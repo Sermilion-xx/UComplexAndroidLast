@@ -1,0 +1,111 @@
+<resources>
+    <string name="app_name">uComplex</string>
+    <string name="ucomplex">UComplex</string>
+    <string name="events">События</string>
+    <string name="disciplines">Дисциплины</string>
+    <string name="users">Пользователи</string>
+    <string name="portfolio">Портфолио</string>
+    <string name="messages">Сообщения</string>
+    <string name="calendar">Календарь</string>
+    <string name="settings">Настройки</string>
+    <string name="logout">Выход</string>
+    <string name="info">Информация</string>
+    <string name="refresh">Обновить</string>
+    <string name="rename">Переименовать</string>
+    <string name="delete">Удалить</string>
+    <string name="add_file">Добавить файл</string>
+    <string name="add_folder">Добавить папку</string>
+    <string name="block">Заблокировать</string>
+    <string name="search">Поиск</string>
+
+
+    <string name="sotrudnik">Сотрудник</string>
+    <string name="administrator">Администратор</string>
+    <string name="sub_administrator">Суб-Администратор</string>
+    <string name="prepodvatel">Преподаватель</string>
+    <string name="student">Студент</string>
+    <string name="metodist_po_raspisaniyu">Методист по расписанию</string>
+    <string name="metodist_ko">Методист КО</string>
+    <string name="bibliotekar">Библиотекарь</string>
+    <string name="tehsekretar">Техсекретарь</string>
+    <string name="abiturient">Абитуриент</string>
+    <string name="uchebny_otdel">Учебный отдел</string>
+    <string name="rukovoditel">Руководитель</string>
+    <string name="monitoring">Мониторинг</string>
+    <string name="dekan">Декан</string>
+    <string name="otdel_kadrov">Отдел кадров</string>
+
+    <string name="drawer_open">open</string>
+    <string name="drawer_closed">closed</string>
+
+    <string name="uc_description">Добро пожаловать\n в uComplex</string>
+    <string name="prompt_login">Логин</string>
+    <string name="prompt_password">Пароль</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="sign_in">Войти</string>
+    <string name="forgot_pass">Забыли пароль?</string>
+
+    <string name="error_wrong_user_type">Неверный тип пользователя.</string>
+    <string name="error_invalid_login">Неверные данные</string>
+    <string name="error_invalid_email">Не валидный электронный адрес</string>
+    <string name="error_invalid_password">Пароль слишком которткий</string>
+    <string name="error_incorrect_password">Пароль должен состоять из 3 и более символов</string>
+    <string name="error_field_required">Обязательное поле</string>
+    <string name="error_check_internet">Проверьте интернет соединение.</string>
+    <string name="error_login">Не удалось войти</string>
+
+    <string name="ok">Готово</string>
+    <string name="cancel">Отмена</string>
+    <string name="restore_password">Восстановление пароля</string>
+    <string name="email_address">Адрес электронной почты</string>
+    <string name="reset_password_sent">На указанный адрес отправленна ссылка для восстановления пароля.</string>
+    <string name="error_loading_data">Error loading data</string>
+    <string name="load_more">Загрузить еще</string>
+    <string name="error_loadig_data">Ошибка при загрузке данных</string>
+    <string name="error_loadig_file">Ошибка при загрузке файла</string>
+    <string name="file_download_started">Загрузка файла началась</string>
+    <string name="file_download_complete">Загрузка файла завершена</string>
+    <string name="file_saved_to_downloads">Файл сохранен в папку "Загрузки"</string>
+    <string name="file_is_downloading">Загрузка файла из Ucomplex</string>
+    <string name="downloading">Загрузка</string>
+    <string name="need_storage_permissions">Необходимо разрешить доступ к хранилищу в для данного приложения</string>
+    <string name="subjects">Дисциплины</string>
+
+    <string name="zachet">Зачет</string>
+    <string name="exam">Экзамен</string>
+    <string name="samostoyatelnaya">Самостоятельная работа</string>
+
+    <string name="no_internet_str">Пожалуйста, проверьте ваше интернет соединение</string>
+    <string name="no_content_str">Нет контента для отображения</string>
+    <string name="no_dilogs_str">Нет диалогов</string>
+    <string name="empty" />
+    <string name="profile_picture">Аватарка</string>
+    <string name="subject">Дисциплина</string>
+    <string name="lecturers">Преподаватели</string>
+
+    <string name="absence" formatted="false">Посещаемость: %1$s</string>
+    <string name="average_mark">Средняя успеваемость: %1$s</string>
+    <string name="attendance">Посещаемость по предмету:</string>
+    <string name="subject_image">Subject Image</string>
+    <string name="clock_icon"></string>
+    <string name="open_file_with">Открыть используя</string>
+    <string name="storage_access_denied">Вы не разрешили доступ к пямяти. Открытие загруженных файлов будет не возможна.</string>
+    <string name="file_was_deleted">Файл был удален</string>
+    <string name="error_deleting_file">Ошибка при удалении файла</string>
+    <string name="share">Поделиться</string>
+    <string name="error">Ошибка</string>
+    <string name="support">Техподдержка</string>
+    <string name="online">Онлайн</string>
+    <string name="friends">Друзья</string>
+    <string name="group">Группа</string>
+    <string name="blacklist">Черный список</string>
+    <string name="pick_image">Выберите фотографи</string>
+    <string name="pick_document">Выберите документы</string>
+    <string name="file_uploaded">Отправка файла завершена</string>
+    <string name="error_file_upload">Ошибка при выгрузке файла</string>
+    <string name="just_now">Сейчас</string>
+    <string name="upload_started">Отправка файла началась</string>
+    <string name="upload_file">Отправить файл</string>
+    <string name="folder_created">Папка добавленна</string>
+    <string name="error_creating_folder">Ошибка при создании пробки</string>
+</resources>

@@ -34,7 +34,7 @@ import static org.ucomplex.ucomplex.Domain.LoginErrorType.PASSWORD_REQUIRED;
  * ---------------------------------------------------
  */
 
-public class LoginPresenter extends AbstractPresenter<LoginUser, UserInterface, LoginParams, LoginModel> implements ActivityExtensions {
+public class LoginPresenter extends AbstractPresenter<LoginUser, UserInterface, LoginParams, LoginModel> {
 
     @Inject
     public void setModel(LoginModel model) {
@@ -110,10 +110,5 @@ public class LoginPresenter extends AbstractPresenter<LoginUser, UserInterface, 
 
     private boolean isPasswordValid(String password) {
         return password.length() > 3;
-    }
-
-    @Override
-    public void showToast(int message) {
-
     }
 }

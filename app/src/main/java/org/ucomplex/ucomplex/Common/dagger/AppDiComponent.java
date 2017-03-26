@@ -12,6 +12,10 @@ import org.ucomplex.ucomplex.Modules.Login.LoginPresenter;
 import org.ucomplex.ucomplex.Modules.Login.dagger.LoginActivityModule;
 import org.ucomplex.ucomplex.Modules.Login.dagger.LoginModelModule;
 import org.ucomplex.ucomplex.Modules.Login.dagger.LoginPresenterModule;
+import org.ucomplex.ucomplex.Modules.RoleSelect.RoleSelectActivity;
+import org.ucomplex.ucomplex.Modules.RoleSelect.RoleSelectPresenter;
+import org.ucomplex.ucomplex.Modules.RoleSelect.dagger.RoleSelectActivityModule;
+import org.ucomplex.ucomplex.Modules.RoleSelect.dagger.RoleSelectPresenterModule;
 
 import javax.inject.Singleton;
 
@@ -33,7 +37,9 @@ import dagger.Component;
                 EventsPresenterModule.class,
                 LoginActivityModule.class,
                 LoginModelModule.class,
-                LoginPresenterModule.class})
+                LoginPresenterModule.class,
+                RoleSelectPresenterModule.class,
+                RoleSelectActivityModule.class})
 
 public interface AppDiComponent {
 
@@ -48,6 +54,10 @@ public interface AppDiComponent {
     void inject(LoginModel model);
 
     void inject(LoginActivity activity);
+
+    void inject(RoleSelectActivity activity);
+
+    void inject(RoleSelectPresenter presenter);
 
 }
 

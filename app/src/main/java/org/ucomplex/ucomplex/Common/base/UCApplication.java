@@ -48,4 +48,8 @@ public class UCApplication extends Application {
     public UserInterface getLoggedUser() {
         return loggedUser;
     }
+
+    public void setLoggedUser(UserInterface loggedUser) {
+        this.loggedUser = loggedUser;
+    }
 }

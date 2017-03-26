@@ -23,6 +23,7 @@ import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
 import org.ucomplex.ucomplex.Domain.LoginErrorType;
 import org.ucomplex.ucomplex.Domain.Users.UserInterface;
 import org.ucomplex.ucomplex.Modules.Events.EventsActivity;
+import org.ucomplex.ucomplex.Modules.RoleSelect.RoleSelectActivity;
 import org.ucomplex.ucomplex.R;
 
 import java.util.List;
@@ -138,10 +139,9 @@ public class LoginActivity extends BaseActivity<MVPView, LoginPresenter> impleme
         Intent intent;
         if (presenter.getData().getRoles().size() == 1) {
             presenter.saveLoginData();
-            intent = EventsActivity.creteIntent(this, presenter.getData());
+            intent = EventsActivity.creteIntent(this);
         } else {
-            //TODO: role select activity
-            intent = new Intent(this, null);
+            intent = new Intent(this, RoleSelectActivity.class);
         }
         startActivity(intent);
         finish();

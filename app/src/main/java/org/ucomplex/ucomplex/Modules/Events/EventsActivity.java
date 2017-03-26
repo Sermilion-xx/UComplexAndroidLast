@@ -13,11 +13,8 @@ import org.ucomplex.ucomplex.R;
 
 public class EventsActivity extends BaseActivity<MVPView, EventsPresenter> {
 
-    private static final String EXTRA_KEY_USER = "user";
-
-    public static Intent creteIntent (Context context, UserInterface user) {
+    public static Intent creteIntent (Context context) {
         Intent intent = new Intent(context, EventsActivity.class);
-        intent.putExtra(EXTRA_KEY_USER, (Parcelable) user);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         return intent;
     }

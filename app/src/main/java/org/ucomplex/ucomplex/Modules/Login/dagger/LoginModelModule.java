@@ -2,8 +2,7 @@ package org.ucomplex.ucomplex.Modules.Login.dagger;
 
 import org.ucomplex.ucomplex.Common.ServiceGenerator;
 import org.ucomplex.ucomplex.Common.base.UCApplication;
-import org.ucomplex.ucomplex.Common.retrofit.EventsService;
-import org.ucomplex.ucomplex.Common.retrofit.LoginService;
+import org.ucomplex.ucomplex.Modules.Login.LoginService;
 
 import dagger.Module;
 import dagger.Provides;

@@ -1,15 +1,13 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_screen"
-    >
+    android:background="@drawable/login_screen">
 
     <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:fillViewport="true"
         android:layout_gravity="center"
-        >
+        android:fillViewport="true">
 
         <LinearLayout
             android:id="@+id/email_login_form"
@@ -45,8 +43,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_login"
                     android:inputType="text"
-                    android:maxLines="1"
-                    />
+                    android:maxLines="1" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -86,7 +83,7 @@
                     android:background="@drawable/round_button_white"
                     android:text="@string/sign_in"
                     android:textColor="@color/color_uc_ListText"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <Button
                     android:id="@+id/forgot_pass_button"
@@ -111,9 +108,8 @@
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:visibility="gone"
         android:layout_gravity="center"
-        />
+        android:layout_marginBottom="8dp"
+        android:visibility="gone" />
 
 </FrameLayout>

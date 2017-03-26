@@ -54,5 +54,6 @@ dependencies {
     compile 'com.google.android.gms:play-services-gcm:10.2.1'
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'com.tubb.smrv:swipemenu-recyclerview:5.4.0'
+    compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
     testCompile 'junit:junit:4.12'
 }

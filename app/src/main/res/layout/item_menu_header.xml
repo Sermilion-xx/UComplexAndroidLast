@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="130dp"
+    android:background="@color/color_uc_menuHeader"
+    android:orientation="horizontal"
+    android:weightSum="1">
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profileImage"
+        android:layout_height="65dp"
+        android:layout_gravity="start"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="41dp"
+        android:layout_width="65dp" />
+
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/profileImage"
+        android:layout_gravity="center"
+        android:layout_marginTop="13dp"
+        android:layout_toEndOf="@+id/profileImage"
+        android:text="Akash Bangad"
+        android:maxLines="1"
+        android:layout_marginStart="10dp"
+        android:textColor="@color/colorWhite"
+        android:textSize="18sp"
+        android:layout_marginEnd="80dp" />
+
+    <TextView
+        android:id="@+id/role"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/name"
+        android:layout_below="@+id/name"
+        android:layout_marginTop="5dp"
+        android:text="Сотрудник"
+        android:textColor="@color/colorWhite" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/roleImage"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="start"
+        android:layout_marginEnd="34dp"
+        android:src="@drawable/ic_menu_user"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="64dp" />
+</RelativeLayout>

@@ -2,10 +2,7 @@ package org.ucomplex.ucomplex.Modules.Events.dagger;
 
 import org.ucomplex.ucomplex.Common.ServiceGenerator;
 import org.ucomplex.ucomplex.Common.base.UCApplication;
-import org.ucomplex.ucomplex.Common.retrofit.EventsService;
-import org.ucomplex.ucomplex.Modules.Events.EventsModel;
-
-import javax.inject.Singleton;
+import org.ucomplex.ucomplex.Modules.Events.EventsService;
 
 import dagger.Module;
 import dagger.Provides;

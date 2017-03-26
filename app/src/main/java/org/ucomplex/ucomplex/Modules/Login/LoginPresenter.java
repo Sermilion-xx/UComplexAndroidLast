@@ -2,7 +2,10 @@ package org.ucomplex.ucomplex.Modules.Login;
 
 import android.text.TextUtils;
 
+import org.ucomplex.ucomplex.Common.FacadePreferences;
 import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
+import org.ucomplex.ucomplex.Common.base.UCApplication;
+import org.ucomplex.ucomplex.Common.interfaces.ActivityExtensions;
 import org.ucomplex.ucomplex.Domain.LoginErrorType;
 import org.ucomplex.ucomplex.Domain.Users.UserInterface;
 import org.ucomplex.ucomplex.Modules.Login.model.LoginUser;
@@ -31,11 +34,15 @@ import static org.ucomplex.ucomplex.Domain.LoginErrorType.PASSWORD_REQUIRED;
  * ---------------------------------------------------
  */
 
-public class LoginPresenter extends AbstractPresenter<LoginUser, UserInterface, LoginParams, LoginModel> {
+public class LoginPresenter extends AbstractPresenter<LoginUser, UserInterface, LoginParams, LoginModel> implements ActivityExtensions {
 
     @Inject
     public void setModel(LoginModel model) {
         mModel = model;
+    }
+
+    public LoginPresenter () {
+        UCApplication.getInstance().getAppDiComponent().inject(this);
     }
 
     @Override
@@ -67,6 +74,10 @@ public class LoginPresenter extends AbstractPresenter<LoginUser, UserInterface, 
         });
     }
 
+    public void saveLoginData () {
+        FacadePreferences.setUserDataToPref(getActivityContext(), getData());
+    }
+
     public void restorePassword(String email) {
         //TODO
     }
@@ -80,10 +91,9 @@ public class LoginPresenter extends AbstractPresenter<LoginUser, UserInterface, 
     }
 
     private List<LoginErrorType> runCheck() {
-        UserInterface user = mModel.getData();
         List<LoginErrorType> errors = new ArrayList<>();
-        String password = user.getPassword();
-        String login = user.getLogin();
+        String password = mRequestParams.getLogin();
+        String login = mRequestParams.getPassword();
         if (TextUtils.isEmpty(password)) {
             errors.add(PASSWORD_REQUIRED);
         } else if (!isPasswordValid(password)) {
@@ -102,4 +112,8 @@ public class LoginPresenter extends AbstractPresenter<LoginUser, UserInterface, 
         return password.length() > 3;
     }
 
+    @Override
+    public void showToast(int message) {
+
+    }
 }

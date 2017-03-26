@@ -2,14 +2,11 @@ package org.ucomplex.ucomplex.Modules.Login;
 
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.FacadePreferences;
+import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
-import org.ucomplex.ucomplex.Common.retrofit.LoginService;
-import org.ucomplex.ucomplex.Domain.Users.User;
 import org.ucomplex.ucomplex.Domain.Users.UserFactory;
 import org.ucomplex.ucomplex.Domain.Users.UserInterface;
 import org.ucomplex.ucomplex.Modules.Login.model.LoginUser;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -29,8 +26,12 @@ import io.reactivex.schedulers.Schedulers;
 
 public class LoginModel implements MVPModel<LoginUser, UserInterface, LoginParams> {
 
-    private UserInterface userInterface;
+    private UserInterface userInterface ;
     private LoginService loginService;
+
+    public LoginModel () {
+        UCApplication.getInstance().getAppDiComponent().inject(this);
+    }
 
     @Inject
     public void setLoginService(LoginService service) {

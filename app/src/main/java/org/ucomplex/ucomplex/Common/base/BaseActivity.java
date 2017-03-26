@@ -101,7 +101,7 @@ public abstract class BaseActivity <V extends MVPView, Presenter extends MvpPres
         ArrayList<DrawerListItem> drawerListItems = new ArrayList<>();
         drawerListItems.add(header);
         for (int i = 0; i < icons.length; i++) {
-            drawerListItems.add(new DrawerListItem(titles[i], icons[i]));
+            drawerListItems.add(new DrawerListItem(icons[i], titles[i]));
         }
         return drawerListItems;
     }

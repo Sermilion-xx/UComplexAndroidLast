@@ -5,7 +5,7 @@ import android.content.Context;
 import com.hannesdorfmann.mosby.mvp.MvpBasePresenter;
 import com.hannesdorfmann.mosby.mvp.MvpPresenter;
 
-import org.ucomplex.ucomplex.Common.interfaces.ActivityExtensions;
+import org.ucomplex.ucomplex.Common.interfaces.ViewExtensions;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPPresenter;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
@@ -67,13 +67,13 @@ public abstract class AbstractPresenter<
 
     public void showProgress() {
         if (getActivityContext() != null) {
-            ((ActivityExtensions) getActivityContext()).showProgress();
+            ((ViewExtensions) getActivityContext()).showProgress();
         }
     }
 
     public void hideProgress() {
         if (getActivityContext() != null) {
-            ((ActivityExtensions) getActivityContext()).hideProgress();
+            ((ViewExtensions) getActivityContext()).hideProgress();
         }
     }
 

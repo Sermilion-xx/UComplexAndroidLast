@@ -1,10 +1,13 @@
-package org.ucomplex.ucomplex.Common.retrofit;
+package org.ucomplex.ucomplex.Modules.Events;
 
 
-import org.ucomplex.ucomplex.Modules.Login.model.LoginUser;
+import org.ucomplex.ucomplex.Modules.Events.EventItem;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 
 /**
  * ---------------------------------------------------
@@ -16,7 +19,10 @@ import retrofit2.http.GET;
  * ---------------------------------------------------
  */
 
-public interface LoginService {
+public interface EventsService {
     @GET("user/events?mobile=1")
-    Observable<LoginUser> login();
+    Observable<List<EventItem>> getSubtitles(
+            @Path("audioId") int audioId
+    );
+
 }

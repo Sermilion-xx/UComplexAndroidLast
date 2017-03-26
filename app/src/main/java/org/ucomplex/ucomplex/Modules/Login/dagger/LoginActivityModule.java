@@ -24,7 +24,7 @@ public class LoginActivityModule {
 
     @Provides
     @Singleton
-    public MvpPresenter<MVPView> providePresenter() {
+    public LoginPresenter providePresenter() {
         return new LoginPresenter();
     }
 

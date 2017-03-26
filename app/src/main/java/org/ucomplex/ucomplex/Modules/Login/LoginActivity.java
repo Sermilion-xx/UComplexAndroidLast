@@ -1,5 +1,6 @@
 package org.ucomplex.ucomplex.Modules.Login;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -11,13 +12,16 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.ucomplex.ucomplex.Common.FacadeCommon;
+import org.ucomplex.ucomplex.Common.FacadePreferences;
 import org.ucomplex.ucomplex.Common.base.BaseActivity;
 import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
 import org.ucomplex.ucomplex.Domain.LoginErrorType;
+import org.ucomplex.ucomplex.Domain.Users.UserInterface;
 import org.ucomplex.ucomplex.Modules.Events.EventsActivity;
 import org.ucomplex.ucomplex.R;
 
@@ -26,17 +30,18 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 import static org.ucomplex.ucomplex.Domain.LoginErrorType.EMPTY_EMAIL;
 import static org.ucomplex.ucomplex.Domain.LoginErrorType.INVALID_PASSWORD;
 import static org.ucomplex.ucomplex.Domain.LoginErrorType.PASSWORD_REQUIRED;
 
-public class LoginActivity extends BaseActivity<MVPView, LoginPresenter> implements View.OnClickListener {
+public class LoginActivity extends BaseActivity<MVPView, LoginPresenter> implements View.OnClickListener, MVPView {
 
     @BindView(R.id.login)
-    private AutoCompleteTextView mLoginView;
+    AutoCompleteTextView mLoginView;
     @BindView(R.id.password)
-    private EditText mPasswordView;
+    EditText mPasswordView;
     @BindView(R.id.forgot_pass_button)
     Button mForgotButton;
     @BindView(R.id.login_sign_in_button)
@@ -50,13 +55,19 @@ public class LoginActivity extends BaseActivity<MVPView, LoginPresenter> impleme
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentViewWithNavDrawer(R.layout.activity_login);
-        setupToolbar(getString(R.string.app_name), R.drawable.ic_menu);
         UCApplication.getInstance().getAppDiComponent().inject(this);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
+        ButterKnife.bind(this);
         mProgress = (ProgressBar) findViewById(R.id.progressBar);
+        UCApplication.getInstance().getAppDiComponent().inject(this);
         mLoginSignInButton.setOnClickListener(this);
         mForgotButton.setOnClickListener(this);
+        UserInterface userInterface = UCApplication.getInstance().getLoggedUser();
+        if (userInterface != null) {
+            mLoginView.setText(userInterface.getLogin());
+            mPasswordView.setText(userInterface.getPassword());
+        }
     }
 
     @NonNull
@@ -126,6 +137,7 @@ public class LoginActivity extends BaseActivity<MVPView, LoginPresenter> impleme
     public void onLogin() {
         Intent intent;
         if (presenter.getData().getRoles().size() == 1) {
+            presenter.saveLoginData();
             intent = EventsActivity.creteIntent(this, presenter.getData());
         } else {
             //TODO: role select activity
@@ -133,5 +145,15 @@ public class LoginActivity extends BaseActivity<MVPView, LoginPresenter> impleme
         }
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public Context getAppContext() {
+        return UCApplication.getInstance();
+    }
+
+    @Override
+    public Context getActivityContext() {
+        return this;
     }
 }

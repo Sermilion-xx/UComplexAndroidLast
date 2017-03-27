@@ -18,6 +18,5 @@ public interface MVPPresenter<L, P, R> {
     void clear();
     L getModel();
     P getData();
-    void loadData();
-    void setParams(R params);
+    void loadData(R params);
 }

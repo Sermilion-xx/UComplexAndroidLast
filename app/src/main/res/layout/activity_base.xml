@@ -17,7 +17,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:headerLayout="@layout/nav_header">
+        app:headerLayout="@layout/nav_header"
+        android:background="@color/color_uc_menuHeader">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/left_drawer"

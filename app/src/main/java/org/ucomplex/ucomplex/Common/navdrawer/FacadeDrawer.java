@@ -3,6 +3,8 @@ package org.ucomplex.ucomplex.Common.navdrawer;
 import android.content.Context;
 import android.support.v4.util.Pair;
 
+import org.ucomplex.ucomplex.R;
+
 /**
  * Created by Sermilion on 03/11/2016.
  */
@@ -24,8 +26,41 @@ public class FacadeDrawer {
     }
 
     public Pair<int[], String[]> getDrawerItemsUser0(){
-        int[] icons = new int[]{};
-        String[] titles = new String[] {};
+        int[] icons = new int[]{
+                R.drawable.ic_menu_events,
+                R.drawable.ic_menu_users,
+                R.drawable.ic_menu_messages,
+                R.drawable.ic_menu_settings,
+                R.drawable.ic_menu_exit};
+        String[] titles = new String[] {
+                getString(R.string.events),
+                getString(R.string.users),
+                getString(R.string.portfolio),
+                getString(R.string.settings),
+                getString(R.string.logout)};
+        return new Pair<>(icons, titles);
+    }
+
+    public Pair<int[], String[]> getDrawerItemsUser4() {
+        int[] icons = new int[]{
+                R.drawable.ic_menu_events,
+                R.drawable.ic_menu_subjects,
+                R.drawable.ic_menu_materials,
+                R.drawable.ic_menu_users,
+                R.drawable.ic_menu_messages,
+                R.drawable.ic_menu_timetable,
+                R.drawable.ic_menu_settings,
+                R.drawable.ic_menu_exit
+        };
+        String[] titles = new String[]{
+                getString(R.string.events),
+                getString(R.string.disciplines),
+                getString(R.string.portfolio),
+                getString(R.string.users),
+                getString(R.string.messages),
+                getString(R.string.calendar),
+                getString(R.string.settings),
+                getString(R.string.logout)};
         return new Pair<>(icons, titles);
     }
 

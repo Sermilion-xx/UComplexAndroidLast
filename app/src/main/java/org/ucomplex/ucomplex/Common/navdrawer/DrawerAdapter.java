@@ -15,9 +15,11 @@ import com.bumptech.glide.Priority;
 
 import org.ucomplex.ucomplex.Common.FacadeMedia;
 import org.ucomplex.ucomplex.Common.FacadePreferences;
+import org.ucomplex.ucomplex.Common.UCApplication;
+import org.ucomplex.ucomplex.Modules.Login.LoginActivity;
 import org.ucomplex.ucomplex.R;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -27,10 +29,10 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
     private static final int TYPE_0 = 0;
     private static final int TYPE_1 = 1;
     private static final String PROFILE_IMAGE_URL = "https://ucomplex.org/files/photos/";
-    private ArrayList<DrawerListItem> mItems;
+    private List<DrawerListItem> mItems;
     private Activity mContext;
 
-    public DrawerAdapter(ArrayList<DrawerListItem> items, Activity context) {
+    public DrawerAdapter(List<DrawerListItem> items, Activity context) {
         mItems = items;
         this.mContext = context;
     }
@@ -90,12 +92,17 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
                     Drawable textDrawable = FacadeMedia.getTextDrawable(row.getId(), row.getTitle1(), mContext);
                     mProfileImageView.setImageBitmap(FacadeMedia.drawableToBitmap(textDrawable));
                 } else {
-                    String url = PROFILE_IMAGE_URL + row.getProfileBitmapCode() + "jpg";
-                    Glide.with(mContext)
-                            .load(url)
-                            .asBitmap()
-                            .priority(Priority.HIGH)
-                            .into(mProfileImageView);
+                    if (row.getProfileBitmapCode() != null) {
+                        String url = PROFILE_IMAGE_URL + row.getProfileBitmapCode() + "jpg";
+                        Glide.with(mContext)
+                                .load(url)
+                                .asBitmap()
+                                .priority(Priority.HIGH)
+                                .into(mProfileImageView);
+                    } else {
+                        Drawable textDrawable = FacadeMedia.getTextDrawable(row.getId(), row.getTitle1(), mContext);
+                        mProfileImageView.setImageBitmap(FacadeMedia.drawableToBitmap(textDrawable));
+                    }
                 }
             } else {
                 mTextView1.setText(row.getTitle1());
@@ -132,10 +139,10 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
 
     public void logout() {
         FacadePreferences.clearPref(mContext);
-//        application.setSharedUser(null);
-//        application.setAuthString("");
-//        mContext.startActivity(new Intent(mContext, LoginActivityView.class));
-//        mContext.finish();
+        UCApplication.getInstance().setLoggedUser(null);
+        UCApplication.getInstance().setAuthString(null);
+        mContext.startActivity(new Intent(mContext, LoginActivity.class));
+        mContext.finish();
     }
 
     private void onDrawerItemPressed(Class<? extends Activity> activity) {

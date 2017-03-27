@@ -1,8 +1,5 @@
 package org.ucomplex.ucomplex.Modules.Events.dagger;
 
-import com.hannesdorfmann.mosby.mvp.MvpPresenter;
-
-import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
 import org.ucomplex.ucomplex.Modules.Events.EventsPresenter;
 
 import javax.inject.Singleton;
@@ -24,7 +21,7 @@ public class EventsActivityModule {
 
     @Provides
     @Singleton
-    public MvpPresenter<MVPView> providePresenter() {
+    EventsPresenter providePresenter() {
         return new EventsPresenter();
     }
 

@@ -4,9 +4,9 @@ import android.text.TextUtils;
 
 import org.ucomplex.ucomplex.Common.FacadePreferences;
 import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
-import org.ucomplex.ucomplex.Common.base.UCApplication;
-import org.ucomplex.ucomplex.Common.interfaces.ActivityExtensions;
+import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Domain.LoginErrorType;
+import org.ucomplex.ucomplex.Domain.Users.Role;
 import org.ucomplex.ucomplex.Domain.Users.UserInterface;
 import org.ucomplex.ucomplex.Modules.Login.model.LoginUser;
 
@@ -46,7 +46,7 @@ public class LoginPresenter extends AbstractPresenter<LoginUser, UserInterface, 
     }
 
     @Override
-    public void loadData() {
+    public void loadData(LoginParams mRequestParams) {
         Observable<LoginUser> dataObservable = mModel.loadData(mRequestParams);
         dataObservable.subscribe(new Observer<LoginUser>() {
             @Override
@@ -74,23 +74,25 @@ public class LoginPresenter extends AbstractPresenter<LoginUser, UserInterface, 
         });
     }
 
-    public void saveLoginData () {
-        FacadePreferences.setUserDataToPref(getActivityContext(), getData());
+    public void saveLoginData(Role role) {
+        getData().setType(role.getType());
+        getData().setId(role.getId());
+        FacadePreferences.setUserDataToPrefSync(getActivityContext(), getData());
     }
 
     public void restorePassword(String email) {
         //TODO
     }
 
-    public List<LoginErrorType> checkCredentials() {
-        List<LoginErrorType> error = runCheck();
+    public List<LoginErrorType> checkCredentials(LoginParams mRequestParams) {
+        List<LoginErrorType> error = runCheck(mRequestParams);
         if (error.get(0) == NO_ERROR) {
-            loadData();
+            loadData(mRequestParams);
         }
         return error;
     }
 
-    private List<LoginErrorType> runCheck() {
+    private List<LoginErrorType> runCheck(LoginParams mRequestParams) {
         List<LoginErrorType> errors = new ArrayList<>();
         String password = mRequestParams.getLogin();
         String login = mRequestParams.getPassword();

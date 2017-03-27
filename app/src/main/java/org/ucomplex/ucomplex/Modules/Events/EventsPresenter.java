@@ -2,7 +2,7 @@ package org.ucomplex.ucomplex.Modules.Events;
 
 import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
 import org.ucomplex.ucomplex.Common.base.RecyclerFragment;
-import org.ucomplex.ucomplex.Common.base.UCApplication;
+import org.ucomplex.ucomplex.Common.UCApplication;
 
 import java.util.List;
 
@@ -32,12 +32,11 @@ public class EventsPresenter extends AbstractPresenter<
     }
 
     public EventsPresenter() {
-        mRequestParams = new EventsParams();
         UCApplication.getInstance().getAppDiComponent().inject(this);
     }
 
     @Override
-    public void loadData() {
+    public void loadData(EventsParams mRequestParams) {
         Observable<List<EventItem>> dataObservable = mModel.loadData(mRequestParams);
         dataObservable.subscribe(new Observer<List<EventItem>>() {
             @Override

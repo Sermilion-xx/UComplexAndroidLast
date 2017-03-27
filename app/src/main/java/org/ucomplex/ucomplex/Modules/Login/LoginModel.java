@@ -2,7 +2,7 @@ package org.ucomplex.ucomplex.Modules.Login;
 
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.FacadePreferences;
-import org.ucomplex.ucomplex.Common.base.UCApplication;
+import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
 import org.ucomplex.ucomplex.Domain.Users.UserFactory;
 import org.ucomplex.ucomplex.Domain.Users.UserInterface;
@@ -40,8 +40,8 @@ public class LoginModel implements MVPModel<LoginUser, UserInterface, LoginParam
 
     @Override
     public Observable<LoginUser> loadData(LoginParams params) {
-        String loginData = FacadeCommon.encodeLoginData(params.getLogin().substring(2) + ":" + params.getPassword());
-        FacadePreferences.setLoginDataToPref(params.getContext(), loginData);
+        String loginData = FacadeCommon.encodeLoginData(params.getLogin() + ":" + params.getPassword());
+        FacadePreferences.setLoginDataToPref(params.getContext(), loginData, false);
         return loginService.login().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -67,7 +67,7 @@ public class LoginModel implements MVPModel<LoginUser, UserInterface, LoginParam
     }
 
     @Override
-    public UserInterface processData(LoginUser data) {
+    public void processData(LoginUser data) {
         userInterface = UserFactory.getUserForType(0);
         userInterface.setRoles(data.getRoles());
         userInterface.setMobile(data.getSession().getMobile());
@@ -81,6 +81,5 @@ public class LoginModel implements MVPModel<LoginUser, UserInterface, LoginParam
         userInterface.setSession(data.getSession().getSession());
         userInterface.setPerson(data.getSession().getPerson());
         userInterface.setClient(data.getSession().getClient());
-        return userInterface;
     }
 }

@@ -1,17 +1,18 @@
 package org.ucomplex.ucomplex.Modules.RoleSelect;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import org.ucomplex.ucomplex.Common.base.BaseActivity;
-import org.ucomplex.ucomplex.Common.base.UCApplication;
+import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.IntentCallback;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
+import org.ucomplex.ucomplex.Domain.Users.UserInterface;
 import org.ucomplex.ucomplex.Modules.Events.EventsActivity;
 import org.ucomplex.ucomplex.R;
 
@@ -24,10 +25,18 @@ import butterknife.ButterKnife;
 
 public class RoleSelectActivity extends BaseActivity<MVPView, RoleSelectPresenter> implements MVPView, IntentCallback<Integer> {
 
+    private static final String EXTRA_USER = "EXTRA_USER";
     @BindView(R.id.recyclerView)
     protected RecyclerView mRecyclerView;
 
     private RoleSelectAdapter mAdapter;
+
+    public static Intent creteIntent (Context context, UserInterface userInterface) {
+        Intent intent = new Intent(context, RoleSelectActivity.class);
+        intent.putExtra(EXTRA_USER, (Parcelable) userInterface);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        return intent;
+    }
 
     @Inject
     @Override
@@ -37,6 +46,7 @@ public class RoleSelectActivity extends BaseActivity<MVPView, RoleSelectPresente
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        UCApplication.getInstance().getAppDiComponent().inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_role_select);
         ButterKnife.bind(this);
@@ -44,9 +54,12 @@ public class RoleSelectActivity extends BaseActivity<MVPView, RoleSelectPresente
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new RoleSelectAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
+        if (presenter.getData() == null) {
+            presenter.loadData(getIntent().getParcelableExtra(EXTRA_USER));
+        }
     }
 
-    public void updateAdapter(List<RoleItem> items) {
+    public void initRecyclerView(List<RoleItem> items) {
         mAdapter.setItems(items);
         mAdapter.notifyDataSetChanged();
     }
@@ -56,8 +69,6 @@ public class RoleSelectActivity extends BaseActivity<MVPView, RoleSelectPresente
     public RoleSelectPresenter createPresenter() {
         return presenter;
     }
-
-
 
     @Override
     public Context getAppContext() {

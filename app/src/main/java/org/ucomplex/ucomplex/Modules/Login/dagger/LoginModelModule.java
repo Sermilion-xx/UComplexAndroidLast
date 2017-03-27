@@ -1,7 +1,7 @@
 package org.ucomplex.ucomplex.Modules.Login.dagger;
 
 import org.ucomplex.ucomplex.Common.ServiceGenerator;
-import org.ucomplex.ucomplex.Common.base.UCApplication;
+import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Modules.Login.LoginService;
 
 import dagger.Module;
@@ -21,7 +21,7 @@ public class LoginModelModule {
 
     @Provides
     LoginService getLoginService(){
-        return ServiceGenerator.createService(LoginService.class, UCApplication.getAuthString());
+        return ServiceGenerator.createService(LoginService.class, UCApplication.getInstance().getAuthString());
     }
 
 }

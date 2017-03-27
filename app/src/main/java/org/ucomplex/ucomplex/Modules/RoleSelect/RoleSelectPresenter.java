@@ -2,7 +2,8 @@ package org.ucomplex.ucomplex.Modules.RoleSelect;
 
 import org.ucomplex.ucomplex.Common.FacadePreferences;
 import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
-import org.ucomplex.ucomplex.Common.base.UCApplication;
+import org.ucomplex.ucomplex.Common.UCApplication;
+import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
 import org.ucomplex.ucomplex.Domain.Users.UserInterface;
 
 import java.util.List;
@@ -25,7 +26,7 @@ import static org.ucomplex.ucomplex.Common.FacadeCommon.encodeLoginData;
  * ---------------------------------------------------
  */
 
-public class RoleSelectPresenter extends AbstractPresenter<UserInterface, List<RoleItem>, RoleSelectParams, RoleSelectModel> {
+public class RoleSelectPresenter extends AbstractPresenter<UserInterface, List<RoleItem>, UserInterface, RoleSelectModel> {
 
     private static final String TOKEN_SEPARATOR = ":";
 
@@ -36,36 +37,14 @@ public class RoleSelectPresenter extends AbstractPresenter<UserInterface, List<R
     @Inject
     public void setModel(RoleSelectModel model) {
         mModel = model;
-        mModel.loadData(null);
     }
 
     @Override
-    public void loadData() {
-        Observable<UserInterface> dataObservable = mModel.loadData(mRequestParams);
-        dataObservable.subscribe(new Observer<UserInterface>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-                showProgress();
-            }
-
-            @Override
-            public void onNext(UserInterface value) {
-                mModel.processData(value);
-                if (getView() != null) {
-                    ((RoleSelectActivity)getView()).updateAdapter(getData());
-                }
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                hideProgress();
-            }
-
-            @Override
-            public void onComplete() {
-                hideProgress();
-            }
-        });
+    public void loadData(UserInterface params) {
+        if (getView() != null) {
+            mModel.processData(params);
+            ((RoleSelectActivity) getView()).initRecyclerView(getData());
+        }
     }
 
     public void onRoleSelected(int position) {
@@ -75,7 +54,11 @@ public class RoleSelectPresenter extends AbstractPresenter<UserInterface, List<R
         int roleId = user.getRoles().get(position).getId();
         user.setType(user.getRoles().get(position).getType());
         String encodedAuth = encodeLoginData(login + TOKEN_SEPARATOR + password + TOKEN_SEPARATOR + roleId);
-        FacadePreferences.setLoginDataToPref(getActivityContext(), encodedAuth);
+        FacadePreferences.setLoginDataToPref(getActivityContext(), encodedAuth, true);
         UCApplication.getInstance().setLoggedUser(user);
+    }
+
+    public void onDestroy() {
+        mModel = null;
     }
 }

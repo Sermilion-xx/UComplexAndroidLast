@@ -4,7 +4,7 @@ package org.ucomplex.ucomplex.Modules.Login;
 import org.ucomplex.ucomplex.Modules.Login.model.LoginUser;
 
 import io.reactivex.Observable;
-import retrofit2.http.GET;
+import retrofit2.http.POST;
 
 /**
  * ---------------------------------------------------
@@ -17,6 +17,6 @@ import retrofit2.http.GET;
  */
 
 public interface LoginService {
-    @GET("/auth?mobile=1")
+    @POST("/auth?mobile=1")
     Observable<LoginUser> login();
 }

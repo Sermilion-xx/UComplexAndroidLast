@@ -3,15 +3,22 @@ package org.ucomplex.ucomplex.Modules.Events;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
 import org.ucomplex.ucomplex.Common.base.BaseActivity;
+import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
-import org.ucomplex.ucomplex.Domain.Users.UserInterface;
 import org.ucomplex.ucomplex.R;
 
+import javax.inject.Inject;
+
 public class EventsActivity extends BaseActivity<MVPView, EventsPresenter> {
+
+    @Inject
+    @Override
+    public void setPresenter(@NonNull EventsPresenter presenter) {
+        super.setPresenter(presenter);
+    }
 
     public static Intent creteIntent (Context context) {
         Intent intent = new Intent(context, EventsActivity.class);
@@ -21,8 +28,11 @@ public class EventsActivity extends BaseActivity<MVPView, EventsPresenter> {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        UCApplication.getInstance().getAppDiComponent().inject(this);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_events);
+        setContentViewWithNavDrawer(R.layout.activity_events);
+        setupToolbar(getString(R.string.events), R.drawable.ic_menu);
+        setupDrawer();
     }
 
     @NonNull

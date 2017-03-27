@@ -3,7 +3,6 @@ package org.ucomplex.ucomplex.Modules.Login;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -12,13 +11,11 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.ucomplex.ucomplex.Common.FacadeCommon;
-import org.ucomplex.ucomplex.Common.FacadePreferences;
 import org.ucomplex.ucomplex.Common.base.BaseActivity;
-import org.ucomplex.ucomplex.Common.base.UCApplication;
+import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
 import org.ucomplex.ucomplex.Domain.LoginErrorType;
 import org.ucomplex.ucomplex.Domain.Users.UserInterface;
@@ -98,8 +95,7 @@ public class LoginActivity extends BaseActivity<MVPView, LoginPresenter> impleme
         LoginParams params = new LoginParams(login, password, presenter.getActivityContext());
         params.setPassword(password);
         params.setLogin(login);
-        presenter.setParams(params);
-        List<LoginErrorType> error = presenter.checkCredentials();
+        List<LoginErrorType> error = presenter.checkCredentials(params);
         if (error.contains(PASSWORD_REQUIRED)) {
             mPasswordView.setError(getString(R.string.error_field_required));
         } else if (error.contains(INVALID_PASSWORD)) {
@@ -138,13 +134,14 @@ public class LoginActivity extends BaseActivity<MVPView, LoginPresenter> impleme
     public void onLogin() {
         Intent intent;
         if (presenter.getData().getRoles().size() == 1) {
-            presenter.saveLoginData();
             intent = EventsActivity.creteIntent(this);
+            startActivity(intent);
+            finish();
         } else {
-            intent = new Intent(this, RoleSelectActivity.class);
+            intent = RoleSelectActivity.creteIntent(this, presenter.getData());
+            startActivity(intent);
         }
-        startActivity(intent);
-        finish();
+
     }
 
     @Override

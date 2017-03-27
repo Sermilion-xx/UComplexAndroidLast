@@ -9,7 +9,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.util.Pair;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -22,16 +21,19 @@ import android.widget.Toast;
 import com.hannesdorfmann.mosby.mvp.MvpActivity;
 import com.hannesdorfmann.mosby.mvp.MvpPresenter;
 
+import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.FragmentFactory;
+import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.ViewExtensions;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
 import org.ucomplex.ucomplex.Common.navdrawer.DrawerAdapter;
 import org.ucomplex.ucomplex.Common.navdrawer.DrawerListItem;
 import org.ucomplex.ucomplex.Common.navdrawer.FacadeDrawer;
+import org.ucomplex.ucomplex.Domain.Users.UserInterface;
 import org.ucomplex.ucomplex.R;
 
 import java.util.ArrayList;
-
+import java.util.List;
 
 
 public abstract class BaseActivity <V extends MVPView, Presenter extends MvpPresenter<V>>
@@ -50,7 +52,6 @@ public abstract class BaseActivity <V extends MVPView, Presenter extends MvpPres
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
-        setupDrawer();
     }
 
     protected Toolbar setupToolbar(String title, int... homeAsUpIndicator) {
@@ -82,13 +83,19 @@ public abstract class BaseActivity <V extends MVPView, Presenter extends MvpPres
     //=================Setup methods================//
 
     public void setupDrawer() {
-        setupDrawerView(setupDrawerListItems());
+        List<DrawerListItem> items = setupDrawerListItems();
+        setupDrawerView(items);
     }
 
-    private ArrayList<DrawerListItem> setupDrawerListItems() {
-        setupDrawerItemListForUser();
-        //TODO
-        DrawerListItem headerItem = null; //new DrawerListItem(mSharedData.get(1).getValue(), mSharedData.get(4).getValue());
+    private List<DrawerListItem> setupDrawerListItems() {
+        UserInterface user = UCApplication.getInstance().getLoggedUser();
+        setupDrawerItemListForUser(user);
+        String code = null;
+        if (user.getPhoto() == 1) {
+            code = user.getCode();
+        }
+        DrawerListItem headerItem = new DrawerListItem(code, user.getName().split(" ")[1],
+                FacadeCommon.getStringUserType(this, user.getType()), user.getPerson());
         return setupDrawerArrayList(headerItem, mDrawerIcons, mDrawerTitles);
     }
 
@@ -108,14 +115,22 @@ public abstract class BaseActivity <V extends MVPView, Presenter extends MvpPres
 
 
 
-    private void setupDrawerItemListForUser() {
+    private void setupDrawerItemListForUser(UserInterface user) {
         Pair<int[], String[]> iconsAndItems;
-        iconsAndItems = FacadeDrawer.getInstance(this).getDrawerItemsUser0();
-        mDrawerIcons = iconsAndItems.first;
-        mDrawerTitles = iconsAndItems.second;
+        if(user!=null) {
+            if (user.getType() == 0) {
+                iconsAndItems = FacadeDrawer.getInstance(this).getDrawerItemsUser0();
+            } else if (user.getType() == 4) {
+                iconsAndItems = FacadeDrawer.getInstance(this).getDrawerItemsUser4();
+            } else {
+                iconsAndItems = FacadeDrawer.getInstance(this).getDrawerItemsUser0();
+            }
+            mDrawerIcons = iconsAndItems.first;
+            mDrawerTitles = iconsAndItems.second;
+        }
     }
 
-    private void setupDrawerView(ArrayList<DrawerListItem> drawerListItems) {
+    private void setupDrawerView(List<DrawerListItem> drawerListItems) {
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerAdapter = new DrawerAdapter(drawerListItems, this);
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.left_drawer);

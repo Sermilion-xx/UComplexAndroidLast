@@ -44,10 +44,14 @@ public class FacadePreferences {
         return pref.getString(KEY_PREF_LOGIN_DATA, "");
     }
 
-    public static void setLoginDataToPref(Context mContext, String loginData) {
+    public static void setLoginDataToPref(Context mContext, String loginData, boolean async) {
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(mContext).edit();
         editor.putString(KEY_PREF_LOGIN_DATA, loginData);
-        editor.apply();
+        if (async) {
+            editor.apply();
+        } else {
+            editor.commit();
+        }
     }
 
     public static User getUserDataFromPref(Context mContext) {
@@ -57,13 +61,22 @@ public class FacadePreferences {
         return gson.fromJson(json, User.class);
     }
 
-    public static void setUserDataToPref(Context mContext, UserInterface user) {
+    private static SharedPreferences.Editor makeUserDataToPrefEditor(Context mContext, UserInterface user) {
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(mContext).edit();
         Gson gson = new Gson();
         String json = gson.toJson(user);
         editor.putString(KEY_PREF_LOGGED_USER, json);
-        editor.apply();
+        return editor;
     }
+
+    public static void setUserDataToPref(Context mContext, UserInterface user) {
+        makeUserDataToPrefEditor(mContext, user).apply();
+    }
+
+    public static void setUserDataToPrefSync(Context mContext, UserInterface user) {
+        makeUserDataToPrefEditor(mContext, user).commit();
+    }
+
 
     public static void deleteFromPref(Context context, String typeStr) {
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();

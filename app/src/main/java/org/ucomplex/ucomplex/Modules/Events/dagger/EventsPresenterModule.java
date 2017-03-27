@@ -25,7 +25,7 @@ public class EventsPresenterModule {
 
     @Provides
     @Singleton
-    public EventsModel provideModel() {
+    EventsModel provideModel() {
         return new EventsModel();
     }
 

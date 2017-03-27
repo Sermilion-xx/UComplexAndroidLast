@@ -44,7 +44,7 @@ public class EventsModel implements MVPModel<List<EventItem>,List<EventItem>,Eve
     }
 
     @Override
-    public List<EventItem> processData(List<EventItem> data) {
-        return null;
+    public void processData(List<EventItem> data) {
+
     }
 }

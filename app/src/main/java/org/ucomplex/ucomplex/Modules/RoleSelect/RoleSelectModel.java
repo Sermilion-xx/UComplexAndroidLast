@@ -1,6 +1,6 @@
 package org.ucomplex.ucomplex.Modules.RoleSelect;
 
-import org.ucomplex.ucomplex.Common.base.UCApplication;
+import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
 import org.ucomplex.ucomplex.Domain.Users.Role;
 import org.ucomplex.ucomplex.Domain.Users.UserInterface;
@@ -23,7 +23,7 @@ import io.reactivex.Observer;
  * ---------------------------------------------------
  */
 
-public class RoleSelectModel implements MVPModel< UserInterface, List<RoleItem>, RoleSelectParams> {
+public class RoleSelectModel implements MVPModel< UserInterface, List<RoleItem>, UserInterface> {
 
     private List<RoleItem> mData;
     private int[] roleIcons = {
@@ -34,13 +34,8 @@ public class RoleSelectModel implements MVPModel< UserInterface, List<RoleItem>,
             R.drawable.role_select_5};
 
     @Override
-    public Observable<UserInterface> loadData(RoleSelectParams params) {
-        return new Observable<UserInterface>() {
-            @Override
-            protected void subscribeActual(Observer<? super UserInterface> observer) {
-                observer.onNext(UCApplication.getInstance().getLoggedUser());
-            }
-        };
+    public Observable<UserInterface> loadData(UserInterface params) {
+        return null;
     }
 
     @Override
@@ -64,7 +59,7 @@ public class RoleSelectModel implements MVPModel< UserInterface, List<RoleItem>,
     }
 
     @Override
-    public List<RoleItem> processData(UserInterface user) {
+    public void processData(UserInterface user) {
         List<RoleItem> roles = new ArrayList<>();
         if (user!=null) {
             Random random = new Random();
@@ -84,6 +79,6 @@ public class RoleSelectModel implements MVPModel< UserInterface, List<RoleItem>,
                 roles.add(new RoleItem(roleIcons[index], roleStr));
             }
         }
-        return roles;
+        mData = roles;
     }
 }

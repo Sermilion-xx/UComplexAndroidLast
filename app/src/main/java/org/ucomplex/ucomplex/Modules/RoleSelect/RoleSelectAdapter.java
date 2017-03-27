@@ -67,6 +67,6 @@ public class RoleSelectAdapter extends RecyclerView.Adapter<RoleSelectAdapter.Ro
 
     @Override
     public int getItemCount() {
-        return mItems.size();
+        return mItems == null ? 0 : mItems.size();
     }
 }

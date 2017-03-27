@@ -1,8 +1,7 @@
-package org.ucomplex.ucomplex.Common.base;
+package org.ucomplex.ucomplex.Common;
 
 import android.app.Application;
 
-import org.ucomplex.ucomplex.Common.FacadePreferences;
 import org.ucomplex.ucomplex.Common.dagger.AppDiComponent;
 import org.ucomplex.ucomplex.Common.dagger.DaggerAppDiComponent;
 import org.ucomplex.ucomplex.Domain.Users.UserInterface;
@@ -23,7 +22,7 @@ public class UCApplication extends Application {
     public  static UCApplication getInstance() {
         return INSTANCE;
     }
-    private static String authString;
+    private String authString;
     private UserInterface loggedUser;
 
     private AppDiComponent appDiComponent;
@@ -41,8 +40,12 @@ public class UCApplication extends Application {
         return appDiComponent;
     }
 
-    public static String getAuthString() {
+    public String getAuthString() {
         return authString;
+    }
+
+    public void setAuthString(String authString) {
+        this.authString = authString;
     }
 
     public UserInterface getLoggedUser() {

@@ -20,8 +20,8 @@ import retrofit2.http.Path;
  */
 
 public interface EventsService {
-    @GET("user/events?mobile=1")
-    Observable<List<EventItem>> getSubtitles(
+    @GET("/user/events?mobile=1")
+    Observable<List<EventItem>> getEvents(
             @Path("audioId") int audioId
     );
 

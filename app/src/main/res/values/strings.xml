@@ -108,4 +108,5 @@
     <string name="upload_file">Отправить файл</string>
     <string name="folder_created">Папка добавленна</string>
     <string name="error_creating_folder">Ошибка при создании пробки</string>
+    <string name="storage_permission_declined">Вы не разрешили доступ к пямяти. Загрузка файлов будет не возможна.</string>
 </resources>

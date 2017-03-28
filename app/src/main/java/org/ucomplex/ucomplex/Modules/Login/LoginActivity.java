@@ -58,7 +58,6 @@ public class LoginActivity extends BaseActivity<MVPView, LoginPresenter> impleme
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         mProgress = (ProgressBar) findViewById(R.id.progressBar);
-        UCApplication.getInstance().getAppDiComponent().inject(this);
         mLoginSignInButton.setOnClickListener(this);
         mForgotButton.setOnClickListener(this);
         UserInterface userInterface = UCApplication.getInstance().getLoggedUser();

@@ -1,15 +1,22 @@
 package org.ucomplex.ucomplex.Common;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Base64;
 
 import org.ucomplex.ucomplex.R;
 
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -163,6 +170,30 @@ public class FacadeCommon {
             r = yyyyMMdd;
         }
         return r;
+    }
+
+    public static final int REQUEST_EXTERNAL_STORAGE = 1;
+    private static String[] PERMISSIONS_STORAGE = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
+
+    public static boolean checkStoragePermissions(Activity activity) {
+        int result;
+        List<String> listPermissionsNeeded = new ArrayList<>();
+        for (String p : PERMISSIONS_STORAGE) {
+            result = ContextCompat.checkSelfPermission(activity, p);
+            if (result != PackageManager.PERMISSION_GRANTED) {
+                listPermissionsNeeded.add(p);
+            }
+        }
+        if (!listPermissionsNeeded.isEmpty()) {
+            ActivityCompat.requestPermissions(activity,
+                    listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]),
+                    REQUEST_EXTERNAL_STORAGE);
+            return false;
+        }
+        return true;
     }
 
 }

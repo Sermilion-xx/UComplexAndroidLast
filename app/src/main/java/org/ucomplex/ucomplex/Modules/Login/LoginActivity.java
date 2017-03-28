@@ -134,14 +134,14 @@ public class LoginActivity extends BaseActivity<MVPView, LoginPresenter> impleme
     public void onLogin() {
         Intent intent;
         if (presenter.getData().getRoles().size() == 1) {
+            presenter.saveLoginData(presenter.getData().getRoles().get(0));
             intent = EventsActivity.creteIntent(this);
-            startActivity(intent);
-            finish();
         } else {
+            presenter.saveLoginData();
             intent = RoleSelectActivity.creteIntent(this, presenter.getData());
-            startActivity(intent);
         }
-
+        startActivity(intent);
+        finish();
     }
 
     @Override

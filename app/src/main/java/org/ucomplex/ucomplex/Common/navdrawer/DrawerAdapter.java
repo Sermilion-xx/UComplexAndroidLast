@@ -93,7 +93,7 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
                     mProfileImageView.setImageBitmap(FacadeMedia.drawableToBitmap(textDrawable));
                 } else {
                     if (row.getProfileBitmapCode() != null) {
-                        String url = PROFILE_IMAGE_URL + row.getProfileBitmapCode() + "jpg";
+                        String url = PROFILE_IMAGE_URL + row.getProfileBitmapCode() + ".jpg";
                         Glide.with(mContext)
                                 .load(url)
                                 .asBitmap()

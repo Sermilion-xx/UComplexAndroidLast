@@ -56,6 +56,9 @@ public class RoleSelectActivity extends BaseActivity<MVPView, RoleSelectPresente
         mRecyclerView.setAdapter(mAdapter);
         if (presenter.getData() == null) {
             presenter.loadData(getIntent().getParcelableExtra(EXTRA_USER));
+        } else {
+            mAdapter.setItems(presenter.getData());
+            mAdapter.notifyDataSetChanged();
         }
     }
 

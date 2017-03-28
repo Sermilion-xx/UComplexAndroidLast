@@ -2,8 +2,6 @@ package org.ucomplex.ucomplex.Common;
 
 import android.app.Application;
 
-import org.ucomplex.ucomplex.Common.dagger.AppDiComponent;
-import org.ucomplex.ucomplex.Common.dagger.DaggerAppDiComponent;
 import org.ucomplex.ucomplex.Domain.Users.UserInterface;
 
 /**

@@ -3,8 +3,8 @@ package org.ucomplex.ucomplex.Modules.Login;
 import android.text.TextUtils;
 
 import org.ucomplex.ucomplex.Common.FacadePreferences;
-import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
 import org.ucomplex.ucomplex.Common.UCApplication;
+import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
 import org.ucomplex.ucomplex.Domain.LoginErrorType;
 import org.ucomplex.ucomplex.Domain.Users.Role;
 import org.ucomplex.ucomplex.Domain.Users.UserInterface;
@@ -41,7 +41,7 @@ public class LoginPresenter extends AbstractPresenter<LoginUser, UserInterface, 
         mModel = model;
     }
 
-    public LoginPresenter () {
+    public LoginPresenter() {
         UCApplication.getInstance().getAppDiComponent().inject(this);
     }
 
@@ -56,9 +56,13 @@ public class LoginPresenter extends AbstractPresenter<LoginUser, UserInterface, 
 
             @Override
             public void onNext(LoginUser value) {
-                mModel.processData(value);
-                if (getView() != null) {
-                    ((LoginActivity)getView()).onLogin();
+                if (value == null) {
+                    onError(new Throwable("Ошибка"));
+                } else {
+                    mModel.processData(value);
+                    if (getView() != null) {
+                        ((LoginActivity) getView()).onLogin();
+                    }
                 }
             }
 
@@ -77,7 +81,16 @@ public class LoginPresenter extends AbstractPresenter<LoginUser, UserInterface, 
     public void saveLoginData(Role role) {
         getData().setType(role.getType());
         getData().setId(role.getId());
+        saveLoginBase();
+    }
+
+    public void saveLoginData() {
+        saveLoginBase();
+    }
+
+    private void saveLoginBase() {
         FacadePreferences.setUserDataToPrefSync(getActivityContext(), getData());
+        UCApplication.getInstance().setLoggedUser(getData());
     }
 
     public void restorePassword(String email) {

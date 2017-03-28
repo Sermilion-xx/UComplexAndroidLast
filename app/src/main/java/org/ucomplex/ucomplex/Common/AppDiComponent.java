@@ -1,4 +1,4 @@
-package org.ucomplex.ucomplex.Common.dagger;
+package org.ucomplex.ucomplex.Common;
 
 import org.ucomplex.ucomplex.Modules.Events.EventsActivity;
 import org.ucomplex.ucomplex.Modules.Events.EventsModel;

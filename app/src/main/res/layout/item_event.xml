@@ -37,8 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="true"
-                android:paddingTop="18dp"
-                android:paddingBottom="18dp">
+                android:paddingTop="18dp">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/list_events_item_image"

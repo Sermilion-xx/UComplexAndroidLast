@@ -2,7 +2,7 @@ package org.ucomplex.ucomplex.Modules.Events;
 
 /**
  * ---------------------------------------------------
- * Created by Sermilion on 24/03/2017.
+ * Created by Sermilion on 29/03/2017.
  * Project: UComplex
  * ---------------------------------------------------
  * <a href="http://www.ucomplex.org">www.ucomplex.org</a>
@@ -10,15 +10,6 @@ package org.ucomplex.ucomplex.Modules.Events;
  * ---------------------------------------------------
  */
 
-public class EventsParams {
-
-    private Integer start;
-
-    public Integer getStart() {
-        return start;
-    }
-
-    public void setStart(Integer start) {
-        this.start = start;
-    }
+public interface LoadMoreCallback<T> {
+    void loadMore(T params);
 }

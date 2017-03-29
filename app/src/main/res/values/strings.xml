@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name">uComplex</string>
-    <string name="ucomplex">UComplex</string>
+    <string name="app_name">UComplex</string>
     <string name="events">События</string>
     <string name="disciplines">Дисциплины</string>
     <string name="users">Пользователи</string>

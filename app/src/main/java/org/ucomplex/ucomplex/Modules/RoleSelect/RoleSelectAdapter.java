@@ -26,7 +26,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RoleSelectAdapter extends RecyclerView.Adapter<RoleSelectAdapter.RoleSelectViewHolder> {
 
-    class RoleSelectViewHolder extends RecyclerView.ViewHolder{
+    static class RoleSelectViewHolder extends RecyclerView.ViewHolder{
 
         CircleImageView image;
         TextView title;

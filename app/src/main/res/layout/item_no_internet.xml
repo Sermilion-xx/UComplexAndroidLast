@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <ImageView
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:src="@drawable/ic_no_internet"
+        android:id="@+id/imageView" />
+
+    <TextView
+        android:text="@string/no_internet_str"
+        android:id="@+id/textView3"
+        android:maxWidth="250dp"
+        android:gravity="center"
+        style="@style/StyleTextViewSecondary"
+        android:textColor="@color/color_uc_NoContentTextColor"
+        android:textStyle="bold"
+        android:layout_marginTop="30dp" />
+
+</LinearLayout>

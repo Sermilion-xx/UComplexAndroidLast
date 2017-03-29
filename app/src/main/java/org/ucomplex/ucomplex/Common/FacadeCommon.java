@@ -196,4 +196,14 @@ public class FacadeCommon {
         return true;
     }
 
+    public static int getAvailableListLayout(int itemCount, Context context) {
+        if (!FacadeCommon.isNetworkConnected(context)) {
+            return R.layout.item_no_internet;
+        } else if (itemCount == 0) {
+            return R.layout.item_no_content;
+        } else {
+            return 0;
+        }
+    }
+
 }

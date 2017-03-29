@@ -23,7 +23,7 @@ import io.reactivex.disposables.Disposable;
  */
 
 public class EventsPresenter extends AbstractPresenter<
-        List<EventItem>, List<EventItem>,
+        Events, List<EventItem>,
         EventsParams, EventsModel> {
 
     @Inject
@@ -37,18 +37,18 @@ public class EventsPresenter extends AbstractPresenter<
 
     @Override
     public void loadData(EventsParams mRequestParams) {
-        Observable<List<EventItem>> dataObservable = mModel.loadData(mRequestParams);
-        dataObservable.subscribe(new Observer<List<EventItem>>() {
+        Observable<Events> dataObservable = mModel.loadData(mRequestParams);
+        dataObservable.subscribe(new Observer<Events>() {
             @Override
             public void onSubscribe(Disposable d) {
                 showProgress();
             }
 
             @Override
-            public void onNext(List<EventItem> value) {
-                mModel.addData(value);
+            public void onNext(Events value) {
+                mModel.processData(value);
                 if(getView()!=null){
-                    ((RecyclerFragment)getView()).receiveNewData(value);
+                    ((EventsActivity)getView()).updateEvents(getData());
                 }
             }
 

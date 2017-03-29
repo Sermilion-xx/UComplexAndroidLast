@@ -16,6 +16,7 @@ import org.ucomplex.ucomplex.Domain.Users.UserInterface;
 
 public class UCApplication extends Application {
 
+    public static final String BASE_URL = "https://ucomplex.org/";
     private static UCApplication INSTANCE;
     public  static UCApplication getInstance() {
         return INSTANCE;

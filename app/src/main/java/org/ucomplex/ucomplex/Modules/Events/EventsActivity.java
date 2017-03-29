@@ -18,17 +18,19 @@ import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
 import org.ucomplex.ucomplex.Modules.RoleSelect.RoleSelectAdapter;
 import org.ucomplex.ucomplex.R;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
 
 import static org.ucomplex.ucomplex.Common.FacadeCommon.REQUEST_EXTERNAL_STORAGE;
 
-public class EventsActivity extends BaseActivity<MVPView, EventsPresenter> {
+public class EventsActivity extends BaseActivity<MVPView, EventsPresenter>  implements MVPView{
 
 
     private RecyclerView      mRecyclerView;
-    private RoleSelectAdapter mAdapter;
+    private EventsAdapter mAdapter;
 
     @Inject
     @Override
@@ -53,7 +55,13 @@ public class EventsActivity extends BaseActivity<MVPView, EventsPresenter> {
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-
+        mAdapter = new EventsAdapter(params -> presenter.loadData(params));
+        mRecyclerView.setAdapter(mAdapter);
+        if (presenter.getData() == null) {
+            presenter.loadData(new EventsParams());
+        } else {
+            updateEvents(presenter.getData());
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             FacadeCommon.checkStoragePermissions(this);
         }
@@ -66,8 +74,7 @@ public class EventsActivity extends BaseActivity<MVPView, EventsPresenter> {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String permissions[], @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
         switch (requestCode) {
             case REQUEST_EXTERNAL_STORAGE: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -77,5 +84,21 @@ public class EventsActivity extends BaseActivity<MVPView, EventsPresenter> {
                 }
             }
         }
+    }
+
+    public void updateEvents(List<EventItem> items){
+        mAdapter = new EventsAdapter(params -> presenter.loadData(params));
+        mAdapter.updateAdapterItems(items);
+        mRecyclerView.setAdapter(mAdapter);
+    }
+
+    @Override
+    public Context getAppContext() {
+        return UCApplication.getInstance();
+    }
+
+    @Override
+    public Context getActivityContext() {
+        return this;
     }
 }

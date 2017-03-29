@@ -8,6 +8,8 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static org.ucomplex.ucomplex.Common.UCApplication.BASE_URL;
+
 /**
  * ---------------------------------------------------
  * Created by Sermilion on 10/02/2017.
@@ -20,8 +22,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServiceGenerator {
 
-    private static final String SCHEMA = "https://";
-    private static final String BASE_URL = SCHEMA + "ucomplex.org/";
 
 
     private static Retrofit.Builder builder =

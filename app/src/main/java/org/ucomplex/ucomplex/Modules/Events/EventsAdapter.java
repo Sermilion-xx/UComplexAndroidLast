@@ -84,8 +84,6 @@ public class EventsAdapter extends BaseAdapter<EventsAdapter.EventViewHolder, Li
         int layout = FacadeCommon.getAvailableListLayout(mItems.size(), parent.getContext());
         if (layout == 0) {
             layout = viewType == TYPE_COMMON ? R.layout.item_event : R.layout.item_footer;
-        } else {
-              System.out.println();
         }
         View view = inflater.inflate(layout, parent, false);
         return new EventViewHolder(view, viewType);
@@ -122,7 +120,7 @@ public class EventsAdapter extends BaseAdapter<EventsAdapter.EventViewHolder, Li
                 holder.loadMoreEventsButton.setVisibility(View.VISIBLE);
                 holder.loadMoreEventsButton.setOnClickListener(v -> {
                     EventsParams params = new EventsParams();
-                    params.setStart(getItemCount() - 1);
+                    params.setStart(getItemCount());
                     mMoreCallback.loadMore(params);
                 });
             } else {
@@ -133,8 +131,7 @@ public class EventsAdapter extends BaseAdapter<EventsAdapter.EventViewHolder, Li
 
     @Override
     public int getItemCount() {
-        return (mItems == null || mItems.size() == 0) ? 1 : mItems.size();
-
+        return mItems == null ? 0 : mItems.size();
     }
 
     @Override
@@ -142,7 +139,8 @@ public class EventsAdapter extends BaseAdapter<EventsAdapter.EventViewHolder, Li
         return position == getItemCount() - 1 ? TYPE_FOOTER : TYPE_COMMON;
     }
 
-    public void updateAdapterItems(List<EventItem> items) {
+    void updateAdapterItems(List<EventItem> items) {
+        setHasMoreEvents(items.size() > 9);
        if (mItems.size() == 0) {
            populateRecyclerView(items);
        } else {
@@ -162,6 +160,6 @@ public class EventsAdapter extends BaseAdapter<EventsAdapter.EventViewHolder, Li
         mItems.clear();
         notifyItemRangeRemoved(0, end);
         mItems.addAll(newItems);
-        notifyItemRangeChanged(0, newItems.size() + 1);
+        notifyItemRangeChanged(0, newItems.size() - 1);
     }
 }

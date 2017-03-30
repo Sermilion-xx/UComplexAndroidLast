@@ -87,9 +87,7 @@ public class EventsActivity extends BaseActivity<MVPView, EventsPresenter>  impl
     }
 
     public void updateEvents(List<EventItem> items){
-        mAdapter = new EventsAdapter(params -> presenter.loadData(params));
         mAdapter.updateAdapterItems(items);
-        mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override

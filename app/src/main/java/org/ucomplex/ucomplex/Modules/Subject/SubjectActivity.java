@@ -22,7 +22,7 @@ public class SubjectActivity extends BaseActivity<MVPView, SubjectPresenter> imp
     private static final String EXTRA_COURSE_NAME = "EXTRA_COURSE_NAME";
 
     public static Intent creteIntent (Context context, int gcourse, String courseName) {
-        Intent intent = new Intent(context, EventsActivity.class);
+        Intent intent = new Intent(context, SubjectActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra(EXTRA_GCOURSE, gcourse);
         intent.putExtra(EXTRA_COURSE_NAME, courseName);

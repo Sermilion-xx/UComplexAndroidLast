@@ -1,6 +1,7 @@
 package org.ucomplex.ucomplex.Modules.Events;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -100,7 +101,7 @@ public class EventsAdapter extends BaseAdapter<EventsAdapter.EventViewHolder, Li
                 item.getParamsObj().setName(context.getResources().getString(R.string.app_name));
             }
             holder.eventPersonName.setText(item.getParamsObj().getName());
-            holder.eventTextView.setText(item.getParamsObj().getMessage());
+            holder.eventTextView.setText(item.getEventText());
             holder.eventTime.setText(FacadeCommon.makeDate(item.getTime()));
             Drawable textDrawable = FacadeMedia.getTextDrawable(item.getParamsObj().getId(),
                     item.getParamsObj().getName(), context);
@@ -113,7 +114,8 @@ public class EventsAdapter extends BaseAdapter<EventsAdapter.EventViewHolder, Li
                     .into(holder.eventsImageView);
             holder.eventDetailsLayout.setOnClickListener(v -> {
                 if (!item.getParamsObj().getName().equals(context.getString(R.string.app_name))) {
-                    SubjectActivity.creteIntent(context, item.getParamsObj().getGcourse(), item.getParamsObj().getCourseName());
+                    Intent intent = SubjectActivity.creteIntent(context, item.getParamsObj().getGcourse(), item.getParamsObj().getCourseName());
+                    context.startActivity(intent);
                 }
             });
         } else if (getItemViewType(position) == TYPE_FOOTER && holder.loadMoreEventsButton != null) {

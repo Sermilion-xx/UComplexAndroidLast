@@ -21,6 +21,8 @@ import java.util.Set;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * ---------------------------------------------------
@@ -56,8 +58,9 @@ public class SubjectModel implements MVPModel<SubjectRaw, SubjectObject, Integer
     }
 
     @Override
-    public Observable<SubjectRaw> loadData(Integer params) {
-        return null;
+    public Observable<SubjectRaw> loadData(Integer gcourse) {
+        return subjectService.getSubject(gcourse).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
@@ -85,6 +88,9 @@ public class SubjectModel implements MVPModel<SubjectRaw, SubjectObject, Integer
         mData = new SubjectObject();
         Map<Integer, Teacher> teachers = new HashMap<>();
         Set<SubjectItemProfile> profileItems = new HashSet<>();
+        SubjectItemProfile header = new SubjectItemProfile();
+        header.setName(data.getCourse().getName());
+        profileItems.add(header);
         List<SubjectItemFile> filesItems = new ArrayList<>();
 
         Teacher mainTeacher = data.getTeacher();

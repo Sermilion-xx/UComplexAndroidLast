@@ -28,7 +28,7 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
 
     private static final int TYPE_0 = 0;
     private static final int TYPE_1 = 1;
-    private static final String PROFILE_IMAGE_URL = "https://ucomplex.org/files/photos/";
+    private static final String PROFILE_IMAGE_URL = UCApplication.PHOTOS_URL ;
     private List<DrawerListItem> mItems;
     private Activity mContext;
 

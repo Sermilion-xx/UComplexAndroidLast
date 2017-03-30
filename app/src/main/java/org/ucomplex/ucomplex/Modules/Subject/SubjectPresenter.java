@@ -1,5 +1,6 @@
 package org.ucomplex.ucomplex.Modules.Subject;
 
+import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
 import org.ucomplex.ucomplex.Modules.Subject.model.SubjectObject;
 import org.ucomplex.ucomplex.Modules.Subject.model.SubjectRaw;
@@ -23,6 +24,10 @@ import io.reactivex.disposables.Disposable;
 public class SubjectPresenter extends AbstractPresenter<
         SubjectRaw, SubjectObject,
         Integer, SubjectModel> {
+
+    public SubjectPresenter() {
+        UCApplication.getInstance().getAppDiComponent().inject(this);
+    }
 
     @Inject
     public void setModel(SubjectModel model) {

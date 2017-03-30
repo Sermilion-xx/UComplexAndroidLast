@@ -47,18 +47,17 @@ public class RoleSelectPresenter extends AbstractPresenter<UserInterface, List<R
         }
     }
 
-    public void onRoleSelected(int position) {
+    void onRoleSelected(int position) {
         UserInterface user = UCApplication.getInstance().getLoggedUser();
-        String login = user.getLogin();
-        String password = user.getPassword();
-        int roleId = user.getRoles().get(position).getId();
-        user.setType(user.getRoles().get(position).getType());
-        String encodedAuth = encodeLoginData(login + TOKEN_SEPARATOR + password + TOKEN_SEPARATOR + roleId);
-        FacadePreferences.setLoginDataToPref(getActivityContext(), encodedAuth, true);
-        UCApplication.getInstance().setLoggedUser(user);
-    }
-
-    public void onDestroy() {
-        mModel = null;
+        if (user != null) {
+            String login = user.getLogin();
+            String password = user.getPassword();
+            int roleId = user.getRoles().get(position).getId();
+            user.setType(user.getRoles().get(position).getType());
+            String encodedAuth = encodeLoginData(login + TOKEN_SEPARATOR + password + TOKEN_SEPARATOR + roleId);
+            UCApplication.getInstance().setAuthString(encodedAuth);
+            FacadePreferences.setLoginDataToPref(getActivityContext(), encodedAuth, true);
+            UCApplication.getInstance().setLoggedUser(user);
+        }
     }
 }

@@ -1,7 +1,5 @@
 package org.ucomplex.ucomplex.Modules.Events.model;
 
-import android.graphics.Bitmap;
-
 
 /**
  * ---------------------------------------------------
@@ -13,6 +11,8 @@ import android.graphics.Bitmap;
  * ---------------------------------------------------
  */
 public class EventItem {
+
+    private String eventText;
     private int id;
     private String params;
     private EventParams paramsObj;
@@ -21,6 +21,14 @@ public class EventItem {
     private int seen;
     EventItem() {
         paramsObj = new EventParams();
+    }
+
+    public String getEventText() {
+        return eventText;
+    }
+
+    public void setEventText(String eventText) {
+        this.eventText = eventText;
     }
 
     public int getId() {
@@ -82,6 +90,51 @@ public class EventItem {
         private String courseName;
         private int hourType;
         private int type;
+        private String semester;
+        private String year;
+        private String eventName;
+        private String date;
+        private String author;
+
+        public String getAuthor() {
+            return author;
+        }
+
+        public void setAuthor(String author) {
+            this.author = author;
+        }
+
+        public String getDate() {
+            return date;
+        }
+
+        public void setDate(String date) {
+            this.date = date;
+        }
+
+        public String getEventName() {
+            return eventName;
+        }
+
+        public void setEventName(String eventName) {
+            this.eventName = eventName;
+        }
+
+        public String getYear() {
+            return year;
+        }
+
+        public void setYear(String year) {
+            this.year = year;
+        }
+
+        public String getSemester() {
+            return semester;
+        }
+
+        public void setSemester(String semester) {
+            this.semester = semester;
+        }
 
         public String getMessage() {
             return message;

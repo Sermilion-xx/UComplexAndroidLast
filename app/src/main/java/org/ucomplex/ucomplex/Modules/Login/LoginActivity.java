@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import org.ucomplex.ucomplex.Common.FacadeCommon;
+import org.ucomplex.ucomplex.Common.FacadePreferences;
 import org.ucomplex.ucomplex.Common.base.BaseActivity;
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
@@ -91,7 +92,7 @@ public class LoginActivity extends BaseActivity<MVPView, LoginPresenter> impleme
         mPasswordView.setError(null);
         String login = mLoginView.getText().toString();
         String password = mPasswordView.getText().toString();
-        LoginParams params = new LoginParams(login, password, presenter.getActivityContext());
+        LoginParams params = new LoginParams(login, password, this);
         params.setPassword(password);
         params.setLogin(login);
         List<LoginErrorType> error = presenter.checkCredentials(params);

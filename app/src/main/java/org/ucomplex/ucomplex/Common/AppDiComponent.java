@@ -42,7 +42,7 @@ import dagger.Component;
                 EventsModelModule.class,
                 EventsPresenterModule.class,
                 LoginActivityModule.class,
-                LoginModelModule.class,
+//                LoginModelModule.class,
                 LoginPresenterModule.class,
                 RoleSelectPresenterModule.class,
                 RoleSelectActivityModule.class,
@@ -60,7 +60,7 @@ public interface AppDiComponent {
 
     void inject(LoginPresenter presenter);
 
-    void inject(LoginModel model);
+//    void inject(LoginModel model);
 
     void inject(LoginActivity activity);
 

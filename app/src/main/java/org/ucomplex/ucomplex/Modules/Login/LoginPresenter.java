@@ -2,6 +2,7 @@ package org.ucomplex.ucomplex.Modules.Login;
 
 import android.text.TextUtils;
 
+import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.FacadePreferences;
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
@@ -49,6 +50,7 @@ public class LoginPresenter extends AbstractPresenter<LoginUser, UserInterface, 
     public void loadData(LoginParams mRequestParams) {
         Observable<LoginUser> dataObservable = mModel.loadData(mRequestParams);
         dataObservable.subscribe(new Observer<LoginUser>() {
+
             @Override
             public void onSubscribe(Disposable d) {
                 showProgress();
@@ -81,6 +83,9 @@ public class LoginPresenter extends AbstractPresenter<LoginUser, UserInterface, 
     public void saveLoginData(Role role) {
         getData().setType(role.getType());
         getData().setId(role.getId());
+        String authData = getData().getLogin() + ":" + getData().getPassword() + ":" + getData().getId();
+        UCApplication.getInstance().setAuthString(FacadeCommon.encodeLoginData(authData));
+        FacadePreferences.setLoginDataToPref(getActivityContext(), authData, true);
         saveLoginBase();
     }
 

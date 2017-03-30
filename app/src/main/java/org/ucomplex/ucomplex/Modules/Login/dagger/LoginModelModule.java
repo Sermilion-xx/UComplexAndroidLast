@@ -19,9 +19,15 @@ import dagger.Provides;
 @Module
 public class LoginModelModule {
 
+    private String authString;
+
+    public LoginModelModule(String auth) {
+        this.authString = auth;
+    }
+
     @Provides
     LoginService getLoginService(){
-        return ServiceGenerator.createService(LoginService.class, UCApplication.getInstance().getAuthString());
+        return ServiceGenerator.createService(LoginService.class, authString);
     }
 
 }

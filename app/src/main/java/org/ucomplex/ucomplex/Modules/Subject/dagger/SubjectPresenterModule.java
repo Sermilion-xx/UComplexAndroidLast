@@ -1,6 +1,5 @@
 package org.ucomplex.ucomplex.Modules.Subject.dagger;
 
-import org.ucomplex.ucomplex.Modules.Events.EventsModel;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectModel;
 
 import javax.inject.Singleton;

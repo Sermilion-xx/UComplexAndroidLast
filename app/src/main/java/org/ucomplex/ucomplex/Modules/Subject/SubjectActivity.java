@@ -30,7 +30,7 @@ public class SubjectActivity extends BaseActivity<MVPView, SubjectPresenter> imp
     }
 
     private RecyclerView mRecyclerView;
-    private SubjectAdapter mAdapter;
+    private SubjectProfileAdapter mAdapter;
 
     @Inject
     @Override
@@ -50,19 +50,17 @@ public class SubjectActivity extends BaseActivity<MVPView, SubjectPresenter> imp
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new SubjectAdapter();
+        mAdapter = new SubjectProfileAdapter();
         mRecyclerView.setAdapter(mAdapter);
         if (presenter.getData() == null) {
             presenter.loadData(intent.getIntExtra(EXTRA_GCOURSE, 0));
         }
     }
 
-
     public void subjectLoaded() {
-
+        mAdapter.setItems(presenter.getData().getProfileItems());
+        mAdapter.notifyDataSetChanged();
     }
-
-
 
     @NonNull
     @Override

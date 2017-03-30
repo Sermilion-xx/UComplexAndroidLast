@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:src="@drawable/ic_user_loading"
+        android:id="@+id/subjects_subject_teacher"
+        android:contentDescription="@string/profile_picture"
+        android:layout_marginStart="18dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        />
+
+    <TextView
+        style="@style/StyleTextViewPrimary"
+        android:id="@+id/subjects_subject_teacher_name"
+        android:layout_gravity="center"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="18dp"/>
+
+</LinearLayout>

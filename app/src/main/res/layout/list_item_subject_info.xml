@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:orientation="vertical"
+    android:paddingStart="20dp">
+
+    <TextView
+        style="@style/StyleTextViewSecondary"
+        android:textSize="15sp"
+        android:id="@+id/subjects_subject_info_header"
+        android:text="Статистика"
+        android:layout_marginTop="25dp" />
+
+    <View
+        style="@style/StyleListSeparator"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="1.0dp"/>
+
+    <TextView
+        style="@style/StyleTextViewPrimary"
+        android:id="@+id/subjects_subject_attendance"
+        android:text="@string/attendance"
+        android:layout_marginTop="22dp" />
+
+    <TextView
+        style="@style/StyleTextViewPrimary"
+        android:id="@+id/subjects_subject_mark"
+        android:text="@string/average_mark"
+        android:layout_marginTop="5dp" />
+
+</LinearLayout>

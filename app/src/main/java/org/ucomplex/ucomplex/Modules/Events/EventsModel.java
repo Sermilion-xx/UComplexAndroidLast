@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
+import org.ucomplex.ucomplex.Modules.Events.model.EventItem;
+import org.ucomplex.ucomplex.Modules.Events.model.EventsRaw;
 
 import java.util.List;
 
@@ -23,7 +25,7 @@ import io.reactivex.schedulers.Schedulers;
  * ---------------------------------------------------
  */
 
-public class EventsModel implements MVPModel<Events, List<EventItem>, EventsParams> {
+public class EventsModel implements MVPModel<EventsRaw, List<EventItem>, Integer> {
 
     private List<EventItem> mData;
     private EventsService eventsService;
@@ -38,8 +40,8 @@ public class EventsModel implements MVPModel<Events, List<EventItem>, EventsPara
     }
 
     @Override
-    public Observable<Events> loadData(EventsParams params) {
-        return eventsService.getEvents(params.getStart()).subscribeOn(Schedulers.io())
+    public Observable<EventsRaw> loadData(Integer start) {
+        return eventsService.getEvents(start).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
@@ -64,7 +66,7 @@ public class EventsModel implements MVPModel<Events, List<EventItem>, EventsPara
     }
 
     @Override
-    public void processData(Events data) {
+    public void processData(EventsRaw data) {
         Gson gson = new Gson();
         for (EventItem item: data.getEvents()) {
             item.setParamsObj(gson.fromJson(item.getParams(), EventItem.EventParams.class));

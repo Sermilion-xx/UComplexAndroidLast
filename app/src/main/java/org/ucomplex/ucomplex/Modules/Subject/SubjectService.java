@@ -1,14 +1,14 @@
-package org.ucomplex.ucomplex.Domain.Materials;
+package org.ucomplex.ucomplex.Modules.Subject;
 
 /**
  * ---------------------------------------------------
- * Created by Sermilion on 06/12/2016.
- * Project: uComplex_v_2
+ * Created by Sermilion on 30/03/2017.
+ * Project: UComplex
  * ---------------------------------------------------
- * <a href="http://www.ucomplex.org">ucomplex.org</a>
+ * <a href="http://www.ucomplex.org">www.ucomplex.org</a>
  * <a href="http://www.github.com/sermilion>github</a>
  * ---------------------------------------------------
  */
 
-public class TimetableEntryItem {
+public interface SubjectService {
 }

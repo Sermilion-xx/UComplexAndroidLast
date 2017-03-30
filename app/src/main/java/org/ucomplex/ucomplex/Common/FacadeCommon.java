@@ -11,7 +11,13 @@ import android.util.Base64;
 
 import org.ucomplex.ucomplex.R;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -204,6 +210,41 @@ public class FacadeCommon {
         } else {
             return 0;
         }
+    }
+
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+        BigDecimal bd;
+        try{
+            bd = new BigDecimal(value);
+        }catch (NumberFormatException e){
+            return 0.0;
+        }
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
+
+    public static String readFile(String name) {
+        StringBuilder builder = new StringBuilder();
+        File file = new File(name);
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader(file));
+            String text;
+            while ((text = reader.readLine()) != null) {
+                builder.append(text);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (reader != null) {
+                    reader.close();
+                }
+            } catch (IOException ignored) {
+            }
+        }
+        return builder.toString();
     }
 
 }

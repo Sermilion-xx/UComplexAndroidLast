@@ -1,4 +1,4 @@
-package org.ucomplex.ucomplex.Modules.Events;
+package org.ucomplex.ucomplex.Modules.Events.model;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import java.util.List;
  * ---------------------------------------------------
  */
 
-public class Events {
+public class EventsRaw {
 
     private List<EventItem> events;
 

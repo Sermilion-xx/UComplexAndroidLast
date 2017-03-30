@@ -1,4 +1,11 @@
-package org.ucomplex.ucomplex.Modules.Events;
+package org.ucomplex.ucomplex.Modules.Subject.dagger;
+
+import org.ucomplex.ucomplex.Modules.Subject.SubjectPresenter;
+
+import javax.inject.Singleton;
+
+import dagger.Module;
+import dagger.Provides;
 
 /**
  * ---------------------------------------------------
@@ -9,16 +16,13 @@ package org.ucomplex.ucomplex.Modules.Events;
  * <a href="http://www.github.com/sermilion>github</a>
  * ---------------------------------------------------
  */
+@Module
+public class SubjectActivityModule {
 
-public class EventsParams {
-
-    private Integer start;
-
-    public Integer getStart() {
-        return start;
+    @Provides
+    @Singleton
+    SubjectPresenter providePresenter() {
+        return new SubjectPresenter();
     }
 
-    public void setStart(Integer start) {
-        this.start = start;
-    }
 }

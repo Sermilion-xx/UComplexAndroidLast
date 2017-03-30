@@ -1,34 +1,25 @@
-package org.ucomplex.ucomplex.Domain.Materials;
-
-import org.ucomplex.ucomplex.Domain.Users.UserInterface;
+package org.ucomplex.ucomplex.Domain.Users;
 
 /**
  * ---------------------------------------------------
- * Created by Sermilion on 06/12/2016.
- * Project: uComplex_v_2
+ * Created by Sermilion on 30/03/2017.
+ * Project: UComplex
  * ---------------------------------------------------
- * <a href="http://www.ucomplex.org">ucomplex.org</a>
+ * <a href="http://www.ucomplex.org">www.ucomplex.org</a>
  * <a href="http://www.github.com/sermilion>github</a>
  * ---------------------------------------------------
  */
 
-public class MaterialItem {
+public class File {
+
     private String id;
-    private UserInterface owner;
+    private int owner;
     private String name;
     private String address;
     private String type;
     private int size;
     private String time;
     private String data;
-    private String checkTime;
-    private int message;
-    private int from;
-    private String folder;
-    private int ID;
-
-    public MaterialItem() {
-    }
 
     public String getId() {
         return id;
@@ -38,11 +29,11 @@ public class MaterialItem {
         this.id = id;
     }
 
-    public UserInterface getOwner() {
+    public int getOwner() {
         return owner;
     }
 
-    public void setOwner(UserInterface owner) {
+    public void setOwner(int owner) {
         this.owner = owner;
     }
 
@@ -92,45 +83,5 @@ public class MaterialItem {
 
     public void setData(String data) {
         this.data = data;
-    }
-
-    public String getCheckTime() {
-        return checkTime;
-    }
-
-    public void setCheckTime(String checkTime) {
-        this.checkTime = checkTime;
-    }
-
-    public int getMessage() {
-        return message;
-    }
-
-    public void setMessage(int message) {
-        this.message = message;
-    }
-
-    public int getFrom() {
-        return from;
-    }
-
-    public void setFrom(int from) {
-        this.from = from;
-    }
-
-    public String getFolder() {
-        return folder;
-    }
-
-    public void setFolder(String folder) {
-        this.folder = folder;
-    }
-
-    public int getID() {
-        return ID;
-    }
-
-    public void setID(int ID) {
-        this.ID = ID;
     }
 }

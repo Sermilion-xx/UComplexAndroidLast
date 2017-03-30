@@ -17,7 +17,8 @@ import com.bumptech.glide.Priority;
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.FacadeMedia;
 import org.ucomplex.ucomplex.Common.base.BaseAdapter;
-import org.ucomplex.ucomplex.Modules.Subjet.SubjectActivity;
+import org.ucomplex.ucomplex.Modules.Events.model.EventItem;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectActivity;
 import org.ucomplex.ucomplex.R;
 
 import java.util.ArrayList;
@@ -67,9 +68,9 @@ public class EventsAdapter extends BaseAdapter<EventsAdapter.EventViewHolder, Li
     private static final int TYPE_COMMON = 0;
     private static final int TYPE_FOOTER = 1;
 
-    private LoadMoreCallback<EventsParams> mMoreCallback;
+    private LoadMoreCallback<Integer> mMoreCallback;
 
-    public EventsAdapter(LoadMoreCallback<EventsParams> callback) {
+    public EventsAdapter(LoadMoreCallback<Integer> callback) {
         this.mMoreCallback = callback;
         mItems = new ArrayList<>();
     }
@@ -118,11 +119,7 @@ public class EventsAdapter extends BaseAdapter<EventsAdapter.EventViewHolder, Li
         } else if (getItemViewType(position) == TYPE_FOOTER && holder.loadMoreEventsButton != null) {
             if (hasMoreEvents) {
                 holder.loadMoreEventsButton.setVisibility(View.VISIBLE);
-                holder.loadMoreEventsButton.setOnClickListener(v -> {
-                    EventsParams params = new EventsParams();
-                    params.setStart(getItemCount());
-                    mMoreCallback.loadMore(params);
-                });
+                holder.loadMoreEventsButton.setOnClickListener(v -> mMoreCallback.loadMore(getItemCount()));
             } else {
                 holder.loadMoreEventsButton.setVisibility(View.GONE);
             }

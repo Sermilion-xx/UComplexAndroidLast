@@ -1,33 +1,29 @@
-package org.ucomplex.ucomplex.Domain.Materials;
-
-import org.ucomplex.ucomplex.Domain.Users.User;
-//import org.ucomplex.ucomplex.Modules.Subject.Subjectdetails.SubjectModel;
+package org.ucomplex.ucomplex.Domain.Subject;
 
 /**
  * ---------------------------------------------------
- * Created by Sermilion on 06/12/2016.
- * Project: uComplex_v_2
+ * Created by Sermilion on 30/03/2017.
+ * Project: UComplex
  * ---------------------------------------------------
- * <a href="http://www.ucomplex.org">ucomplex.org</a>
+ * <a href="http://www.ucomplex.org">www.ucomplex.org</a>
  * <a href="http://www.github.com/sermilion>github</a>
  * ---------------------------------------------------
  */
 
-public class ProgressItem {
+public class Progress {
+
     private int student;
-    private User teacher;
+    private int course;
+    private int teacher;
     private int table;
     private int time;
     private int mark;
     private int type;
     private int _mark;
-    private int markCount;
+    private int marksCount;
     private int absence;
     private int individ;
     private int hours;
-
-    public ProgressItem() {
-    }
 
     public int getStudent() {
         return student;
@@ -37,11 +33,19 @@ public class ProgressItem {
         this.student = student;
     }
 
-    public User getTeacher() {
+    public int getCourse() {
+        return course;
+    }
+
+    public void setCourse(int course) {
+        this.course = course;
+    }
+
+    public int getTeacher() {
         return teacher;
     }
 
-    public void setTeacher(User teacher) {
+    public void setTeacher(int teacher) {
         this.teacher = teacher;
     }
 
@@ -85,12 +89,12 @@ public class ProgressItem {
         this._mark = _mark;
     }
 
-    public int getMarkCount() {
-        return markCount;
+    public int getMarksCount() {
+        return marksCount;
     }
 
-    public void setMarkCount(int markCount) {
-        this.markCount = markCount;
+    public void setMarksCount(int marksCount) {
+        this.marksCount = marksCount;
     }
 
     public int getAbsence() {

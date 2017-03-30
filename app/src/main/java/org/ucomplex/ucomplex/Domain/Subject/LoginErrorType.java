@@ -1,4 +1,4 @@
-package org.ucomplex.ucomplex.Domain;
+package org.ucomplex.ucomplex.Domain.Subject;
 
 /**
  * ---------------------------------------------------

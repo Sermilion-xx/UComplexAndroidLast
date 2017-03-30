@@ -1,21 +1,24 @@
-package org.ucomplex.ucomplex.Domain.Materials;
+package org.ucomplex.ucomplex.Domain.Subject;
 
 /**
  * ---------------------------------------------------
- * Created by Sermilion on 06/12/2016.
- * Project: uComplex_v_2
+ * Created by Sermilion on 30/03/2017.
+ * Project: UComplex
  * ---------------------------------------------------
- * <a href="http://www.ucomplex.org">ucomplex.org</a>
+ * <a href="http://www.ucomplex.org">www.ucomplex.org</a>
  * <a href="http://www.github.com/sermilion>github</a>
  * ---------------------------------------------------
  */
 
-public class DepartmentItem  {
+public class Depart {
+
     private int    id;
     private String name;
     private String postcode;
     private String description;
     private String fax;
+    private int type;
+    private String building;
     private String address;
     private String tel;
     private String email;
@@ -23,9 +26,6 @@ public class DepartmentItem  {
     private String alias;
     private int    faculty;
     private int    client;
-
-    public DepartmentItem() {
-    }
 
     public int getId() {
         return id;
@@ -65,6 +65,22 @@ public class DepartmentItem  {
 
     public void setFax(String fax) {
         this.fax = fax;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public String getBuilding() {
+        return building;
+    }
+
+    public void setBuilding(String building) {
+        this.building = building;
     }
 
     public String getAddress() {

@@ -1,12 +1,6 @@
 package org.ucomplex.ucomplex.Domain.Users;
 
-import android.os.Parcelable;
-
-import org.ucomplex.ucomplex.Domain.Materials.DepartmentItem;
-import org.ucomplex.ucomplex.Domain.Materials.MaterialItem;
-import org.ucomplex.ucomplex.Domain.Materials.TimetableEntryItem;
-
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * ---------------------------------------------------
@@ -18,13 +12,15 @@ import java.util.ArrayList;
  * ---------------------------------------------------
  */
 
-public class Teacher extends User implements Parcelable {
+public class Teacher extends User {
 
     private int post;
     private int experience;
-    private int dep_experience;
-    private ArrayList<String> courses;
+    private String dep_experience;
+    private String courses;
     private int rank;
+    private String academic_awards;
+    private String upqualification;
     private int degree;
     private String bio;
     private String phone_work;
@@ -33,61 +29,11 @@ public class Teacher extends User implements Parcelable {
     private int fails;
     private String activity_update;
     private int selection;
-    private DepartmentItem department;
-    private int departmentId;
-    private String departmentName;
+    private String department;
     private int closed;
-    private ArrayList<MaterialItem> files;
-    private int sex;
-    private String series;
-    private String number;
-    private String documentDate;
-    private String documentDepart;
-    private String documentDepartCode;
-    private int academic_degree;
-    private int academic_rank;
-    private String statuses;
-    private String academic_awards;
-    private String upqualification;
-    private int rate;
-    private int section;
-    private String sectionName;
-    private int lead;
-    private int activity;
-    private String facultyName;
-    private ArrayList<TimetableEntryItem> timetableEntries;
-
-    public String getPhone_work() {
-        return phone_work;
-    }
-
-    public void setPhone_work(String phone_work) {
-        this.phone_work = phone_work;
-    }
-
-    public int getAcademic_degree() {
-        return academic_degree;
-    }
-
-    public void setAcademic_degree(int academic_degree) {
-        this.academic_degree = academic_degree;
-    }
-
-    public int getAcademic_rank() {
-        return academic_rank;
-    }
-
-    public void setAcademic_rank(int academic_rank) {
-        this.academic_rank = academic_rank;
-    }
-
-    public String getAcademic_awards() {
-        return academic_awards;
-    }
-
-    public void setAcademic_awards(String academic_awards) {
-        this.academic_awards = academic_awards;
-    }
+    private int agent;
+    private String online;
+    private List<Integer> departments;
 
     public int getPost() {
         return post;
@@ -105,19 +51,19 @@ public class Teacher extends User implements Parcelable {
         this.experience = experience;
     }
 
-    public int getDep_experience() {
+    public String getDep_experience() {
         return dep_experience;
     }
 
-    public void setDep_experience(int dep_experience) {
+    public void setDep_experience(String dep_experience) {
         this.dep_experience = dep_experience;
     }
 
-    public ArrayList<String> getCourses() {
+    public String getCourses() {
         return courses;
     }
 
-    public void setCourses(ArrayList<String> courses) {
+    public void setCourses(String courses) {
         this.courses = courses;
     }
 
@@ -127,6 +73,22 @@ public class Teacher extends User implements Parcelable {
 
     public void setRank(int rank) {
         this.rank = rank;
+    }
+
+    public String getAcademic_awards() {
+        return academic_awards;
+    }
+
+    public void setAcademic_awards(String academic_awards) {
+        this.academic_awards = academic_awards;
+    }
+
+    public String getUpqualification() {
+        return upqualification;
+    }
+
+    public void setUpqualification(String upqualification) {
+        this.upqualification = upqualification;
     }
 
     public int getDegree() {
@@ -143,6 +105,14 @@ public class Teacher extends User implements Parcelable {
 
     public void setBio(String bio) {
         this.bio = bio;
+    }
+
+    public String getPhone_work() {
+        return phone_work;
+    }
+
+    public void setPhone_work(String phone_work) {
+        this.phone_work = phone_work;
     }
 
     public int getPlan() {
@@ -185,28 +155,12 @@ public class Teacher extends User implements Parcelable {
         this.selection = selection;
     }
 
-    public DepartmentItem getDepartment() {
+    public String getDepartment() {
         return department;
     }
 
-    public void setDepartment(DepartmentItem department) {
+    public void setDepartment(String department) {
         this.department = department;
-    }
-
-    public int getDepartmentId() {
-        return departmentId;
-    }
-
-    public void setDepartmentId(int departmentId) {
-        this.departmentId = departmentId;
-    }
-
-    public String getDepartmentName() {
-        return departmentName;
-    }
-
-    public void setDepartmentName(String departmentName) {
-        this.departmentName = departmentName;
     }
 
     public int getClosed() {
@@ -217,155 +171,27 @@ public class Teacher extends User implements Parcelable {
         this.closed = closed;
     }
 
-    public ArrayList<MaterialItem> getFiles() {
-        return files;
+    public int getAgent() {
+        return agent;
     }
 
-    public void setFiles(ArrayList<MaterialItem> files) {
-        this.files = files;
+    public void setAgent(int agent) {
+        this.agent = agent;
     }
 
-    public int getSex() {
-        return sex;
+    public String getOnline() {
+        return online;
     }
 
-    public void setSex(int sex) {
-        this.sex = sex;
+    public void setOnline(String online) {
+        this.online = online;
     }
 
-    public String getSeries() {
-        return series;
+    public List<Integer> getDepartments() {
+        return departments;
     }
 
-    public void setSeries(String series) {
-        this.series = series;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
-    public String getDocumentDate() {
-        return documentDate;
-    }
-
-    public void setDocumentDate(String documentDate) {
-        this.documentDate = documentDate;
-    }
-
-    public String getDocumentDepart() {
-        return documentDepart;
-    }
-
-    public void setDocumentDepart(String documentDepart) {
-        this.documentDepart = documentDepart;
-    }
-
-    public String getDocumentDepartCode() {
-        return documentDepartCode;
-    }
-
-    public void setDocumentDepartCode(String documentDepartCode) {
-        this.documentDepartCode = documentDepartCode;
-    }
-
-    public int getAcademicDegree() {
-        return academic_degree;
-    }
-
-    public void setAcademicDegree(int academicDegree) {
-        this.academic_degree = academicDegree;
-    }
-
-    public int getAcademicRank() {
-        return academic_rank;
-    }
-
-    public void setAcademicRank(int academicRank) {
-        this.academic_rank = academicRank;
-    }
-
-    public String getStatuses() {
-        return statuses;
-    }
-
-    public void setStatuses(String statuses) {
-        this.statuses = statuses;
-    }
-
-    public String getAcademicAwards() {
-        return academic_awards;
-    }
-
-    public void setAcademicAwards(String academic_awards) {
-        this.academic_awards = academic_awards;
-    }
-
-    public String getUpqualification() {
-        return upqualification;
-    }
-
-    public void setUpqualification(String upqualification) {
-        this.upqualification = upqualification;
-    }
-
-    public int getRate() {
-        return rate;
-    }
-
-    public void setRate(int rate) {
-        this.rate = rate;
-    }
-
-    public int getSection() {
-        return section;
-    }
-
-    public void setSection(int section) {
-        this.section = section;
-    }
-
-    public String getSectionName() {
-        return sectionName;
-    }
-
-    public void setSectionName(String sectionName) {
-        this.sectionName = sectionName;
-    }
-
-    public int getLead() {
-        return lead;
-    }
-
-    public void setLead(int lead) {
-        this.lead = lead;
-    }
-
-    public int getActivity() {
-        return activity;
-    }
-
-    public void setActivity(int activity) {
-        this.activity = activity;
-    }
-
-    public String getFacultyName() {
-        return facultyName;
-    }
-
-    public void setFacultyName(String facultyName) {
-        this.facultyName = facultyName;
-    }
-
-    public ArrayList<TimetableEntryItem> getTimetableEntries() {
-        return timetableEntries;
-    }
-
-    public void setTimetableEntries(ArrayList<TimetableEntryItem> timetableEntries) {
-        this.timetableEntries = timetableEntries;
+    public void setDepartments(List<Integer> departments) {
+        this.departments = departments;
     }
 }

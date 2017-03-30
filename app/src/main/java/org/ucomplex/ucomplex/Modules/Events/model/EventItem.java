@@ -1,4 +1,4 @@
-package org.ucomplex.ucomplex.Modules.Events;
+package org.ucomplex.ucomplex.Modules.Events.model;
 
 import android.graphics.Bitmap;
 
@@ -71,7 +71,7 @@ public class EventItem {
         this.seen = seen;
     }
 
-    class EventParams {
+    public class EventParams {
 
         private String message;
         private String name;

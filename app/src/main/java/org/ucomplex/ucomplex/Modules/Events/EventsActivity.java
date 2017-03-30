@@ -15,33 +15,30 @@ import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.base.BaseActivity;
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
-import org.ucomplex.ucomplex.Modules.RoleSelect.RoleSelectAdapter;
+import org.ucomplex.ucomplex.Modules.Events.model.EventItem;
 import org.ucomplex.ucomplex.R;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
-
 import static org.ucomplex.ucomplex.Common.FacadeCommon.REQUEST_EXTERNAL_STORAGE;
 
 public class EventsActivity extends BaseActivity<MVPView, EventsPresenter>  implements MVPView{
 
+    public static Intent creteIntent (Context context) {
+        Intent intent = new Intent(context, EventsActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        return intent;
+    }
 
-    private RecyclerView      mRecyclerView;
+    private RecyclerView  mRecyclerView;
     private EventsAdapter mAdapter;
 
     @Inject
     @Override
     public void setPresenter(@NonNull EventsPresenter presenter) {
         super.setPresenter(presenter);
-    }
-
-    public static Intent creteIntent (Context context) {
-        Intent intent = new Intent(context, EventsActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        return intent;
     }
 
     @Override
@@ -58,7 +55,7 @@ public class EventsActivity extends BaseActivity<MVPView, EventsPresenter>  impl
         mAdapter = new EventsAdapter(params -> presenter.loadData(params));
         mRecyclerView.setAdapter(mAdapter);
         if (presenter.getData() == null) {
-            presenter.loadData(new EventsParams());
+            presenter.loadData(0);
         } else {
             updateEvents(presenter.getData());
         }

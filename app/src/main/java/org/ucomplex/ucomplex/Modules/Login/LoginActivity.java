@@ -17,7 +17,7 @@ import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.base.BaseActivity;
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
-import org.ucomplex.ucomplex.Domain.LoginErrorType;
+import org.ucomplex.ucomplex.Domain.Subject.LoginErrorType;
 import org.ucomplex.ucomplex.Domain.Users.UserInterface;
 import org.ucomplex.ucomplex.Modules.Events.EventsActivity;
 import org.ucomplex.ucomplex.Modules.RoleSelect.RoleSelectActivity;
@@ -30,9 +30,9 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static org.ucomplex.ucomplex.Domain.LoginErrorType.EMPTY_EMAIL;
-import static org.ucomplex.ucomplex.Domain.LoginErrorType.INVALID_PASSWORD;
-import static org.ucomplex.ucomplex.Domain.LoginErrorType.PASSWORD_REQUIRED;
+import static org.ucomplex.ucomplex.Domain.Subject.LoginErrorType.EMPTY_EMAIL;
+import static org.ucomplex.ucomplex.Domain.Subject.LoginErrorType.INVALID_PASSWORD;
+import static org.ucomplex.ucomplex.Domain.Subject.LoginErrorType.PASSWORD_REQUIRED;
 
 public class LoginActivity extends BaseActivity<MVPView, LoginPresenter> implements View.OnClickListener, MVPView {
 

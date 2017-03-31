@@ -1,8 +1,9 @@
-package org.ucomplex.ucomplex.Modules.Subject.dagger;
+package org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.dagger;
 
-import org.ucomplex.ucomplex.Common.ServiceGenerator;
-import org.ucomplex.ucomplex.Common.UCApplication;
-import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.SubjectService;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.SubjectMaterialsPresenter;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.SubjectPresenter;
+
+import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
@@ -17,11 +18,12 @@ import dagger.Provides;
  * ---------------------------------------------------
  */
 @Module
-public class SubjectModelModule {
+public class SubjectMaterialsModule {
 
     @Provides
-    SubjectService getEventsService(){
-        return ServiceGenerator.createService(SubjectService.class, UCApplication.getInstance().getAuthString());
+    @Singleton
+    SubjectMaterialsPresenter providePresenter() {
+        return new SubjectMaterialsPresenter();
     }
 
 }

@@ -132,6 +132,8 @@ public class SubjectModel implements MVPModel<SubjectRaw, SubjectObject, Integer
         item.setData(file.getData());
         item.setOwnersName(teachers.get(file.getOwner()).getName());
         item.setSize(file.getSize());
+        item.setType(file.getType());
+        item.setTime(file.getTime());
         return item;
     }
 

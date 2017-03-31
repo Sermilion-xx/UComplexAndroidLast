@@ -13,7 +13,11 @@ import android.widget.Toast;
 
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.base.BaseActivity;
+import org.ucomplex.ucomplex.Common.interfaces.OnPresenterInjectedListener;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.SubjectMaterialsFragment;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.SubjectModel;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.SubjectProfileFragment;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectTimeline.SubjectTimelineFragment;
 import org.ucomplex.ucomplex.R;
 
 import static org.ucomplex.ucomplex.Common.FacadeCommon.REQUEST_EXTERNAL_STORAGE;
@@ -55,11 +59,11 @@ public class SubjectActivity extends BaseActivity {
         Intent intent = getIntent();
         setupToolbar(intent.getStringExtra(EXTRA_COURSE_NAME), R.drawable.ic_menu);
         setupDrawer();
+
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-//        viewPager.addOnPageChangeListener(pageChangeListener);
         viewPager.setOffscreenPageLimit(2);
         tabLayout.setupWithViewPager(viewPager);
 
@@ -70,7 +74,8 @@ public class SubjectActivity extends BaseActivity {
         } else {
             int gcourse = intent.getIntExtra(EXTRA_GCOURSE, -1);
             subjectProfileFragment = SubjectProfileFragment.getInstance(gcourse);
-            subjectMaterialsFragment = SubjectMaterialsFragment.getInstance(gcourse);
+            subjectMaterialsFragment = SubjectMaterialsFragment.getInstance();
+            subjectProfileFragment.setOnPresenterInjectedListener(model -> subjectMaterialsFragment.setModel(model));
             subjectTimelineFragment = SubjectTimelineFragment.getInstance(gcourse);
         }
 
@@ -82,7 +87,6 @@ public class SubjectActivity extends BaseActivity {
             FacadeCommon.checkStoragePermissions(this);
         }
     }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
@@ -97,32 +101,4 @@ public class SubjectActivity extends BaseActivity {
             }
         }
     }
-
-//    @Override
-//    public void onBackPressed() {
-//        if(currentPage==1 && subjectMaterialsFragment.getCurrentPage()>0){
-//            subjectMaterialsFragment.onBackPress();
-//        }else{
-//            super.onBackPressed();
-//        }
-//    }
-
-//    ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
-//
-//        @Override
-//        public void onPageSelected(int position) {
-//            currentPage = position;
-//            if(position==1){
-//                subjectMaterialsFragment.onFragmentVisible(false);
-//            }else if(position==2){
-//                subjectTimelineFragment.onFragmentVisible();
-//            }
-//        }
-//        @Override
-//        public void onPageScrollStateChanged(int state) {}
-//        @Override
-//        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
-//    };
-
-
 }

@@ -1,4 +1,4 @@
-package org.ucomplex.ucomplex.Modules.Subject;
+package org.ucomplex.ucomplex.Modules.Subject.SubjectTimeline;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

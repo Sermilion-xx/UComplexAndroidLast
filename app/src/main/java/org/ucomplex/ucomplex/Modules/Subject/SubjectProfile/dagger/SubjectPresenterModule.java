@@ -1,4 +1,4 @@
-package org.ucomplex.ucomplex.Modules.Subject.dagger;
+package org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.dagger;
 
 import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.SubjectModel;
 

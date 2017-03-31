@@ -1,14 +1,10 @@
 package org.ucomplex.ucomplex.Modules.Login;
 
-import org.ucomplex.ucomplex.Common.DaggerAppDiComponent;
 import org.ucomplex.ucomplex.Common.FacadeCommon;
-import org.ucomplex.ucomplex.Common.FacadePreferences;
 import org.ucomplex.ucomplex.Common.ServiceGenerator;
-import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
 import org.ucomplex.ucomplex.Domain.Users.UserFactory;
 import org.ucomplex.ucomplex.Domain.Users.UserInterface;
-import org.ucomplex.ucomplex.Modules.Login.dagger.LoginModelModule;
 import org.ucomplex.ucomplex.Modules.Login.model.LoginUser;
 
 import javax.inject.Inject;

@@ -1,9 +1,10 @@
-package org.ucomplex.ucomplex.Modules.Subject.SubjectProfile;
+package org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,8 +18,15 @@ import com.hannesdorfmann.mosby.mvp.MvpFragment;
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.OnPresenterInjectedListener;
 import org.ucomplex.ucomplex.Common.interfaces.ViewExtensions;
+import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.SubjectModel;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.SubjectPresenter;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.SubjectProfileAdapter;
+import org.ucomplex.ucomplex.Modules.Subject.model.SubjectItemFile;
 import org.ucomplex.ucomplex.R;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -37,13 +45,10 @@ import static org.ucomplex.ucomplex.Modules.Subject.SubjectActivity.EXTRA_GCOURS
  * ---------------------------------------------------
  */
 
-public class SubjectProfileFragment extends MvpFragment<MVPView, SubjectPresenter> implements MVPView, ViewExtensions {
+public class SubjectMaterialsFragment extends MvpFragment<MVPView, SubjectMaterialsPresenter> implements MVPView, ViewExtensions {
 
-    public static SubjectProfileFragment getInstance(int gcourse) {
-        SubjectProfileFragment fragment = new SubjectProfileFragment();
-        Bundle bundle = new Bundle();
-        bundle.putInt(EXTRA_GCOURSE, gcourse);
-        fragment.setArguments(bundle);
+    public static SubjectMaterialsFragment getInstance() {
+        SubjectMaterialsFragment fragment = new SubjectMaterialsFragment();
         return fragment;
     }
 
@@ -51,16 +56,17 @@ public class SubjectProfileFragment extends MvpFragment<MVPView, SubjectPresente
     protected ProgressBar mProgress;
     @BindView(R.id.recyclerView)
     protected RecyclerView mRecyclerView;
-    private SubjectProfileAdapter mAdapter;
-    private OnPresenterInjectedListener<SubjectModel> onPresenterInjectedListener;
+    private SubjectMaterialsAdapter mAdapter;
 
-    public void setOnPresenterInjectedListener(OnPresenterInjectedListener<SubjectModel> onPresenterInjectedListener) {
-        this.onPresenterInjectedListener = onPresenterInjectedListener;
+    public void setModel(SubjectModel model) {
+        presenter.setModel(model);
+        mAdapter.setItems(presenter.getData().getMaterialsItems());
+        mAdapter.notifyDataSetChanged();
     }
 
     @Inject
     @Override
-    public void setPresenter(@NonNull SubjectPresenter presenter) {
+    public void setPresenter(@NonNull SubjectMaterialsPresenter presenter) {
         super.setPresenter(presenter);
     }
 
@@ -78,28 +84,14 @@ public class SubjectProfileFragment extends MvpFragment<MVPView, SubjectPresente
         ButterKnife.bind(this, view);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivityContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new SubjectProfileAdapter();
+        mAdapter = new SubjectMaterialsAdapter();
         mRecyclerView.setAdapter(mAdapter);
-        if (presenter.getData() == null) {
-            presenter.loadData(getArguments().getInt(EXTRA_GCOURSE, 0));
-        }
         return view;
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
-
-    public void subjectLoaded() {
-        mAdapter.setItems(presenter.getData().getProfileItems());
-        mAdapter.notifyDataSetChanged();
-        onPresenterInjectedListener.presenterInjected(presenter.getModel());
     }
 
     @NonNull
     @Override
-    public SubjectPresenter createPresenter() {
+    public SubjectMaterialsPresenter createPresenter() {
         return presenter;
     }
 

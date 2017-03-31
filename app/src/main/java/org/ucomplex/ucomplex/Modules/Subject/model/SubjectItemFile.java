@@ -17,6 +17,24 @@ public class SubjectItemFile {
     private String data;
     private String ownersName;
     private String address;
+    private String type;
+    private String time;
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public String getName() {
         return name;

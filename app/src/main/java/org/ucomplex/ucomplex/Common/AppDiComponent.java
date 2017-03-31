@@ -14,12 +14,14 @@ import org.ucomplex.ucomplex.Modules.RoleSelect.RoleSelectActivity;
 import org.ucomplex.ucomplex.Modules.RoleSelect.RoleSelectPresenter;
 import org.ucomplex.ucomplex.Modules.RoleSelect.dagger.RoleSelectActivityModule;
 import org.ucomplex.ucomplex.Modules.RoleSelect.dagger.RoleSelectPresenterModule;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.SubjectMaterialsFragment;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.dagger.SubjectMaterialsModule;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.SubjectModel;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.SubjectPresenter;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.SubjectProfileFragment;
-import org.ucomplex.ucomplex.Modules.Subject.dagger.SubjectProfileModule;
-import org.ucomplex.ucomplex.Modules.Subject.dagger.SubjectModelModule;
-import org.ucomplex.ucomplex.Modules.Subject.dagger.SubjectPresenterModule;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.dagger.SubjectProfileModule;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.dagger.SubjectModelModule;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.dagger.SubjectPresenterModule;
 
 import javax.inject.Singleton;
 
@@ -40,13 +42,14 @@ import dagger.Component;
                 EventsModelModule.class,
                 EventsPresenterModule.class,
                 LoginActivityModule.class,
-//                LoginModelModule.class,
                 LoginPresenterModule.class,
                 RoleSelectPresenterModule.class,
                 RoleSelectActivityModule.class,
                 SubjectModelModule.class,
                 SubjectPresenterModule.class,
-                SubjectProfileModule.class})
+                SubjectProfileModule.class,
+                SubjectMaterialsModule.class
+        })
 
 public interface AppDiComponent {
 
@@ -57,8 +60,6 @@ public interface AppDiComponent {
     void inject(EventsActivity activity);
 
     void inject(LoginPresenter presenter);
-
-//    void inject(LoginModel model);
 
     void inject(LoginActivity activity);
 
@@ -72,6 +73,7 @@ public interface AppDiComponent {
 
     void inject(SubjectPresenter presenter);
 
+    void inject(SubjectMaterialsFragment fragment);
 
 }
 

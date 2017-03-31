@@ -1,4 +1,4 @@
-package org.ucomplex.ucomplex.Modules.Subject;
+package org.ucomplex.ucomplex.Modules.Subject.SubjectProfile;
 
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.UCApplication;

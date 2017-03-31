@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 
 import org.junit.Test;
 import org.ucomplex.ucomplex.Common.FacadeCommon;
-import org.ucomplex.ucomplex.Modules.Subject.SubjectModel;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.SubjectModel;
 import org.ucomplex.ucomplex.Modules.Subject.model.SubjectRaw;
 
 import static org.hamcrest.MatcherAssert.assertThat;

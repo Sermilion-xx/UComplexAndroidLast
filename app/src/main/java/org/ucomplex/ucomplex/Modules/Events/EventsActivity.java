@@ -14,6 +14,7 @@ import android.widget.Toast;
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.base.BaseActivity;
 import org.ucomplex.ucomplex.Common.UCApplication;
+import org.ucomplex.ucomplex.Common.base.BaseMVPActivity;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
 import org.ucomplex.ucomplex.Modules.Events.model.EventItem;
 import org.ucomplex.ucomplex.R;
@@ -24,7 +25,7 @@ import javax.inject.Inject;
 
 import static org.ucomplex.ucomplex.Common.FacadeCommon.REQUEST_EXTERNAL_STORAGE;
 
-public class EventsActivity extends BaseActivity<MVPView, EventsPresenter>  implements MVPView{
+public class EventsActivity extends BaseMVPActivity<MVPView, EventsPresenter> implements MVPView{
 
     public static Intent creteIntent (Context context) {
         Intent intent = new Intent(context, EventsActivity.class);

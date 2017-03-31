@@ -9,7 +9,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.util.Pair;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -19,10 +18,14 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.hannesdorfmann.mosby.mvp.MvpActivity;
+import com.hannesdorfmann.mosby.mvp.MvpPresenter;
+
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.FragmentFactory;
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.ViewExtensions;
+import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
 import org.ucomplex.ucomplex.Common.navdrawer.DrawerAdapter;
 import org.ucomplex.ucomplex.Common.navdrawer.DrawerListItem;
 import org.ucomplex.ucomplex.Common.navdrawer.FacadeDrawer;
@@ -32,8 +35,8 @@ import org.ucomplex.ucomplex.R;
 import java.util.ArrayList;
 import java.util.List;
 
-
-public abstract class BaseActivity extends AppCompatActivity implements ViewExtensions {
+public abstract class BaseMVPActivity<V extends MVPView, Presenter extends MvpPresenter<V>>
+        extends MvpActivity<V, Presenter> implements ViewExtensions {
 
     protected ProgressBar mProgress;
     protected Toolbar mToolbar;
@@ -193,5 +196,4 @@ public abstract class BaseActivity extends AppCompatActivity implements ViewExte
             mProgress.setVisibility(View.GONE);
         }
     }
-
 }

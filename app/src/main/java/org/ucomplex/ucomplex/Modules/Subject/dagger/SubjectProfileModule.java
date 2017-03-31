@@ -1,6 +1,6 @@
 package org.ucomplex.ucomplex.Modules.Subject.dagger;
 
-import org.ucomplex.ucomplex.Modules.Subject.SubjectPresenter;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.SubjectPresenter;
 
 import javax.inject.Singleton;
 
@@ -17,7 +17,7 @@ import dagger.Provides;
  * ---------------------------------------------------
  */
 @Module
-public class SubjectActivityModule {
+public class SubjectProfileModule {
 
     @Provides
     @Singleton

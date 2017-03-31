@@ -17,6 +17,7 @@ import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.FacadePreferences;
 import org.ucomplex.ucomplex.Common.base.BaseActivity;
 import org.ucomplex.ucomplex.Common.UCApplication;
+import org.ucomplex.ucomplex.Common.base.BaseMVPActivity;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
 import org.ucomplex.ucomplex.Domain.Subject.LoginErrorType;
 import org.ucomplex.ucomplex.Domain.Users.UserInterface;
@@ -35,7 +36,7 @@ import static org.ucomplex.ucomplex.Domain.Subject.LoginErrorType.EMPTY_EMAIL;
 import static org.ucomplex.ucomplex.Domain.Subject.LoginErrorType.INVALID_PASSWORD;
 import static org.ucomplex.ucomplex.Domain.Subject.LoginErrorType.PASSWORD_REQUIRED;
 
-public class LoginActivity extends BaseActivity<MVPView, LoginPresenter> implements View.OnClickListener, MVPView {
+public class LoginActivity extends BaseMVPActivity<MVPView, LoginPresenter> implements View.OnClickListener, MVPView {
 
     @BindView(R.id.login)
     AutoCompleteTextView mLoginView;

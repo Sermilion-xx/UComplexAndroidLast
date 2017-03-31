@@ -108,4 +108,6 @@
     <string name="folder_created">Папка добавленна</string>
     <string name="error_creating_folder">Ошибка при создании пробки</string>
     <string name="storage_permission_declined">Вы не разрешили доступ к пямяти. Загрузка файлов будет не возможна.</string>
+    <string name="materials">Материалы</string>
+    <string name="timeline">Лента</string>
 </resources>

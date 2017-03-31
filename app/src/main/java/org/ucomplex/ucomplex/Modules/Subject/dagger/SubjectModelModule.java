@@ -2,8 +2,7 @@ package org.ucomplex.ucomplex.Modules.Subject.dagger;
 
 import org.ucomplex.ucomplex.Common.ServiceGenerator;
 import org.ucomplex.ucomplex.Common.UCApplication;
-import org.ucomplex.ucomplex.Modules.Events.EventsService;
-import org.ucomplex.ucomplex.Modules.Subject.SubjectService;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.SubjectService;
 
 import dagger.Module;
 import dagger.Provides;

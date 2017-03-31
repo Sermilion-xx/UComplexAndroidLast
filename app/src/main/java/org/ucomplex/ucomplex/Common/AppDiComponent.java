@@ -7,19 +7,17 @@ import org.ucomplex.ucomplex.Modules.Events.dagger.EventsActivityModule;
 import org.ucomplex.ucomplex.Modules.Events.dagger.EventsModelModule;
 import org.ucomplex.ucomplex.Modules.Events.dagger.EventsPresenterModule;
 import org.ucomplex.ucomplex.Modules.Login.LoginActivity;
-import org.ucomplex.ucomplex.Modules.Login.LoginModel;
 import org.ucomplex.ucomplex.Modules.Login.LoginPresenter;
 import org.ucomplex.ucomplex.Modules.Login.dagger.LoginActivityModule;
-import org.ucomplex.ucomplex.Modules.Login.dagger.LoginModelModule;
 import org.ucomplex.ucomplex.Modules.Login.dagger.LoginPresenterModule;
 import org.ucomplex.ucomplex.Modules.RoleSelect.RoleSelectActivity;
 import org.ucomplex.ucomplex.Modules.RoleSelect.RoleSelectPresenter;
 import org.ucomplex.ucomplex.Modules.RoleSelect.dagger.RoleSelectActivityModule;
 import org.ucomplex.ucomplex.Modules.RoleSelect.dagger.RoleSelectPresenterModule;
-import org.ucomplex.ucomplex.Modules.Subject.SubjectActivity;
-import org.ucomplex.ucomplex.Modules.Subject.SubjectModel;
-import org.ucomplex.ucomplex.Modules.Subject.SubjectPresenter;
-import org.ucomplex.ucomplex.Modules.Subject.dagger.SubjectActivityModule;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.SubjectModel;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.SubjectPresenter;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.SubjectProfileFragment;
+import org.ucomplex.ucomplex.Modules.Subject.dagger.SubjectProfileModule;
 import org.ucomplex.ucomplex.Modules.Subject.dagger.SubjectModelModule;
 import org.ucomplex.ucomplex.Modules.Subject.dagger.SubjectPresenterModule;
 
@@ -48,7 +46,7 @@ import dagger.Component;
                 RoleSelectActivityModule.class,
                 SubjectModelModule.class,
                 SubjectPresenterModule.class,
-                SubjectActivityModule.class})
+                SubjectProfileModule.class})
 
 public interface AppDiComponent {
 
@@ -68,7 +66,7 @@ public interface AppDiComponent {
 
     void inject(RoleSelectPresenter presenter);
 
-    void inject(SubjectActivity activity);
+    void inject(SubjectProfileFragment fragment);
 
     void inject(SubjectModel model);
 

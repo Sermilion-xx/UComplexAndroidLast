@@ -26,7 +26,8 @@
         </activity>
         <activity android:name=".Modules.Events.EventsActivity" />
         <activity android:name=".Modules.RoleSelect.RoleSelectActivity" />
-        <activity android:name=".Modules.Subject.SubjectActivity"></activity>
+        <activity android:name=".Modules.Subject.SubjectActivity" />
+        <activity android:name=".Common.base.BaseMVPActivity"></activity>
     </application>
 
 </manifest>

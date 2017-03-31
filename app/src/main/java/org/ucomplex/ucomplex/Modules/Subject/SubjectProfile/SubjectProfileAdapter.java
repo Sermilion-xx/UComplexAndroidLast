@@ -1,4 +1,4 @@
-package org.ucomplex.ucomplex.Modules.Subject;
+package org.ucomplex.ucomplex.Modules.Subject.SubjectProfile;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

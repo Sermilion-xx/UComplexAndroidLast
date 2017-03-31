@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 
 import org.ucomplex.ucomplex.Common.base.BaseActivity;
 import org.ucomplex.ucomplex.Common.UCApplication;
+import org.ucomplex.ucomplex.Common.base.BaseMVPActivity;
 import org.ucomplex.ucomplex.Common.interfaces.IntentCallback;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
 import org.ucomplex.ucomplex.Domain.Users.UserInterface;
@@ -23,7 +24,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RoleSelectActivity extends BaseActivity<MVPView, RoleSelectPresenter> implements MVPView, IntentCallback<Integer> {
+public class RoleSelectActivity extends BaseMVPActivity<MVPView, RoleSelectPresenter> implements MVPView, IntentCallback<Integer> {
 
     private static final String EXTRA_USER = "EXTRA_USER";
     @BindView(R.id.recyclerView)

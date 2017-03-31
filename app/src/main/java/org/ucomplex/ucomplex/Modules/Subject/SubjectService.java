@@ -3,7 +3,9 @@ package org.ucomplex.ucomplex.Modules.Subject;
 import org.ucomplex.ucomplex.Modules.Subject.model.SubjectRaw;
 
 import io.reactivex.Observable;
-import retrofit2.http.GET;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 /**
@@ -17,7 +19,6 @@ import retrofit2.http.Query;
  */
 
 public interface SubjectService {
-
-    @GET("student/ajax/my_subjects?mobile=1")
-    Observable<SubjectRaw> getSubject(@Query("gcourse") Integer start);
+    @POST("/student/ajax/my_subjects?mobile=1")  @FormUrlEncoded
+    Observable<SubjectRaw> getSubject(@Field("subjId") Integer subjId);
 }

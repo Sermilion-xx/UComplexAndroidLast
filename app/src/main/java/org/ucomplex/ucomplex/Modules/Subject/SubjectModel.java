@@ -87,38 +87,42 @@ public class SubjectModel implements MVPModel<SubjectRaw, SubjectObject, Integer
     public void processData(SubjectRaw data) {
         mData = new SubjectObject();
         Map<Integer, Teacher> teachers = new HashMap<>();
-        Set<SubjectItemProfile> profileItems = new HashSet<>();
-        SubjectItemProfile header = new SubjectItemProfile();
-        header.setName(data.getCourse().getName());
-        profileItems.add(header);
+
+        Set<SubjectItemProfile> profileItemsSet = new HashSet<>();
         List<SubjectItemFile> filesItems = new ArrayList<>();
 
         Teacher mainTeacher = data.getTeacher();
         teachers.put(mainTeacher.getId(), mainTeacher);
-        profileItems.add(extractProfileItem(mainTeacher));
-
-        SubjectItemProfile attendanceItem = new SubjectItemProfile();
-        double absence = getAbsence(data.getProgress().getAbsence(), data.getProgress().getHours());
-        absence = FacadeCommon.round(absence, 2);
-        attendanceItem.setAttendance(Double.toString(absence));
-        profileItems.add(attendanceItem);
-
-        SubjectItemProfile markItem = new SubjectItemProfile();
-        double mark = getMark(data.getProgress().getMark(), data.getProgress().getMarksCount());
-        mark = FacadeCommon.round(mark, 2);
-        markItem.setMark(Double.toString(mark));
-        profileItems.add(markItem);
+        profileItemsSet.add(extractProfileItem(mainTeacher));
 
         for (int i = 0; i < data.getFiles().size(); i++) {
             Files files = data.getFiles().get(i);
-            profileItems.add(extractProfileItem(files.getTeacher()));
+            profileItemsSet.add(extractProfileItem(files.getTeacher()));
             teachers.put(files.getTeacher().getId(), files.getTeacher());
             for (File file : files.getFiles()) {
                 filesItems.add(extractFileItem(file, teachers));
             }
         }
+
+        List<SubjectItemProfile> profileItemsList = new ArrayList<>();
+        SubjectItemProfile header = new SubjectItemProfile();
+        header.setName(data.getCourse().getName());
+        profileItemsList.add(header);
+        profileItemsList.addAll(new ArrayList<>(profileItemsSet));
+
+        SubjectItemProfile markAttendanceItem = new SubjectItemProfile();
+        double mark = getMark(data.getProgress().getMark(), data.getProgress().getMarksCount());
+        mark = FacadeCommon.round(mark, 2);
+        markAttendanceItem.setMark(Double.toString(mark));
+
+        double absence = getAbsence(data.getProgress().getAbsence(), data.getProgress().getHours());
+        absence = FacadeCommon.round(absence, 2);
+        markAttendanceItem.setAttendance(Double.toString(absence));
+
+        profileItemsList.add(markAttendanceItem);
+
         mData.setMaterialsItems(filesItems);
-        mData.setProfileItems(new ArrayList<>(profileItems));
+        mData.setProfileItems(profileItemsList);
     }
 
     private SubjectItemFile extractFileItem(File file, Map<Integer, Teacher> teachers) {

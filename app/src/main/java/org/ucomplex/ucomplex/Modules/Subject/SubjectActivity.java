@@ -71,7 +71,6 @@ public class SubjectActivity extends BaseActivity {
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         viewPager.setOffscreenPageLimit(2);
-        viewPager.addOnPageChangeListener(pageChangeListener);
         tabLayout.setupWithViewPager(viewPager);
 
         if (savedInstanceState != null) {
@@ -95,22 +94,15 @@ public class SubjectActivity extends BaseActivity {
         }
     }
 
-    ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
-
-        @Override
-        public void onPageSelected(int position) {
-            currentPage = position;
-            if(position==1){
-//                subjectMaterialsFragment.onFragmentVisible(subjectProfileFragment.getPresenter().getData().getMaterialsItems(), false);
-            }else if(position==2){
-//                subjectTimelineFragment.onFragmentVisible();
-            }
+    @Override
+    public void onBackPressed() {
+        if(currentPage==1 && subjectMaterialsFragment.getCurrentPage() > 0){
+            subjectMaterialsFragment.onBackPress();
+        }else{
+            super.onBackPressed();
         }
-        @Override
-        public void onPageScrollStateChanged(int state) {}
-        @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
-    };
+    }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode,

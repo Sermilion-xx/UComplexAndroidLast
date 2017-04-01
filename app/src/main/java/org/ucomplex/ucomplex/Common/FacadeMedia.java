@@ -193,6 +193,8 @@ public class FacadeMedia {
                 .buildRound(String.valueOf(firstLetter), getColor(number));
     }
 
+
+
     public static String getLetter(int mark) {
         if (mark == -1) {
             return "н";

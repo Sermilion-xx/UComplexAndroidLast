@@ -11,6 +11,7 @@ import android.support.v4.content.ContextCompat;
 import android.text.Html;
 import android.text.Spanned;
 import android.util.Base64;
+import android.widget.Toast;
 
 import org.ucomplex.ucomplex.R;
 
@@ -265,6 +266,14 @@ public class FacadeCommon {
         int exp = (int) (Math.log(bytes) / Math.log(unit));
         String pre = (si ? "кмгтпе" : "кмгтпе").charAt(exp - 1) + (si ? "" : "");
         return String.format(new Locale("Ru"),"%.1f %sб", bytes / Math.pow(unit, exp), pre);
+    }
+
+    public static void requireStoragePermission(Context context) {
+        if (ContextCompat.checkSelfPermission(context,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(context, context.getString(R.string.need_storage_permissions), Toast.LENGTH_LONG).show();
+        }
     }
 
 }

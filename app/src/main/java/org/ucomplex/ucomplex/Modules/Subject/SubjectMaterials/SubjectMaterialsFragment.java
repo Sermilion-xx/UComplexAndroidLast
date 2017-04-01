@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.hannesdorfmann.mosby.mvp.MvpFragment;
 
 import org.ucomplex.ucomplex.Common.UCApplication;
+import org.ucomplex.ucomplex.Common.interfaces.OnlIstItemClicked;
 import org.ucomplex.ucomplex.Common.interfaces.ViewExtensions;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
 import org.ucomplex.ucomplex.Modules.Subject.model.SubjectItemFile;
@@ -39,8 +40,13 @@ import butterknife.ButterKnife;
 
 public class SubjectMaterialsFragment extends MvpFragment<MVPView, SubjectMaterialsPresenter> implements MVPView, ViewExtensions {
 
-    public static SubjectMaterialsFragment getInstance() {
+    private static final String MY_FILES = "MY_FILES";
+
+    public static SubjectMaterialsFragment getInstance(boolean myFiles) {
         SubjectMaterialsFragment fragment = new SubjectMaterialsFragment();
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(MY_FILES, myFiles);
+        fragment.setArguments(bundle);
         return fragment;
     }
 
@@ -49,6 +55,20 @@ public class SubjectMaterialsFragment extends MvpFragment<MVPView, SubjectMateri
     @BindView(R.id.recyclerView)
     protected RecyclerView mRecyclerView;
     private SubjectMaterialsAdapter mAdapter;
+
+    public SubjectMaterialsAdapter getAdapter() {
+        return mAdapter;
+    }
+
+    public void onBackPress(){
+        presenter.pageDown();
+        mAdapter.setItems(presenter.getData());
+        mAdapter.notifyDataSetChanged();
+    }
+
+    public int getCurrentPage(){
+        return presenter.getCurrentPage();
+    }
 
     public void setMaterialsItems(List<SubjectItemFile> items) {
         presenter.setMaterialsItems(items);
@@ -88,6 +108,8 @@ public class SubjectMaterialsFragment extends MvpFragment<MVPView, SubjectMateri
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivityContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new SubjectMaterialsAdapter();
+        mAdapter.setMyFiles(getArguments().getBoolean(MY_FILES));
+        mAdapter.setOnlIstItemClicked(params -> presenter.loadData(params));
         mRecyclerView.setAdapter(mAdapter);
         return view;
     }

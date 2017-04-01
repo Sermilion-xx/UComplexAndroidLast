@@ -1,9 +1,12 @@
 package org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials;
 
+import android.support.v4.util.Pair;
+
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
 import org.ucomplex.ucomplex.Modules.Subject.model.SubjectItemFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -22,13 +25,54 @@ import io.reactivex.schedulers.Schedulers;
  * ---------------------------------------------------
  */
 
-public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<SubjectItemFile>, String> {
+public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<SubjectItemFile>, SubjectMaterialsParams> {
 
     private List<SubjectItemFile> mData;
     private SubjectMaterialsService subjectMaterialsService;
+    private List<Pair<List<SubjectItemFile> , String>> mPageHistory;
+    private int currentPage = -1;
+    private String currentFolder = null;
+
+    public void setCurrentFolder(String currentFolder) {
+        this.currentFolder = currentFolder;
+    }
+
+    public int getCurrentPage() {
+        return currentPage;
+    }
+
+    public void pageUp() {
+        currentPage++;
+    }
+
+    public void pageDown() {
+        currentPage--;
+        if(currentPage<1){
+            currentFolder = "null";
+        }else {
+            currentFolder = getHistory(currentPage).second;
+        }
+    }
+
+    void addHistory(Pair<List<SubjectItemFile>, String> list) {
+        this.mPageHistory.add(list);
+    }
+
+    int getHistoryCount(){
+        return this.mPageHistory.size();
+    }
+
+    public Pair<List<SubjectItemFile>, String> getHistory(int index) {
+        if(index<this.mPageHistory.size()){
+            return this.mPageHistory.get(index);
+        }else {
+            return null;
+        }
+    }
 
     public SubjectMaterialsModel() {
         UCApplication.getInstance().getAppDiComponent().inject(this);
+        mPageHistory = new ArrayList<>();
     }
 
     @Inject
@@ -37,8 +81,8 @@ public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Subjec
     }
 
     @Override
-    public Observable<MaterialsRaw> loadData(String folder) {
-        return subjectMaterialsService.getMaterials(folder).subscribeOn(Schedulers.io())
+    public Observable<MaterialsRaw> loadData(SubjectMaterialsParams folder) {
+        return subjectMaterialsService.getMaterials(folder.getFolder()).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 

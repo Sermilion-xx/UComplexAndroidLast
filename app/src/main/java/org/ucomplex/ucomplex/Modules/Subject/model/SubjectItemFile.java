@@ -12,6 +12,7 @@ package org.ucomplex.ucomplex.Modules.Subject.model;
 
 public class SubjectItemFile {
 
+    private int ownersId;
     private String name;
     private int size;
     private String data;
@@ -19,6 +20,14 @@ public class SubjectItemFile {
     private String address;
     private String type;
     private String time;
+
+    public int getOwnersId() {
+        return ownersId;
+    }
+
+    public void setOwnersId(int ownersId) {
+        this.ownersId = ownersId;
+    }
 
     public String getTime() {
         return time;

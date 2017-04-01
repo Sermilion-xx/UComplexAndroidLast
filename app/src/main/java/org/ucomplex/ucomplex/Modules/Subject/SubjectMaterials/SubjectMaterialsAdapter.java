@@ -1,5 +1,12 @@
 package org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials;
 
+import android.Manifest;
+import android.app.DownloadManager;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,13 +14,21 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.base.BaseAdapter;
+import org.ucomplex.ucomplex.Common.interfaces.OnlIstItemClicked;
+import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPPresenter;
 import org.ucomplex.ucomplex.Modules.Subject.model.SubjectItemFile;
 import org.ucomplex.ucomplex.R;
 
 import java.util.List;
+
+import static org.ucomplex.ucomplex.Common.UCApplication.BASE_URL;
+import static org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.NotificationService.EXTRA_BODY;
+import static org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.NotificationService.EXTRA_LARGE_ICON;
+import static org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.NotificationService.EXTRA_TITLE;
 
 /**
  * ---------------------------------------------------
@@ -58,6 +73,18 @@ public class SubjectMaterialsAdapter extends BaseAdapter<SubjectMaterialsAdapter
     }
 
     private boolean[] mItemTypes;
+    private String filename;
+    private boolean mMyFiles;
+    private OnlIstItemClicked<SubjectMaterialsParams> onlIstItemClicked;
+
+    public void setOnlIstItemClicked(OnlIstItemClicked<SubjectMaterialsParams> onlIstItemClicked) {
+        this.onlIstItemClicked = onlIstItemClicked;
+    }
+
+    public void setMyFiles(boolean mMyFiles) {
+        this.mMyFiles = mMyFiles;
+    }
+
 
     @Override
     public void setItems(List<SubjectItemFile> data) {
@@ -105,16 +132,36 @@ public class SubjectMaterialsAdapter extends BaseAdapter<SubjectMaterialsAdapter
             } else {
                 holder.mFileTime.setText(holder.mFileTime.getContext().getString(R.string.just_now));
             }
-            switch (getItemViewType(position)) {
-                case TYPE_FILE:
-                    holder.mSize.setText(FacadeCommon.readableFileSize(item.getSize(), false));
-                    break;
-                case TYPE_FOLDER:
-                    holder.mOwnersName.setText(item.getOwnersName());
-                    break;
+            if (getItemViewType(position) == TYPE_FILE) {
+                Context context = holder.mSize.getContext();
+                holder.mSize.setText(FacadeCommon.readableFileSize(item.getSize(), false));
+                FacadeCommon.requireStoragePermission(context);
+                Toast.makeText(context, context.getString(R.string.file_download_started), Toast.LENGTH_SHORT).show();
+                filename = item.getAddress() + "." + item.getType();
+                startNotificationService(filename, "Загрузка файла началась.", null, context);
+                String mUrl = BASE_URL + "storage.ucomplex.org/files/users/";
+                //TODO: download
+            } else if (getItemViewType(position) == TYPE_FOLDER) {
+                holder.mOwnersName.setText(item.getOwnersName());
+                SubjectMaterialsParams params = new SubjectMaterialsParams();
+                params.setFolder(item.getAddress());
+                params.setFolder(true);
+                params.setMyFolder(mMyFiles);
+                onlIstItemClicked.onClick(params);
             }
         }
     }
+
+    private void startNotificationService(String filename, String message, Uri largeIcon, Context context) {
+        Intent notificationIntent = new Intent(context, NotificationService.class);
+        notificationIntent.putExtra(EXTRA_TITLE, filename);
+        notificationIntent.putExtra(EXTRA_BODY, message);
+        if (largeIcon != null) {
+            notificationIntent.putExtra(EXTRA_LARGE_ICON, largeIcon);
+        }
+        context.startService(notificationIntent);
+    }
+
 
     @Override
     public int getItemViewType(int position) {

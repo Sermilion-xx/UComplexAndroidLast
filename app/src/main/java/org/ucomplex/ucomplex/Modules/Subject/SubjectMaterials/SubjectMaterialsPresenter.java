@@ -1,5 +1,9 @@
 package org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials;
 
+
+
+import android.support.v4.util.Pair;
+
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
 import org.ucomplex.ucomplex.Modules.Subject.model.SubjectItemFile;
@@ -23,7 +27,7 @@ import io.reactivex.disposables.Disposable;
  */
 
 public class SubjectMaterialsPresenter extends AbstractPresenter<
-        MaterialsRaw, List<SubjectItemFile>, String, SubjectMaterialsModel> {
+        MaterialsRaw, List<SubjectItemFile>, SubjectMaterialsParams, SubjectMaterialsModel> {
 
 
     public SubjectMaterialsPresenter() {
@@ -39,9 +43,33 @@ public class SubjectMaterialsPresenter extends AbstractPresenter<
         mModel.setData(items);
     }
 
+    private void pageUp() {
+        mModel.pageUp();
+    }
+
+    void pageDown() {
+        mModel.pageDown();
+        Pair<List<SubjectItemFile>, String> history = getHistory(mModel.getCurrentPage());
+        if (getView() != null) {
+            ((SubjectMaterialsFragment)getView()).getAdapter().setItems(history.first);
+        }
+    }
+
+    public int getCurrentPage() {
+        return mModel.getCurrentPage();
+    }
+
+    private void addHistory(Pair<List<SubjectItemFile>, String> list) {
+        mModel.addHistory(list);
+    }
+
+    private Pair<List<SubjectItemFile>, String> getHistory(int index) {
+        return mModel.getHistory(index);
+    }
+
     @Override
-    public void loadData(String folder) {
-        Observable<MaterialsRaw> dataObservable = mModel.loadData(folder);
+    public void loadData(SubjectMaterialsParams params) {
+        Observable<MaterialsRaw> dataObservable = mModel.loadData(params);
         dataObservable.subscribe(new Observer<MaterialsRaw>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -53,6 +81,9 @@ public class SubjectMaterialsPresenter extends AbstractPresenter<
                 mModel.processData(value);
                 if(getView()!=null){
                     ((SubjectMaterialsFragment)getView()).dataLoaded();
+                    mModel.setCurrentFolder(params.getFolderName());
+                    addHistory(new Pair<>(getData(), params.getFolderName()));
+                    pageUp();
                 }
             }
 

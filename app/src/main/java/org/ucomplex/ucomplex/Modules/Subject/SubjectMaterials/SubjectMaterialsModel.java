@@ -4,10 +4,13 @@ import android.support.v4.util.Pair;
 
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
+import org.ucomplex.ucomplex.Domain.Users.File;
+import org.ucomplex.ucomplex.Domain.Users.Teacher;
 import org.ucomplex.ucomplex.Modules.Subject.model.SubjectItemFile;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -25,13 +28,18 @@ import io.reactivex.schedulers.Schedulers;
  * ---------------------------------------------------
  */
 
-public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<SubjectItemFile>, SubjectMaterialsParams> {
+public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<List<SubjectItemFile>, String>>, SubjectMaterialsParams> {
 
-    private List<SubjectItemFile> mData;
+    private static final String DEFAULT_FOLDER_NAME = "null";
     private SubjectMaterialsService subjectMaterialsService;
     private List<Pair<List<SubjectItemFile> , String>> mPageHistory;
+    private Map<Integer, Teacher> mTeachers;
     private int currentPage = -1;
-    private String currentFolder = null;
+    private String currentFolder = "null";
+
+    public void setTeachers(Map<Integer, Teacher> mTeachers) {
+        this.mTeachers = mTeachers;
+    }
 
     public void setCurrentFolder(String currentFolder) {
         this.currentFolder = currentFolder;
@@ -48,7 +56,7 @@ public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Subjec
     public void pageDown() {
         currentPage--;
         if(currentPage<1){
-            currentFolder = "null";
+            currentFolder = DEFAULT_FOLDER_NAME;
         }else {
             currentFolder = getHistory(currentPage).second;
         }
@@ -87,27 +95,44 @@ public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Subjec
     }
 
     @Override
-    public void setData(List<SubjectItemFile> data) {
-        mData = data;
+    public void setData(List<Pair<List<SubjectItemFile>, String>> data) {
+        mPageHistory = data;
     }
 
     @Override
-    public void addData(List<SubjectItemFile> data) {
-        mData.addAll(data);
+    public void addData(List<Pair<List<SubjectItemFile>, String>> data) {
+        mPageHistory.addAll(data);
     }
 
     @Override
     public void clear() {
-        mData.clear();
+        mPageHistory.clear();
     }
 
     @Override
-    public List<SubjectItemFile> getData() {
-        return mData;
+    public List<Pair<List<SubjectItemFile>, String>> getData() {
+        return mPageHistory;
     }
 
     @Override
     public void processData(MaterialsRaw data) {
-
+        List<SubjectItemFile> list = new ArrayList<>();
+        for (File file : data.getFiles()) {
+            list.add(extractFileItem(file));
+        }
+        mPageHistory.add(new Pair<>(list, ""));
     }
+
+    private SubjectItemFile extractFileItem(File file) {
+        SubjectItemFile item = new SubjectItemFile();
+        item.setAddress(file.getAddress());
+        item.setName(file.getName());
+        item.setData(file.getData());
+        item.setOwnersName(mTeachers.get(file.getOwner()).getName());
+        item.setSize(file.getSize());
+        item.setType(file.getType());
+        item.setTime(file.getTime());
+        return item;
+    }
+
 }

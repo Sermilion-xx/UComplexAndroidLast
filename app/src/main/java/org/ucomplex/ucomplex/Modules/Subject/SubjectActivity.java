@@ -53,7 +53,7 @@ public class SubjectActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         if (subjectProfileFragment!= null && subjectProfileFragment.getPresenter() != null) {
-            subjectMaterialsFragment.setMaterialsItems(subjectProfileFragment.getPresenter().getData().getMaterialsItems());
+            subjectMaterialsFragment.setMaterialsItems(subjectProfileFragment.getPresenter().getModel().getFilesAndteachers());
         }
     }
 
@@ -80,7 +80,7 @@ public class SubjectActivity extends BaseActivity {
         } else {
             int gcourse = intent.getIntExtra(EXTRA_GCOURSE, -1);
             subjectProfileFragment = SubjectProfileFragment.getInstance(gcourse);
-            subjectMaterialsFragment = SubjectMaterialsFragment.getInstance();
+            subjectMaterialsFragment = SubjectMaterialsFragment.getInstance(false);
             subjectProfileFragment.setOnPresenterInjectedListener(data -> subjectMaterialsFragment.setMaterialsItems(data));
             subjectTimelineFragment = SubjectTimelineFragment.getInstance(gcourse);
         }

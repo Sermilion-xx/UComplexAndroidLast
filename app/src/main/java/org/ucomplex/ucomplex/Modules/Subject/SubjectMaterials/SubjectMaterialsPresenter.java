@@ -27,7 +27,7 @@ import io.reactivex.disposables.Disposable;
  */
 
 public class SubjectMaterialsPresenter extends AbstractPresenter<
-        MaterialsRaw, List<SubjectItemFile>, SubjectMaterialsParams, SubjectMaterialsModel> {
+        MaterialsRaw, List<Pair<List<SubjectItemFile>, String>>, SubjectMaterialsParams, SubjectMaterialsModel> {
 
 
     public SubjectMaterialsPresenter() {
@@ -40,7 +40,7 @@ public class SubjectMaterialsPresenter extends AbstractPresenter<
     }
 
     public void setMaterialsItems(List<SubjectItemFile> items) {
-        mModel.setData(items);
+        mModel.addHistory(new Pair<>(items, ""));
     }
 
     private void pageUp() {
@@ -67,6 +67,10 @@ public class SubjectMaterialsPresenter extends AbstractPresenter<
         return mModel.getHistory(index);
     }
 
+    public List<SubjectItemFile> getCurrentHistory() {
+        return mModel.getHistory(mModel.getCurrentPage()).first;
+    }
+
     @Override
     public void loadData(SubjectMaterialsParams params) {
         Observable<MaterialsRaw> dataObservable = mModel.loadData(params);
@@ -80,10 +84,9 @@ public class SubjectMaterialsPresenter extends AbstractPresenter<
             public void onNext(MaterialsRaw value) {
                 mModel.processData(value);
                 if(getView()!=null){
-                    ((SubjectMaterialsFragment)getView()).dataLoaded();
                     mModel.setCurrentFolder(params.getFolderName());
-                    addHistory(new Pair<>(getData(), params.getFolderName()));
                     pageUp();
+                    ((SubjectMaterialsFragment)getView()).dataLoaded();
                 }
             }
 

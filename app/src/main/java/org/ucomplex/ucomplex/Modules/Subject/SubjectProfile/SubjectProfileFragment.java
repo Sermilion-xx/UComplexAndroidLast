@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,10 +19,12 @@ import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.OnPresenterInjectedListener;
 import org.ucomplex.ucomplex.Common.interfaces.ViewExtensions;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
+import org.ucomplex.ucomplex.Domain.Users.Teacher;
 import org.ucomplex.ucomplex.Modules.Subject.model.SubjectItemFile;
 import org.ucomplex.ucomplex.R;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -55,9 +58,9 @@ public class SubjectProfileFragment extends MvpFragment<MVPView, SubjectPresente
     @BindView(R.id.recyclerView)
     protected RecyclerView mRecyclerView;
     private SubjectProfileAdapter mAdapter;
-    private OnPresenterInjectedListener<List<SubjectItemFile>> onPresenterInjectedListener;
+    private OnPresenterInjectedListener<Pair<List<SubjectItemFile>, Map<Integer, Teacher>>> onPresenterInjectedListener;
 
-    public void setOnPresenterInjectedListener(OnPresenterInjectedListener<List<SubjectItemFile>> onPresenterInjectedListener) {
+    public void setOnPresenterInjectedListener(OnPresenterInjectedListener<Pair<List<SubjectItemFile>, Map<Integer, Teacher>>> onPresenterInjectedListener) {
         this.onPresenterInjectedListener = onPresenterInjectedListener;
     }
 
@@ -101,7 +104,7 @@ public class SubjectProfileFragment extends MvpFragment<MVPView, SubjectPresente
     public void subjectLoaded() {
         mAdapter.setItems(presenter.getData().getProfileItems());
         mAdapter.notifyDataSetChanged();
-        onPresenterInjectedListener.presenterInjected(presenter.getModel().getData().getMaterialsItems());
+        onPresenterInjectedListener.presenterInjected(presenter.getModel().getFilesAndteachers());
     }
 
     @NonNull

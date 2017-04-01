@@ -1,12 +1,8 @@
 package org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials;
 
-import android.Manifest;
-import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +15,6 @@ import android.widget.Toast;
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.base.BaseAdapter;
 import org.ucomplex.ucomplex.Common.interfaces.OnlIstItemClicked;
-import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPPresenter;
 import org.ucomplex.ucomplex.Modules.Subject.model.SubjectItemFile;
 import org.ucomplex.ucomplex.R;
 
@@ -100,7 +95,7 @@ public class SubjectMaterialsAdapter extends BaseAdapter<SubjectMaterialsAdapter
         }
     }
 
-    public int getAdapterSize(){
+    public int getAdapterSize() {
         return mItems == null ? 0 : mItems.size();
     }
 
@@ -135,19 +130,30 @@ public class SubjectMaterialsAdapter extends BaseAdapter<SubjectMaterialsAdapter
             if (getItemViewType(position) == TYPE_FILE) {
                 Context context = holder.mSize.getContext();
                 holder.mSize.setText(FacadeCommon.readableFileSize(item.getSize(), false));
-                FacadeCommon.requireStoragePermission(context);
-                Toast.makeText(context, context.getString(R.string.file_download_started), Toast.LENGTH_SHORT).show();
-                filename = item.getAddress() + "." + item.getType();
-                startNotificationService(filename, "Загрузка файла началась.", null, context);
-                String mUrl = BASE_URL + "storage.ucomplex.org/files/users/";
-                //TODO: download
+                holder.mClickArea.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        FacadeCommon.requireStoragePermission(context);
+                        Toast.makeText(context, context.getString(R.string.file_download_started), Toast.LENGTH_SHORT).show();
+                        filename = item.getAddress() + "." + item.getType();
+                        startNotificationService(filename, "Загрузка файла началась.", null, context);
+                        String mUrl = BASE_URL + "storage.ucomplex.org/files/users/";
+                        //TODO: download
+                    }
+                });
             } else if (getItemViewType(position) == TYPE_FOLDER) {
                 holder.mOwnersName.setText(item.getOwnersName());
-                SubjectMaterialsParams params = new SubjectMaterialsParams();
-                params.setFolder(item.getAddress());
-                params.setFolder(true);
-                params.setMyFolder(mMyFiles);
-                onlIstItemClicked.onClick(params);
+                holder.mClickArea.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        SubjectMaterialsParams params = new SubjectMaterialsParams();
+                        params.setFolder(item.getAddress());
+                        params.setFolderName(item.getName());
+                        params.setFolder(true);
+                        params.setMyFolder(mMyFiles);
+                        onlIstItemClicked.onClick(params);
+                    }
+                });
             }
         }
     }

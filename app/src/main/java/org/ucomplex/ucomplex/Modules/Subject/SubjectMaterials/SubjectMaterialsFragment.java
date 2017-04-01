@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,10 +19,12 @@ import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.OnlIstItemClicked;
 import org.ucomplex.ucomplex.Common.interfaces.ViewExtensions;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
+import org.ucomplex.ucomplex.Domain.Users.Teacher;
 import org.ucomplex.ucomplex.Modules.Subject.model.SubjectItemFile;
 import org.ucomplex.ucomplex.R;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -62,7 +65,6 @@ public class SubjectMaterialsFragment extends MvpFragment<MVPView, SubjectMateri
 
     public void onBackPress(){
         presenter.pageDown();
-        mAdapter.setItems(presenter.getData());
         mAdapter.notifyDataSetChanged();
     }
 
@@ -70,9 +72,10 @@ public class SubjectMaterialsFragment extends MvpFragment<MVPView, SubjectMateri
         return presenter.getCurrentPage();
     }
 
-    public void setMaterialsItems(List<SubjectItemFile> items) {
-        presenter.setMaterialsItems(items);
-        mAdapter.setItems(items);
+    public void setMaterialsItems(Pair<List<SubjectItemFile>, Map<Integer, Teacher>> items) {
+        presenter.setMaterialsItems(items.first);
+        presenter.getModel().setTeachers(items.second);
+        mAdapter.setItems(items.first);
         mAdapter.notifyDataSetChanged();
     }
 
@@ -94,7 +97,7 @@ public class SubjectMaterialsFragment extends MvpFragment<MVPView, SubjectMateri
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
             if (mAdapter.getAdapterSize() == 0) {
-                mAdapter.setItems(presenter.getData());
+                mAdapter.setItems(presenter.getCurrentHistory());
                 mAdapter.notifyDataSetChanged();
             }
         }
@@ -115,7 +118,8 @@ public class SubjectMaterialsFragment extends MvpFragment<MVPView, SubjectMateri
     }
 
     public void dataLoaded() {
-
+        mAdapter.setItems(presenter.getCurrentHistory());
+        mAdapter.notifyDataSetChanged();
     }
 
     @NonNull

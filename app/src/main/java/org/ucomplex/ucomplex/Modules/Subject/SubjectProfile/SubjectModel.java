@@ -1,5 +1,7 @@
 package org.ucomplex.ucomplex.Modules.Subject.SubjectProfile;
 
+import android.support.v4.util.Pair;
+
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
@@ -36,6 +38,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class SubjectModel implements MVPModel<SubjectRaw, SubjectObject, Integer> {
 
+    private Map<Integer, Teacher> mTeachers;
     private SubjectObject mData;
     private SubjectService subjectService;
 
@@ -83,24 +86,28 @@ public class SubjectModel implements MVPModel<SubjectRaw, SubjectObject, Integer
         return mData;
     }
 
+    public Pair<List<SubjectItemFile>, Map<Integer, Teacher>> getFilesAndteachers() {
+        return new Pair<>(mData.getMaterialsItems(), mTeachers);
+    }
+
     @Override
     public void processData(SubjectRaw data) {
         mData = new SubjectObject();
-        Map<Integer, Teacher> teachers = new HashMap<>();
+        mTeachers = new HashMap<>();
 
         Set<SubjectItemProfile> profileItemsSet = new HashSet<>();
         List<SubjectItemFile> filesItems = new ArrayList<>();
 
         Teacher mainTeacher = data.getTeacher();
-        teachers.put(mainTeacher.getId(), mainTeacher);
+        mTeachers.put(mainTeacher.getId(), mainTeacher);
         profileItemsSet.add(extractProfileItem(mainTeacher));
 
         for (int i = 0; i < data.getFiles().size(); i++) {
             Files files = data.getFiles().get(i);
             profileItemsSet.add(extractProfileItem(files.getTeacher()));
-            teachers.put(files.getTeacher().getId(), files.getTeacher());
+            mTeachers.put(files.getTeacher().getId(), files.getTeacher());
             for (File file : files.getFiles()) {
-                filesItems.add(extractFileItem(file, teachers));
+                filesItems.add(extractFileItem(file, mTeachers));
             }
         }
 

@@ -13,4 +13,5 @@ package org.ucomplex.ucomplex.Common.interfaces;
 public interface OnPresenterInjectedListener<T> {
 
     void presenterInjected(T data);
+
 }

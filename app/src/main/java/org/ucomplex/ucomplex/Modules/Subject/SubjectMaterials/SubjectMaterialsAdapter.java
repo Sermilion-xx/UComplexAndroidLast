@@ -57,6 +57,26 @@ public class SubjectMaterialsAdapter extends BaseAdapter<SubjectMaterialsAdapter
         }
     }
 
+    private boolean[] mItemTypes;
+
+    @Override
+    public void setItems(List<SubjectItemFile> data) {
+        super.setItems(data);
+        if (data != null) {
+            mItemTypes = new boolean[data.size()];
+            for (int i = 0; i < data.size(); i++) {
+                SubjectItemFile file = data.get(i);
+                if (file.getType().equals("f")) {
+                    mItemTypes[i] = true;
+                }
+            }
+        }
+    }
+
+    public int getAdapterSize(){
+        return mItems == null ? 0 : mItems.size();
+    }
+
     @Override
     public SubjectMaterialsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
@@ -98,11 +118,8 @@ public class SubjectMaterialsAdapter extends BaseAdapter<SubjectMaterialsAdapter
 
     @Override
     public int getItemViewType(int position) {
-        SubjectItemFile item = mItems.get(position);
-        if (item != null) {
-            if (item.getType().equals("f")) {
-                return TYPE_FOLDER;
-            }
+        if (mItemTypes[position]) {
+            return TYPE_FOLDER;
         }
         return TYPE_FILE;
     }

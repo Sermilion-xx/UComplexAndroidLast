@@ -15,7 +15,11 @@ import org.ucomplex.ucomplex.Modules.RoleSelect.RoleSelectPresenter;
 import org.ucomplex.ucomplex.Modules.RoleSelect.dagger.RoleSelectActivityModule;
 import org.ucomplex.ucomplex.Modules.RoleSelect.dagger.RoleSelectPresenterModule;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.SubjectMaterialsFragment;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.SubjectMaterialsModel;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.SubjectMaterialsPresenter;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.dagger.SubjectMaterialsModelModule;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.dagger.SubjectMaterialsModule;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.dagger.SubjectMaterialsPresenterModule;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.SubjectModel;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.SubjectPresenter;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.SubjectProfileFragment;
@@ -48,7 +52,9 @@ import dagger.Component;
                 SubjectModelModule.class,
                 SubjectPresenterModule.class,
                 SubjectProfileModule.class,
-                SubjectMaterialsModule.class
+                SubjectMaterialsModule.class,
+                SubjectMaterialsModelModule.class,
+                SubjectMaterialsPresenterModule.class
         })
 
 public interface AppDiComponent {
@@ -74,6 +80,10 @@ public interface AppDiComponent {
     void inject(SubjectPresenter presenter);
 
     void inject(SubjectMaterialsFragment fragment);
+
+    void inject(SubjectMaterialsModel model);
+
+    void inject(SubjectMaterialsPresenter presenter);
 
 }
 

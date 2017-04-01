@@ -18,7 +18,10 @@ import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.OnPresenterInjectedListener;
 import org.ucomplex.ucomplex.Common.interfaces.ViewExtensions;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
+import org.ucomplex.ucomplex.Modules.Subject.model.SubjectItemFile;
 import org.ucomplex.ucomplex.R;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -52,9 +55,9 @@ public class SubjectProfileFragment extends MvpFragment<MVPView, SubjectPresente
     @BindView(R.id.recyclerView)
     protected RecyclerView mRecyclerView;
     private SubjectProfileAdapter mAdapter;
-    private OnPresenterInjectedListener<SubjectModel> onPresenterInjectedListener;
+    private OnPresenterInjectedListener<List<SubjectItemFile>> onPresenterInjectedListener;
 
-    public void setOnPresenterInjectedListener(OnPresenterInjectedListener<SubjectModel> onPresenterInjectedListener) {
+    public void setOnPresenterInjectedListener(OnPresenterInjectedListener<List<SubjectItemFile>> onPresenterInjectedListener) {
         this.onPresenterInjectedListener = onPresenterInjectedListener;
     }
 
@@ -80,21 +83,25 @@ public class SubjectProfileFragment extends MvpFragment<MVPView, SubjectPresente
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new SubjectProfileAdapter();
         mRecyclerView.setAdapter(mAdapter);
-        if (presenter.getData() == null) {
-            presenter.loadData(getArguments().getInt(EXTRA_GCOURSE, 0));
-        }
         return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        presenter.attachView(this);
+        if (presenter.getData() == null) {
+            presenter.loadData(getArguments().getInt(EXTRA_GCOURSE, 0));
+        } else {
+            mAdapter.setItems(presenter.getData().getProfileItems());
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
     public void subjectLoaded() {
         mAdapter.setItems(presenter.getData().getProfileItems());
         mAdapter.notifyDataSetChanged();
-        onPresenterInjectedListener.presenterInjected(presenter.getModel());
+        onPresenterInjectedListener.presenterInjected(presenter.getModel().getData().getMaterialsItems());
     }
 
     @NonNull

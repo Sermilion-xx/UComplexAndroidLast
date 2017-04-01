@@ -65,14 +65,14 @@ public abstract class AbstractPresenter<
     }
 
     public void showProgress() {
-        if (getActivityContext() != null) {
-            ((ViewExtensions) getActivityContext()).showProgress();
+        if (getView() != null) {
+            ((ViewExtensions) getView()).showProgress();
         }
     }
 
     public void hideProgress() {
-        if (getActivityContext() != null) {
-            ((ViewExtensions) getActivityContext()).hideProgress();
+        if (getView() != null) {
+            ((ViewExtensions) getView()).hideProgress();
         }
     }
 

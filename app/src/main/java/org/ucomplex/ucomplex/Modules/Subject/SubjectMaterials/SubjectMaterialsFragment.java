@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,13 +15,8 @@ import android.widget.Toast;
 import com.hannesdorfmann.mosby.mvp.MvpFragment;
 
 import org.ucomplex.ucomplex.Common.UCApplication;
-import org.ucomplex.ucomplex.Common.interfaces.OnPresenterInjectedListener;
 import org.ucomplex.ucomplex.Common.interfaces.ViewExtensions;
-import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
-import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.SubjectModel;
-import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.SubjectPresenter;
-import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.SubjectProfileAdapter;
 import org.ucomplex.ucomplex.Modules.Subject.model.SubjectItemFile;
 import org.ucomplex.ucomplex.R;
 
@@ -32,8 +26,6 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static org.ucomplex.ucomplex.Modules.Subject.SubjectActivity.EXTRA_GCOURSE;
 
 /**
  * ---------------------------------------------------
@@ -58,9 +50,9 @@ public class SubjectMaterialsFragment extends MvpFragment<MVPView, SubjectMateri
     protected RecyclerView mRecyclerView;
     private SubjectMaterialsAdapter mAdapter;
 
-    public void setModel(SubjectModel model) {
-        presenter.setModel(model);
-        mAdapter.setItems(presenter.getData().getMaterialsItems());
+    public void setMaterialsItems(List<SubjectItemFile> items) {
+        presenter.setMaterialsItems(items);
+        mAdapter.setItems(items);
         mAdapter.notifyDataSetChanged();
     }
 
@@ -77,6 +69,17 @@ public class SubjectMaterialsFragment extends MvpFragment<MVPView, SubjectMateri
         setRetainInstance(true);
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            if (mAdapter.getAdapterSize() == 0) {
+                mAdapter.setItems(presenter.getData());
+                mAdapter.notifyDataSetChanged();
+            }
+        }
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -87,6 +90,10 @@ public class SubjectMaterialsFragment extends MvpFragment<MVPView, SubjectMateri
         mAdapter = new SubjectMaterialsAdapter();
         mRecyclerView.setAdapter(mAdapter);
         return view;
+    }
+
+    public void dataLoaded() {
+
     }
 
     @NonNull

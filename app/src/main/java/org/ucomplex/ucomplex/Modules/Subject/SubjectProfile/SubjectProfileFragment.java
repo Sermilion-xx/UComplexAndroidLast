@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.hannesdorfmann.mosby.mvp.MvpFragment;
 
 import org.ucomplex.ucomplex.Common.UCApplication;
+import org.ucomplex.ucomplex.Common.base.BaseMvpFragment;
 import org.ucomplex.ucomplex.Common.interfaces.OnPresenterInjectedListener;
 import org.ucomplex.ucomplex.Common.interfaces.ViewExtensions;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
@@ -43,7 +44,7 @@ import static org.ucomplex.ucomplex.Modules.Subject.SubjectActivity.EXTRA_GCOURS
  * ---------------------------------------------------
  */
 
-public class SubjectProfileFragment extends MvpFragment<MVPView, SubjectPresenter> implements MVPView, ViewExtensions {
+public class SubjectProfileFragment extends BaseMvpFragment<SubjectPresenter> {
 
     public static SubjectProfileFragment getInstance(int gcourse) {
         SubjectProfileFragment fragment = new SubjectProfileFragment();
@@ -64,12 +65,6 @@ public class SubjectProfileFragment extends MvpFragment<MVPView, SubjectPresente
         this.onPresenterInjectedListener = onPresenterInjectedListener;
     }
 
-    @Inject
-    @Override
-    public void setPresenter(@NonNull SubjectPresenter presenter) {
-        super.setPresenter(presenter);
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         UCApplication.getInstance().getAppDiComponent().inject(this);
@@ -80,7 +75,7 @@ public class SubjectProfileFragment extends MvpFragment<MVPView, SubjectPresente
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_subject_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_subject, container, false);
         ButterKnife.bind(this, view);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivityContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -105,40 +100,5 @@ public class SubjectProfileFragment extends MvpFragment<MVPView, SubjectPresente
         mAdapter.setItems(presenter.getData().getProfileItems());
         mAdapter.notifyDataSetChanged();
         onPresenterInjectedListener.presenterInjected(presenter.getModel().getFilesAndteachers());
-    }
-
-    @NonNull
-    @Override
-    public SubjectPresenter createPresenter() {
-        return presenter;
-    }
-
-    @Override
-    public Context getAppContext() {
-        return UCApplication.getInstance();
-    }
-
-    @Override
-    public Context getActivityContext() {
-        return getContext();
-    }
-
-    @Override
-    public void showProgress() {
-        if (mProgress != null) {
-            mProgress.setVisibility(View.VISIBLE);
-        }
-    }
-
-    @Override
-    public void hideProgress() {
-        if (mProgress != null) {
-            mProgress.setVisibility(View.GONE);
-        }
-    }
-
-    @Override
-    public void showToast(int textId, int length) {
-        Toast.makeText(getActivityContext(), textId, length).show();
     }
 }

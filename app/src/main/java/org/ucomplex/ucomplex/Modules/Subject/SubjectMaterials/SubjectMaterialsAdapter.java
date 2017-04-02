@@ -101,10 +101,6 @@ public class SubjectMaterialsAdapter extends BaseAdapter<SubjectMaterialsAdapter
         }
     }
 
-    public int getAdapterSize() {
-        return mItems == null ? 0 : mItems.size();
-    }
-
     @Override
     public SubjectMaterialsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());

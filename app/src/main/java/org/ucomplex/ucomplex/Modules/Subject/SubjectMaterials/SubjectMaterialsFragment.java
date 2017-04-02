@@ -16,10 +16,11 @@ import android.widget.Toast;
 import com.hannesdorfmann.mosby.mvp.MvpFragment;
 
 import org.ucomplex.ucomplex.Common.UCApplication;
-import org.ucomplex.ucomplex.Common.interfaces.OnlIstItemClicked;
+import org.ucomplex.ucomplex.Common.base.BaseMvpFragment;
 import org.ucomplex.ucomplex.Common.interfaces.ViewExtensions;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
 import org.ucomplex.ucomplex.Domain.Users.Teacher;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.SubjectPresenter;
 import org.ucomplex.ucomplex.Modules.Subject.model.SubjectItemFile;
 import org.ucomplex.ucomplex.R;
 
@@ -41,11 +42,9 @@ import butterknife.ButterKnife;
  * ---------------------------------------------------
  */
 
-public class SubjectMaterialsFragment extends MvpFragment<MVPView, SubjectMaterialsPresenter> implements MVPView, ViewExtensions {
+public class SubjectMaterialsFragment extends BaseMvpFragment<SubjectMaterialsPresenter> {
 
     private static final String MY_FILES = "MY_FILES";
-
-
 
     public static SubjectMaterialsFragment getInstance(boolean myFiles) {
         SubjectMaterialsFragment fragment = new SubjectMaterialsFragment();
@@ -59,7 +58,8 @@ public class SubjectMaterialsFragment extends MvpFragment<MVPView, SubjectMateri
     protected ProgressBar mProgress;
     @BindView(R.id.recyclerView)
     protected RecyclerView mRecyclerView;
-    private SubjectMaterialsAdapter mAdapter;
+    @Inject
+    protected SubjectMaterialsAdapter mAdapter;
 
     public SubjectMaterialsAdapter getAdapter() {
         return mAdapter;
@@ -81,10 +81,15 @@ public class SubjectMaterialsFragment extends MvpFragment<MVPView, SubjectMateri
         mAdapter.notifyDataSetChanged();
     }
 
-    @Inject
     @Override
-    public void setPresenter(@NonNull SubjectMaterialsPresenter presenter) {
-        super.setPresenter(presenter);
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            if (mAdapter.getItemCount() == 0) {
+                mAdapter.setItems(presenter.getCurrentHistory());
+                mAdapter.notifyDataSetChanged();
+            }
+        }
     }
 
     @Override
@@ -94,25 +99,13 @@ public class SubjectMaterialsFragment extends MvpFragment<MVPView, SubjectMateri
         setRetainInstance(true);
     }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            if (mAdapter.getAdapterSize() == 0) {
-                mAdapter.setItems(presenter.getCurrentHistory());
-                mAdapter.notifyDataSetChanged();
-            }
-        }
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_subject_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_subject, container, false);
         ButterKnife.bind(this, view);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivityContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new SubjectMaterialsAdapter();
         mAdapter.setMyFiles(getArguments().getBoolean(MY_FILES));
         mAdapter.setOnlIstItemClicked(params -> presenter.loadData(params));
         mRecyclerView.setAdapter(mAdapter);
@@ -122,40 +115,5 @@ public class SubjectMaterialsFragment extends MvpFragment<MVPView, SubjectMateri
     public void dataLoaded() {
         mAdapter.setItems(presenter.getCurrentHistory());
         mAdapter.notifyDataSetChanged();
-    }
-
-    @NonNull
-    @Override
-    public SubjectMaterialsPresenter createPresenter() {
-        return presenter;
-    }
-
-    @Override
-    public Context getAppContext() {
-        return UCApplication.getInstance();
-    }
-
-    @Override
-    public Context getActivityContext() {
-        return getContext();
-    }
-
-    @Override
-    public void showProgress() {
-        if (mProgress != null) {
-            mProgress.setVisibility(View.VISIBLE);
-        }
-    }
-
-    @Override
-    public void hideProgress() {
-        if (mProgress != null) {
-            mProgress.setVisibility(View.GONE);
-        }
-    }
-
-    @Override
-    public void showToast(int textId, int length) {
-        Toast.makeText(getActivityContext(), textId, length).show();
     }
 }

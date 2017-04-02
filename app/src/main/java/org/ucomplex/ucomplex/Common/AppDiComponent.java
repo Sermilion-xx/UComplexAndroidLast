@@ -26,6 +26,12 @@ import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.SubjectProfileFragme
 import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.dagger.SubjectProfileModule;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.dagger.SubjectModelModule;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.dagger.SubjectPresenterModule;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectTimeline.SubjectTimelineFragment;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectTimeline.SubjectTimelineModel;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectTimeline.SubjectTimelinePresenter;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectTimeline.dagger.SubjectTimelineModelModule;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectTimeline.dagger.SubjectTimelineModule;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectTimeline.dagger.SubjectTimelinePresenterModule;
 
 import javax.inject.Singleton;
 
@@ -54,7 +60,10 @@ import dagger.Component;
                 SubjectProfileModule.class,
                 SubjectMaterialsModule.class,
                 SubjectMaterialsModelModule.class,
-                SubjectMaterialsPresenterModule.class
+                SubjectMaterialsPresenterModule.class,
+                SubjectTimelineModule.class,
+                SubjectTimelineModelModule.class,
+                SubjectTimelinePresenterModule.class
         })
 
 public interface AppDiComponent {
@@ -84,6 +93,12 @@ public interface AppDiComponent {
     void inject(SubjectMaterialsModel model);
 
     void inject(SubjectMaterialsPresenter presenter);
+
+    void inject(SubjectTimelineFragment fragment);
+
+    void inject(SubjectTimelineModel model);
+
+    void inject(SubjectTimelinePresenter presenter);
 
 }
 

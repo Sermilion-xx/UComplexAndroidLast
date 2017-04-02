@@ -1,7 +1,22 @@
 package org.ucomplex.ucomplex.Modules.Subject.SubjectTimeline;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
+
+import org.ucomplex.ucomplex.Common.UCApplication;
+import org.ucomplex.ucomplex.Common.base.BaseMvpFragment;
+import org.ucomplex.ucomplex.R;
+
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 import static org.ucomplex.ucomplex.Modules.Subject.SubjectActivity.EXTRA_GCOURSE;
 
@@ -15,7 +30,7 @@ import static org.ucomplex.ucomplex.Modules.Subject.SubjectActivity.EXTRA_GCOURS
  * ---------------------------------------------------
  */
 
-public class SubjectTimelineFragment extends Fragment {
+public class SubjectTimelineFragment extends BaseMvpFragment<SubjectTimelinePresenter> {
 
     public static SubjectTimelineFragment getInstance(int gcourse) {
         SubjectTimelineFragment fragment = new SubjectTimelineFragment();
@@ -23,5 +38,41 @@ public class SubjectTimelineFragment extends Fragment {
         bundle.putInt(EXTRA_GCOURSE, gcourse);
         fragment.setArguments(bundle);
         return fragment;
+    }
+
+    @BindView(R.id.progressBar)
+    protected ProgressBar mProgress;
+    @BindView(R.id.recyclerView)
+    protected RecyclerView mRecyclerView;
+    @Inject
+    protected SubjectTimelineAdapter mAdapter;
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            if (mAdapter.getItemCount() == 0) {
+                mAdapter.setItems(presenter.getData());
+                mAdapter.notifyDataSetChanged();
+            }
+        }
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        UCApplication.getInstance().getAppDiComponent().inject(this);
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_subject, container, false);
+        ButterKnife.bind(this, view);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivityContext());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setAdapter(mAdapter);
+        return view;
     }
 }

@@ -1,5 +1,6 @@
 package org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.dagger;
 
+import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.SubjectMaterialsAdapter;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.SubjectMaterialsPresenter;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.SubjectPresenter;
 
@@ -24,6 +25,12 @@ public class SubjectMaterialsModule {
     @Singleton
     SubjectMaterialsPresenter providePresenter() {
         return new SubjectMaterialsPresenter();
+    }
+
+    @Provides
+    @Singleton
+    SubjectMaterialsAdapter provideAdapter() {
+        return new SubjectMaterialsAdapter();
     }
 
 }

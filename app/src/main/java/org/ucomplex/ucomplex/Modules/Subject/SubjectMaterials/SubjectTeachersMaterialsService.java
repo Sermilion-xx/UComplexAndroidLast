@@ -15,9 +15,9 @@ import retrofit2.http.POST;
  * ---------------------------------------------------
  */
 
-public interface SubjectMaterialsService {
+public interface SubjectTeachersMaterialsService {
 
-    @POST("/student/ajax/teacher_files")  @FormUrlEncoded
+    @POST("/student/ajax/teacher_files?mobile=1")  @FormUrlEncoded
     Observable<MaterialsRaw> getMaterials(@Field("folder") String folder);
 
 }

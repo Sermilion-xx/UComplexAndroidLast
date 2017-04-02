@@ -96,7 +96,7 @@ public class SubjectActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        if(currentPage==1 && subjectMaterialsFragment.getCurrentPage() > 0){
+        if(currentPage == 0 && subjectMaterialsFragment.getCurrentPage() > 0){
             subjectMaterialsFragment.onBackPress();
         }else{
             super.onBackPressed();

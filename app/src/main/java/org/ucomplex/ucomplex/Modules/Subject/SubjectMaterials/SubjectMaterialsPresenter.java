@@ -1,7 +1,6 @@
 package org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials;
 
 
-
 import android.support.v4.util.Pair;
 
 import org.ucomplex.ucomplex.Common.UCApplication;
@@ -51,7 +50,7 @@ public class SubjectMaterialsPresenter extends AbstractPresenter<
         mModel.pageDown();
         Pair<List<SubjectItemFile>, String> history = getHistory(mModel.getCurrentPage());
         if (getView() != null) {
-            ((SubjectMaterialsFragment)getView()).getAdapter().setItems(history.first);
+            ((SubjectMaterialsFragment) getView()).getAdapter().setItems(history.first);
         }
     }
 
@@ -68,7 +67,11 @@ public class SubjectMaterialsPresenter extends AbstractPresenter<
     }
 
     public List<SubjectItemFile> getCurrentHistory() {
-        return mModel.getHistory(mModel.getCurrentPage()).first;
+        Pair<List<SubjectItemFile>, String> pair = mModel.getHistory(mModel.getCurrentPage());
+        if (pair != null) {
+            return pair.first;
+        }
+        return null;
     }
 
     @Override
@@ -83,10 +86,10 @@ public class SubjectMaterialsPresenter extends AbstractPresenter<
             @Override
             public void onNext(MaterialsRaw value) {
                 mModel.processData(value);
-                if(getView()!=null){
+                if (getView() != null) {
                     mModel.setCurrentFolder(params.getFolderName());
                     pageUp();
-                    ((SubjectMaterialsFragment)getView()).dataLoaded();
+                    ((SubjectMaterialsFragment) getView()).dataLoaded();
                 }
             }
 

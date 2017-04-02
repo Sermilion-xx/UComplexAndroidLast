@@ -2,7 +2,7 @@ package org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.dagger;
 
 import org.ucomplex.ucomplex.Common.ServiceGenerator;
 import org.ucomplex.ucomplex.Common.UCApplication;
-import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.SubjectMaterialsService;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.SubjectTeachersMaterialsService;
 
 import dagger.Module;
 import dagger.Provides;
@@ -20,8 +20,8 @@ import dagger.Provides;
 public class SubjectMaterialsModelModule {
 
     @Provides
-    SubjectMaterialsService provideService(){
-        return ServiceGenerator.createService(SubjectMaterialsService.class, UCApplication.getInstance().getAuthString());
+    SubjectTeachersMaterialsService provideService(){
+        return ServiceGenerator.createService(SubjectTeachersMaterialsService.class, UCApplication.getInstance().getAuthString());
     }
 
 }

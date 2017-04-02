@@ -18,6 +18,7 @@ import org.ucomplex.ucomplex.Common.interfaces.OnlIstItemClicked;
 import org.ucomplex.ucomplex.Modules.Subject.model.SubjectItemFile;
 import org.ucomplex.ucomplex.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.ucomplex.ucomplex.Common.UCApplication.BASE_URL;
@@ -39,6 +40,7 @@ public class SubjectMaterialsAdapter extends BaseAdapter<SubjectMaterialsAdapter
 
     private static final int TYPE_FILE = 0;
     private static final int TYPE_FOLDER = 1;
+    private static final int TYPE_EMPTY = 2;
 
     static class SubjectMaterialsViewHolder extends RecyclerView.ViewHolder {
 
@@ -67,10 +69,14 @@ public class SubjectMaterialsAdapter extends BaseAdapter<SubjectMaterialsAdapter
         }
     }
 
-    private boolean[] mItemTypes;
+    private boolean[] mItemTypes = new boolean[1];
     private String filename;
     private boolean mMyFiles;
     private OnlIstItemClicked<SubjectMaterialsParams> onlIstItemClicked;
+
+    public SubjectMaterialsAdapter () {
+        mItems = new ArrayList<>();
+    }
 
     public void setOnlIstItemClicked(OnlIstItemClicked<SubjectMaterialsParams> onlIstItemClicked) {
         this.onlIstItemClicked = onlIstItemClicked;
@@ -119,7 +125,7 @@ public class SubjectMaterialsAdapter extends BaseAdapter<SubjectMaterialsAdapter
 
     @Override
     public void onBindViewHolder(SubjectMaterialsViewHolder holder, int position) {
-        if (mItems.size() > 0) {
+        if (getItemViewType(position) != TYPE_EMPTY) {
             SubjectItemFile item = mItems.get(position);
             holder.mFileName.setText(item.getName());
             if (item.getTime() != null) {
@@ -171,9 +177,17 @@ public class SubjectMaterialsAdapter extends BaseAdapter<SubjectMaterialsAdapter
 
     @Override
     public int getItemViewType(int position) {
-        if (mItemTypes[position]) {
+        if (mItems == null || mItems.size() == 0) {
+            return TYPE_EMPTY;
+        } else if (mItemTypes[position]) {
             return TYPE_FOLDER;
         }
         return TYPE_FILE;
     }
+
+    @Override
+    public int getItemCount() {
+        return mItems == null || mItems.size() == 0 ? 1 : mItems.size();
+    }
+
 }

@@ -45,6 +45,8 @@ public class SubjectMaterialsFragment extends MvpFragment<MVPView, SubjectMateri
 
     private static final String MY_FILES = "MY_FILES";
 
+
+
     public static SubjectMaterialsFragment getInstance(boolean myFiles) {
         SubjectMaterialsFragment fragment = new SubjectMaterialsFragment();
         Bundle bundle = new Bundle();

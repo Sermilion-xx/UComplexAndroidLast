@@ -31,10 +31,10 @@ import io.reactivex.schedulers.Schedulers;
 public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<List<SubjectItemFile>, String>>, SubjectMaterialsParams> {
 
     private static final String DEFAULT_FOLDER_NAME = "null";
-    private SubjectMaterialsService subjectMaterialsService;
+    private SubjectTeachersMaterialsService subjectTeachersMaterialsService;
     private List<Pair<List<SubjectItemFile> , String>> mPageHistory;
     private Map<Integer, Teacher> mTeachers;
-    private int currentPage = -1;
+    private int currentPage = 0;
     private String currentFolder = "null";
 
     public void setTeachers(Map<Integer, Teacher> mTeachers) {
@@ -84,13 +84,13 @@ public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<L
     }
 
     @Inject
-    public void setSubjectMaterialsService(SubjectMaterialsService service) {
-        this.subjectMaterialsService = service;
+    public void setSubjectTeachersMaterialsService(SubjectTeachersMaterialsService service) {
+        this.subjectTeachersMaterialsService = service;
     }
 
     @Override
     public Observable<MaterialsRaw> loadData(SubjectMaterialsParams folder) {
-        return subjectMaterialsService.getMaterials(folder.getFolder()).subscribeOn(Schedulers.io())
+        return subjectTeachersMaterialsService.getMaterials(folder.getFolder()).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 

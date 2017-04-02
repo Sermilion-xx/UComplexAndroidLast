@@ -142,7 +142,7 @@ public class SubjectMaterialsAdapter extends BaseAdapter<SubjectMaterialsAdapter
                         FacadeCommon.requireStoragePermission(context);
                         Toast.makeText(context, context.getString(R.string.file_download_started), Toast.LENGTH_SHORT).show();
                         filename = item.getAddress() + "." + item.getType();
-                        startNotificationService(filename, "Загрузка файла началась.", null, context);
+                        startNotificationService(filename, context.getString(R.string.file_download_started), null, context);
                         String mUrl = BASE_URL + "storage.ucomplex.org/files/users/";
                         //TODO: download
                     }

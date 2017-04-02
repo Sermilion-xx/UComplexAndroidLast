@@ -76,32 +76,39 @@ public class SubjectMaterialsPresenter extends AbstractPresenter<
 
     @Override
     public void loadData(SubjectMaterialsParams params) {
-        Observable<MaterialsRaw> dataObservable = mModel.loadData(params);
-        dataObservable.subscribe(new Observer<MaterialsRaw>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-                showProgress();
+        if (mModel.getHistoryCount() > 1 && !params.isMyFolder()) {
+            if (getView() != null) {
+                pageUp();
+                ((SubjectMaterialsFragment) getView()).dataLoaded();
             }
-
-            @Override
-            public void onNext(MaterialsRaw value) {
-                mModel.processData(value);
-                if (getView() != null) {
-                    mModel.setCurrentFolder(params.getFolderName());
-                    pageUp();
-                    ((SubjectMaterialsFragment) getView()).dataLoaded();
+        } else {
+            Observable<MaterialsRaw> dataObservable = mModel.loadData(params);
+            dataObservable.subscribe(new Observer<MaterialsRaw>() {
+                @Override
+                public void onSubscribe(Disposable d) {
+                    showProgress();
                 }
-            }
 
-            @Override
-            public void onError(Throwable e) {
-                hideProgress();
-            }
+                @Override
+                public void onNext(MaterialsRaw value) {
+                    mModel.processData(value);
+                    if (getView() != null) {
+                        mModel.setCurrentFolder(params.getFolderName());
+                        pageUp();
+                        ((SubjectMaterialsFragment) getView()).dataLoaded();
+                    }
+                }
 
-            @Override
-            public void onComplete() {
-                hideProgress();
-            }
-        });
+                @Override
+                public void onError(Throwable e) {
+                    hideProgress();
+                }
+
+                @Override
+                public void onComplete() {
+                    hideProgress();
+                }
+            });
+        }
     }
 }

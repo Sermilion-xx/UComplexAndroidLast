@@ -1,4 +1,4 @@
-package org.ucomplex.ucomplex.Domain.Subject;
+package org.ucomplex.ucomplex.Modules.Login.model;
 
 /**
  * ---------------------------------------------------

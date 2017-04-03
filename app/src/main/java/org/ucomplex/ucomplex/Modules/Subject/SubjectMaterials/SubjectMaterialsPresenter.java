@@ -5,7 +5,9 @@ import android.support.v4.util.Pair;
 
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
-import org.ucomplex.ucomplex.Modules.Subject.model.SubjectItemFile;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.MaterialsRaw;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.SubjectItemFile;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.SubjectMaterialsParams;
 
 import java.util.List;
 

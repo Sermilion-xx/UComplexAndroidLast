@@ -1,6 +1,6 @@
 package org.ucomplex.ucomplex.Modules.Subject.SubjectTimeline;
 
-import org.ucomplex.ucomplex.Modules.Subject.SubjectTimeline.model.SubjectTimelineItem;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectTimeline.model.SubjectTimelineRaw;
 
 import io.reactivex.Observable;
 import retrofit2.http.Field;
@@ -17,8 +17,9 @@ import retrofit2.http.POST;
  * ---------------------------------------------------
  */
 
-public interface SubjectTimelineSeverice {
+public interface SubjectTimelineService {
 
-    @POST("/student/ajax/calendar_belt?mobile=1")  @FormUrlEncoded
-    Observable<SubjectTimelineItem> getTimeline(@Field("gcourse") Integer gcourse);
+    @POST("/student/ajax/calendar_belt?mobile=1")
+    @FormUrlEncoded
+    Observable<SubjectTimelineRaw> getTimeline(@Field("gcourse") Integer gcourse);
 }

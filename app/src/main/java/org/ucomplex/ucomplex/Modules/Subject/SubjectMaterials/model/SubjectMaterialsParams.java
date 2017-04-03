@@ -1,4 +1,4 @@
-package org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials;
+package org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model;
 
 /**
  * ---------------------------------------------------

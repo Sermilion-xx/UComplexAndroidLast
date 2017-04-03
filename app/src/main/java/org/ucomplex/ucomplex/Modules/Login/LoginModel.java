@@ -40,7 +40,6 @@ public class LoginModel implements MVPModel<LoginUser, UserInterface, LoginParam
     @Override
     public Observable<LoginUser> loadData(LoginParams params) {
         String loginData = FacadeCommon.encodeLoginData(params.getLogin() + ":" + params.getPassword());
-//        DaggerAppDiComponent.builder().loginModelModule(new LoginModelModule(loginData)).build().inject(this);
         loginService = ServiceGenerator.createService(LoginService.class, loginData);
         return loginService.login().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());

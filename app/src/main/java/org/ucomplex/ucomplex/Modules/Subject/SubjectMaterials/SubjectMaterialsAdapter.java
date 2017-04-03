@@ -14,8 +14,9 @@ import android.widget.Toast;
 
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.base.BaseAdapter;
-import org.ucomplex.ucomplex.Common.interfaces.OnlIstItemClicked;
-import org.ucomplex.ucomplex.Modules.Subject.model.SubjectItemFile;
+import org.ucomplex.ucomplex.Common.interfaces.OnListItemClicked;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.SubjectItemFile;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.SubjectMaterialsParams;
 import org.ucomplex.ucomplex.R;
 
 import java.util.ArrayList;
@@ -72,14 +73,14 @@ public class SubjectMaterialsAdapter extends BaseAdapter<SubjectMaterialsAdapter
     private boolean[] mItemTypes = new boolean[1];
     private String filename;
     private boolean mMyFiles;
-    private OnlIstItemClicked<SubjectMaterialsParams> onlIstItemClicked;
+    private OnListItemClicked<SubjectMaterialsParams> onListItemClicked;
 
     public SubjectMaterialsAdapter () {
         mItems = new ArrayList<>();
     }
 
-    public void setOnlIstItemClicked(OnlIstItemClicked<SubjectMaterialsParams> onlIstItemClicked) {
-        this.onlIstItemClicked = onlIstItemClicked;
+    public void setOnListItemClicked(OnListItemClicked<SubjectMaterialsParams> onListItemClicked) {
+        this.onListItemClicked = onListItemClicked;
     }
 
     public void setMyFiles(boolean mMyFiles) {
@@ -121,41 +122,43 @@ public class SubjectMaterialsAdapter extends BaseAdapter<SubjectMaterialsAdapter
 
     @Override
     public void onBindViewHolder(SubjectMaterialsViewHolder holder, int position) {
-        if (getItemViewType(position) != TYPE_EMPTY) {
-            SubjectItemFile item = mItems.get(position);
-            holder.mFileName.setText(item.getName());
-            if (item.getTime() != null) {
-                holder.mFileTime.setText(FacadeCommon.makeDate(item.getTime()));
-            } else {
-                holder.mFileTime.setText(holder.mFileTime.getContext().getString(R.string.just_now));
-            }
-            if (getItemViewType(position) == TYPE_FILE) {
-                Context context = holder.mSize.getContext();
-                holder.mSize.setText(FacadeCommon.readableFileSize(item.getSize(), false));
-                holder.mClickArea.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        FacadeCommon.requireStoragePermission(context);
-                        Toast.makeText(context, context.getString(R.string.file_download_started), Toast.LENGTH_SHORT).show();
-                        filename = item.getAddress() + "." + item.getType();
-                        startNotificationService(filename, context.getString(R.string.file_download_started), null, context);
-                        String mUrl = BASE_URL + "storage.ucomplex.org/files/users/";
-                        //TODO: download
-                    }
-                });
-            } else if (getItemViewType(position) == TYPE_FOLDER) {
-                holder.mOwnersName.setText(item.getOwnersName());
-                holder.mClickArea.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        SubjectMaterialsParams params = new SubjectMaterialsParams();
-                        params.setFolder(item.getAddress());
-                        params.setFolderName(item.getName());
-                        params.setFolder(true);
-                        params.setMyFolder(mMyFiles);
-                        onlIstItemClicked.onClick(params);
-                    }
-                });
+        if (mItems.size() > 0) {
+            if (getItemViewType(position) != TYPE_EMPTY) {
+                SubjectItemFile item = mItems.get(position);
+                holder.mFileName.setText(item.getName());
+                if (item.getTime() != null) {
+                    holder.mFileTime.setText(FacadeCommon.makeDate(item.getTime()));
+                } else {
+                    holder.mFileTime.setText(holder.mFileTime.getContext().getString(R.string.just_now));
+                }
+                if (getItemViewType(position) == TYPE_FILE) {
+                    Context context = holder.mSize.getContext();
+                    holder.mSize.setText(FacadeCommon.readableFileSize(item.getSize(), false));
+                    holder.mClickArea.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            FacadeCommon.requireStoragePermission(context);
+                            Toast.makeText(context, context.getString(R.string.file_download_started), Toast.LENGTH_SHORT).show();
+                            filename = item.getAddress() + "." + item.getType();
+                            startNotificationService(filename, context.getString(R.string.file_download_started), null, context);
+                            String mUrl = BASE_URL + "storage.ucomplex.org/files/users/";
+                            //TODO: download
+                        }
+                    });
+                } else if (getItemViewType(position) == TYPE_FOLDER) {
+                    holder.mOwnersName.setText(item.getOwnersName());
+                    holder.mClickArea.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            SubjectMaterialsParams params = new SubjectMaterialsParams();
+                            params.setFolder(item.getAddress());
+                            params.setFolderName(item.getName());
+                            params.setFolder(true);
+                            params.setMyFolder(mMyFiles);
+                            onListItemClicked.onClick(params);
+                        }
+                    });
+                }
             }
         }
     }

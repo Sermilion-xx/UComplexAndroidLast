@@ -1,12 +1,13 @@
-package org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials;
+package org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.model;
 
 import org.ucomplex.ucomplex.Domain.Users.File;
+import org.ucomplex.ucomplex.Domain.Users.Teacher;
 
 import java.util.List;
 
 /**
  * ---------------------------------------------------
- * Created by Sermilion on 01/04/2017.
+ * Created by Sermilion on 30/03/2017.
  * Project: UComplex
  * ---------------------------------------------------
  * <a href="http://www.ucomplex.org">www.ucomplex.org</a>
@@ -14,9 +15,18 @@ import java.util.List;
  * ---------------------------------------------------
  */
 
-public class MaterialsRaw {
+public class Files {
 
+    private Teacher teacher;
     private List<File> files;
+
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
+    }
 
     public List<File> getFiles() {
         return files;

@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import org.ucomplex.ucomplex.Common.FacadeCommon;
+import org.ucomplex.ucomplex.Common.ViewPagerAdapter;
 import org.ucomplex.ucomplex.Common.base.BaseActivity;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.SubjectMaterialsFragment;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.SubjectProfileFragment;
@@ -53,7 +54,7 @@ public class SubjectActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         if (subjectProfileFragment!= null && subjectProfileFragment.getPresenter() != null) {
-            subjectMaterialsFragment.setMaterialsItems(subjectProfileFragment.getPresenter().getModel().getFilesAndteachers());
+            subjectMaterialsFragment.setMaterialsItems(subjectProfileFragment.getPresenter().getModel().getFilesAndTeachers());
         }
     }
 

@@ -6,7 +6,9 @@ import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
 import org.ucomplex.ucomplex.Domain.Users.File;
 import org.ucomplex.ucomplex.Domain.Users.Teacher;
-import org.ucomplex.ucomplex.Modules.Subject.model.SubjectItemFile;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.MaterialsRaw;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.SubjectItemFile;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.SubjectMaterialsParams;
 
 import java.util.ArrayList;
 import java.util.List;

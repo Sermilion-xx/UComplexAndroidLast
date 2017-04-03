@@ -62,43 +62,37 @@
                     android:imeOptions="actionUnspecified"
                     android:inputType="textPassword"
                     android:maxLines="1"
-                    android:singleLine="true"
                     android:textColor="@color/colorWhite"
                     android:textColorHint="@color/colorWhite" />
 
             </android.support.design.widget.TextInputLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/login_sign_in_button"
-                    style="?android:textAppearanceSmall"
-                    android:layout_width="300dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="start"
-                    android:layout_marginTop="16dp"
-                    android:background="@drawable/round_button_white"
-                    android:text="@string/sign_in"
-                    android:textColor="@color/color_uc_ListText"
-                    android:textStyle="bold" />
+            <Button
+                android:id="@+id/login_sign_in_button"
+                style="?android:textAppearanceSmall"
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:layout_gravity="start"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/round_button_white"
+                android:text="@string/sign_in"
+                android:textColor="@color/color_uc_ListText"
+                android:textStyle="bold" />
 
-                <Button
-                    android:id="@+id/forgot_pass_button"
-                    style="?android:textAppearanceSmall"
-                    android:layout_width="150dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="16dp"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:text="@string/forgot_pass"
-                    android:textAllCaps="false"
-                    android:textColor="@color/colorWhite"
-                    android:textStyle="bold" />
+            <Button
+                android:id="@+id/forgot_pass_button"
+                style="?android:textAppearanceSmall"
+                android:layout_width="150dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:text="@string/forgot_pass"
+                android:textAllCaps="false"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold" />
 
-            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 

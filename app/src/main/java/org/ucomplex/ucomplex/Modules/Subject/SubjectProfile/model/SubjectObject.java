@@ -1,4 +1,6 @@
-package org.ucomplex.ucomplex.Modules.Subject.model;
+package org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.model;
+
+import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.SubjectItemFile;
 
 import java.util.List;
 

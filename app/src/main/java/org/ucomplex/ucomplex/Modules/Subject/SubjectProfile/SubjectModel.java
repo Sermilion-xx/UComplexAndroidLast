@@ -5,13 +5,13 @@ import android.support.v4.util.Pair;
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
-import org.ucomplex.ucomplex.Domain.Subject.Files;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.model.Files;
 import org.ucomplex.ucomplex.Domain.Users.File;
 import org.ucomplex.ucomplex.Domain.Users.Teacher;
-import org.ucomplex.ucomplex.Modules.Subject.model.SubjectItemFile;
-import org.ucomplex.ucomplex.Modules.Subject.model.SubjectItemProfile;
-import org.ucomplex.ucomplex.Modules.Subject.model.SubjectObject;
-import org.ucomplex.ucomplex.Modules.Subject.model.SubjectRaw;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.SubjectItemFile;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.model.SubjectItemProfile;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.model.SubjectObject;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.model.SubjectRaw;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,13 +47,12 @@ public class SubjectModel implements MVPModel<SubjectRaw, SubjectObject, Integer
     }
 
     private SubjectModel(boolean test) {
-        UCApplication.getInstance().getAppDiComponent().inject(this);
+
     }
 
     public static SubjectModel createTestModel() {
         return new SubjectModel(true);
     }
-
 
     @Inject
     public void setSubjectService(SubjectService service) {
@@ -86,8 +85,11 @@ public class SubjectModel implements MVPModel<SubjectRaw, SubjectObject, Integer
         return mData;
     }
 
-    public Pair<List<SubjectItemFile>, Map<Integer, Teacher>> getFilesAndteachers() {
-        return new Pair<>(mData.getMaterialsItems(), mTeachers);
+    public Pair<List<SubjectItemFile>, Map<Integer, Teacher>> getFilesAndTeachers() {
+        if (mData != null) {
+            return new Pair<>(mData.getMaterialsItems(), mTeachers);
+        }
+        return null;
     }
 
     @Override

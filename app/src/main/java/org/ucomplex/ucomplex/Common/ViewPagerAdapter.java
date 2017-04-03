@@ -1,4 +1,4 @@
-package org.ucomplex.ucomplex.Modules.Subject;
+package org.ucomplex.ucomplex.Common;
 
 
 

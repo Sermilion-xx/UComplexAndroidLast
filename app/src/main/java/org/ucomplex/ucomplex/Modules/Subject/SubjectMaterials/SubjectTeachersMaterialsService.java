@@ -1,5 +1,7 @@
 package org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials;
 
+import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.MaterialsRaw;
+
 import io.reactivex.Observable;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;

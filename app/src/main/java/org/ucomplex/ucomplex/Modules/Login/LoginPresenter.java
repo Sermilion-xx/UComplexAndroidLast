@@ -6,7 +6,7 @@ import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.FacadePreferences;
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
-import org.ucomplex.ucomplex.Domain.Subject.LoginErrorType;
+import org.ucomplex.ucomplex.Modules.Login.model.LoginErrorType;
 import org.ucomplex.ucomplex.Domain.Users.Role;
 import org.ucomplex.ucomplex.Domain.Users.UserInterface;
 import org.ucomplex.ucomplex.Modules.Login.model.LoginUser;
@@ -20,10 +20,10 @@ import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
-import static org.ucomplex.ucomplex.Domain.Subject.LoginErrorType.EMPTY_EMAIL;
-import static org.ucomplex.ucomplex.Domain.Subject.LoginErrorType.INVALID_PASSWORD;
-import static org.ucomplex.ucomplex.Domain.Subject.LoginErrorType.NO_ERROR;
-import static org.ucomplex.ucomplex.Domain.Subject.LoginErrorType.PASSWORD_REQUIRED;
+import static org.ucomplex.ucomplex.Modules.Login.model.LoginErrorType.EMPTY_EMAIL;
+import static org.ucomplex.ucomplex.Modules.Login.model.LoginErrorType.INVALID_PASSWORD;
+import static org.ucomplex.ucomplex.Modules.Login.model.LoginErrorType.NO_ERROR;
+import static org.ucomplex.ucomplex.Modules.Login.model.LoginErrorType.PASSWORD_REQUIRED;
 
 /**
  * ---------------------------------------------------

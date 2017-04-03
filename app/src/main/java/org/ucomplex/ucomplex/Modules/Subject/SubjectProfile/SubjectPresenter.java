@@ -2,9 +2,8 @@ package org.ucomplex.ucomplex.Modules.Subject.SubjectProfile;
 
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
-import org.ucomplex.ucomplex.Modules.Subject.SubjectActivity;
-import org.ucomplex.ucomplex.Modules.Subject.model.SubjectObject;
-import org.ucomplex.ucomplex.Modules.Subject.model.SubjectRaw;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.model.SubjectObject;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.model.SubjectRaw;
 
 import javax.inject.Inject;
 
@@ -48,7 +47,7 @@ public class SubjectPresenter extends AbstractPresenter<
             public void onNext(SubjectRaw value) {
                 mModel.processData(value);
                 if(getView()!=null){
-                    ((SubjectProfileFragment)getView()).subjectLoaded();
+                    ((SubjectProfileFragment)getView()).dataLoaded();
                 }
             }
 

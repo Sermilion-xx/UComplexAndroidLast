@@ -1,8 +1,6 @@
 package org.ucomplex.ucomplex.Modules.Subject.SubjectProfile;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,23 +9,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.Toast;
-
-import com.hannesdorfmann.mosby.mvp.MvpFragment;
 
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.base.BaseMvpFragment;
 import org.ucomplex.ucomplex.Common.interfaces.OnPresenterInjectedListener;
-import org.ucomplex.ucomplex.Common.interfaces.ViewExtensions;
-import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
 import org.ucomplex.ucomplex.Domain.Users.Teacher;
-import org.ucomplex.ucomplex.Modules.Subject.model.SubjectItemFile;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.SubjectItemFile;
 import org.ucomplex.ucomplex.R;
 
 import java.util.List;
 import java.util.Map;
-
-import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -96,9 +87,10 @@ public class SubjectProfileFragment extends BaseMvpFragment<SubjectPresenter> {
         }
     }
 
-    public void subjectLoaded() {
+    @Override
+    public void dataLoaded() {
         mAdapter.setItems(presenter.getData().getProfileItems());
         mAdapter.notifyDataSetChanged();
-        onPresenterInjectedListener.presenterInjected(presenter.getModel().getFilesAndteachers());
+        onPresenterInjectedListener.presenterInjected(presenter.getModel().getFilesAndTeachers());
     }
 }

@@ -11,6 +11,7 @@ import android.widget.ProgressBar;
 
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.base.BaseMvpFragment;
+import org.ucomplex.ucomplex.Common.interfaces.OnListItemClicked;
 import org.ucomplex.ucomplex.R;
 
 import javax.inject.Inject;
@@ -40,8 +41,6 @@ public class SubjectTimelineFragment extends BaseMvpFragment<SubjectTimelinePres
         return fragment;
     }
 
-    @BindView(R.id.progressBar)
-    protected ProgressBar mProgress;
     @BindView(R.id.recyclerView)
     protected RecyclerView mRecyclerView;
     @Inject
@@ -71,8 +70,18 @@ public class SubjectTimelineFragment extends BaseMvpFragment<SubjectTimelinePres
         View view = inflater.inflate(R.layout.fragment_subject, container, false);
         ButterKnife.bind(this, view);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivityContext());
+        mAdapter.setOnListItemClicked(gcourse -> presenter.loadData(gcourse));
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
+        if (presenter.getData() == null) {
+            presenter.loadData(0);
+        }
         return view;
+    }
+
+    @Override
+    public void dataLoaded() {
+        mAdapter.setItems(presenter.getData());
+        mAdapter.notifyDataSetChanged();
     }
 }

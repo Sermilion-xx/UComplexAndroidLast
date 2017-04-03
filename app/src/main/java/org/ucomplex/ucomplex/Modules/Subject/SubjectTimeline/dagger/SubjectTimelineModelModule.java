@@ -2,7 +2,7 @@ package org.ucomplex.ucomplex.Modules.Subject.SubjectTimeline.dagger;
 
 import org.ucomplex.ucomplex.Common.ServiceGenerator;
 import org.ucomplex.ucomplex.Common.UCApplication;
-import org.ucomplex.ucomplex.Modules.Subject.SubjectTimeline.SubjectTimelineSeverice;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectTimeline.SubjectTimelineService;
 
 import dagger.Module;
 import dagger.Provides;
@@ -20,8 +20,8 @@ import dagger.Provides;
 public class SubjectTimelineModelModule {
 
     @Provides
-    SubjectTimelineSeverice provideService(){
-        return ServiceGenerator.createService(SubjectTimelineSeverice.class, UCApplication.getInstance().getAuthString());
+    SubjectTimelineService provideService(){
+        return ServiceGenerator.createService(SubjectTimelineService.class, UCApplication.getInstance().getAuthString());
     }
 
 }

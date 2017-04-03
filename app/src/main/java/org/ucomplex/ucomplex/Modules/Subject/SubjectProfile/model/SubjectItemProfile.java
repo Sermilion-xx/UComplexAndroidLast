@@ -1,4 +1,4 @@
-package org.ucomplex.ucomplex.Modules.Subject.model;
+package org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.model;
 
 /**
  * ---------------------------------------------------

@@ -1,12 +1,11 @@
 package org.ucomplex.ucomplex.Modules.Subject.SubjectProfile;
 
-import org.ucomplex.ucomplex.Modules.Subject.model.SubjectRaw;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.model.SubjectRaw;
 
 import io.reactivex.Observable;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
-import retrofit2.http.Query;
 
 /**
  * ---------------------------------------------------

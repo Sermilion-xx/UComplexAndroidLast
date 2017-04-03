@@ -1,9 +1,5 @@
-package org.ucomplex.ucomplex.Modules.Subject.model;
+package org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.model;
 
-import org.ucomplex.ucomplex.Domain.Subject.Course;
-import org.ucomplex.ucomplex.Domain.Subject.Depart;
-import org.ucomplex.ucomplex.Domain.Subject.Files;
-import org.ucomplex.ucomplex.Domain.Subject.Progress;
 import org.ucomplex.ucomplex.Domain.Users.Teacher;
 
 import java.util.List;

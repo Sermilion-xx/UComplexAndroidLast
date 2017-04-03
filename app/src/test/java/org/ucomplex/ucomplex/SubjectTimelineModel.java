@@ -1,8 +1,8 @@
-package org.ucomplex.ucomplex.Common.interfaces;
+package org.ucomplex.ucomplex;
 
 /**
  * ---------------------------------------------------
- * Created by Sermilion on 01/04/2017.
+ * Created by Sermilion on 03/04/2017.
  * Project: UComplex
  * ---------------------------------------------------
  * <a href="http://www.ucomplex.org">www.ucomplex.org</a>
@@ -10,7 +10,5 @@ package org.ucomplex.ucomplex.Common.interfaces;
  * ---------------------------------------------------
  */
 
-public interface OnlIstItemClicked<T> {
-
-    void onClick(T params);
+public class SubjectTimelineModel {
 }

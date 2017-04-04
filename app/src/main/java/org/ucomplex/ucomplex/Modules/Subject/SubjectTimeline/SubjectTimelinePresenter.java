@@ -3,6 +3,7 @@ package org.ucomplex.ucomplex.Modules.Subject.SubjectTimeline;
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectTimeline.model.SubjectTimelineItem;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectTimeline.model.SubjectTimelineParams;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectTimeline.model.SubjectTimelineRaw;
 
 import java.util.List;
@@ -24,7 +25,10 @@ import io.reactivex.disposables.Disposable;
  */
 
 public class SubjectTimelinePresenter extends AbstractPresenter<
-        SubjectTimelineRaw, List<SubjectTimelineItem>, Integer, SubjectTimelineModel> {
+        SubjectTimelineRaw, List<SubjectTimelineItem>, SubjectTimelineParams, SubjectTimelineModel> {
+
+    private boolean hasMoreItems = false;
+    private int gcourse = 0;
 
     public SubjectTimelinePresenter() {
         UCApplication.getInstance().getAppDiComponent().inject(this);
@@ -36,8 +40,8 @@ public class SubjectTimelinePresenter extends AbstractPresenter<
     }
 
     @Override
-    public void loadData(Integer gcourse) {
-        Observable<SubjectTimelineRaw> dataObservable = mModel.loadData(gcourse);
+    public void loadData(SubjectTimelineParams params) {
+        Observable<SubjectTimelineRaw> dataObservable = mModel.loadData(params);
         dataObservable.subscribe(new Observer<SubjectTimelineRaw>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -46,7 +50,11 @@ public class SubjectTimelinePresenter extends AbstractPresenter<
 
             @Override
             public void onNext(SubjectTimelineRaw value) {
+                hasMoreItems = value.getMarks().size() > 19;
                 mModel.processData(value);
+                if (hasMoreItems) {
+                    getData().add(new SubjectTimelineItem());
+                }
                 if (getView() != null) {
                     ((SubjectTimelineFragment) getView()).dataLoaded();
                 }

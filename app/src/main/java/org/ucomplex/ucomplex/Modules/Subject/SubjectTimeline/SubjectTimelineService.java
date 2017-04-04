@@ -21,5 +21,6 @@ public interface SubjectTimelineService {
 
     @POST("/student/ajax/calendar_belt?mobile=1")
     @FormUrlEncoded
-    Observable<SubjectTimelineRaw> getTimeline(@Field("gcourse") Integer gcourse);
+    Observable<SubjectTimelineRaw> getTimeline(@Field("gcourse") Integer gcourse,
+                                               @Field("start") Integer start);
 }

@@ -6,7 +6,7 @@ import org.junit.Test;
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.SubjectModel;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.model.SubjectRaw;
-import org.ucomplex.ucomplex.Modules.Subject.SubjectTimeline.SubjectTimelinePresenter;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectTimeline.SubjectTimelineModel;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectTimeline.model.SubjectTimelineRaw;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -61,6 +61,13 @@ public class SubjectModelTest {
                 subjectRaw.getMarks() != null &&
                 subjectRaw.getTeachers() != null &&
                 subjectRaw.getUser() != null);
+    }
+
+    @Test
+    public void SubjectTimelineRawToSubjectTimelineListItems() {
+        SubjectTimelineRaw subjectRaw = getSubjectTimelineRawFromJson(SUBJECT_TIMELINE_JSON);
+        SubjectTimelineModel model = new SubjectTimelineModel(true);
+        model.processData(subjectRaw);
     }
 
 }

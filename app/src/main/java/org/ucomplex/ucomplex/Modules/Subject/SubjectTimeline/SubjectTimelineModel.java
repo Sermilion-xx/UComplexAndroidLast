@@ -1,9 +1,11 @@
 package org.ucomplex.ucomplex.Modules.Subject.SubjectTimeline;
 
+import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectTimeline.model.Marks;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectTimeline.model.SubjectTimelineItem;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectTimeline.model.SubjectTimelineParams;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectTimeline.model.SubjectTimelineRaw;
 
 import java.text.SimpleDateFormat;
@@ -29,7 +31,7 @@ import io.reactivex.schedulers.Schedulers;
  * ---------------------------------------------------
  */
 
-public class SubjectTimelineModel implements MVPModel<SubjectTimelineRaw, List<SubjectTimelineItem>, Integer> {
+public class SubjectTimelineModel implements MVPModel<SubjectTimelineRaw, List<SubjectTimelineItem>, SubjectTimelineParams> {
 
     private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
     private static final String LOCALE = "Ru";
@@ -40,14 +42,18 @@ public class SubjectTimelineModel implements MVPModel<SubjectTimelineRaw, List<S
         UCApplication.getInstance().getAppDiComponent().inject(this);
     }
 
+    public SubjectTimelineModel(boolean test) {
+
+    }
+
     @Inject
     public void setSubjectTimelineService(SubjectTimelineService service) {
         this.mService = service;
     }
 
     @Override
-    public Observable<SubjectTimelineRaw> loadData(Integer gcourse) {
-        return mService.getTimeline(gcourse).subscribeOn(Schedulers.io())
+    public Observable<SubjectTimelineRaw> loadData(SubjectTimelineParams params) {
+        return mService.getTimeline(params.getGcourse(), params.getStart()).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
@@ -81,10 +87,11 @@ public class SubjectTimelineModel implements MVPModel<SubjectTimelineRaw, List<S
             SubjectTimelineItem item = new SubjectTimelineItem();
             item.setMark(mark.getMark());
             item.setCourseName(courses.get(mark.getCourse()));
-            Date date = new Date(mark.getTime() * 1000);
+            Date date = new Date(mark.getTime()*1000);
             SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, new Locale(LOCALE));
             String time = sdf.format(date);
-            item.setTime(time);
+            String timeString = FacadeCommon.makeDate(time, true);
+            item.setTime(timeString);
             item.setType(mark.getType());
             item.setTeacherName(teachers.get(mark.getTeacher()));
             mData.add(item);

@@ -18,6 +18,14 @@ public class SubjectTimelineItem {
     private String time;
     private int    type;
 
+    public boolean isEmpty() {
+        return mark == 0 &&
+                courseName == null &&
+                teacherName == null &&
+                time == null &&
+                type == 0;
+    }
+
     public String getTeacherName() {
         return teacherName;
     }

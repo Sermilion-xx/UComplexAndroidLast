@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.base.BaseMvpFragment;
 import org.ucomplex.ucomplex.Common.interfaces.OnListItemClicked;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectTimeline.model.SubjectTimelineParams;
 import org.ucomplex.ucomplex.R;
 
 import javax.inject.Inject;
@@ -70,18 +71,23 @@ public class SubjectTimelineFragment extends BaseMvpFragment<SubjectTimelinePres
         View view = inflater.inflate(R.layout.fragment_subject, container, false);
         ButterKnife.bind(this, view);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivityContext());
-        mAdapter.setOnListItemClicked(gcourse -> presenter.loadData(gcourse));
+        mAdapter.setOnListItemClicked(params -> {
+            params.setGcourse(getArguments().getInt(EXTRA_GCOURSE));
+            presenter.loadData(params);
+        });
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
         if (presenter.getData() == null) {
-            presenter.loadData(0);
+            SubjectTimelineParams params = new SubjectTimelineParams();
+            params.setGcourse(getArguments().getInt(EXTRA_GCOURSE));
+            presenter.loadData(params);
         }
         return view;
     }
 
     @Override
     public void dataLoaded() {
-        mAdapter.setItems(presenter.getData());
+        mAdapter.getItems().addAll(presenter.getData());
         mAdapter.notifyDataSetChanged();
     }
 }

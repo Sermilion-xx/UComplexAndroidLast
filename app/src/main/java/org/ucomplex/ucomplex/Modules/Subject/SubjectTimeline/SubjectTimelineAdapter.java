@@ -18,8 +18,10 @@ import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.base.BaseAdapter;
 import org.ucomplex.ucomplex.Common.interfaces.OnListItemClicked;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectTimeline.model.SubjectTimelineItem;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectTimeline.model.SubjectTimelineParams;
 import org.ucomplex.ucomplex.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.ucomplex.ucomplex.Common.FacadeMedia.getLetter;
@@ -62,9 +64,13 @@ public class SubjectTimelineAdapter extends BaseAdapter<SubjectTimelineAdapter.S
     }
 
     private String[] colors = {"#51cde7", "#fecd71", "#9ece2b", "#d18ec0"};
-    private OnListItemClicked<Integer> onListItemClicked;
+    private OnListItemClicked<SubjectTimelineParams> onListItemClicked;
 
-    public void setOnListItemClicked(OnListItemClicked<Integer> onListItemClicked) {
+    public SubjectTimelineAdapter() {
+        mItems = new ArrayList<>();
+    }
+
+    public void setOnListItemClicked(OnListItemClicked<SubjectTimelineParams> onListItemClicked) {
         this.onListItemClicked = onListItemClicked;
     }
 
@@ -110,8 +116,17 @@ public class SubjectTimelineAdapter extends BaseAdapter<SubjectTimelineAdapter.S
                 holder.mTimeIcon.setTypeface(typeface);
                 holder.mTimeIcon.setText("\uF017");
             } else {
-                holder.loadMoreButton.setOnClickListener(view -> onListItemClicked.onClick(getItemCount() + 1));
+                holder.loadMoreButton.setOnClickListener(view -> {
+                    SubjectTimelineParams params = new SubjectTimelineParams();
+                    params.setStart(getItemCount());
+                    onListItemClicked.onClick(params);
+                });
             }
         }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return mItems.get(position).isEmpty() ? TYPE_FOOTER : TYPE_ITEM;
     }
 }

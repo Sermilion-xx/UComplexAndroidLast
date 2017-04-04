@@ -12,7 +12,7 @@ package org.ucomplex.ucomplex.Modules.Subject.SubjectTimeline.model;
 
 public class Marks {
 
-    private int time;
+    private long time;
     private int number;
     private int mark;
     private int type;
@@ -20,11 +20,11 @@ public class Marks {
     private int teacher;
     private int gcourse;
 
-    public int getTime() {
+    public long getTime() {
         return time;
     }
 
-    public void setTime(int time) {
+    public void setTime(long time) {
         this.time = time;
     }
 

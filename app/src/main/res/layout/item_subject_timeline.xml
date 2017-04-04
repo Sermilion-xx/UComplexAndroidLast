@@ -15,10 +15,10 @@
 
     <TextView
         android:id="@+id/subject_name"
-        android:lines="1"
         android:layout_toEndOf="@id/subject_mark_image"
         android:layout_alignTop="@id/subject_mark_image"
-        android:text="Название какого-то беспонтового документа dsfdsf dsfsdf sdf ds fs dfds f"
+        android:ellipsize="end"
+        android:lines="1"
         style="@style/StyleTextViewPrimary"
         android:layout_marginStart="26dp"
         android:layout_marginEnd="10dp" />
@@ -35,10 +35,9 @@
     <TextView
         android:id="@+id/subject_time"
         android:layout_marginStart="5dp"
-        android:lines="1"
         android:layout_toEndOf="@id/subject_time_icon"
         android:layout_below="@id/subject_name"
-        android:text="dfsfsdfsf"
+        android:lines="1"
         style="@style/StyleRecyclerSubText"
         android:layout_marginTop="3dp" />
 

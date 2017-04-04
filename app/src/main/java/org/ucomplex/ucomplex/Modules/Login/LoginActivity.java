@@ -34,7 +34,7 @@ import static org.ucomplex.ucomplex.Modules.Login.model.LoginErrorType.EMPTY_EMA
 import static org.ucomplex.ucomplex.Modules.Login.model.LoginErrorType.INVALID_PASSWORD;
 import static org.ucomplex.ucomplex.Modules.Login.model.LoginErrorType.PASSWORD_REQUIRED;
 
-public class LoginActivity extends BaseMVPActivity<MVPView, LoginPresenter> implements View.OnClickListener, MVPView {
+public class LoginActivity extends BaseMVPActivity<MVPView, LoginPresenter> implements View.OnClickListener {
 
     @BindView(R.id.login)
     AutoCompleteTextView mLoginView;
@@ -143,13 +143,4 @@ public class LoginActivity extends BaseMVPActivity<MVPView, LoginPresenter> impl
         finish();
     }
 
-    @Override
-    public Context getAppContext() {
-        return UCApplication.getInstance();
-    }
-
-    @Override
-    public Context getActivityContext() {
-        return this;
-    }
 }

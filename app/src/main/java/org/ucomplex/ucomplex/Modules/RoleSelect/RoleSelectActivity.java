@@ -24,7 +24,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RoleSelectActivity extends BaseMVPActivity<MVPView, RoleSelectPresenter> implements MVPView, IntentCallback<Integer> {
+public class RoleSelectActivity extends BaseMVPActivity<MVPView, RoleSelectPresenter> implements IntentCallback<Integer> {
 
     private static final String EXTRA_USER = "EXTRA_USER";
     @BindView(R.id.recyclerView)
@@ -72,16 +72,6 @@ public class RoleSelectActivity extends BaseMVPActivity<MVPView, RoleSelectPrese
     @Override
     public RoleSelectPresenter createPresenter() {
         return presenter;
-    }
-
-    @Override
-    public Context getAppContext() {
-        return UCApplication.getInstance();
-    }
-
-    @Override
-    public Context getActivityContext() {
-        return this;
     }
 
     @Override

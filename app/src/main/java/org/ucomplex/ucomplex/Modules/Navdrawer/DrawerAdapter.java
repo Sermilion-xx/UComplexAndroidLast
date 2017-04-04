@@ -1,4 +1,4 @@
-package org.ucomplex.ucomplex.Common.navdrawer;
+package org.ucomplex.ucomplex.Modules.Navdrawer;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -16,7 +16,9 @@ import com.bumptech.glide.Priority;
 import org.ucomplex.ucomplex.Common.FacadeMedia;
 import org.ucomplex.ucomplex.Common.FacadePreferences;
 import org.ucomplex.ucomplex.Common.UCApplication;
+import org.ucomplex.ucomplex.Modules.Events.EventsActivity;
 import org.ucomplex.ucomplex.Modules.Login.LoginActivity;
+import org.ucomplex.ucomplex.Modules.SubjectsList.SubjectsListActivity;
 import org.ucomplex.ucomplex.R;
 
 import java.util.List;
@@ -69,7 +71,7 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
         private CircleImageView mProfileImageView;
         private CircleImageView mRolesImageView;
 
-        ViewHolder(View view, int viewType) {
+        public ViewHolder(View view, int viewType) {
             super(view);
             if (viewType == 0) {
                 mTextView1 = (TextView) view.findViewById(R.id.name);
@@ -84,7 +86,7 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
             view.setOnLongClickListener(this);
         }
 
-        void bindListRow(DrawerListItem row) {
+        public void bindListRow(DrawerListItem row) {
             if (getItemViewType() == 0) {
                 mTextView1.setText(row.getTitle1());
                 mTextView2.setText(row.getTitle2());
@@ -118,12 +120,9 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
             } else if (position == 0) {
                 //TODO: go to profile
             } else if (position == 1) {
-//                onDrawerItemPressed(EventsActivity.class);
-//                Intent intent = new Intent(Constants.EVENTS_REFRESH_BROADCAST);
-//                intent.putExtra(EventsActivity.ACTION_RELOAD_EVENTS, true);
-//                mContext.sendBroadcast(intent);
+
             } else if (position == 2) {
-//                onDrawerItemPressed(SubjectsListActivity.class);
+                onDrawerItemPressed(SubjectsListActivity.class);
             } else if (position == 3) {
 //                onDrawerItemPressed(MaterialsActivity.class);
             } else if (position == 4) {

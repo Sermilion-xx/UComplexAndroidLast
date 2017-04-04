@@ -1,5 +1,6 @@
 package org.ucomplex.ucomplex.Common.base;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -26,9 +27,9 @@ import org.ucomplex.ucomplex.Common.FragmentFactory;
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.ViewExtensions;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
-import org.ucomplex.ucomplex.Common.navdrawer.DrawerAdapter;
-import org.ucomplex.ucomplex.Common.navdrawer.DrawerListItem;
-import org.ucomplex.ucomplex.Common.navdrawer.FacadeDrawer;
+import org.ucomplex.ucomplex.Modules.Navdrawer.DrawerAdapter;
+import org.ucomplex.ucomplex.Modules.Navdrawer.DrawerListItem;
+import org.ucomplex.ucomplex.Modules.Navdrawer.FacadeDrawer;
 import org.ucomplex.ucomplex.Domain.Users.UserInterface;
 import org.ucomplex.ucomplex.R;
 
@@ -36,7 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BaseMVPActivity<V extends MVPView, Presenter extends MvpPresenter<V>>
-        extends MvpActivity<V, Presenter> implements ViewExtensions {
+        extends MvpActivity<V, Presenter> implements ViewExtensions, MVPView {
 
     protected ProgressBar mProgress;
     protected Toolbar mToolbar;
@@ -195,5 +196,15 @@ public abstract class BaseMVPActivity<V extends MVPView, Presenter extends MvpPr
         if (mProgress != null) {
             mProgress.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public Context getAppContext() {
+        return UCApplication.getInstance();
+    }
+
+    @Override
+    public Context getActivityContext() {
+        return this;
     }
 }

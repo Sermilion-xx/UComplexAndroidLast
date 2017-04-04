@@ -23,9 +23,9 @@ import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.FragmentFactory;
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.ViewExtensions;
-import org.ucomplex.ucomplex.Common.navdrawer.DrawerAdapter;
-import org.ucomplex.ucomplex.Common.navdrawer.DrawerListItem;
-import org.ucomplex.ucomplex.Common.navdrawer.FacadeDrawer;
+import org.ucomplex.ucomplex.Modules.Navdrawer.DrawerAdapter;
+import org.ucomplex.ucomplex.Modules.Navdrawer.DrawerListItem;
+import org.ucomplex.ucomplex.Modules.Navdrawer.FacadeDrawer;
 import org.ucomplex.ucomplex.Domain.Users.UserInterface;
 import org.ucomplex.ucomplex.R;
 

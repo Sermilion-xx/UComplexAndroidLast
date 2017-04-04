@@ -1,7 +1,6 @@
-package org.ucomplex.ucomplex.Modules.Subject.SubjectTimeline.dagger;
+package org.ucomplex.ucomplex.Modules.SubjectsList.dagger;
 
-import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.SubjectModel;
-import org.ucomplex.ucomplex.Modules.Subject.SubjectTimeline.SubjectTimelineModel;
+import org.ucomplex.ucomplex.Modules.SubjectsList.SubjectsListPresenter;
 
 import javax.inject.Singleton;
 
@@ -18,12 +17,12 @@ import dagger.Provides;
  * ---------------------------------------------------
  */
 @Module
-public class SubjectTimelinePresenterModule {
+public class SubjectsListModule {
 
     @Provides
     @Singleton
-    SubjectTimelineModel provideModel() {
-        return SubjectTimelineModel.getInstance();
+    SubjectsListPresenter providePresenter() {
+        return new SubjectsListPresenter();
     }
 
 }

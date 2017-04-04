@@ -38,12 +38,20 @@ public class SubjectTimelineModel implements MVPModel<SubjectTimelineRaw, List<S
     private List<SubjectTimelineItem> mData;
     private SubjectTimelineService mService;
 
-    public SubjectTimelineModel() {
+    private SubjectTimelineModel() { }
+
+    private void inject() {
         UCApplication.getInstance().getAppDiComponent().inject(this);
     }
 
-    public SubjectTimelineModel(boolean test) {
+    public static SubjectTimelineModel getInstance(){
+        SubjectTimelineModel model = new SubjectTimelineModel();
+        model.inject();
+        return model;
+    }
 
+    public static SubjectTimelineModel getTestInstance(){
+        return new SubjectTimelineModel();
     }
 
     @Inject

@@ -27,7 +27,8 @@
         <activity android:name=".Modules.Events.EventsActivity" />
         <activity android:name=".Modules.RoleSelect.RoleSelectActivity" />
         <activity android:name=".Modules.Subject.SubjectActivity" />
-        <activity android:name=".Common.base.BaseMVPActivity"></activity>
+        <activity android:name=".Common.base.BaseMVPActivity" />
+        <activity android:name=".Modules.SubjectsList.SubjectsListActivity"></activity>
     </application>
 
 </manifest>

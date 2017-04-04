@@ -25,11 +25,19 @@ import javax.inject.Inject;
 
 import static org.ucomplex.ucomplex.Common.FacadeCommon.REQUEST_EXTERNAL_STORAGE;
 
-public class EventsActivity extends BaseMVPActivity<MVPView, EventsPresenter> implements MVPView{
+public class EventsActivity extends BaseMVPActivity<MVPView, EventsPresenter> implements MVPView {
+
+    private static final String EXTRA_REFRESH = "REFRESH";
 
     public static Intent creteIntent (Context context) {
         Intent intent = new Intent(context, EventsActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        return intent;
+    }
+
+    public static Intent creteRefreshIntent (Context context) {
+        Intent intent = new Intent(context, EventsActivity.class);
+        intent.putExtra(EXTRA_REFRESH, true);
         return intent;
     }
 
@@ -55,7 +63,7 @@ public class EventsActivity extends BaseMVPActivity<MVPView, EventsPresenter> im
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new EventsAdapter(params -> presenter.loadData(params));
         mRecyclerView.setAdapter(mAdapter);
-        if (presenter.getData() == null) {
+        if (presenter.getData() == null || getIntent().getBooleanExtra(EXTRA_REFRESH, false)) {
             presenter.loadData(0);
         } else {
             updateEvents(presenter.getData());
@@ -88,13 +96,4 @@ public class EventsActivity extends BaseMVPActivity<MVPView, EventsPresenter> im
         mAdapter.updateAdapterItems(items);
     }
 
-    @Override
-    public Context getAppContext() {
-        return UCApplication.getInstance();
-    }
-
-    @Override
-    public Context getActivityContext() {
-        return this;
-    }
 }

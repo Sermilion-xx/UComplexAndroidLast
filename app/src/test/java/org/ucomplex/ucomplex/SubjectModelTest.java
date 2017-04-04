@@ -8,6 +8,8 @@ import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.SubjectModel;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.model.SubjectRaw;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectTimeline.SubjectTimelineModel;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectTimeline.model.SubjectTimelineRaw;
+import org.ucomplex.ucomplex.Modules.SubjectsList.SubjectsListModel;
+import org.ucomplex.ucomplex.Modules.SubjectsList.model.SubjectsListRaw;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -25,6 +27,9 @@ public class SubjectModelTest {
 
     private static final String SUBJECT_JSON = "subject.json";
     private static final String SUBJECT_TIMELINE_JSON = "subject_timeline.json";
+    private static final String SUBJECTS_LIST_JSON = "subjects_list.json";
+
+    //------------------------------- SubjectModel ------------------------------------------------/
 
     private SubjectRaw getSubjectRawFromJson(String fileName) {
         String json = FacadeCommon.readFile(fileName);
@@ -46,6 +51,8 @@ public class SubjectModelTest {
                 model.getData().getMaterialsItems().size() == 40);
     }
 
+    //------------------------------- SubjectTimeline ---------------------------------------------/
+
     private SubjectTimelineRaw getSubjectTimelineRawFromJson(String fileName) {
         String json = FacadeCommon.readFile(fileName);
         Gson gson = new Gson();
@@ -65,9 +72,34 @@ public class SubjectModelTest {
 
     @Test
     public void SubjectTimelineRawToSubjectTimelineListItems() {
-        SubjectTimelineRaw subjectRaw = getSubjectTimelineRawFromJson(SUBJECT_TIMELINE_JSON);
-        SubjectTimelineModel model = new SubjectTimelineModel(true);
-        model.processData(subjectRaw);
+        SubjectTimelineRaw raw = getSubjectTimelineRawFromJson(SUBJECT_TIMELINE_JSON);
+        SubjectTimelineModel model = SubjectTimelineModel.getTestInstance();
+        model.processData(raw);
+        assertThat("Model data should not be null", model.getData() != null);
     }
 
+    //------------------------------- SubjectsList ------------------------------------------------/
+
+    private SubjectsListRaw getSubjectsListRawFromJson(String fileName) {
+        String json = FacadeCommon.readFile(fileName);
+        Gson gson = new Gson();
+        return gson.fromJson(json, SubjectsListRaw.class);
+    }
+
+    @Test
+    public void jsonStringToSubjectsListRaw() {
+        SubjectsListRaw subjectRaw = getSubjectsListRawFromJson(SUBJECTS_LIST_JSON);
+        assertThat("SubjectsListRaw fields must not be null",
+                subjectRaw.getCourses() != null &&
+                        subjectRaw.getCourses_forms() != null &&
+                        subjectRaw.getStudentSubjectsList() != null);
+    }
+
+    @Test
+    public void SubjectsListRawToSubjectListItems() {
+        SubjectsListRaw raw = getSubjectsListRawFromJson(SUBJECTS_LIST_JSON);
+        SubjectsListModel model = SubjectsListModel.getTestInstance();
+        model.processData(raw);
+        assertThat("Model data should not be null", model.getData() != null);
+    }
 }

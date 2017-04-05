@@ -1,6 +1,8 @@
 package org.ucomplex.ucomplex.Modules.Login;
 
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.Toast;
 
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.FacadePreferences;
@@ -10,6 +12,7 @@ import org.ucomplex.ucomplex.Modules.Login.model.LoginErrorType;
 import org.ucomplex.ucomplex.Domain.Users.Role;
 import org.ucomplex.ucomplex.Domain.Users.UserInterface;
 import org.ucomplex.ucomplex.Modules.Login.model.LoginUser;
+import org.ucomplex.ucomplex.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,6 +74,9 @@ public class LoginPresenter extends AbstractPresenter<LoginUser, UserInterface, 
             @Override
             public void onError(Throwable e) {
                 hideProgress();
+                if (getView() != null) {
+                    ((LoginActivity) getView()).showToast(R.string.authorization_error, Toast.LENGTH_LONG);
+                }
             }
 
             @Override

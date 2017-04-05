@@ -15,7 +15,7 @@ import java.util.List;
 public class Teacher extends User {
 
     private int post;
-    private int experience;
+    private String experience;
     private String dep_experience;
     private String courses;
     private int rank;
@@ -43,11 +43,11 @@ public class Teacher extends User {
         this.post = post;
     }
 
-    public int getExperience() {
+    public String getExperience() {
         return experience;
     }
 
-    public void setExperience(int experience) {
+    public void setExperience(String experience) {
         this.experience = experience;
     }
 

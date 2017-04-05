@@ -5,6 +5,7 @@ import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
 import org.ucomplex.ucomplex.Modules.SubjectsList.model.StudentSubjectList;
 import org.ucomplex.ucomplex.Modules.SubjectsList.model.SubjectsListItem;
 import org.ucomplex.ucomplex.Modules.SubjectsList.model.SubjectsListRaw;
+import org.ucomplex.ucomplex.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class SubjectsListModel implements MVPModel<SubjectsListRaw, List<SubjectsListItem>, Void> {
 
+    private final int[] assessmentType = {R.string.zachet, R.string.exam, R.string.samostoyatelnaya, R.string.empty};
     private List<SubjectsListItem> mDate;
     private SubjectsListService mService;
 
@@ -85,8 +87,8 @@ public class SubjectsListModel implements MVPModel<SubjectsListRaw, List<Subject
         for (int i = 0; i < data.getStudentSubjectsList().size(); i++) {
             SubjectsListItem item = new SubjectsListItem();
             StudentSubjectList subject = data.getStudentSubjectsList().get(i);
-            item.setAssessmentType(data.getCourses_forms().get(subject.getCourse()));
-            item.setCourseId(subject.getCourse());
+            item.setAssessmentType(assessmentType[data.getCourses_forms().get(subject.getCourse())]);
+            item.setCourseId(subject.getId());
             item.setCourseName(data.getCourses().get(subject.getCourse()));
             mDate.add(item);
         }

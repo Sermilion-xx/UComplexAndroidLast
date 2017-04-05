@@ -18,6 +18,12 @@ public class SubjectItemProfile {
     private String attendance;
     private String mark;
 
+    public SubjectItemProfile() {
+        attendance = "";
+        mark = "";
+    }
+
+
     public String getCode() {
         return code;
     }

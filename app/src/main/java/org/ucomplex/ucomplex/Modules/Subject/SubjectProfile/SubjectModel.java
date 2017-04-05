@@ -120,14 +120,15 @@ public class SubjectModel implements MVPModel<SubjectRaw, SubjectObject, Integer
         profileItemsList.addAll(new ArrayList<>(profileItemsSet));
 
         SubjectItemProfile markAttendanceItem = new SubjectItemProfile();
-        double mark = getMark(data.getProgress().getMark(), data.getProgress().getMarksCount());
-        mark = FacadeCommon.round(mark, 2);
-        markAttendanceItem.setMark(Double.toString(mark));
+        if (data.getProgress() != null) {
+            double mark = getMark(data.getProgress().getMark(), data.getProgress().getMarksCount());
+            mark = FacadeCommon.round(mark, 2);
+            markAttendanceItem.setMark(Double.toString(mark));
 
-        double absence = getAbsence(data.getProgress().getAbsence(), data.getProgress().getHours());
-        absence = FacadeCommon.round(absence, 2);
-        markAttendanceItem.setAttendance(Double.toString(absence));
-
+            double absence = getAbsence(data.getProgress().getAbsence(), data.getProgress().getHours());
+            absence = FacadeCommon.round(absence, 2);
+            markAttendanceItem.setAttendance(Double.toString(absence));
+        }
         profileItemsList.add(markAttendanceItem);
 
         mData.setMaterialsItems(filesItems);

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
+import android.util.EventLog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -120,7 +121,7 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
             } else if (position == 0) {
                 //TODO: go to profile
             } else if (position == 1) {
-
+                onDrawerItemPressed(EventsActivity.class);
             } else if (position == 2) {
                 onDrawerItemPressed(SubjectsListActivity.class);
             } else if (position == 3) {

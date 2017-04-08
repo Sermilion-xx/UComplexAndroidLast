@@ -62,7 +62,7 @@ public class RoleSelectAdapter extends RecyclerView.Adapter<RoleSelectAdapter.Ro
         RoleItem item = mItems.get(position);
         holder.image.setImageResource(item.getRoleIcon());
         holder.title.setText(item.getRoleName());
-        holder.image.setOnClickListener(v -> mCallback.creteIntent(position));
+        holder.image.setOnClickListener(v -> mCallback.startIntent(position));
     }
 
     @Override

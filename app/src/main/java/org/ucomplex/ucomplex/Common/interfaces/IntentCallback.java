@@ -11,5 +11,5 @@ package org.ucomplex.ucomplex.Common.interfaces;
  */
 
 public interface IntentCallback<T> {
-    void creteIntent(T object);
+    void startIntent(T object);
 }

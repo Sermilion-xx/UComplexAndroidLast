@@ -27,9 +27,9 @@ import butterknife.ButterKnife;
 public class RoleSelectActivity extends BaseMVPActivity<MVPView, RoleSelectPresenter> implements IntentCallback<Integer> {
 
     private static final String EXTRA_USER = "EXTRA_USER";
+
     @BindView(R.id.recyclerView)
     protected RecyclerView mRecyclerView;
-
     private RoleSelectAdapter mAdapter;
 
     public static Intent creteIntent (Context context, UserInterface userInterface) {
@@ -37,12 +37,6 @@ public class RoleSelectActivity extends BaseMVPActivity<MVPView, RoleSelectPrese
         intent.putExtra(EXTRA_USER, (Parcelable) userInterface);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         return intent;
-    }
-
-    @Inject
-    @Override
-    public void setPresenter(@NonNull RoleSelectPresenter presenter) {
-        super.setPresenter(presenter);
     }
 
     @Override
@@ -55,27 +49,21 @@ public class RoleSelectActivity extends BaseMVPActivity<MVPView, RoleSelectPrese
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new RoleSelectAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
-        if (presenter.getData() == null) {
+        if (presenter.getData() == null || presenter.getData().size() == 0) {
             presenter.loadData(getIntent().getParcelableExtra(EXTRA_USER));
         } else {
-            mAdapter.setItems(presenter.getData());
-            mAdapter.notifyDataSetChanged();
+            dataLoaded();
         }
     }
 
-    public void initRecyclerView(List<RoleItem> items) {
-        mAdapter.setItems(items);
+    @Override
+    public void dataLoaded() {
+        mAdapter.setItems(presenter.getData());
         mAdapter.notifyDataSetChanged();
     }
 
-    @NonNull
     @Override
-    public RoleSelectPresenter createPresenter() {
-        return presenter;
-    }
-
-    @Override
-    public void creteIntent(Integer position) {
+    public void startIntent(Integer position) {
         presenter.onRoleSelected(position);
         startActivity(EventsActivity.creteIntent(this));
         finish();

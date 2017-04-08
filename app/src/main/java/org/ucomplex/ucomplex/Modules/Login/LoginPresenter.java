@@ -65,7 +65,7 @@ public class LoginPresenter extends AbstractPresenter<LoginUser, UserInterface, 
                 } else {
                     mModel.processData(value);
                     if (getView() != null) {
-                        ((LoginActivity) getView()).onLoginPassed();
+                        ((LoginActivity) getView()).dataLoaded();
                     }
                 }
             }

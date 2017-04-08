@@ -3,16 +3,11 @@ package org.ucomplex.ucomplex.Modules.RoleSelect;
 import org.ucomplex.ucomplex.Common.FacadePreferences;
 import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
 import org.ucomplex.ucomplex.Common.UCApplication;
-import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
 import org.ucomplex.ucomplex.Domain.Users.UserInterface;
 
 import java.util.List;
 
 import javax.inject.Inject;
-
-import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
 
 import static org.ucomplex.ucomplex.Common.FacadeCommon.encodeLoginData;
 
@@ -43,7 +38,7 @@ public class RoleSelectPresenter extends AbstractPresenter<UserInterface, List<R
     public void loadData(UserInterface params) {
         if (getView() != null) {
             mModel.processData(params);
-            ((RoleSelectActivity) getView()).initRecyclerView(getData());
+            ((RoleSelectActivity) getView()).dataLoaded();
         }
     }
 

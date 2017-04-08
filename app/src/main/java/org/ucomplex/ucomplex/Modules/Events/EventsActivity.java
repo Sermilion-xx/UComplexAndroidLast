@@ -41,7 +41,6 @@ public class EventsActivity extends BaseMVPActivity<MVPView, EventsPresenter> im
         return intent;
     }
 
-    private RecyclerView  mRecyclerView;
     private EventsAdapter mAdapter;
 
     @Override
@@ -55,7 +54,7 @@ public class EventsActivity extends BaseMVPActivity<MVPView, EventsPresenter> im
         setupToolbar(getString(R.string.events), R.drawable.ic_menu);
         mProgress = (ProgressBar) findViewById(R.id.progressBar);
         setupDrawer();
-        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new EventsAdapter(params -> presenter.loadData(params));
@@ -80,6 +79,7 @@ public class EventsActivity extends BaseMVPActivity<MVPView, EventsPresenter> im
         }
     }
 
+    @Override
     public void dataLoaded(){
         mAdapter.updateAdapterItems(presenter.getData());
     }

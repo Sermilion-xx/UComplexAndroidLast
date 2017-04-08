@@ -54,6 +54,8 @@ public abstract class BaseMVPActivity<V extends MVPView, Presenter extends MvpPr
     protected DrawerAdapter mDrawerAdapter;
     protected ActionBarDrawerToggle mActionBarDrawerToggle;
 
+    public abstract void dataLoaded();
+
     @Inject
     @Override
     public void setPresenter(@NonNull Presenter presenter) {

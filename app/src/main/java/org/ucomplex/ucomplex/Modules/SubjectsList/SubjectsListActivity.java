@@ -20,18 +20,10 @@ import javax.inject.Inject;
 public class SubjectsListActivity extends BaseMVPActivity<MVPView, SubjectsListPresenter> {
 
     public static Intent creteIntent (Context context) {
-        Intent intent = new Intent(context, SubjectsListActivity.class);
-        return intent;
+        return new Intent(context, SubjectsListActivity.class);
     }
 
-    private RecyclerView mRecyclerView;
     private SubjectsListAdapter mAdapter;
-
-    @Inject
-    @Override
-    public void setPresenter(@NonNull SubjectsListPresenter presenter) {
-        super.setPresenter(presenter);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +33,7 @@ public class SubjectsListActivity extends BaseMVPActivity<MVPView, SubjectsListP
         mProgress = (ProgressBar) findViewById(R.id.progressBar);
         setupToolbar(getString(R.string.subjects), R.drawable.ic_menu);
         setupDrawer();
-        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new SubjectsListAdapter();
@@ -53,14 +45,9 @@ public class SubjectsListActivity extends BaseMVPActivity<MVPView, SubjectsListP
         }
     }
 
+    @Override
     public void dataLoaded() {
         mAdapter.setItems(presenter.getData());
         mAdapter.notifyDataSetChanged();
-    }
-
-    @NonNull
-    @Override
-    public SubjectsListPresenter createPresenter() {
-        return presenter;
     }
 }

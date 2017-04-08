@@ -114,7 +114,8 @@ public class LoginActivity extends BaseMVPActivity<MVPView, LoginPresenter> impl
         alert.show();
     }
 
-    public void onLoginPassed() {
+    @Override
+    public void dataLoaded() {
         Intent intent;
         if (presenter.getData().getRoles().size() == 1) {
             presenter.saveLoginData(presenter.getData().getRoles().get(0));

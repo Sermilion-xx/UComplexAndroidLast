@@ -11,6 +11,8 @@ import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPPresenter;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
 
+import javax.inject.Inject;
+
 /**
  * ---------------------------------------------------
  * Created by Sermilion on 04/03/2017.
@@ -30,6 +32,11 @@ public abstract class AbstractPresenter<
         implements MVPPresenter<Model, T, Param> {
 
     protected Model mModel;
+
+    @Inject
+    public void setModel(Model model) {
+        mModel = model;
+    }
 
     @Override
     public Context getAppContext() {

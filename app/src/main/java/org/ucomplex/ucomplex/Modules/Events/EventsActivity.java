@@ -25,7 +25,7 @@ import javax.inject.Inject;
 
 import static org.ucomplex.ucomplex.Common.FacadeCommon.REQUEST_EXTERNAL_STORAGE;
 
-public class EventsActivity extends BaseMVPActivity<MVPView, EventsPresenter> implements MVPView {
+public class EventsActivity extends BaseMVPActivity<MVPView, EventsPresenter>  {
 
     private static final String EXTRA_REFRESH = "REFRESH";
 

@@ -7,11 +7,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.base.BaseMvpFragment;
-import org.ucomplex.ucomplex.Common.interfaces.OnListItemClicked;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectTimeline.model.SubjectTimelineParams;
 import org.ucomplex.ucomplex.R;
 
@@ -68,7 +66,7 @@ public class SubjectTimelineFragment extends BaseMvpFragment<SubjectTimelinePres
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_subject, container, false);
+        View view = inflater.inflate(R.layout.fragment_recycler, container, false);
         ButterKnife.bind(this, view);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivityContext());
         mAdapter.setOnListItemClicked(params -> {

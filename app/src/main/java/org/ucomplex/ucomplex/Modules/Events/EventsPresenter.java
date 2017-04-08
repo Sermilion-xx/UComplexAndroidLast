@@ -27,11 +27,6 @@ public class EventsPresenter extends AbstractPresenter<
         EventsRaw, List<EventItem>,
         Integer, EventsModel> {
 
-    @Inject
-    public void setModel(EventsModel model) {
-        mModel = model;
-    }
-
     public EventsPresenter() {
         UCApplication.getInstance().getAppDiComponent().inject(this);
     }

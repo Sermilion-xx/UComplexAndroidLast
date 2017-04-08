@@ -18,6 +18,7 @@ import org.ucomplex.ucomplex.Common.FacadePreferences;
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Modules.Events.EventsActivity;
 import org.ucomplex.ucomplex.Modules.Login.LoginActivity;
+import org.ucomplex.ucomplex.Modules.Portfolio.PortfolioActivity;
 import org.ucomplex.ucomplex.Modules.SubjectsList.SubjectsListActivity;
 import org.ucomplex.ucomplex.R;
 
@@ -118,7 +119,7 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
                 } else if (position == 2) {
                     mContext.startActivity(SubjectsListActivity.creteIntent(mContext));
                 } else if (position == 3) {
-
+                    mContext.startActivity(PortfolioActivity.creteIntent(mContext));
                 } else if (position == 4) {
 
                 }

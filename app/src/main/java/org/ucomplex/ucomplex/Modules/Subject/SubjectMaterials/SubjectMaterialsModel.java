@@ -39,23 +39,23 @@ public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<L
     private int currentPage = 0;
     private String currentFolder = "null";
 
-    public void setTeachers(Map<Integer, Teacher> mTeachers) {
+    void setTeachers(Map<Integer, Teacher> mTeachers) {
         this.mTeachers = mTeachers;
     }
 
-    public void setCurrentFolder(String currentFolder) {
+    void setCurrentFolder(String currentFolder) {
         this.currentFolder = currentFolder;
     }
 
-    public int getCurrentPage() {
+    int getCurrentPage() {
         return currentPage;
     }
 
-    public void pageUp() {
+    void pageUp() {
         currentPage++;
     }
 
-    public void pageDown() {
+    void pageDown() {
         currentPage--;
         if(currentPage<1){
             currentFolder = DEFAULT_FOLDER_NAME;
@@ -72,7 +72,7 @@ public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<L
         return this.mPageHistory.size();
     }
 
-    public Pair<List<SubjectItemFile>, String> getHistory(int index) {
+    Pair<List<SubjectItemFile>, String> getHistory(int index) {
         if(index<this.mPageHistory.size()){
             return this.mPageHistory.get(index);
         }else {
@@ -86,14 +86,19 @@ public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<L
     }
 
     @Inject
-    public void setSubjectTeachersMaterialsService(SubjectTeachersMaterialsService service) {
+    void setSubjectTeachersMaterialsService(SubjectTeachersMaterialsService service) {
         this.subjectTeachersMaterialsService = service;
     }
 
     @Override
     public Observable<MaterialsRaw> loadData(SubjectMaterialsParams folder) {
-        return subjectTeachersMaterialsService.getMaterials(folder.getFolder()).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+        if (!folder.isMyFolder()) {
+            return subjectTeachersMaterialsService.getMaterials(folder.getFolder()).subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread());
+        } else {
+            return subjectTeachersMaterialsService.getMaterials(folder.getFolder()).subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread());
+        }
     }
 
     @Override

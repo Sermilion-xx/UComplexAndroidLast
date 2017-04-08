@@ -94,7 +94,7 @@ public class SubjectMaterialsFragment extends BaseMvpFragment<SubjectMaterialsPr
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_subject, container, false);
+        View view = inflater.inflate(R.layout.fragment_recycler, container, false);
         ButterKnife.bind(this, view);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivityContext());
         mRecyclerView.setLayoutManager(mLayoutManager);

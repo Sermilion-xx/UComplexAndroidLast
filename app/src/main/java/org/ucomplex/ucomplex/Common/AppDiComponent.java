@@ -10,6 +10,7 @@ import org.ucomplex.ucomplex.Modules.Login.LoginActivity;
 import org.ucomplex.ucomplex.Modules.Login.LoginPresenter;
 import org.ucomplex.ucomplex.Modules.Login.dagger.LoginActivityModule;
 import org.ucomplex.ucomplex.Modules.Login.dagger.LoginPresenterModule;
+import org.ucomplex.ucomplex.Modules.Portfolio.PortfolioActivity;
 import org.ucomplex.ucomplex.Modules.RoleSelect.RoleSelectActivity;
 import org.ucomplex.ucomplex.Modules.RoleSelect.RoleSelectPresenter;
 import org.ucomplex.ucomplex.Modules.RoleSelect.dagger.RoleSelectActivityModule;
@@ -33,7 +34,6 @@ import org.ucomplex.ucomplex.Modules.Subject.SubjectTimeline.dagger.SubjectTimel
 import org.ucomplex.ucomplex.Modules.Subject.SubjectTimeline.dagger.SubjectTimelineModule;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectTimeline.dagger.SubjectTimelinePresenterModule;
 import org.ucomplex.ucomplex.Modules.SubjectsList.SubjectsListActivity;
-import org.ucomplex.ucomplex.Modules.SubjectsList.SubjectsListAdapter;
 import org.ucomplex.ucomplex.Modules.SubjectsList.SubjectsListModel;
 import org.ucomplex.ucomplex.Modules.SubjectsList.SubjectsListPresenter;
 import org.ucomplex.ucomplex.Modules.SubjectsList.dagger.SubjectsListModelModule;
@@ -115,6 +115,8 @@ public interface AppDiComponent {
     void inject(SubjectsListModel model);
 
     void inject(SubjectsListPresenter presenter);
+
+    void inject(PortfolioActivity activity);
 
 }
 

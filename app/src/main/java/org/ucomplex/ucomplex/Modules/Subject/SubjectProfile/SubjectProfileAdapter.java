@@ -1,6 +1,7 @@
 package org.ucomplex.ucomplex.Modules.Subject.SubjectProfile;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 
 import org.ucomplex.ucomplex.Common.FacadeCommon;
+import org.ucomplex.ucomplex.Common.FacadeMedia;
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.base.BaseAdapter;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.model.SubjectItemProfile;
@@ -35,6 +37,7 @@ public class SubjectProfileAdapter extends BaseAdapter<SubjectProfileAdapter.Sub
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_TEACHERS = 1;
     private static final int TYPE_INFO = 2;
+    private static final String IMAGE_FORMAT = ".jpg";
 
     static class SubjectProfileViewHolder extends RecyclerView.ViewHolder {
 
@@ -84,10 +87,13 @@ public class SubjectProfileAdapter extends BaseAdapter<SubjectProfileAdapter.Sub
             holder.mTitle.setText(item.getName());
         } else if (getItemViewType(position) == TYPE_TEACHERS) {
             holder.mTeachersName.setText(item.getName());
-            String url = UCApplication.PHOTOS_URL + item.getCode() + ".jpg";
+            String url = UCApplication.PHOTOS_URL + item.getCode() + IMAGE_FORMAT;
+            Drawable textDrawable = FacadeMedia.getTextDrawable(item.getId(),
+                    item.getName(), holder.mTeachersName.getContext());
             Glide.with(holder.mTeachersName.getContext())
                     .load(url)
                     .asBitmap()
+                    .placeholder(textDrawable)
                     .priority(Priority.HIGH)
                     .into(holder.mIcon);
         } else if (getItemViewType(position) == TYPE_INFO) {

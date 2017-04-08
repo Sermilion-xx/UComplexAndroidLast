@@ -17,18 +17,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Modules.Login.LoginActivity">
+        <activity android:name=".Modules.Login.LoginActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Modules.Events.EventsActivity" />
-        <activity android:name=".Modules.RoleSelect.RoleSelectActivity" />
-        <activity android:name=".Modules.Subject.SubjectActivity" />
-        <activity android:name=".Common.base.BaseMVPActivity" />
-        <activity android:name=".Modules.SubjectsList.SubjectsListActivity"></activity>
+        <activity android:name=".Modules.Events.EventsActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Modules.RoleSelect.RoleSelectActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Modules.Subject.SubjectActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Modules.SubjectsList.SubjectsListActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

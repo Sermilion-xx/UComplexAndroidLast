@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
-import android.util.EventLog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +30,30 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
 
     private static final int TYPE_0 = 0;
     private static final int TYPE_1 = 1;
-    private static final String PROFILE_IMAGE_URL = UCApplication.PHOTOS_URL ;
+    private static final String PROFILE_IMAGE_URL = UCApplication.PHOTOS_URL;
+
+    static class ViewHolder extends RecyclerView.ViewHolder {
+
+        private ImageView mIconImageView;
+        private TextView mTextView1;
+        private TextView mTextView2;
+        private CircleImageView mProfileImageView;
+        private CircleImageView mRolesImageView;
+
+        ViewHolder(View view, int viewType) {
+            super(view);
+            if (viewType == 0) {
+                mTextView1 = (TextView) view.findViewById(R.id.name);
+                mTextView2 = (TextView) view.findViewById(R.id.role);
+                mProfileImageView = (CircleImageView) view.findViewById(R.id.profileImage);
+                mRolesImageView = (CircleImageView) view.findViewById(R.id.roleImage);
+            } else {
+                mIconImageView = (ImageView) view.findViewById(R.id.icon);
+                mTextView1 = (TextView) view.findViewById(R.id.title);
+            }
+        }
+    }
+
     private List<DrawerListItem> mItems;
     private Activity mContext;
 
@@ -55,101 +77,60 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         DrawerListItem row = mItems.get(position);
-        holder.bindListRow(row);
+        bindListRow(row, holder, position);
     }
-
 
     @Override
     public int getItemCount() {
         return mItems.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
-
-        private ImageView mIconImageView;
-        private TextView mTextView1;
-        private TextView mTextView2;
-        private CircleImageView mProfileImageView;
-        private CircleImageView mRolesImageView;
-
-        public ViewHolder(View view, int viewType) {
-            super(view);
-            if (viewType == 0) {
-                mTextView1 = (TextView) view.findViewById(R.id.name);
-                mTextView2 = (TextView) view.findViewById(R.id.role);
-                mProfileImageView = (CircleImageView) view.findViewById(R.id.profileImage);
-                mRolesImageView = (CircleImageView) view.findViewById(R.id.roleImage);
+    private void bindListRow(DrawerListItem row, ViewHolder holder, int position) {
+        if (getItemViewType(position) == 0) {
+            holder.mTextView1.setText(row.getTitle1());
+            holder.mTextView2.setText(row.getTitle2());
+            if (row.getProfileBitmapCode() == null) {
+                Drawable textDrawable = FacadeMedia.getTextDrawable(row.getId(), row.getTitle1(), mContext);
+                holder.mProfileImageView.setImageBitmap(FacadeMedia.drawableToBitmap(textDrawable));
             } else {
-                mIconImageView = (ImageView) view.findViewById(R.id.icon);
-                mTextView1 = (TextView) view.findViewById(R.id.title);
-            }
-            view.setOnClickListener(this);
-            view.setOnLongClickListener(this);
-        }
-
-        public void bindListRow(DrawerListItem row) {
-            if (getItemViewType() == 0) {
-                mTextView1.setText(row.getTitle1());
-                mTextView2.setText(row.getTitle2());
-                if (row.getProfileBitmapCode() == null) {
-                    Drawable textDrawable = FacadeMedia.getTextDrawable(row.getId(), row.getTitle1(), mContext);
-                    mProfileImageView.setImageBitmap(FacadeMedia.drawableToBitmap(textDrawable));
+                if (row.getProfileBitmapCode() != null) {
+                    String url = PROFILE_IMAGE_URL + row.getProfileBitmapCode() + ".jpg";
+                    Glide.with(mContext)
+                            .load(url)
+                            .asBitmap()
+                            .priority(Priority.HIGH)
+                            .into(holder.mProfileImageView);
                 } else {
-                    if (row.getProfileBitmapCode() != null) {
-                        String url = PROFILE_IMAGE_URL + row.getProfileBitmapCode() + ".jpg";
-                        Glide.with(mContext)
-                                .load(url)
-                                .asBitmap()
-                                .priority(Priority.HIGH)
-                                .into(mProfileImageView);
-                    } else {
-                        Drawable textDrawable = FacadeMedia.getTextDrawable(row.getId(), row.getTitle1(), mContext);
-                        mProfileImageView.setImageBitmap(FacadeMedia.drawableToBitmap(textDrawable));
-                    }
+                    Drawable textDrawable = FacadeMedia.getTextDrawable(row.getId(), row.getTitle1(), mContext);
+                    holder.mProfileImageView.setImageBitmap(FacadeMedia.drawableToBitmap(textDrawable));
                 }
-            } else {
-                mTextView1.setText(row.getTitle1());
-                mIconImageView.setImageResource(row.getIcon());
             }
-        }
+        } else {
+            holder.mTextView1.setText(row.getTitle1());
+            holder.mIconImageView.setImageResource(row.getIcon());
+            holder.mTextView1.setOnClickListener(v -> {
+                if (position == getItemCount() - 1) {
+                    logout();
+                } else if (position == 0) {
+                    //TODO: go to profile
+                } else if (position == 1) {
+                    mContext.startActivity(EventsActivity.creteRefreshIntent(mContext));
+                } else if (position == 2) {
+                    mContext.startActivity(SubjectsListActivity.creteIntent(mContext));
+                } else if (position == 3) {
 
-        @Override
-        public void onClick(View view) {
-            int position = getAdapterPosition();
-            if (position == getItemCount() - 1) {
-                logout();
-            } else if (position == 0) {
-                //TODO: go to profile
-            } else if (position == 1) {
-                onDrawerItemPressed(EventsActivity.class);
-            } else if (position == 2) {
-                onDrawerItemPressed(SubjectsListActivity.class);
-            } else if (position == 3) {
-//                onDrawerItemPressed(MaterialsActivity.class);
-            } else if (position == 4) {
-//                onDrawerItemPressed(UsersActivity.class);
-            }
-        }
+                } else if (position == 4) {
 
-        @Override
-        public boolean onLongClick(View view) {
-            return false;
+                }
+            });
         }
     }
 
-    public void logout() {
+    private void logout() {
         FacadePreferences.clearPref(mContext);
         UCApplication.getInstance().setLoggedUser(null);
         UCApplication.getInstance().setAuthString(null);
         mContext.startActivity(new Intent(mContext, LoginActivity.class));
         mContext.finish();
-    }
-
-    private void onDrawerItemPressed(Class<? extends Activity> activity) {
-        if (!(mContext.getClass() == activity)) {
-            mContext.startActivity(new Intent(mContext, activity));
-        } else {
-            mContext.onBackPressed();
-        }
     }
 }

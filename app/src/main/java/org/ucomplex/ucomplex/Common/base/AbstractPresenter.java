@@ -27,8 +27,7 @@ public abstract class AbstractPresenter<
         Param,
         Model extends MVPModel<M, T, Param>>
         extends MvpBasePresenter<MVPView>
-        implements MVPPresenter<Model, T, Param>,
-        MvpPresenter<MVPView> {
+        implements MVPPresenter<Model, T, Param> {
 
     protected Model mModel;
 

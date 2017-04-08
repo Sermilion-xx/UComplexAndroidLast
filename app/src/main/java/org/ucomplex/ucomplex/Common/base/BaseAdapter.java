@@ -28,7 +28,7 @@ public abstract class BaseAdapter<T extends RecyclerView.ViewHolder, D> extends 
 
     @Override
     public int getItemCount() {
-        return mItems == null ?0 : ((List)mItems).size() ;
+        return mItems == null ? 0 : ((List)mItems).size() ;
     }
 
 }

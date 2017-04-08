@@ -49,7 +49,7 @@ public class EventsPresenter extends AbstractPresenter<
             public void onNext(EventsRaw value) {
                 mModel.processData(value);
                 if(getView()!=null){
-                    ((EventsActivity)getView()).updateEvents(getData());
+                    ((EventsActivity)getView()).dataLoaded();
                 }
             }
 

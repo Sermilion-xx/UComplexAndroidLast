@@ -44,19 +44,16 @@ public class EventsActivity extends BaseMVPActivity<MVPView, EventsPresenter> im
     private RecyclerView  mRecyclerView;
     private EventsAdapter mAdapter;
 
-    @Inject
-    @Override
-    public void setPresenter(@NonNull EventsPresenter presenter) {
-        super.setPresenter(presenter);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         UCApplication.getInstance().getAppDiComponent().inject(this);
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            FacadeCommon.checkStoragePermissions(this);
+        }
         setContentViewWithNavDrawer(R.layout.activity_events);
-        mProgress = (ProgressBar) findViewById(R.id.progressBar);
         setupToolbar(getString(R.string.events), R.drawable.ic_menu);
+        mProgress = (ProgressBar) findViewById(R.id.progressBar);
         setupDrawer();
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
@@ -66,17 +63,8 @@ public class EventsActivity extends BaseMVPActivity<MVPView, EventsPresenter> im
         if (presenter.getData() == null || getIntent().getBooleanExtra(EXTRA_REFRESH, false)) {
             presenter.loadData(0);
         } else {
-            updateEvents(presenter.getData());
+            dataLoaded();
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            FacadeCommon.checkStoragePermissions(this);
-        }
-    }
-
-    @NonNull
-    @Override
-    public EventsPresenter createPresenter() {
-        return presenter;
     }
 
     @Override
@@ -92,8 +80,8 @@ public class EventsActivity extends BaseMVPActivity<MVPView, EventsPresenter> im
         }
     }
 
-    public void updateEvents(List<EventItem> items){
-        mAdapter.updateAdapterItems(items);
+    public void dataLoaded(){
+        mAdapter.updateAdapterItems(presenter.getData());
     }
 
 }

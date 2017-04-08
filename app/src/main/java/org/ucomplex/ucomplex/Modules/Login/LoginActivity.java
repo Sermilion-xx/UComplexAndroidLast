@@ -1,6 +1,5 @@
 package org.ucomplex.ucomplex.Modules.Login;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,9 +16,9 @@ import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.base.BaseMVPActivity;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
-import org.ucomplex.ucomplex.Modules.Login.model.LoginErrorType;
 import org.ucomplex.ucomplex.Domain.Users.UserInterface;
 import org.ucomplex.ucomplex.Modules.Events.EventsActivity;
+import org.ucomplex.ucomplex.Modules.Login.model.LoginErrorType;
 import org.ucomplex.ucomplex.Modules.RoleSelect.RoleSelectActivity;
 import org.ucomplex.ucomplex.R;
 
@@ -45,32 +44,21 @@ public class LoginActivity extends BaseMVPActivity<MVPView, LoginPresenter> impl
     @BindView(R.id.login_sign_in_button)
     Button mLoginSignInButton;
 
-    @Inject
-    @Override
-    public void setPresenter(@NonNull LoginPresenter presenter) {
-        super.setPresenter(presenter);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         UCApplication.getInstance().getAppDiComponent().inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        mProgress = (ProgressBar) findViewById(R.id.progressBar);
         mLoginSignInButton.setOnClickListener(this);
         mForgotButton.setOnClickListener(this);
+        //check if the user has been logged before. If so, do login
         UserInterface userInterface = UCApplication.getInstance().getLoggedUser();
         if (userInterface != null) {
             mLoginView.setText(userInterface.getLogin());
             mPasswordView.setText(userInterface.getPassword());
+            clickLoginButton();
         }
-    }
-
-    @NonNull
-    @Override
-    public LoginPresenter createPresenter() {
-        return presenter;
     }
 
     @Override
@@ -81,7 +69,7 @@ public class LoginActivity extends BaseMVPActivity<MVPView, LoginPresenter> impl
                 clickLoginButton();
                 break;
             case R.id.forgot_pass_button:
-                clickForgotButton();
+                showRestorePasswordDialog();
                 break;
         }
     }
@@ -105,10 +93,6 @@ public class LoginActivity extends BaseMVPActivity<MVPView, LoginPresenter> impl
         }
     }
 
-    void clickForgotButton() {
-        showRestorePasswordDialog();
-    }
-
     public void showRestorePasswordDialog() {
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         View promptView = layoutInflater.inflate(R.layout.dialog_forgot_password, null);
@@ -130,7 +114,7 @@ public class LoginActivity extends BaseMVPActivity<MVPView, LoginPresenter> impl
         alert.show();
     }
 
-    public void onLogin() {
+    public void onLoginPassed() {
         Intent intent;
         if (presenter.getData().getRoles().size() == 1) {
             presenter.saveLoginData(presenter.getData().getRoles().get(0));

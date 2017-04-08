@@ -46,8 +46,10 @@ public class SubjectsListActivity extends BaseMVPActivity<MVPView, SubjectsListP
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new SubjectsListAdapter();
         mRecyclerView.setAdapter(mAdapter);
-        if (presenter.getData() == null) {
+        if (presenter.getData() == null || presenter.getData().size() == 0) {
             presenter.loadData(null);
+        } else {
+            dataLoaded();
         }
     }
 

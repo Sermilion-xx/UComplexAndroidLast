@@ -15,6 +15,7 @@ import org.ucomplex.ucomplex.Modules.Subject.SubjectActivity;
 import org.ucomplex.ucomplex.Modules.SubjectsList.model.SubjectsListItem;
 import org.ucomplex.ucomplex.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -50,6 +51,10 @@ public class SubjectsListAdapter extends BaseAdapter<SubjectsListAdapter.Subject
         }
     }
 
+    public SubjectsListAdapter() {
+        mItems = new ArrayList<>();
+    }
+
     @Override
     public SubjectsListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
@@ -73,5 +78,10 @@ public class SubjectsListAdapter extends BaseAdapter<SubjectsListAdapter.Subject
                 context.startActivity(intent);
             });
         }
+    }
+
+    @Override
+    public int getItemCount() {
+        return (mItems == null || mItems.size() == 0) ? 1 : mItems.size();
     }
 }

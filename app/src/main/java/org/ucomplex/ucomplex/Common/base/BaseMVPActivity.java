@@ -3,6 +3,7 @@ package org.ucomplex.ucomplex.Common.base;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -27,6 +28,7 @@ import org.ucomplex.ucomplex.Common.FragmentFactory;
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.ViewExtensions;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
+import org.ucomplex.ucomplex.Modules.Login.LoginPresenter;
 import org.ucomplex.ucomplex.Modules.Navdrawer.DrawerAdapter;
 import org.ucomplex.ucomplex.Modules.Navdrawer.DrawerListItem;
 import org.ucomplex.ucomplex.Modules.Navdrawer.FacadeDrawer;
@@ -35,6 +37,10 @@ import org.ucomplex.ucomplex.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
+
+import butterknife.BindView;
 
 public abstract class BaseMVPActivity<V extends MVPView, Presenter extends MvpPresenter<V>>
         extends MvpActivity<V, Presenter> implements ViewExtensions, MVPView {
@@ -47,6 +53,18 @@ public abstract class BaseMVPActivity<V extends MVPView, Presenter extends MvpPr
     protected NavigationView navigationView;
     protected DrawerAdapter mDrawerAdapter;
     protected ActionBarDrawerToggle mActionBarDrawerToggle;
+
+    @Inject
+    @Override
+    public void setPresenter(@NonNull Presenter presenter) {
+        super.setPresenter(presenter);
+    }
+
+    @NonNull
+    @Override
+    public Presenter createPresenter() {
+        return presenter;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -41,6 +41,8 @@ public class EventsAdapter extends BaseAdapter<EventsAdapter.EventViewHolder, Li
 
     private static final String PHOTOS_PATH = "files/photos/";
     private static final String FORMAT_JPG = ".jpg";
+    private static final int TYPE_COMMON = 0;
+    private static final int TYPE_FOOTER = 1;
 
     static class EventViewHolder extends RecyclerView.ViewHolder {
 
@@ -51,7 +53,7 @@ public class EventsAdapter extends BaseAdapter<EventsAdapter.EventViewHolder, Li
         LinearLayout eventDetailsLayout;
         Button loadMoreEventsButton;
 
-        public EventViewHolder(View view, int viewType) {
+        EventViewHolder(View view, int viewType) {
             super(view);
             if (viewType == TYPE_COMMON) {
                 eventsImageView = (ImageView) view.findViewById(R.id.list_events_item_image);
@@ -66,17 +68,14 @@ public class EventsAdapter extends BaseAdapter<EventsAdapter.EventViewHolder, Li
     }
 
     private boolean hasMoreEvents = false;
-    private static final int TYPE_COMMON = 0;
-    private static final int TYPE_FOOTER = 1;
-
     private LoadMoreCallback<Integer> mMoreCallback;
 
-    public EventsAdapter(LoadMoreCallback<Integer> callback) {
+    EventsAdapter(LoadMoreCallback<Integer> callback) {
         this.mMoreCallback = callback;
         mItems = new ArrayList<>();
     }
 
-    public void setHasMoreEvents(boolean hasMoreEvents) {
+    private void setHasMoreEvents(boolean hasMoreEvents) {
         this.hasMoreEvents = hasMoreEvents;
     }
 
@@ -93,44 +92,46 @@ public class EventsAdapter extends BaseAdapter<EventsAdapter.EventViewHolder, Li
 
     @Override
     public void onBindViewHolder(EventViewHolder holder, int position) {
-        if (getItemViewType(position) == TYPE_COMMON && mItems.size() > 0) {
-            Context context = holder.eventPersonName.getContext();
-            EventItem item = mItems.get(position);
-            String personName = item.getParamsObj().getName();
-            if (personName == null || personName.equals("")) {
-                item.getParamsObj().setName(context.getResources().getString(R.string.app_name));
-            }
-            holder.eventPersonName.setText(item.getParamsObj().getName());
-            holder.eventTextView.setText(item.getEventText());
-            holder.eventTime.setText(FacadeCommon.makeDate(item.getTime()));
-            Drawable textDrawable = FacadeMedia.getTextDrawable(item.getParamsObj().getId(),
-                    item.getParamsObj().getName(), context);
-            String url = BASE_URL + PHOTOS_PATH + item.getParamsObj().getCode() + FORMAT_JPG;
-            Glide.with(context)
-                    .load(url)
-                    .asBitmap()
-                    .placeholder(textDrawable)
-                    .priority(Priority.HIGH)
-                    .into(holder.eventsImageView);
-            holder.eventDetailsLayout.setOnClickListener(v -> {
-                if (!item.getParamsObj().getName().equals(context.getString(R.string.app_name))) {
-                    Intent intent = SubjectActivity.creteIntent(context, item.getParamsObj().getGcourse(), item.getParamsObj().getCourseName());
-                    context.startActivity(intent);
+        if (mItems.size() > 0) {
+            if (getItemViewType(position) == TYPE_COMMON && mItems.size() > 0) {
+                Context context = holder.eventPersonName.getContext();
+                EventItem item = mItems.get(position);
+                String personName = item.getParamsObj().getName();
+                if (personName == null || personName.equals("")) {
+                    item.getParamsObj().setName(context.getResources().getString(R.string.app_name));
                 }
-            });
-        } else if (getItemViewType(position) == TYPE_FOOTER && holder.loadMoreEventsButton != null) {
-            if (hasMoreEvents) {
-                holder.loadMoreEventsButton.setVisibility(View.VISIBLE);
-                holder.loadMoreEventsButton.setOnClickListener(v -> mMoreCallback.loadMore(getItemCount()));
-            } else {
-                holder.loadMoreEventsButton.setVisibility(View.GONE);
+                holder.eventPersonName.setText(item.getParamsObj().getName());
+                holder.eventTextView.setText(item.getEventText());
+                holder.eventTime.setText(FacadeCommon.makeDate(item.getTime()));
+                Drawable textDrawable = FacadeMedia.getTextDrawable(item.getParamsObj().getId(),
+                        item.getParamsObj().getName(), context);
+                String url = BASE_URL + PHOTOS_PATH + item.getParamsObj().getCode() + FORMAT_JPG;
+                Glide.with(context)
+                        .load(url)
+                        .asBitmap()
+                        .placeholder(textDrawable)
+                        .priority(Priority.HIGH)
+                        .into(holder.eventsImageView);
+                holder.eventDetailsLayout.setOnClickListener(v -> {
+                    if (!item.getParamsObj().getName().equals(context.getString(R.string.app_name))) {
+                        Intent intent = SubjectActivity.creteIntent(context, item.getParamsObj().getGcourse(), item.getParamsObj().getCourseName());
+                        context.startActivity(intent);
+                    }
+                });
+            } else if (getItemViewType(position) == TYPE_FOOTER && holder.loadMoreEventsButton != null) {
+                if (hasMoreEvents) {
+                    holder.loadMoreEventsButton.setVisibility(View.VISIBLE);
+                    holder.loadMoreEventsButton.setOnClickListener(v -> mMoreCallback.loadMore(getItemCount()));
+                } else {
+                    holder.loadMoreEventsButton.setVisibility(View.GONE);
+                }
             }
         }
     }
 
     @Override
     public int getItemCount() {
-        return mItems == null ? 0 : mItems.size();
+        return (mItems == null || mItems.size() == 0) ? 1 : mItems.size();
     }
 
     @Override

@@ -1,7 +1,6 @@
 package org.ucomplex.ucomplex.Modules.Login;
 
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.Toast;
 
 import org.ucomplex.ucomplex.Common.FacadeCommon;
@@ -66,7 +65,7 @@ public class LoginPresenter extends AbstractPresenter<LoginUser, UserInterface, 
                 } else {
                     mModel.processData(value);
                     if (getView() != null) {
-                        ((LoginActivity) getView()).onLogin();
+                        ((LoginActivity) getView()).onLoginPassed();
                     }
                 }
             }

@@ -2,7 +2,6 @@ package org.ucomplex.ucomplex.Modules.Events;
 
 import com.google.gson.Gson;
 
-import org.json.JSONException;
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
 import org.ucomplex.ucomplex.Modules.Events.model.EventItem;
@@ -69,9 +68,11 @@ public class EventsModel implements MVPModel<EventsRaw, List<EventItem>, Integer
 
     @Override
     public void processData(EventsRaw data) {
-        mData = new ArrayList<>();
+        if (mData == null) {
+            mData = new ArrayList<>();
+        }
         Gson gson = new Gson();
-        for (EventItem item: data.getEvents()) {
+        for (EventItem item : data.getEvents()) {
             item.setParamsObj(gson.fromJson(item.getParams(), EventItem.EventParams.class));
             item.setParams(null);
             String displayEvent = makeEvent(item.getType(), item.getParamsObj());
@@ -81,7 +82,7 @@ public class EventsModel implements MVPModel<EventsRaw, List<EventItem>, Integer
     }
 
 
-    private  String makeEvent(int type, EventItem.EventParams params)
+    private String makeEvent(int type, EventItem.EventParams params)
             throws NumberFormatException {
         String result = "";
         String[] hourTypes = new String[]{"протокол занятия",

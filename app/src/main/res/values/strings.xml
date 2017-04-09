@@ -112,4 +112,8 @@
     <string name="timeline">Лента</string>
     <string name="download_started">Загрузка файла началась.</string>
     <string name="authorization_error">Не верные данные</string>
+    <string name="check_internet">Проверте интернет соединение</string>
+    <string name="error_while_choosing_file">Ошибка при выборе файла</string>
+    <string name="Done">Готово</string>
+    <string name="name_cant_be_empty">Название не может быть пустым.</string>
 </resources>

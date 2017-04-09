@@ -1,6 +1,8 @@
 package org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.base.BaseMvpFragment;
@@ -23,6 +26,8 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static org.ucomplex.ucomplex.Common.FacadeCommon.REQUEST_EXTERNAL_STORAGE;
 
 /**
  * ---------------------------------------------------
@@ -108,5 +113,19 @@ public class SubjectMaterialsFragment extends BaseMvpFragment<SubjectMaterialsPr
     public void dataLoaded() {
         mAdapter.setItems(presenter.getCurrentHistory());
         mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String permissions[], @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_EXTERNAL_STORAGE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                } else {
+                    Toast.makeText(getActivityContext(), getString(R.string.storage_access_denied), Toast.LENGTH_LONG).show();
+                }
+            }
+        }
     }
 }

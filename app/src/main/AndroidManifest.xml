@@ -39,6 +39,9 @@
             android:name=".Modules.SubjectsList.SubjectsListActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".Modules.Portfolio.PortfolioActivity"></activity>
+
+        <service android:name=".Modules.Subject.SubjectMaterials.NotificationService" />
+
     </application>
 
 </manifest>

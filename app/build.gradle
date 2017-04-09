@@ -41,6 +41,7 @@ dependencies {
     compile "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
     compile "io.reactivex.rxjava2:rxandroid:$RXJAVA_VERSION"
     compile "io.reactivex.rxjava2:rxjava:$RXJAVA_VERSION"
+    compile 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
     compile "com.jakewharton:butterknife:$BUTTERKNIFE_VERSION"
     annotationProcessor "com.jakewharton:butterknife-compiler:$BUTTERKNIFE_VERSION"
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'

@@ -172,7 +172,7 @@ public class FacadeMedia {
         return bitmap;
     }
 
-    public static Uri createFileForBitmap() {
+    public static Uri createFileForBitmap(String directory) {
         File bitmapFile = FacadeMedia.getOutputMediaFile(MEDIA_TYPE_IMAGE, Environment.DIRECTORY_PICTURES, UCOMPLEX_PROFILE);
         if (bitmapFile != null) {
             return Uri.fromFile(bitmapFile);

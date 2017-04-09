@@ -16,6 +16,24 @@ public class SubjectMaterialsParams {
     private String folderName;
     private boolean isFolder;
     private  boolean isMyFolder;
+    private String fileUrl;
+    private String fileName;
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public String getFileUrl() {
+        return fileUrl;
+    }
+
+    public void setFileUrl(String fileUrl) {
+        this.fileUrl = fileUrl;
+    }
 
     public boolean isMyFolder() {
         return isMyFolder;

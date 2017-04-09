@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.hannesdorfmann.mosby.mvp.MvpFragment;
 import com.hannesdorfmann.mosby.mvp.MvpPresenter;
@@ -88,8 +89,24 @@ public class RecyclerFragment extends MvpFragment<MVPView, MvpPresenter<MVPView>
     }
 
     @Override
+    public void showProgress() {
+
+    }
+
+    @Override
+    public void hideProgress() {
+
+    }
+
+    @Override
     public void dataLoaded() {
 
     }
+
+    @Override
+    public void showToast(int textId, int length) {
+        Toast.makeText(getActivityContext(), textId, length).show();
+    }
+
 
 }

@@ -42,6 +42,7 @@ public class SubjectMaterialsAdapter extends BaseAdapter<SubjectMaterialsAdapter
     private static final int TYPE_FILE = 0;
     private static final int TYPE_FOLDER = 1;
     private static final int TYPE_EMPTY = 2;
+    private static final String FILE_TYPE_ABBR = "f";
 
     static class SubjectMaterialsViewHolder extends RecyclerView.ViewHolder {
 
@@ -95,7 +96,7 @@ public class SubjectMaterialsAdapter extends BaseAdapter<SubjectMaterialsAdapter
             mItemTypes = new boolean[data.size()];
             for (int i = 0; i < data.size(); i++) {
                 SubjectItemFile file = data.get(i);
-                if (file.getType().equals("f")) {
+                if (file.getType().equals(FILE_TYPE_ABBR)) {
                     mItemTypes[i] = true;
                 }
             }
@@ -140,9 +141,9 @@ public class SubjectMaterialsAdapter extends BaseAdapter<SubjectMaterialsAdapter
                             FacadeCommon.requireStoragePermission(context);
                             Toast.makeText(context, context.getString(R.string.file_download_started), Toast.LENGTH_SHORT).show();
                             filename = item.getAddress() + "." + item.getType();
-                            startNotificationService(filename, context.getString(R.string.file_download_started), null, context);
-                            String mUrl = BASE_URL + "storage.ucomplex.org/files/users/";
-                            //TODO: download
+                            SubjectMaterialsParams params = new SubjectMaterialsParams();
+                            params.setFileName(filename);
+                            onListItemClicked.onClick(params);
                         }
                     });
                 } else if (getItemViewType(position) == TYPE_FOLDER) {
@@ -163,15 +164,7 @@ public class SubjectMaterialsAdapter extends BaseAdapter<SubjectMaterialsAdapter
         }
     }
 
-    private void startNotificationService(String filename, String message, Uri largeIcon, Context context) {
-        Intent notificationIntent = new Intent(context, NotificationService.class);
-        notificationIntent.putExtra(EXTRA_TITLE, filename);
-        notificationIntent.putExtra(EXTRA_BODY, message);
-        if (largeIcon != null) {
-            notificationIntent.putExtra(EXTRA_LARGE_ICON, largeIcon);
-        }
-        context.startService(notificationIntent);
-    }
+
 
 
     @Override

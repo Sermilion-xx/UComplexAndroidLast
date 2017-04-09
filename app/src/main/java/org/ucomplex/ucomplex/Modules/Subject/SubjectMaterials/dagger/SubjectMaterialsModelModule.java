@@ -3,6 +3,7 @@ package org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.dagger;
 import org.ucomplex.ucomplex.Common.ServiceGenerator;
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Modules.Portfolio.PortfolioService;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.DownloadFileService;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.SubjectTeachersMaterialsService;
 
 import dagger.Module;
@@ -28,6 +29,11 @@ public class SubjectMaterialsModelModule {
     @Provides
     PortfolioService providePortfolioService(){
         return ServiceGenerator.createService(PortfolioService.class, UCApplication.getInstance().getAuthString());
+    }
+
+    @Provides
+    DownloadFileService provideDownloadService(){
+        return ServiceGenerator.createService(DownloadFileService.class, UCApplication.getInstance().getAuthString());
     }
 
 }

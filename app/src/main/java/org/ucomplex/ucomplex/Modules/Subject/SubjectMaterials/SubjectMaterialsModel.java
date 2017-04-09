@@ -1,7 +1,11 @@
 package org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials;
 
+import android.net.Uri;
 import android.support.v4.util.Pair;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
 import org.ucomplex.ucomplex.Domain.Users.File;
@@ -12,6 +16,7 @@ import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.SubjectItemF
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.SubjectMaterialsParams;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +25,9 @@ import javax.inject.Inject;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.ResponseBody;
+
+import static org.ucomplex.ucomplex.Common.UCApplication.BASE_URL;
 
 /**
  * ---------------------------------------------------
@@ -34,8 +42,15 @@ import io.reactivex.schedulers.Schedulers;
 public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<List<SubjectItemFile>, String>>, SubjectMaterialsParams> {
 
     private static final String DEFAULT_FOLDER_NAME = "null";
+    private static final String FILES_PATH = "storage.ucomplex.org/files/users/";
+    public static final String EXTRA_KEY_MY_MATERIALS = "myMaterials";
+    public static final String EXTRA_KEY_FILE = "file";
+    public static final String EXTRA_KEY_NAME = "name";
+    public static final String FILE_URI = "file_uri";
+
     private SubjectTeachersMaterialsService subjectTeachersMaterialsService;
     private PortfolioService portfolioService;
+    private DownloadFileService downloadService;
     private List<Pair<List<SubjectItemFile> , String>> mPageHistory;
     private Map<Integer, Teacher> mTeachers;
     private int currentPage = -1;
@@ -63,6 +78,11 @@ public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<L
         this.portfolioService = service;
     }
 
+    @Inject
+    void setDownloadService(DownloadFileService service) {
+        this.downloadService = service;
+    }
+
     @Override
     public Observable<MaterialsRaw> loadData(SubjectMaterialsParams folder) {
         if (!folder.isMyFolder()) {
@@ -75,6 +95,14 @@ public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<L
                     .observeOn(AndroidSchedulers.mainThread());
         }
     }
+
+    Observable<ResponseBody> downloadFile(SubjectMaterialsParams params) {
+        String mUrl = BASE_URL + FILES_PATH + params.getFileName();
+        return downloadService.downloadFileWithDynamicUrlSync(mUrl).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+
 
     @Override
     public void setData(List<Pair<List<SubjectItemFile>, String>> data) {
@@ -159,4 +187,23 @@ public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<L
         }
     }
 
+    void deleteFile(String file) {
+
+    }
+
+    void renameFile(String file, String newName, String prevName) {
+
+    }
+
+    void shareFile(String file) {
+
+    }
+
+    void createFolder(String folderName) {
+
+
+    }
+
+    void uploadFile(Uri uri) {
+    }
 }

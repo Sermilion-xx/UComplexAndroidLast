@@ -17,6 +17,9 @@ import com.hannesdorfmann.mosby.mvp.MvpView;
 public interface MVPView extends MvpView {
     Context getAppContext();
     Context getActivityContext();
+    void showProgress();
+    void hideProgress();
     void dataLoaded();
+    void showToast(int textId, int length);
 }
 

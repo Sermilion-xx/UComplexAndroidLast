@@ -2,6 +2,9 @@ package org.ucomplex.ucomplex.Common;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLSession;
+
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -41,6 +44,13 @@ public class ServiceGenerator {
                     .addHeader("Authorization", " Basic " + authString).build();
             return chain.proceed(request);
         });
+        OkHttpClient client = httpClient.build();
+//        client.setHostnameVerifier(new HostnameVerifier() {
+//            @Override
+//            public boolean verify(String hostname, SSLSession session) {
+//                return true;
+//            }
+//        });
         Retrofit retrofit = builder.client(httpClient.build()).build();
         return retrofit.create(serviceClass);
     }

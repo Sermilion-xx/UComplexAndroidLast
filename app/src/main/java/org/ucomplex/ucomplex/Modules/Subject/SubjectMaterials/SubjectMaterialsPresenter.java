@@ -18,28 +18,25 @@ import android.widget.Toast;
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
-import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.MaterialsRaw;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.SubjectItemFile;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.SubjectMaterialsParams;
 import org.ucomplex.ucomplex.R;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
 import okhttp3.ResponseBody;
 
 import static org.ucomplex.ucomplex.Common.Constants.UC_ACTION_DOWNLOAD_COMPLETE;
@@ -151,13 +148,9 @@ public class SubjectMaterialsPresenter extends AbstractPresenter<
             }
             startNotificationService(params.getFileName(), R.string.file_download_started, null, getActivityContext());
             Observable<ResponseBody> dataObservable = mModel.downloadFile(params);
-            dataObservable.subscribe(new Observer<ResponseBody>() {
+            dataObservable.flatMap(new Function<ResponseBody, ObservableSource<?>>() {
                 @Override
-                public void onSubscribe(Disposable d) {
-                }
-
-                @Override
-                public void onNext(ResponseBody value) {
+                public ObservableSource<?> apply(ResponseBody responseBody) throws Exception {
                     try {
                         InputStream inputStream = null;
                         OutputStream outputStream = null;
@@ -165,7 +158,7 @@ public class SubjectMaterialsPresenter extends AbstractPresenter<
                             byte[] fileReader = new byte[4096];
                             String name = params.getFileName();
                             File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), name);
-                            inputStream = value.byteStream();
+                            inputStream = responseBody.byteStream();
                             outputStream = new FileOutputStream(file);
                             while (true) {
                                 int read = inputStream.read(fileReader);
@@ -191,23 +184,66 @@ public class SubjectMaterialsPresenter extends AbstractPresenter<
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                }
-
-                @Override
-                public void onError(Throwable e) {
-                    e.printStackTrace();
-                    if (getView() != null) {
-                        getView().showToast(R.string.error_loadig_file, Toast.LENGTH_LONG);
-                    }
-                }
-
-                @Override
-                public void onComplete() {
-                    Intent intent = new Intent();
-                    intent.setAction(UC_ACTION_DOWNLOAD_COMPLETE);
-                    getActivityContext().sendBroadcast(intent);
+                    return null;
                 }
             });
+//            dataObservable.subscribe(new Observer<ResponseBody>() {
+//                @Override
+//                public void onSubscribe(Disposable d) {
+//                }
+//
+//                @Override
+//                public void onNext(ResponseBody value) {
+//                    try {
+//                        InputStream inputStream = null;
+//                        OutputStream outputStream = null;
+//                        try {
+//                            byte[] fileReader = new byte[4096];
+//                            String name = params.getFileName();
+//                            File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), name);
+//                            inputStream = value.byteStream();
+//                            outputStream = new FileOutputStream(file);
+//                            while (true) {
+//                                int read = inputStream.read(fileReader);
+//                                if (read == -1) {
+//                                    break;
+//                                }
+//                                outputStream.write(fileReader, 0, read);
+//                            }
+//                            outputStream.flush();
+//                            if (getView() != null) {
+//                                getView().showToast(R.string.file_saved_to_downloads, Toast.LENGTH_LONG);
+//                            }
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        } finally {
+//                            if (inputStream != null) {
+//                                inputStream.close();
+//                            }
+//                            if (outputStream != null) {
+//                                outputStream.close();
+//                            }
+//                        }
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//
+//                @Override
+//                public void onError(Throwable e) {
+//                    e.printStackTrace();
+//                    if (getView() != null) {
+//                        getView().showToast(R.string.error_loadig_file, Toast.LENGTH_LONG);
+//                    }
+//                }
+//
+//                @Override
+//                public void onComplete() {
+//                    Intent intent = new Intent();
+//                    intent.setAction(UC_ACTION_DOWNLOAD_COMPLETE);
+//                    getActivityContext().sendBroadcast(intent);
+//                }
+//            });
         }
     }
 

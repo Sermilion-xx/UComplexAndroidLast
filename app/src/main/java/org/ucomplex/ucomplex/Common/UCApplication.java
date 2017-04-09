@@ -4,6 +4,14 @@ import android.app.Application;
 
 import org.ucomplex.ucomplex.Domain.Users.UserInterface;
 
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+
 /**
  * ---------------------------------------------------
  * Created by Sermilion on 04/03/2017.
@@ -36,6 +44,19 @@ public class UCApplication extends Application {
         authString = FacadePreferences.getLoginDataFromPref(this);
         loggedUser = FacadePreferences.getUserDataFromPref(this);
         appDiComponent = DaggerAppDiComponent.builder().build();
+        configureConnectionTrust();
+    }
+
+    void configureConnectionTrust(){
+        HttpsURLConnection.setDefaultHostnameVerifier(new NullHostNameVerifier());
+        SSLContext context;
+        try {
+            context = SSLContext.getInstance("TLS");
+            context.init(null, trustAllCerts, new java.security.SecureRandom());
+            HttpsURLConnection.setDefaultSSLSocketFactory(context.getSocketFactory());
+        } catch (NoSuchAlgorithmException | KeyManagementException e) {
+            e.printStackTrace();
+        }
     }
 
     public AppDiComponent getAppDiComponent() {
@@ -57,4 +78,26 @@ public class UCApplication extends Application {
     public void setLoggedUser(UserInterface loggedUser) {
         this.loggedUser = loggedUser;
     }
+
+
+    private static TrustManager[] trustAllCerts = new TrustManager[] {
+            new X509TrustManager() {
+
+                @Override
+                public void checkClientTrusted(java.security.cert.X509Certificate[] x509Certificates, String s) throws java.security.cert.CertificateException {
+                    // not implemented
+                }
+
+                @Override
+                public void checkServerTrusted(java.security.cert.X509Certificate[] x509Certificates, String s) throws java.security.cert.CertificateException {
+                    // not implemented
+                }
+
+                @Override
+                public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                    return null;
+                }
+
+            }
+    };
 }

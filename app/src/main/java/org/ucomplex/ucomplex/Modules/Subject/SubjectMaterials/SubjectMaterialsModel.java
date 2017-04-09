@@ -26,6 +26,7 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
+import retrofit2.Call;
 
 import static org.ucomplex.ucomplex.Common.UCApplication.BASE_URL;
 
@@ -97,12 +98,9 @@ public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<L
     }
 
     Observable<ResponseBody> downloadFile(SubjectMaterialsParams params) {
-        String mUrl = BASE_URL + FILES_PATH + params.getFileName();
-        return downloadService.downloadFileWithDynamicUrlSync(mUrl).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+        String mUrl = "https://" + FILES_PATH + params.getFileName();
+        return downloadService.downloadFileWithDynamicUrlSync(mUrl);
     }
-
-
 
     @Override
     public void setData(List<Pair<List<SubjectItemFile>, String>> data) {

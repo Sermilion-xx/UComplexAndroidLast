@@ -5,6 +5,7 @@ import android.support.v4.util.Pair;
 
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
+import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.MaterialsRaw;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.SubjectItemFile;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.SubjectMaterialsParams;
@@ -30,7 +31,6 @@ import io.reactivex.disposables.Disposable;
 public class SubjectMaterialsPresenter extends AbstractPresenter<
         MaterialsRaw, List<Pair<List<SubjectItemFile>, String>>, SubjectMaterialsParams, SubjectMaterialsModel> {
 
-
     public SubjectMaterialsPresenter() {
         UCApplication.getInstance().getAppDiComponent().inject(this);
     }
@@ -40,8 +40,9 @@ public class SubjectMaterialsPresenter extends AbstractPresenter<
         mModel = model;
     }
 
-    public void setMaterialsItems(List<SubjectItemFile> items) {
+    void setMaterialsItems(List<SubjectItemFile> items) {
         mModel.addHistory(new Pair<>(items, ""));
+        pageUp();
     }
 
     private void pageUp() {
@@ -81,7 +82,7 @@ public class SubjectMaterialsPresenter extends AbstractPresenter<
         if (mModel.getHistoryCount() > 1 && !params.isMyFolder()) {
             if (getView() != null) {
                 pageUp();
-                ((SubjectMaterialsFragment) getView()).dataLoaded();
+                getView().dataLoaded();
             }
         } else {
             Observable<MaterialsRaw> dataObservable = mModel.loadData(params);
@@ -97,7 +98,7 @@ public class SubjectMaterialsPresenter extends AbstractPresenter<
                     if (getView() != null) {
                         mModel.setCurrentFolder(params.getFolderName());
                         pageUp();
-                        ((SubjectMaterialsFragment) getView()).dataLoaded();
+                        getView().dataLoaded();
                     }
                 }
 

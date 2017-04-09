@@ -6,6 +6,7 @@ import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
 import org.ucomplex.ucomplex.Domain.Users.File;
 import org.ucomplex.ucomplex.Domain.Users.Teacher;
+import org.ucomplex.ucomplex.Modules.Portfolio.PortfolioService;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.MaterialsRaw;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.SubjectItemFile;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.SubjectMaterialsParams;
@@ -34,50 +35,16 @@ public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<L
 
     private static final String DEFAULT_FOLDER_NAME = "null";
     private SubjectTeachersMaterialsService subjectTeachersMaterialsService;
+    private PortfolioService portfolioService;
     private List<Pair<List<SubjectItemFile> , String>> mPageHistory;
     private Map<Integer, Teacher> mTeachers;
-    private int currentPage = 0;
+    private int currentPage = -1;
     private String currentFolder = "null";
+    private boolean myFiles;
+    private String myName;
 
     void setTeachers(Map<Integer, Teacher> mTeachers) {
         this.mTeachers = mTeachers;
-    }
-
-    void setCurrentFolder(String currentFolder) {
-        this.currentFolder = currentFolder;
-    }
-
-    int getCurrentPage() {
-        return currentPage;
-    }
-
-    void pageUp() {
-        currentPage++;
-    }
-
-    void pageDown() {
-        currentPage--;
-        if(currentPage<1){
-            currentFolder = DEFAULT_FOLDER_NAME;
-        }else {
-            currentFolder = getHistory(currentPage).second;
-        }
-    }
-
-    void addHistory(Pair<List<SubjectItemFile>, String> list) {
-        this.mPageHistory.add(list);
-    }
-
-    int getHistoryCount(){
-        return this.mPageHistory.size();
-    }
-
-    Pair<List<SubjectItemFile>, String> getHistory(int index) {
-        if(index<this.mPageHistory.size()){
-            return this.mPageHistory.get(index);
-        }else {
-            return null;
-        }
     }
 
     public SubjectMaterialsModel() {
@@ -85,9 +52,15 @@ public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<L
         mPageHistory = new ArrayList<>();
     }
 
+    //TODO: create only one service
     @Inject
     void setSubjectTeachersMaterialsService(SubjectTeachersMaterialsService service) {
         this.subjectTeachersMaterialsService = service;
+    }
+
+    @Inject
+    void setPortfolioService(PortfolioService service) {
+        this.portfolioService = service;
     }
 
     @Override
@@ -96,7 +69,9 @@ public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<L
             return subjectTeachersMaterialsService.getMaterials(folder.getFolder()).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread());
         } else {
-            return subjectTeachersMaterialsService.getMaterials(folder.getFolder()).subscribeOn(Schedulers.io())
+            myFiles = true;
+            myName = UCApplication.getInstance().getLoggedUser().getName();
+            return portfolioService.getPortfolio().subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread());
         }
     }
@@ -135,11 +110,53 @@ public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<L
         item.setAddress(file.getAddress());
         item.setName(file.getName());
         item.setData(file.getData());
-        item.setOwnersName(mTeachers.get(file.getOwner()).getName());
+        if (!myFiles) {
+            item.setOwnersName(mTeachers.get(file.getOwner()).getName());
+        } else {
+            item.setOwnersName(myName);
+        }
         item.setSize(file.getSize());
         item.setType(file.getType());
         item.setTime(file.getTime());
         return item;
+    }
+
+
+    void setCurrentFolder(String currentFolder) {
+        this.currentFolder = currentFolder;
+    }
+
+    int getCurrentPage() {
+        return currentPage;
+    }
+
+    void pageUp() {
+        currentPage++;
+    }
+
+    void pageDown() {
+        currentPage--;
+        if(currentPage<1){
+            currentFolder = DEFAULT_FOLDER_NAME;
+        }else {
+            currentFolder = getHistory(currentPage).second;
+        }
+    }
+
+    void addHistory(Pair<List<SubjectItemFile>, String> list) {
+        this.mPageHistory.add(list);
+    }
+
+    int getHistoryCount(){
+        return this.mPageHistory.size();
+    }
+
+    Pair<List<SubjectItemFile>, String> getHistory(int index) {
+        if(index<this.mPageHistory.size()){
+            return this.mPageHistory.get(index);
+        }else {
+            return null;
+        }
     }
 
 }

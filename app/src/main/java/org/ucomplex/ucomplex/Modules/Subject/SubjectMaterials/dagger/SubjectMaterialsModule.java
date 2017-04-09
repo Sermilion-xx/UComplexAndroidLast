@@ -22,13 +22,11 @@ import dagger.Provides;
 public class SubjectMaterialsModule {
 
     @Provides
-    @Singleton
     SubjectMaterialsPresenter providePresenter() {
         return new SubjectMaterialsPresenter();
     }
 
     @Provides
-    @Singleton
     SubjectMaterialsAdapter provideAdapter() {
         return new SubjectMaterialsAdapter();
     }

@@ -87,4 +87,9 @@ public class RecyclerFragment extends MvpFragment<MVPView, MvpPresenter<MVPView>
         return getContext();
     }
 
+    @Override
+    public void dataLoaded() {
+
+    }
+
 }

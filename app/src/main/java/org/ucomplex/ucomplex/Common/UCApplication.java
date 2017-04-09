@@ -29,7 +29,7 @@ public class UCApplication extends Application {
 
     private AppDiComponent appDiComponent;
 
-    @Override
+    @Override 
     public void onCreate() {
         super.onCreate();
         INSTANCE = this;

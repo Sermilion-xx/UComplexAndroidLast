@@ -47,7 +47,7 @@ public class SubjectPresenter extends AbstractPresenter<
             public void onNext(SubjectRaw value) {
                 mModel.processData(value);
                 if(getView()!=null){
-                    ((SubjectProfileFragment)getView()).dataLoaded();
+                    getView().dataLoaded();
                 }
             }
 

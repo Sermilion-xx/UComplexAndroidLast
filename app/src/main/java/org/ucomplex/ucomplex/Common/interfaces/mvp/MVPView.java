@@ -17,5 +17,6 @@ import com.hannesdorfmann.mosby.mvp.MvpView;
 public interface MVPView extends MvpView {
     Context getAppContext();
     Context getActivityContext();
+    void dataLoaded();
 }
 

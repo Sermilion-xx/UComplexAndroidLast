@@ -75,7 +75,7 @@ public class SubjectMaterialsAdapter extends BaseAdapter<SubjectMaterialsAdapter
     private boolean mMyFiles;
     private OnListItemClicked<SubjectMaterialsParams> onListItemClicked;
 
-    public SubjectMaterialsAdapter () {
+    public SubjectMaterialsAdapter() {
         mItems = new ArrayList<>();
     }
 
@@ -90,8 +90,8 @@ public class SubjectMaterialsAdapter extends BaseAdapter<SubjectMaterialsAdapter
 
     @Override
     public void setItems(List<SubjectItemFile> data) {
-        super.setItems(data);
         if (data != null) {
+            super.setItems(data);
             mItemTypes = new boolean[data.size()];
             for (int i = 0; i < data.size(); i++) {
                 SubjectItemFile file = data.get(i);

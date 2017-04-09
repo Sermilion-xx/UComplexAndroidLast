@@ -12,6 +12,7 @@ import org.ucomplex.ucomplex.Common.base.BaseMVPActivity;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.SubjectMaterialsAdapter;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.SubjectMaterialsPresenter;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.SubjectMaterialsParams;
 import org.ucomplex.ucomplex.R;
 
 public class PortfolioActivity extends BaseMVPActivity<MVPView, SubjectMaterialsPresenter> {
@@ -36,7 +37,9 @@ public class PortfolioActivity extends BaseMVPActivity<MVPView, SubjectMaterials
         mAdapter = new SubjectMaterialsAdapter();
         mRecyclerView.setAdapter(mAdapter);
         if (presenter.getData() == null || presenter.getData().size() == 0) {
-            presenter.loadData(null);
+            SubjectMaterialsParams params = new SubjectMaterialsParams();
+            params.setMyFolder(true);
+            presenter.loadData(params);
         } else {
             dataLoaded();
         }

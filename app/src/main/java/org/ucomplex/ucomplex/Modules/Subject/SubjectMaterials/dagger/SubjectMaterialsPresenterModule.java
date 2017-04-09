@@ -20,7 +20,6 @@ import dagger.Provides;
 public class SubjectMaterialsPresenterModule {
 
     @Provides
-    @Singleton
     SubjectMaterialsModel provideModel() {
         return new SubjectMaterialsModel();
     }

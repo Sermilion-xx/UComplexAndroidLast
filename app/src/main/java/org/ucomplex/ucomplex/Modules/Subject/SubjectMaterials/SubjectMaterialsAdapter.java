@@ -143,6 +143,7 @@ public class SubjectMaterialsAdapter extends BaseAdapter<SubjectMaterialsAdapter
                             filename = item.getAddress() + "." + item.getType();
                             SubjectMaterialsParams params = new SubjectMaterialsParams();
                             params.setFileName(filename);
+                            params.setOwnersId(item.getOwnersId());
                             onListItemClicked.onClick(params);
                         }
                     });

@@ -1,6 +1,6 @@
 package org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model;
 
-import org.ucomplex.ucomplex.Domain.Users.File;
+import org.ucomplex.ucomplex.Domain.Users.MaterialsFile;
 
 import java.util.List;
 
@@ -16,13 +16,13 @@ import java.util.List;
 
 public class MaterialsRaw {
 
-    private List<File> files;
+    private List<MaterialsFile> files;
 
-    public List<File> getFiles() {
+    public List<MaterialsFile> getFiles() {
         return files;
     }
 
-    public void setFiles(List<File> files) {
+    public void setFiles(List<MaterialsFile> files) {
         this.files = files;
     }
 }

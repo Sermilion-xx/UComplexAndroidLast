@@ -1,6 +1,6 @@
 package org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.model;
 
-import org.ucomplex.ucomplex.Domain.Users.File;
+import org.ucomplex.ucomplex.Domain.Users.MaterialsFile;
 import org.ucomplex.ucomplex.Domain.Users.Teacher;
 
 import java.util.List;
@@ -18,7 +18,7 @@ import java.util.List;
 public class Files {
 
     private Teacher teacher;
-    private List<File> files;
+    private List<MaterialsFile> materialsFiles;
 
     public Teacher getTeacher() {
         return teacher;
@@ -28,11 +28,11 @@ public class Files {
         this.teacher = teacher;
     }
 
-    public List<File> getFiles() {
-        return files;
+    public List<MaterialsFile> getMaterialsFiles() {
+        return materialsFiles;
     }
 
-    public void setFiles(List<File> files) {
-        this.files = files;
+    public void setMaterialsFiles(List<MaterialsFile> materialsFiles) {
+        this.materialsFiles = materialsFiles;
     }
 }

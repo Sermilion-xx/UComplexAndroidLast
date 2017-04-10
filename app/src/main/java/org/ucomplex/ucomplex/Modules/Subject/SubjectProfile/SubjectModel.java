@@ -5,8 +5,8 @@ import android.support.v4.util.Pair;
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
+import org.ucomplex.ucomplex.Domain.Users.MaterialsFile;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.model.Files;
-import org.ucomplex.ucomplex.Domain.Users.File;
 import org.ucomplex.ucomplex.Domain.Users.Teacher;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.SubjectItemFile;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.model.SubjectItemProfile;
@@ -108,8 +108,8 @@ public class SubjectModel implements MVPModel<SubjectRaw, SubjectObject, Integer
             Files files = data.getFiles().get(i);
             profileItemsSet.add(extractProfileItem(files.getTeacher()));
             mTeachers.put(files.getTeacher().getId(), files.getTeacher());
-            for (File file : files.getFiles()) {
-                filesItems.add(extractFileItem(file, mTeachers));
+            for (MaterialsFile materialsFile : files.getMaterialsFiles()) {
+                filesItems.add(extractFileItem(materialsFile, mTeachers));
             }
         }
 
@@ -135,15 +135,15 @@ public class SubjectModel implements MVPModel<SubjectRaw, SubjectObject, Integer
         mData.setProfileItems(profileItemsList);
     }
 
-    private SubjectItemFile extractFileItem(File file, Map<Integer, Teacher> teachers) {
+    private SubjectItemFile extractFileItem(MaterialsFile materialsFile, Map<Integer, Teacher> teachers) {
         SubjectItemFile item = new SubjectItemFile();
-        item.setAddress(file.getAddress());
-        item.setName(file.getName());
-        item.setData(file.getData());
-        item.setOwnersName(teachers.get(file.getOwner()).getName());
-        item.setSize(file.getSize());
-        item.setType(file.getType());
-        item.setTime(file.getTime());
+        item.setAddress(materialsFile.getAddress());
+        item.setName(materialsFile.getName());
+        item.setData(materialsFile.getData());
+        item.setOwnersName(teachers.get(materialsFile.getOwner()).getName());
+        item.setSize(materialsFile.getSize());
+        item.setType(materialsFile.getType());
+        item.setTime(materialsFile.getTime());
         return item;
     }
 

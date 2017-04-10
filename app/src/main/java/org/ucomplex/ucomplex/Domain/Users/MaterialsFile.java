@@ -10,7 +10,7 @@ package org.ucomplex.ucomplex.Domain.Users;
  * ---------------------------------------------------
  */
 
-public class File {
+public class MaterialsFile {
 
     private String id;
     private int owner;

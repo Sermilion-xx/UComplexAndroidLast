@@ -3,12 +3,10 @@ package org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials;
 import android.net.Uri;
 import android.support.v4.util.Pair;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.UCApplication;
+import org.ucomplex.ucomplex.Common.interfaces.DownloadCallback;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
-import org.ucomplex.ucomplex.Domain.Users.File;
+import org.ucomplex.ucomplex.Domain.Users.MaterialsFile;
 import org.ucomplex.ucomplex.Domain.Users.Teacher;
 import org.ucomplex.ucomplex.Modules.Portfolio.PortfolioService;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.MaterialsRaw;
@@ -16,7 +14,6 @@ import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.SubjectItemF
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.SubjectMaterialsParams;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,8 +24,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
-
-import static org.ucomplex.ucomplex.Common.UCApplication.BASE_URL;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * ---------------------------------------------------
@@ -52,7 +49,7 @@ public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<L
     private SubjectTeachersMaterialsService subjectTeachersMaterialsService;
     private PortfolioService portfolioService;
     private DownloadFileService downloadService;
-    private List<Pair<List<SubjectItemFile> , String>> mPageHistory;
+    private List<Pair<List<SubjectItemFile>, String>> mPageHistory;
     private Map<Integer, Teacher> mTeachers;
     private int currentPage = -1;
     private String currentFolder = "null";
@@ -97,10 +94,37 @@ public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<L
         }
     }
 
-    Observable<ResponseBody> downloadFile(SubjectMaterialsParams params) {
-        String mUrl = "https://" + FILES_PATH + params.getFileName();
-        return downloadService.downloadFileWithDynamicUrlSync(mUrl);
+    void downloadFile(SubjectMaterialsParams params, DownloadCallback<Response<ResponseBody>> callback) {
+        String mUrl = FILES_PATH + params.getOwnersId() + "/" + params.getFileName();
+        Call<ResponseBody> call = downloadService.downloadFileWithDynamicUrlSync(mUrl);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    callback.onResponse(response);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                t.printStackTrace();
+                callback.onError(t);
+            }
+        });
     }
+
+//        return downloadService.downloadFileWithDynamicUrlSync(mUrl).flatMap(new Function<ResponseBody, Observable<ResponseBody>>() {
+//            @Override
+//            public Observable<ResponseBody> apply(ResponseBody responseBody) throws Exception {
+//                return new Observable<ResponseBody>() {
+//                    @Override
+//                    protected void subscribeActual(Observer<? super ResponseBody> observer) {
+//                        observer.onNext(responseBody);
+//                    }
+//                };
+//            }
+//        });
+//    }
 
     @Override
     public void setData(List<Pair<List<SubjectItemFile>, String>> data) {
@@ -125,25 +149,26 @@ public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<L
     @Override
     public void processData(MaterialsRaw data) {
         List<SubjectItemFile> list = new ArrayList<>();
-        for (File file : data.getFiles()) {
-            list.add(extractFileItem(file));
+        for (MaterialsFile materialsFile : data.getFiles()) {
+            list.add(extractFileItem(materialsFile));
         }
         mPageHistory.add(new Pair<>(list, ""));
     }
 
-    private SubjectItemFile extractFileItem(File file) {
+    private SubjectItemFile extractFileItem(MaterialsFile materialsFile) {
         SubjectItemFile item = new SubjectItemFile();
-        item.setAddress(file.getAddress());
-        item.setName(file.getName());
-        item.setData(file.getData());
+        item.setAddress(materialsFile.getAddress());
+        item.setName(materialsFile.getName());
+        item.setData(materialsFile.getData());
         if (!myFiles) {
-            item.setOwnersName(mTeachers.get(file.getOwner()).getName());
+            item.setOwnersName(mTeachers.get(materialsFile.getOwner()).getName());
         } else {
             item.setOwnersName(myName);
         }
-        item.setSize(file.getSize());
-        item.setType(file.getType());
-        item.setTime(file.getTime());
+        item.setOwnersId(materialsFile.getOwner());
+        item.setSize(materialsFile.getSize());
+        item.setType(materialsFile.getType());
+        item.setTime(materialsFile.getTime());
         return item;
     }
 
@@ -162,9 +187,9 @@ public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<L
 
     void pageDown() {
         currentPage--;
-        if(currentPage<1){
+        if (currentPage < 1) {
             currentFolder = DEFAULT_FOLDER_NAME;
-        }else {
+        } else {
             currentFolder = getHistory(currentPage).second;
         }
     }
@@ -173,14 +198,14 @@ public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<L
         this.mPageHistory.add(list);
     }
 
-    int getHistoryCount(){
+    int getHistoryCount() {
         return this.mPageHistory.size();
     }
 
     Pair<List<SubjectItemFile>, String> getHistory(int index) {
-        if(index<this.mPageHistory.size()){
+        if (index < this.mPageHistory.size()) {
             return this.mPageHistory.get(index);
-        }else {
+        } else {
             return null;
         }
     }

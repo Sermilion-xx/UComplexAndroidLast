@@ -8,6 +8,8 @@ import org.ucomplex.ucomplex.Modules.Portfolio.PortfolioService;
 import dagger.Module;
 import dagger.Provides;
 
+import static org.ucomplex.ucomplex.Common.UCApplication.BASE_FILES_URL;
+
 /**
  * ---------------------------------------------------
  * Created by Sermilion on 24/03/2017.
@@ -18,11 +20,11 @@ import dagger.Provides;
  * ---------------------------------------------------
  */
 @Module
-public class PortfolioModelModule {
+class PortfolioModelModule {
 
     @Provides
     PortfolioService provideService(){
-        return ServiceGenerator.createService(PortfolioService.class, UCApplication.getInstance().getAuthString());
+        return ServiceGenerator.createService(PortfolioService.class, UCApplication.getInstance().getAuthString(), BASE_FILES_URL);
     }
 
 }

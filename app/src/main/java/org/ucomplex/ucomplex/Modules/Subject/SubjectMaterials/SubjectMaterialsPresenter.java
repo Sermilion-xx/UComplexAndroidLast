@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Environment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
+import org.ucomplex.ucomplex.Common.interfaces.DownloadCallback;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.MaterialsRaw;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.SubjectItemFile;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.SubjectMaterialsParams;
@@ -33,11 +35,10 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Function;
 import okhttp3.ResponseBody;
+import retrofit2.Response;
 
 import static org.ucomplex.ucomplex.Common.Constants.UC_ACTION_DOWNLOAD_COMPLETE;
 import static org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.NotificationService.EXTRA_BODY;
@@ -144,106 +145,113 @@ public class SubjectMaterialsPresenter extends AbstractPresenter<
             if (ContextCompat.checkSelfPermission(getActivityContext(),
                     Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     != PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(getActivityContext(), getActivityContext().getString(R.string.need_storage_permissions), Toast.LENGTH_LONG).show();
+                if (getView() != null) {
+                    getView().showToast(R.string.need_storage_permissions, Toast.LENGTH_LONG);
+                }
             }
             startNotificationService(params.getFileName(), R.string.file_download_started, null, getActivityContext());
-            Observable<ResponseBody> dataObservable = mModel.downloadFile(params);
-            dataObservable.flatMap(new Function<ResponseBody, ObservableSource<?>>() {
+
+            mModel.downloadFile(params, new DownloadCallback<Response<ResponseBody>>() {
                 @Override
-                public ObservableSource<?> apply(ResponseBody responseBody) throws Exception {
-                    try {
-                        InputStream inputStream = null;
-                        OutputStream outputStream = null;
-                        try {
-                            byte[] fileReader = new byte[4096];
-                            String name = params.getFileName();
-                            File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), name);
-                            inputStream = responseBody.byteStream();
-                            outputStream = new FileOutputStream(file);
-                            while (true) {
-                                int read = inputStream.read(fileReader);
-                                if (read == -1) {
-                                    break;
+                public void onResponse(Response<ResponseBody> response) {
+                    new AsyncTask<Void, Void, Void>() {
+                        @Override
+                        protected Void doInBackground(Void... voids) {
+                            try {
+                                String name = params.getFileName();
+                                File materialsFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), name);
+                                InputStream inputStream = null;
+                                OutputStream outputStream = null;
+
+                                try {
+                                    byte[] fileReader = new byte[4096];
+                                    long fileSize = response.body().contentLength();
+                                    long fileSizeDownloaded = 0;
+                                    inputStream = response.body().byteStream();
+                                    outputStream = new FileOutputStream(materialsFile);
+                                    while (true) {
+                                        int read = inputStream.read(fileReader);
+                                        if (read == -1) {
+                                            break;
+                                        }
+                                        outputStream.write(fileReader, 0, read);
+                                        fileSizeDownloaded += read;
+                                    }
+                                    outputStream.flush();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                } finally {
+                                    if (inputStream != null) {
+                                        inputStream.close();
+                                    }
+                                    if (outputStream != null) {
+                                        outputStream.close();
+                                    }
                                 }
-                                outputStream.write(fileReader, 0, read);
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
-                            outputStream.flush();
+                            return null;
+                        }
+
+                        @Override
+                        protected void onPostExecute(Void aVoid) {
+                            super.onPostExecute(aVoid);
+                            Intent intent = new Intent();
+                            intent.setAction(UC_ACTION_DOWNLOAD_COMPLETE);
+                            getActivityContext().sendBroadcast(intent);
                             if (getView() != null) {
-                                getView().showToast(R.string.file_saved_to_downloads, Toast.LENGTH_LONG);
-                            }
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        } finally {
-                            if (inputStream != null) {
-                                inputStream.close();
-                            }
-                            if (outputStream != null) {
-                                outputStream.close();
+                                getView().showToast(R.string.file_download_complete, Toast.LENGTH_LONG);
                             }
                         }
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    }.execute();
+                }
+
+                @Override
+                public void onError(Throwable t) {
+                    if (getView() != null) {
+                        getView().showToast(R.string.error_loadig_file, Toast.LENGTH_LONG);
                     }
-                    return null;
                 }
             });
-//            dataObservable.subscribe(new Observer<ResponseBody>() {
-//                @Override
-//                public void onSubscribe(Disposable d) {
-//                }
+//            Observable<ResponseBody> dataObservable = mModel.downloadFile(params);
+//            dataObservable.subscribeOn(Schedulers.io())
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .subscribe(new Observer<ResponseBody>() {
 //
-//                @Override
-//                public void onNext(ResponseBody value) {
-//                    try {
-//                        InputStream inputStream = null;
-//                        OutputStream outputStream = null;
-//                        try {
-//                            byte[] fileReader = new byte[4096];
-//                            String name = params.getFileName();
-//                            File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), name);
-//                            inputStream = value.byteStream();
-//                            outputStream = new FileOutputStream(file);
-//                            while (true) {
-//                                int read = inputStream.read(fileReader);
-//                                if (read == -1) {
-//                                    break;
-//                                }
-//                                outputStream.write(fileReader, 0, read);
-//                            }
-//                            outputStream.flush();
-//                            if (getView() != null) {
-//                                getView().showToast(R.string.file_saved_to_downloads, Toast.LENGTH_LONG);
-//                            }
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        } finally {
-//                            if (inputStream != null) {
-//                                inputStream.close();
-//                            }
-//                            if (outputStream != null) {
-//                                outputStream.close();
+//                        @Override
+//                        public void onSubscribe(Disposable d) {
+//                        }
+//
+//                        @Override
+//                        public void onNext(ResponseBody value) {
+//                            try {
+//                                String name = params.getFileName();
+//                                MaterialsFile file = new MaterialsFile(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), name);
+//                                FileOutputStream out = new FileOutputStream(file.getPath());
+//                                long lenght = value.contentLength();
+//                                out.write(value.bytes());
+//                                out.close();
+//                            } catch (IOException e) {
+//                                e.printStackTrace();
 //                            }
 //                        }
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
 //
-//                @Override
-//                public void onError(Throwable e) {
-//                    e.printStackTrace();
-//                    if (getView() != null) {
-//                        getView().showToast(R.string.error_loadig_file, Toast.LENGTH_LONG);
-//                    }
-//                }
+//                        @Override
+//                        public void onError(Throwable e) {
+//                            e.printStackTrace();
+//                            if (getView() != null) {
+//                                getView().showToast(R.string.error_loadig_file, Toast.LENGTH_LONG);
+//                            }
+//                        }
 //
-//                @Override
-//                public void onComplete() {
-//                    Intent intent = new Intent();
-//                    intent.setAction(UC_ACTION_DOWNLOAD_COMPLETE);
-//                    getActivityContext().sendBroadcast(intent);
-//                }
-//            });
+//                        @Override
+//                        public void onComplete() {
+//                            Intent intent = new Intent();
+//                            intent.setAction(UC_ACTION_DOWNLOAD_COMPLETE);
+//                            getActivityContext().sendBroadcast(intent);
+//                        }
+//                    });
         }
     }
 

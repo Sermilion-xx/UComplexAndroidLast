@@ -2,8 +2,14 @@ package org.ucomplex.ucomplex.Common;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
+import java.security.cert.Certificate;
+import java.util.Locale;
+
 import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLException;
 import javax.net.ssl.SSLSession;
+
+import java.security.cert.X509Certificate;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -11,6 +17,8 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static java.util.regex.Pattern.matches;
+import static org.apache.http.conn.ssl.AbstractVerifier.getDNSSubjectAlts;
 import static org.ucomplex.ucomplex.Common.UCApplication.BASE_URL;
 
 /**
@@ -27,13 +35,21 @@ public class ServiceGenerator {
 
 
 
-    private static Retrofit.Builder builder =
-            new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
-                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                    .addConverterFactory(GsonConverterFactory.create());
+    private static Retrofit.Builder builder;
 
-    public static <S> S createService(Class<S> serviceClass, String authString) {
+    private static void buildRetrofitBuilder(String baseUrl) {
+        builder = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create());
+    }
+
+    public static <S> S createService(Class<S> serviceClass, String authString, String ... baseUrl) {
+        String base_url = BASE_URL;
+        if (baseUrl.length > 0) {
+            base_url = baseUrl[0];
+        }
+        buildRetrofitBuilder(base_url);
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
@@ -44,13 +60,6 @@ public class ServiceGenerator {
                     .addHeader("Authorization", " Basic " + authString).build();
             return chain.proceed(request);
         });
-        OkHttpClient client = httpClient.build();
-//        client.setHostnameVerifier(new HostnameVerifier() {
-//            @Override
-//            public boolean verify(String hostname, SSLSession session) {
-//                return true;
-//            }
-//        });
         Retrofit retrofit = builder.client(httpClient.build()).build();
         return retrofit.create(serviceClass);
     }

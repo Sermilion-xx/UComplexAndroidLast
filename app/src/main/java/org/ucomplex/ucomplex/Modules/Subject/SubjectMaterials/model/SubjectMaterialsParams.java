@@ -18,6 +18,15 @@ public class SubjectMaterialsParams {
     private  boolean isMyFolder;
     private String fileUrl;
     private String fileName;
+    private int ownersId;
+
+    public int getOwnersId() {
+        return ownersId;
+    }
+
+    public void setOwnersId(int ownersId) {
+        this.ownersId = ownersId;
+    }
 
     public String getFileName() {
         return fileName;

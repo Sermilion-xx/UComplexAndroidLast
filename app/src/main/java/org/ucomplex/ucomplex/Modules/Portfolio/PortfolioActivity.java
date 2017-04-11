@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,6 +22,7 @@ import android.widget.Toast;
 
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.FacadeMedia;
+import org.ucomplex.ucomplex.Common.PresenterCache;
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.base.BaseMVPActivity;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
@@ -28,20 +31,53 @@ import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.SubjectMaterialsPr
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.SubjectMaterialsParams;
 import org.ucomplex.ucomplex.R;
 
+import javax.inject.Inject;
+
 public class PortfolioActivity extends BaseMVPActivity<MVPView, SubjectMaterialsPresenter> {
 
     private static final int GALLERY_KITKAT_INTENT_CALLED = 0;
     private static final int GALLERY_INTENT_CALLED = 1;
+    private static final String TAG =  PortfolioActivity.class.getName();
+    private static final String DESTROYED_BY_SYSTEM = "DESTROYED_BY_SYSTEM";
+
 
     public static Intent creteIntent(Context context) {
         return new Intent(context, PortfolioActivity.class);
     }
 
     private SubjectMaterialsAdapter mAdapter;
+    private PresenterCache presenterCache = PresenterCache.getInstance();
+    private boolean isDestroyedBySystem;
+
+    @Inject
+    @Override
+    public void setPresenter(@NonNull SubjectMaterialsPresenter presenter) {
+        super.setPresenter(presenter);
+        presenterCache.addToChache(TAG, presenter);
+    }
+
+    @NonNull
+    @Override
+    public SubjectMaterialsPresenter createPresenter() {
+        if (isDestroyedBySystem) {
+            presenter =  (SubjectMaterialsPresenter) presenterCache.getFromChache(TAG);
+        }
+        return presenter;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        isDestroyedBySystem = true;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        UCApplication.getInstance().getAppDiComponent().inject(this);
+        if (savedInstanceState != null) {
+            isDestroyedBySystem = true;
+        } else {
+            UCApplication.getInstance().getAppDiComponent().inject(this);
+        }
         super.onCreate(savedInstanceState);
         setContentViewWithNavDrawer(R.layout.activity_portfolio);
         mProgress = (ProgressBar) findViewById(R.id.progressBar);
@@ -53,14 +89,13 @@ public class PortfolioActivity extends BaseMVPActivity<MVPView, SubjectMaterials
         mAdapter = new SubjectMaterialsAdapter();
         mAdapter.setOnListItemClicked(params -> presenter.loadData(params));
         mRecyclerView.setAdapter(mAdapter);
-        if (presenter.getData() == null || presenter.getData().size() == 0) {
+        if (presenter.getCurrentHistory() == null || presenter.getCurrentHistory().size() == 0) {
             SubjectMaterialsParams params = new SubjectMaterialsParams();
             params.setMyFolder(true);
             presenter.loadData(params);
         } else {
             dataLoaded();
         }
-
     }
 
     @Override
@@ -149,5 +184,19 @@ public class PortfolioActivity extends BaseMVPActivity<MVPView, SubjectMaterials
     public void dataLoaded() {
         mAdapter.setItems(presenter.getCurrentHistory());
         mAdapter.notifyDataSetChanged();
+    }
+
+    @Override public void onResume() {
+        super.onResume();
+        isDestroyedBySystem = false;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter = null;
+        if (!isDestroyedBySystem) {
+            presenterCache.removePresenter(TAG);
+        }
     }
 }

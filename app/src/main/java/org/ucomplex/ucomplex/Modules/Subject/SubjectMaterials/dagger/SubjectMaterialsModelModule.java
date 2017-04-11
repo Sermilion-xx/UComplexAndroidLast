@@ -9,6 +9,8 @@ import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.SubjectTeachersMat
 import dagger.Module;
 import dagger.Provides;
 
+import static org.ucomplex.ucomplex.Common.UCApplication.BASE_FILES_URL;
+
 /**
  * ---------------------------------------------------
  * Created by Sermilion on 24/03/2017.
@@ -33,7 +35,7 @@ public class SubjectMaterialsModelModule {
 
     @Provides
     DownloadFileService provideDownloadService(){
-        return ServiceGenerator.createService(DownloadFileService.class, UCApplication.getInstance().getAuthString());
+        return ServiceGenerator.createService(DownloadFileService.class, UCApplication.getInstance().getAuthString(), BASE_FILES_URL);
     }
 
 }

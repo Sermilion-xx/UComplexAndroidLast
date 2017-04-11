@@ -58,6 +58,8 @@ import static org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.Notificatio
 public class SubjectMaterialsPresenter extends AbstractPresenter<
         MaterialsRaw, List<Pair<List<SubjectItemFile>, String>>, SubjectMaterialsParams, SubjectMaterialsModel> {
 
+    private DownloadTask saveFileTask;
+
     public SubjectMaterialsPresenter() {
         UCApplication.getInstance().getAppDiComponent().inject(this);
     }
@@ -154,61 +156,13 @@ public class SubjectMaterialsPresenter extends AbstractPresenter<
             mModel.downloadFile(params, new DownloadCallback<Response<ResponseBody>>() {
                 @Override
                 public void onResponse(Response<ResponseBody> response) {
-                    new AsyncTask<Void, Void, Void>() {
-                        @Override
-                        protected Void doInBackground(Void... voids) {
-                            try {
-                                String name = params.getFileName();
-                                File materialsFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), name);
-                                InputStream inputStream = null;
-                                OutputStream outputStream = null;
-
-                                try {
-                                    byte[] fileReader = new byte[4096];
-                                    long fileSize = response.body().contentLength();
-                                    long fileSizeDownloaded = 0;
-                                    inputStream = response.body().byteStream();
-                                    outputStream = new FileOutputStream(materialsFile);
-                                    while (true) {
-                                        int read = inputStream.read(fileReader);
-                                        if (read == -1) {
-                                            break;
-                                        }
-                                        outputStream.write(fileReader, 0, read);
-                                        fileSizeDownloaded += read;
-                                    }
-                                    outputStream.flush();
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                } finally {
-                                    if (inputStream != null) {
-                                        inputStream.close();
-                                    }
-                                    if (outputStream != null) {
-                                        outputStream.close();
-                                    }
-                                }
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                            return null;
-                        }
-
-                        @Override
-                        protected void onPostExecute(Void aVoid) {
-                            super.onPostExecute(aVoid);
-                            Intent intent = new Intent();
-                            intent.setAction(UC_ACTION_DOWNLOAD_COMPLETE);
-                            getActivityContext().sendBroadcast(intent);
-                            if (getView() != null) {
-                                getView().showToast(R.string.file_download_complete, Toast.LENGTH_LONG);
-                            }
-                        }
-                    }.execute();
+                    saveFileTask = new DownloadTask(response, getActivityContext());
+                    saveFileTask.execute(params);
                 }
 
                 @Override
                 public void onError(Throwable t) {
+                    t.printStackTrace();
                     if (getView() != null) {
                         getView().showToast(R.string.error_loadig_file, Toast.LENGTH_LONG);
                     }
@@ -326,6 +280,64 @@ public class SubjectMaterialsPresenter extends AbstractPresenter<
             notificationIntent.putExtra(EXTRA_LARGE_ICON, largeIcon);
         }
         context.startService(notificationIntent);
+    }
+
+    private static class DownloadTask extends AsyncTask<SubjectMaterialsParams, Void, Void> {
+
+        private Response<ResponseBody> response;
+        private Context context;
+
+        public DownloadTask(Response<ResponseBody> responseBodyResponse, Context context) {
+            this.response = responseBodyResponse;
+            this.context = context;
+        }
+
+        @Override
+        protected Void doInBackground(SubjectMaterialsParams... params) {
+            try {
+                String name = params[0].getFileName();
+                File materialsFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), name);
+                InputStream inputStream = null;
+                OutputStream outputStream = null;
+                try {
+                    byte[] fileReader = new byte[4096];
+                    long fileSize = response.body().contentLength();
+                    long fileSizeDownloaded = 0;
+                    inputStream = response.body().byteStream();
+                    outputStream = new FileOutputStream(materialsFile);
+                    while (true) {
+                        int read = inputStream.read(fileReader);
+                        if (read == -1) {
+                            break;
+                        }
+                        outputStream.write(fileReader, 0, read);
+                        fileSizeDownloaded += read;
+                    }
+                    outputStream.flush();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    if (inputStream != null) {
+                        inputStream.close();
+                    }
+                    if (outputStream != null) {
+                        outputStream.close();
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            Intent intent = new Intent();
+            intent.setAction(UC_ACTION_DOWNLOAD_COMPLETE);
+            context.sendBroadcast(intent);
+            Toast.makeText(context, R.string.file_download_complete, Toast.LENGTH_LONG).show();
+        }
     }
 
 

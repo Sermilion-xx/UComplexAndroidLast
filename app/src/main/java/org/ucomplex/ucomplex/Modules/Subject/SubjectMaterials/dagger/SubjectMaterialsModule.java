@@ -1,5 +1,6 @@
 package org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.dagger;
 
+import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.DownloadFileService;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.SubjectMaterialsAdapter;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.SubjectMaterialsPresenter;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.SubjectPresenter;

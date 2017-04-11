@@ -40,7 +40,7 @@ import retrofit2.Response;
 public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<List<SubjectItemFile>, String>>, SubjectMaterialsParams> {
 
     private static final String DEFAULT_FOLDER_NAME = "null";
-    private static final String FILES_PATH = "storage.ucomplex.org/files/users/";
+    private static final String FILES_PATH = "/files/users/";
     public static final String EXTRA_KEY_MY_MATERIALS = "myMaterials";
     public static final String EXTRA_KEY_FILE = "file";
     public static final String EXTRA_KEY_NAME = "name";
@@ -49,8 +49,10 @@ public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<L
     private SubjectTeachersMaterialsService subjectTeachersMaterialsService;
     private PortfolioService portfolioService;
     private DownloadFileService downloadService;
+
     private List<Pair<List<SubjectItemFile>, String>> mPageHistory;
     private Map<Integer, Teacher> mTeachers;
+
     private int currentPage = -1;
     private String currentFolder = "null";
     private boolean myFiles;
@@ -203,11 +205,10 @@ public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<L
     }
 
     Pair<List<SubjectItemFile>, String> getHistory(int index) {
-        if (index < this.mPageHistory.size()) {
+        if (index > -1 && index < this.mPageHistory.size()) {
             return this.mPageHistory.get(index);
-        } else {
-            return null;
         }
+        return null;
     }
 
     void deleteFile(String file) {

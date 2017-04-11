@@ -54,6 +54,7 @@ public class ServiceGenerator {
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.addInterceptor(interceptor);
+        httpClient.hostnameVerifier((hostname, session) -> true);
         httpClient.addInterceptor(chain -> {
             Request request = chain.request()
                     .newBuilder()

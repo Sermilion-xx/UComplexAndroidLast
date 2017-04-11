@@ -20,11 +20,11 @@ import static org.ucomplex.ucomplex.Common.UCApplication.BASE_FILES_URL;
  * ---------------------------------------------------
  */
 @Module
-class PortfolioModelModule {
+public class PortfolioModelModule {
 
     @Provides
     PortfolioService provideService(){
-        return ServiceGenerator.createService(PortfolioService.class, UCApplication.getInstance().getAuthString(), BASE_FILES_URL);
+        return ServiceGenerator.createService(PortfolioService.class, UCApplication.getInstance().getAuthString());
     }
 
 }

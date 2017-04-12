@@ -61,16 +61,73 @@ import static org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.Notificatio
 public class SubjectMaterialsPresenter extends AbstractPresenter<
         MaterialsRaw, List<Pair<List<SubjectItemFile>, String>>, SubjectMaterialsParams, SubjectMaterialsModel> {
 
+    private static class DownloadTask extends AsyncTask<SubjectMaterialsParams, Void, Void> {
+
+        private Response<ResponseBody> response;
+        private Context context;
+
+        DownloadTask(Response<ResponseBody> responseBodyResponse, Context context) {
+            this.response = responseBodyResponse;
+            this.context = context;
+        }
+
+        @Override
+        protected Void doInBackground(SubjectMaterialsParams... params) {
+            try {
+                String name = params[0].getFileName();
+                File materialsFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), name);
+                InputStream inputStream = null;
+                OutputStream outputStream = null;
+                try {
+                    byte[] fileReader = new byte[4096];
+                    long fileSize = response.body().contentLength();
+                    long fileSizeDownloaded = 0;
+                    inputStream = response.body().byteStream();
+                    outputStream = new FileOutputStream(materialsFile);
+                    while (true) {
+                        int read = inputStream.read(fileReader);
+                        if (read == -1) {
+                            break;
+                        }
+                        outputStream.write(fileReader, 0, read);
+                        fileSizeDownloaded += read;
+                    }
+                    outputStream.flush();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    if (inputStream != null) {
+                        inputStream.close();
+                    }
+                    if (outputStream != null) {
+                        outputStream.close();
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            Intent intent = new Intent();
+            intent.setAction(UC_ACTION_DOWNLOAD_COMPLETE);
+            context.sendBroadcast(intent);
+            Toast.makeText(context, R.string.file_download_complete, Toast.LENGTH_LONG).show();
+        }
+    }
+
     private DownloadTask saveFileTask;
     private String[] folderMenuActions;
     private String[] fileMenuActions;
-    private String[] menuItems;
 
     public SubjectMaterialsPresenter() {
         UCApplication application = UCApplication.getInstance();
         application.getAppDiComponent().inject(this);
         folderMenuActions = new String[]{application.getString(R.string.rename), application.getString(R.string.delete)};
-        fileMenuActions = new String[]{application.getString(R.string.rename), application.getString(R.string.delete), application.getString(R.string.share)};
+        fileMenuActions = new String[]{application.getString(R.string.rename), application.getString(R.string.delete)};
     }
 
     @Inject
@@ -113,6 +170,14 @@ public class SubjectMaterialsPresenter extends AbstractPresenter<
             return pair.first;
         }
         return null;
+    }
+
+    public int getCurrentHistorySize() {
+        Pair<List<SubjectItemFile>, String> pair = mModel.getHistory(mModel.getCurrentPage());
+        if (pair != null) {
+            return pair.first.size();
+        }
+        return 0;
     }
 
     @Override
@@ -249,7 +314,32 @@ public class SubjectMaterialsPresenter extends AbstractPresenter<
         intent.setAction(UC_ACTION_DOWNLOAD_COMPLETE);
         File file = new File(uri.getPath());
         startNotificationService(file.getName(), R.string.upload_started, uri, getActivityContext());
-        mModel.uploadFile(uri);
+        Observable<MaterialsRaw> observable = mModel.uploadFile(uri, getActivityContext());
+        observable.subscribe(new Observer<MaterialsRaw>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                showProgress();
+            }
+
+            @Override
+            public void onNext(MaterialsRaw value) {
+                mModel.processDataToCurrentHistory(value);
+                if (getView() != null) {
+                    ((PortfolioActivity) getView()).notifyItemInserted(getCurrentHistory().size());
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+                hideProgress();
+            }
+
+            @Override
+            public void onComplete() {
+                hideProgress();
+            }
+        });
     }
 
     public void createFolder(String folderName) {
@@ -268,70 +358,12 @@ public class SubjectMaterialsPresenter extends AbstractPresenter<
         context.startService(notificationIntent);
     }
 
-    private static class DownloadTask extends AsyncTask<SubjectMaterialsParams, Void, Void> {
-
-        private Response<ResponseBody> response;
-        private Context context;
-
-        DownloadTask(Response<ResponseBody> responseBodyResponse, Context context) {
-            this.response = responseBodyResponse;
-            this.context = context;
-        }
-
-        @Override
-        protected Void doInBackground(SubjectMaterialsParams... params) {
-            try {
-                String name = params[0].getFileName();
-                File materialsFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), name);
-                InputStream inputStream = null;
-                OutputStream outputStream = null;
-                try {
-                    byte[] fileReader = new byte[4096];
-                    long fileSize = response.body().contentLength();
-                    long fileSizeDownloaded = 0;
-                    inputStream = response.body().byteStream();
-                    outputStream = new FileOutputStream(materialsFile);
-                    while (true) {
-                        int read = inputStream.read(fileReader);
-                        if (read == -1) {
-                            break;
-                        }
-                        outputStream.write(fileReader, 0, read);
-                        fileSizeDownloaded += read;
-                    }
-                    outputStream.flush();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally {
-                    if (inputStream != null) {
-                        inputStream.close();
-                    }
-                    if (outputStream != null) {
-                        outputStream.close();
-                    }
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            Intent intent = new Intent();
-            intent.setAction(UC_ACTION_DOWNLOAD_COMPLETE);
-            context.sendBroadcast(intent);
-            Toast.makeText(context, R.string.file_download_complete, Toast.LENGTH_LONG).show();
-        }
-    }
-
-    public void deleteFile(SubjectItemFile params, int position) {
+    private void deleteFile(SubjectItemFile params, int position) {
         Observable<RequestResult> deleteObservable = mModel.deleteFile(params.getAddress());
         deleteObservable.subscribe(new Observer<RequestResult>() {
             @Override
             public void onSubscribe(Disposable d) {
-
+                showProgress();
             }
 
             @Override
@@ -348,6 +380,8 @@ public class SubjectMaterialsPresenter extends AbstractPresenter<
 
             @Override
             public void onError(Throwable e) {
+                e.printStackTrace();
+                hideProgress();
                 if (getView() != null) {
                     getView().showToast(R.string.error_deleting_file, Toast.LENGTH_LONG);
                 }
@@ -355,14 +389,14 @@ public class SubjectMaterialsPresenter extends AbstractPresenter<
 
             @Override
             public void onComplete() {
-
+                hideProgress();
             }
         });
     }
 
     public AlertDialog.Builder createItemMenu(SubjectMaterialsParams params) {
         AlertDialog.Builder build = new AlertDialog.Builder(getActivityContext());
-        menuItems = params.getFile().getType().equals(TYPE_FOLDER) ? folderMenuActions : fileMenuActions;
+        String[] menuItems = params.getFile().getType().equals(TYPE_FOLDER) ? folderMenuActions : fileMenuActions;
         build.setItems(menuItems, (dialog, which) -> {
             switch (which) {
                 case 0:

@@ -81,8 +81,8 @@ public class FacadeMedia {
             return k;
     }
 
-    public static Bitmap getThumbnail(Uri uri, Context activity, int ...thumbnail_size) throws IOException {
-        if(uri!=null) {
+    public static Bitmap getThumbnail(Uri uri, Context activity, int... thumbnail_size) throws IOException {
+        if (uri != null) {
 
             if (thumbnail_size.length == 0) {
                 thumbnail_size = new int[1];
@@ -121,7 +121,7 @@ public class FacadeMedia {
         return null;
     }
 
-    public static Drawable getTextDrawable(int personId, String name, Context context){
+    public static Drawable getTextDrawable(int personId, String name, Context context) {
         final int colorsCount = 16;
         final int number = (personId <= colorsCount) ? personId : personId % colorsCount;
         char firstLetter = name.split("")[1].charAt(0);
@@ -129,7 +129,7 @@ public class FacadeMedia {
                 .width(60)
                 .height(60)
                 .endConfig()
-                .buildRound(String.valueOf(firstLetter), ContextCompat.getColor(context,getColor(number)));
+                .buildRound(String.valueOf(firstLetter), ContextCompat.getColor(context, getColor(number)));
     }
 
     private static int getColor(int index) {
@@ -155,9 +155,9 @@ public class FacadeMedia {
         return hexColors[index];
     }
 
-    public static Bitmap drawableToBitmap (Drawable drawable) {
+    public static Bitmap drawableToBitmap(Drawable drawable) {
         if (drawable instanceof BitmapDrawable) {
-            return ((BitmapDrawable)drawable).getBitmap();
+            return ((BitmapDrawable) drawable).getBitmap();
         }
         int width = drawable.getIntrinsicWidth();
         width = width > 0 ? width : 1;
@@ -194,7 +194,6 @@ public class FacadeMedia {
     }
 
 
-
     public static String getLetter(int mark) {
         if (mark == -1) {
             return "н";
@@ -210,7 +209,7 @@ public class FacadeMedia {
     public static String getPath(final Context context, final Uri uri) {
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
+            if (isKitKat) {
                 if (isExternalStorageDocument(uri)) {
                     final String docId = DocumentsContract.getDocumentId(uri);
                     final String[] split = docId.split(":");
@@ -218,13 +217,12 @@ public class FacadeMedia {
                     if ("primary".equalsIgnoreCase(type)) {
                         return Environment.getExternalStorageDirectory() + "/" + split[1];
                     }
-                }else if (isDownloadsDocument(uri)) {
+                } else if (isDownloadsDocument(uri)) {
                     final String id = DocumentsContract.getDocumentId(uri);
                     final Uri contentUri = ContentUris.withAppendedId(
                             Uri.parse(CONTENT_DOWNLOADS_PUBLIC_DOWNLOADS), Long.valueOf(id));
                     return getDataColumn(context, contentUri, null, null);
-                }
-                else if (isMediaDocument(uri)) {
+                } else if (isMediaDocument(uri)) {
                     final String docId = DocumentsContract.getDocumentId(uri);
                     final String[] split = docId.split(":");
                     final String type = split[0];
@@ -247,13 +245,23 @@ public class FacadeMedia {
                     return getDataColumn(context, uri, null, null);
                 }
             }
-        }
-        else if (CONTENT.equalsIgnoreCase(uri.getScheme())) {
+        } else if (CONTENT.equalsIgnoreCase(uri.getScheme())) {
             return getDataColumn(context, uri, null, null);
         } else if (FILE.equalsIgnoreCase(uri.getScheme())) {
             return uri.getPath();
         }
         return null;
+    }
+
+    public static String getPath(Uri uri, Context context) {
+        String[] projection = {MediaStore.Images.Media.DATA};
+        Cursor cursor = context.getContentResolver().query(uri, projection, null, null, null);
+        if (cursor == null) return null;
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        String s = cursor.getString(column_index);
+        cursor.close();
+        return s;
     }
 
     private static boolean isExternalStorageDocument(Uri uri) {

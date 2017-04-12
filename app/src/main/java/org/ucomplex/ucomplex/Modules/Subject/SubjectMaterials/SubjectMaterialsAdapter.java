@@ -72,7 +72,7 @@ public class SubjectMaterialsAdapter extends BaseAdapter<SubjectMaterialsAdapter
         }
     }
 
-    private boolean[] mItemTypes = new boolean[1];
+    private boolean[] mItemTypes;
     private String filename;
     private boolean mMyFiles;
     private OnListItemClicked<SubjectMaterialsParams> onListItemClicked;
@@ -103,6 +103,17 @@ public class SubjectMaterialsAdapter extends BaseAdapter<SubjectMaterialsAdapter
             }
         }
     }
+
+    public void refteshItemTypesRefresh(){
+        mItemTypes = new boolean[mItems.size()];
+        for (int i = 0; i < mItems.size(); i++) {
+            SubjectItemFile file = mItems.get(i);
+            if (file.getType().equals(FILE_TYPE_ABBR)) {
+                mItemTypes[i] = true;
+            }
+        }
+    }
+
 
     @Override
     public SubjectMaterialsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

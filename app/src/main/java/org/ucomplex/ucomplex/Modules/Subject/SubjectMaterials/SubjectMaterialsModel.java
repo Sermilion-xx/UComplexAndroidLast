@@ -1,5 +1,6 @@
 package org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials;
 
+import android.content.Context;
 import android.net.Uri;
 import android.support.v4.util.Pair;
 
@@ -17,8 +18,9 @@ import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.MaterialsRaw
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.SubjectItemFile;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.SubjectMaterialsParams;
 
-
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +29,9 @@ import javax.inject.Inject;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -46,6 +51,7 @@ public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<L
 
     private static final String DEFAULT_FOLDER_NAME = "null";
     private static final String FILES_PATH = "/files/users/";
+    private static final String PARAM_KEY = "file";
 
     private SubjectTeachersMaterialsService subjectTeachersMaterialsService;
     private PortfolioService portfolioService;
@@ -150,6 +156,12 @@ public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<L
         mPageHistory.add(new Pair<>(list, ""));
     }
 
+    public void processDataToCurrentHistory(MaterialsRaw data) {
+        for (MaterialsFile materialsFile : data.getFiles()) {
+            mPageHistory.get(getHistoryCount()-1).first.add(extractFileItem(materialsFile));
+        }
+    }
+
     private SubjectItemFile extractFileItem(MaterialsFile materialsFile) {
         SubjectItemFile item = new SubjectItemFile();
         item.setAddress(materialsFile.getAddress());
@@ -224,6 +236,16 @@ public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<L
 
     }
 
-    void uploadFile(Uri uri) {
+    Observable<MaterialsRaw> uploadFile(Uri uri, Context context) {
+        HashMap<String, RequestBody> params = new HashMap<>();
+        File myFile = new File(uri.getPath());
+        String filePath = myFile.getAbsolutePath();
+        File uploadFile = new File(filePath);
+        RequestBody requestFile = RequestBody.create(MediaType.parse(filePath), uploadFile);
+        MultipartBody.Part body =
+                MultipartBody.Part.createFormData(PARAM_KEY, uploadFile.getName(), requestFile);
+        return fileService.upload(body, params).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+
     }
 }

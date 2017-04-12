@@ -200,6 +200,10 @@ public class PortfolioActivity extends BaseMVPActivity<MVPView, SubjectMaterials
     public void notifyItemRemoved(int position) {
         mAdapter.notifyItemRemoved(position);
     }
+    public void notifyItemInserted(int position) {
+        mAdapter.refteshItemTypesRefresh();
+        mAdapter.notifyItemInserted(position);
+    }
 
     @Override public void onResume() {
         super.onResume();

@@ -2,6 +2,7 @@ package org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials;
 
 
 import android.Manifest;
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -20,6 +21,9 @@ import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
 import org.ucomplex.ucomplex.Common.interfaces.DownloadCallback;
+import org.ucomplex.ucomplex.Domain.Users.MaterialsFile;
+import org.ucomplex.ucomplex.Modules.Portfolio.PortfolioActivity;
+import org.ucomplex.ucomplex.Modules.Portfolio.model.RequestResult;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.MaterialsRaw;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.SubjectItemFile;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.SubjectMaterialsParams;
@@ -31,6 +35,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
+import java.util.StringJoiner;
 
 import javax.inject.Inject;
 
@@ -40,6 +45,7 @@ import io.reactivex.disposables.Disposable;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 
+import static org.ucomplex.ucomplex.Common.Constants.TYPE_FOLDER;
 import static org.ucomplex.ucomplex.Common.Constants.UC_ACTION_DOWNLOAD_COMPLETE;
 import static org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.NotificationService.EXTRA_BODY;
 import static org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.NotificationService.EXTRA_LARGE_ICON;
@@ -59,9 +65,15 @@ public class SubjectMaterialsPresenter extends AbstractPresenter<
         MaterialsRaw, List<Pair<List<SubjectItemFile>, String>>, SubjectMaterialsParams, SubjectMaterialsModel> {
 
     private DownloadTask saveFileTask;
+    private String[] folderMenuActions;
+    private String[] fileMenuActions;
+    private String[] menuItems;
 
     public SubjectMaterialsPresenter() {
-        UCApplication.getInstance().getAppDiComponent().inject(this);
+        UCApplication application = UCApplication.getInstance();
+        application.getAppDiComponent().inject(this);
+        folderMenuActions = new String[]{application.getString(R.string.rename), application.getString(R.string.delete)};
+        fileMenuActions = new String[]{application.getString(R.string.rename), application.getString(R.string.delete), application.getString(R.string.share)};
     }
 
     @Inject
@@ -126,7 +138,7 @@ public class SubjectMaterialsPresenter extends AbstractPresenter<
                     public void onNext(MaterialsRaw value) {
                         mModel.processData(value);
                         if (getView() != null) {
-                            mModel.setCurrentFolder(params.getFolderName());
+                            mModel.setCurrentFolder(params.getFileName());
                             pageUp();
                             getView().dataLoaded();
                         }
@@ -168,95 +180,69 @@ public class SubjectMaterialsPresenter extends AbstractPresenter<
                     }
                 }
             });
-//            Observable<ResponseBody> dataObservable = mModel.downloadFile(params);
-//            dataObservable.subscribeOn(Schedulers.io())
-//                    .observeOn(AndroidSchedulers.mainThread())
-//                    .subscribe(new Observer<ResponseBody>() {
-//
-//                        @Override
-//                        public void onSubscribe(Disposable d) {
-//                        }
-//
-//                        @Override
-//                        public void onNext(ResponseBody value) {
-//                            try {
-//                                String name = params.getFileName();
-//                                MaterialsFile file = new MaterialsFile(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), name);
-//                                FileOutputStream out = new FileOutputStream(file.getPath());
-//                                long lenght = value.contentLength();
-//                                out.write(value.bytes());
-//                                out.close();
-//                            } catch (IOException e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onError(Throwable e) {
-//                            e.printStackTrace();
-//                            if (getView() != null) {
-//                                getView().showToast(R.string.error_loadig_file, Toast.LENGTH_LONG);
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onComplete() {
-//                            Intent intent = new Intent();
-//                            intent.setAction(UC_ACTION_DOWNLOAD_COMPLETE);
-//                            getActivityContext().sendBroadcast(intent);
-//                        }
-//                    });
         }
     }
 
-    private void showRenameDialog(String file, String oldName, int position) {
+    private void showRenameDialog(SubjectItemFile file, int position) {
         LayoutInflater layoutInflater = LayoutInflater.from(getActivityContext());
         View promptView = layoutInflater.inflate(R.layout.dialog_input, null);
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivityContext());
         alertDialogBuilder.setView(promptView);
         final EditText editText = (EditText) promptView.findViewById(R.id.edittext);
         editText.setTextColor(ContextCompat.getColor(getActivityContext(), R.color.color_uc_ListText));
-        editText.setText(oldName);
+        editText.setText(file.getName());
         alertDialogBuilder.setCancelable(false)
                 .setPositiveButton(R.string.Done, (dialog, id) -> {
-                    if (FacadeCommon.isNetworkConnected(getActivityContext())) {
-                        String newName = editText.getText().toString();
-                        if (!newName.equals("")) {
-                            mModel.renameFile(file, newName, getCurrentHistory().get(position).getName());
-                        } else {
-                            if (getView() != null) {
-                                getView().showToast(R.string.name_cant_be_empty, Toast.LENGTH_LONG);
-                            }
-                        }
-                    } else {
-                        if (getView() != null) {
-                            getView().showToast(R.string.check_internet, Toast.LENGTH_LONG);
-                        }
-                    }
+                    sendRenameRequest(file, position, editText.getText().toString());
                 }).setNegativeButton(R.string.cancel,
                 (dialog, id) -> dialog.cancel());
         AlertDialog alert = alertDialogBuilder.create();
         alert.show();
     }
 
-    private AlertDialog.Builder createItemMenu(String code, String name, int position, String[] menuItems) {
-        AlertDialog.Builder build = new AlertDialog.Builder(getActivityContext());
-        build.setItems(menuItems, (dialog, which) -> {
-            switch (which) {
-                case 0:
-                    showRenameDialog(code, name, position);
-                    break;
-                case 1:
-                    mModel.deleteFile(code);
-                    break;
-                case 2:
-                    mModel.shareFile(code);
-                    break;
-            }
-        });
-        return build;
-    }
+    private void sendRenameRequest(final SubjectItemFile file, final int position, String newName) {
+        if (FacadeCommon.isNetworkConnected(getActivityContext())) {
+            if (!newName.equals("")) {
+                Observable<RequestResult> renameObservable = mModel.renameFile(file.getAddress(), newName);
+                renameObservable.subscribe(new Observer<RequestResult>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        showProgress();
+                    }
 
+                    @Override
+                    public void onNext(RequestResult value) {
+                        if (value.isGeneral()) {
+                            file.setName(newName);
+                            if (getView() != null) {
+                                ((PortfolioActivity) getView()).notifyAdapter(position);
+                            }
+                        } else {
+                            onError(new Throwable(getActivityContext().getString(R.string.error)));
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        hideProgress();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        hideProgress();
+                    }
+                });
+            } else {
+                if (getView() != null) {
+                    getView().showToast(R.string.name_cant_be_empty, Toast.LENGTH_LONG);
+                }
+            }
+        } else {
+            if (getView() != null) {
+                getView().showToast(R.string.check_internet, Toast.LENGTH_LONG);
+            }
+        }
+    }
 
     public void uploadFile(Uri uri) {
         Intent intent = new Intent();
@@ -287,7 +273,7 @@ public class SubjectMaterialsPresenter extends AbstractPresenter<
         private Response<ResponseBody> response;
         private Context context;
 
-        public DownloadTask(Response<ResponseBody> responseBodyResponse, Context context) {
+        DownloadTask(Response<ResponseBody> responseBodyResponse, Context context) {
             this.response = responseBodyResponse;
             this.context = context;
         }
@@ -338,6 +324,51 @@ public class SubjectMaterialsPresenter extends AbstractPresenter<
             context.sendBroadcast(intent);
             Toast.makeText(context, R.string.file_download_complete, Toast.LENGTH_LONG).show();
         }
+    }
+
+    public void deleteFile(SubjectItemFile params) {
+        Observable<String> deleteObservable = mModel.deleteFile(params.getAddress());
+        deleteObservable.subscribe(new Observer<String>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(String value) {
+                getCurrentHistory().remove(params);
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    public AlertDialog.Builder createItemMenu(SubjectMaterialsParams params) {
+        AlertDialog.Builder build = new AlertDialog.Builder(getActivityContext());
+        menuItems = params.getFile().getType().equals(TYPE_FOLDER) ? folderMenuActions : fileMenuActions;
+        build.setItems(menuItems, (dialog, which) -> {
+            switch (which) {
+                case 0:
+                    showRenameDialog(params.getFile(), params.getPosition());
+                    break;
+                case 1:
+                    deleteFile(params.getFile());
+                    break;
+                case 2:
+                    mModel.shareFile(params.getFileAddress());
+                    break;
+            }
+        });
+        return build;
     }
 
 

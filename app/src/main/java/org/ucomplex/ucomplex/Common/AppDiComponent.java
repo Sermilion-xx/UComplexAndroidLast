@@ -11,7 +11,6 @@ import org.ucomplex.ucomplex.Modules.Login.LoginPresenter;
 import org.ucomplex.ucomplex.Modules.Login.dagger.LoginActivityModule;
 import org.ucomplex.ucomplex.Modules.Login.dagger.LoginPresenterModule;
 import org.ucomplex.ucomplex.Modules.Portfolio.PortfolioActivity;
-import org.ucomplex.ucomplex.Modules.Portfolio.dagger.PortfolioModelModule;
 import org.ucomplex.ucomplex.Modules.RoleSelect.RoleSelectActivity;
 import org.ucomplex.ucomplex.Modules.RoleSelect.RoleSelectPresenter;
 import org.ucomplex.ucomplex.Modules.RoleSelect.dagger.RoleSelectActivityModule;

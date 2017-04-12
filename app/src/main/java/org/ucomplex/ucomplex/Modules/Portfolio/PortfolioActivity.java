@@ -25,9 +25,11 @@ import org.ucomplex.ucomplex.Common.FacadeMedia;
 import org.ucomplex.ucomplex.Common.PresenterCache;
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.base.BaseMVPActivity;
+import org.ucomplex.ucomplex.Common.interfaces.OnListItemClicked;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.SubjectMaterialsAdapter;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.SubjectMaterialsPresenter;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.FileOperationType;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.SubjectMaterialsParams;
 import org.ucomplex.ucomplex.R;
 
@@ -54,6 +56,11 @@ public class PortfolioActivity extends BaseMVPActivity<MVPView, SubjectMaterials
     public void setPresenter(@NonNull SubjectMaterialsPresenter presenter) {
         super.setPresenter(presenter);
         presenterCache.addToChache(TAG, presenter);
+    }
+
+    @Inject
+    public void setAdapter(SubjectMaterialsAdapter mAdapter) {
+        this.mAdapter = mAdapter;
     }
 
     @NonNull
@@ -86,11 +93,11 @@ public class PortfolioActivity extends BaseMVPActivity<MVPView, SubjectMaterials
         setupDrawer();
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new SubjectMaterialsAdapter();
-        mAdapter.setOnListItemClicked(params -> presenter.loadData(params));
+        mAdapter.setMyFiles(true);
+        mAdapter.setOnListItemClicked(this::performFileOperation);
         mRecyclerView.setAdapter(mAdapter);
         if (presenter.getCurrentHistory() == null || presenter.getCurrentHistory().size() == 0) {
-            SubjectMaterialsParams params = new SubjectMaterialsParams();
+            SubjectMaterialsParams params = new SubjectMaterialsParams(FileOperationType.DOWNLOAD);
             params.setMyFolder(true);
             presenter.loadData(params);
         } else {
@@ -186,6 +193,10 @@ public class PortfolioActivity extends BaseMVPActivity<MVPView, SubjectMaterials
         mAdapter.notifyDataSetChanged();
     }
 
+    public void notifyAdapter(int position) {
+        mAdapter.notifyItemChanged(position);
+    }
+
     @Override public void onResume() {
         super.onResume();
         isDestroyedBySystem = false;
@@ -197,6 +208,16 @@ public class PortfolioActivity extends BaseMVPActivity<MVPView, SubjectMaterials
         presenter = null;
         if (!isDestroyedBySystem) {
             presenterCache.removePresenter(TAG);
+        }
+    }
+
+    public void performFileOperation(SubjectMaterialsParams params) {
+        if (params.getOperationType() == FileOperationType.CREATE_FOLDER) {
+
+        } else if (params.getOperationType() == FileOperationType.MENU) {
+            presenter.createItemMenu(params).show();
+        }  else if (params.getOperationType() == FileOperationType.DOWNLOAD) {
+            presenter.loadData(params);
         }
     }
 }

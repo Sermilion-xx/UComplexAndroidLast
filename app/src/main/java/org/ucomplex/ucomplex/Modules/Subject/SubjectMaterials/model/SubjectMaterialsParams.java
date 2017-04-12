@@ -12,13 +12,51 @@ package org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model;
 
 public class SubjectMaterialsParams {
 
-    private String folder;
-    private String folderName;
-    private boolean isFolder;
     private  boolean isMyFolder;
-    private String fileUrl;
-    private String fileName;
     private int ownersId;
+    private String fileAddress;
+    private String fileName;
+    private String newName;
+    private int position;
+
+    private SubjectItemFile file;
+    private FileOperationType operationType;
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
+    public SubjectMaterialsParams(FileOperationType type) {
+        this.operationType = type;
+    }
+
+    public String getNewName() {
+        return newName;
+    }
+
+    public void setNewName(String newName) {
+        this.newName = newName;
+    }
+
+    public SubjectItemFile getFile() {
+        return file;
+    }
+
+    public void setFile(SubjectItemFile file) {
+        this.file = file;
+    }
+
+    public FileOperationType getOperationType() {
+        return operationType;
+    }
+
+    public void setOperationType(FileOperationType operationType) {
+        this.operationType = operationType;
+    }
 
     public int getOwnersId() {
         return ownersId;
@@ -36,12 +74,12 @@ public class SubjectMaterialsParams {
         this.fileName = fileName;
     }
 
-    public String getFileUrl() {
-        return fileUrl;
+    public String getFileAddress() {
+        return fileAddress;
     }
 
-    public void setFileUrl(String fileUrl) {
-        this.fileUrl = fileUrl;
+    public void setFileAddress(String fileAddress) {
+        this.fileAddress = fileAddress;
     }
 
     public boolean isMyFolder() {
@@ -52,27 +90,4 @@ public class SubjectMaterialsParams {
         isMyFolder = myFolder;
     }
 
-    public boolean isFolder() {
-        return isFolder;
-    }
-
-    public void setFolder(boolean folder) {
-        isFolder = folder;
-    }
-
-    public String getFolder() {
-        return folder;
-    }
-
-    public void setFolder(String folder) {
-        this.folder = folder;
-    }
-
-    public String getFolderName() {
-        return folderName;
-    }
-
-    public void setFolderName(String folderName) {
-        this.folderName = folderName;
-    }
 }

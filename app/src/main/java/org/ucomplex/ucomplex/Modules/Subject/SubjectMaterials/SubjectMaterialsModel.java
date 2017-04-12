@@ -8,10 +8,15 @@ import org.ucomplex.ucomplex.Common.interfaces.DownloadCallback;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
 import org.ucomplex.ucomplex.Domain.Users.MaterialsFile;
 import org.ucomplex.ucomplex.Domain.Users.Teacher;
-import org.ucomplex.ucomplex.Modules.Portfolio.PortfolioService;
+import org.ucomplex.ucomplex.Modules.Portfolio.model.RequestResult;
+import org.ucomplex.ucomplex.Modules.Portfolio.model.ShareFileList;
+import org.ucomplex.ucomplex.Modules.Portfolio.retrofit.DownloadFileService;
+import org.ucomplex.ucomplex.Modules.Portfolio.retrofit.FileService;
+import org.ucomplex.ucomplex.Modules.Portfolio.retrofit.PortfolioService;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.MaterialsRaw;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.SubjectItemFile;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.SubjectMaterialsParams;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,14 +46,11 @@ public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<L
 
     private static final String DEFAULT_FOLDER_NAME = "null";
     private static final String FILES_PATH = "/files/users/";
-    public static final String EXTRA_KEY_MY_MATERIALS = "myMaterials";
-    public static final String EXTRA_KEY_FILE = "file";
-    public static final String EXTRA_KEY_NAME = "name";
-    public static final String FILE_URI = "file_uri";
 
     private SubjectTeachersMaterialsService subjectTeachersMaterialsService;
     private PortfolioService portfolioService;
     private DownloadFileService downloadService;
+    private FileService fileService;
 
     private List<Pair<List<SubjectItemFile>, String>> mPageHistory;
     private Map<Integer, Teacher> mTeachers;
@@ -67,7 +69,6 @@ public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<L
         mPageHistory = new ArrayList<>();
     }
 
-    //TODO: create only one service
     @Inject
     void setSubjectTeachersMaterialsService(SubjectTeachersMaterialsService service) {
         this.subjectTeachersMaterialsService = service;
@@ -83,10 +84,15 @@ public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<L
         this.downloadService = service;
     }
 
+    @Inject
+    void setFileService(FileService service) {
+        this.fileService = service;
+    }
+
     @Override
     public Observable<MaterialsRaw> loadData(SubjectMaterialsParams folder) {
         if (!folder.isMyFolder()) {
-            return subjectTeachersMaterialsService.getMaterials(folder.getFolder()).subscribeOn(Schedulers.io())
+            return subjectTeachersMaterialsService.getMaterials(folder.getFileAddress()).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread());
         } else {
             myFiles = true;
@@ -114,19 +120,6 @@ public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<L
             }
         });
     }
-
-//        return downloadService.downloadFileWithDynamicUrlSync(mUrl).flatMap(new Function<ResponseBody, Observable<ResponseBody>>() {
-//            @Override
-//            public Observable<ResponseBody> apply(ResponseBody responseBody) throws Exception {
-//                return new Observable<ResponseBody>() {
-//                    @Override
-//                    protected void subscribeActual(Observer<? super ResponseBody> observer) {
-//                        observer.onNext(responseBody);
-//                    }
-//                };
-//            }
-//        });
-//    }
 
     @Override
     public void setData(List<Pair<List<SubjectItemFile>, String>> data) {
@@ -211,16 +204,19 @@ public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<L
         return null;
     }
 
-    void deleteFile(String file) {
-
+    Observable<String> deleteFile(String file) {
+        return fileService.delete(file).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
-    void renameFile(String file, String newName, String prevName) {
-
+    Observable<RequestResult> renameFile(String file, String name) {
+        return fileService.rename(file, name).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
-    void shareFile(String file) {
-
+    Observable<ShareFileList> shareFile(String file) {
+        return fileService.getShareList(file).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     void createFolder(String folderName) {

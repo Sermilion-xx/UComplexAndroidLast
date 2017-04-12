@@ -15,6 +15,7 @@ import android.widget.Toast;
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.base.BaseAdapter;
 import org.ucomplex.ucomplex.Common.interfaces.OnListItemClicked;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.FileOperationType;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.SubjectItemFile;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.SubjectMaterialsParams;
 import org.ucomplex.ucomplex.R;
@@ -140,10 +141,12 @@ public class SubjectMaterialsAdapter extends BaseAdapter<SubjectMaterialsAdapter
                         public void onClick(View v) {
                             FacadeCommon.requireStoragePermission(context);
                             Toast.makeText(context, context.getString(R.string.file_download_started), Toast.LENGTH_SHORT).show();
+
                             filename = item.getAddress() + "." + item.getType();
-                            SubjectMaterialsParams params = new SubjectMaterialsParams();
+                            SubjectMaterialsParams params = new SubjectMaterialsParams(FileOperationType.DOWNLOAD);
                             params.setFileName(filename);
                             params.setOwnersId(item.getOwnersId());
+
                             onListItemClicked.onClick(params);
                         }
                     });
@@ -152,21 +155,28 @@ public class SubjectMaterialsAdapter extends BaseAdapter<SubjectMaterialsAdapter
                     holder.mClickArea.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            SubjectMaterialsParams params = new SubjectMaterialsParams();
-                            params.setFolder(item.getAddress());
-                            params.setFolderName(item.getName());
-                            params.setFolder(true);
+                            SubjectMaterialsParams params = new SubjectMaterialsParams(FileOperationType.GO_TO_FOLDER);
+                            params.setFileAddress(item.getAddress());
+                            params.setFileName(item.getName());
                             params.setMyFolder(mMyFiles);
                             onListItemClicked.onClick(params);
                         }
                     });
                 }
+                if (mMyFiles) {
+                    holder.mMenuButton.setVisibility(View.VISIBLE);
+                    holder.mMenuButton.setOnClickListener(v -> {
+                        SubjectMaterialsParams params = new SubjectMaterialsParams(FileOperationType.MENU);
+                        params.setPosition(position);
+                        params.setFile(item);
+                        onListItemClicked.onClick(params);
+                    });
+                } else {
+                    holder.mMenuButton.setVisibility(View.GONE);
+                }
             }
         }
     }
-
-
-
 
     @Override
     public int getItemViewType(int position) {

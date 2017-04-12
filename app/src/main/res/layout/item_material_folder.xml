@@ -12,13 +12,11 @@
         android:id="@+id/list_course_material_item_imageview_folder"
         android:src="@drawable/ic_folder"
         android:layout_marginTop="17dp"
-        android:layout_marginStart="21dp"
-        />
+        android:layout_marginStart="21dp" />
 
 
         <TextView
             android:id="@+id/file_name"
-            android:text="Тема 1"
             android:layout_toEndOf="@+id/list_course_material_item_imageview_folder"
             android:layout_marginTop="18dp"
             android:layout_marginStart="24dp"
@@ -26,7 +24,6 @@
 
         <TextView
             android:id="@+id/file_time"
-            android:text="время"
             android:layout_below="@+id/file_name"
             android:layout_toEndOf="@+id/list_course_material_item_imageview_folder"
             android:layout_marginStart="24dp"
@@ -36,7 +33,6 @@
 
     <TextView
         android:id="@+id/file_owner"
-        android:text="имя"
         android:layout_below="@+id/file_name"
         android:layout_toEndOf="@+id/file_time"
         android:layout_marginEnd="21dp"
@@ -51,6 +47,6 @@
         android:background="@drawable/ic_more"
         android:id="@+id/file_menu_button"
         android:focusable="false"
-        />
+        android:foreground="?attr/selectableItemBackground"/>
 
 </RelativeLayout>

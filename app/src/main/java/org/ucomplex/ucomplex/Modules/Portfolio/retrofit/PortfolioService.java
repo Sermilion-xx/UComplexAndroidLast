@@ -1,7 +1,8 @@
-package org.ucomplex.ucomplex.Modules.Portfolio;
+package org.ucomplex.ucomplex.Modules.Portfolio.retrofit;
 
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.MaterialsRaw;
 
+import dagger.Lazy;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 

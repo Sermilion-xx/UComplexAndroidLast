@@ -46,6 +46,7 @@
         android:layout_alignParentEnd="true"
         android:background="@drawable/ic_more"
         android:id="@+id/file_menu_button"
+        android:foreground="?attr/selectableItemBackground"
         android:focusable="false"
         />
 

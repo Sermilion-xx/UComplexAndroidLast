@@ -4,14 +4,9 @@ import org.ucomplex.ucomplex.Modules.Portfolio.model.RequestResult;
 import org.ucomplex.ucomplex.Modules.Portfolio.model.ShareFileList;
 
 import io.reactivex.Observable;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.Streaming;
-import retrofit2.http.Url;
 
 /**
  * ---------------------------------------------------
@@ -30,7 +25,7 @@ public interface FileService {
                                      @Field("name") String name);
 
     @POST("/student/my_files/delete_file?mobile=1")  @FormUrlEncoded
-    Observable<String> delete(@Field("file") String file);
+    Observable<RequestResult> delete(@Field("file") String file);
 
     @POST("/student/my_files/get_access?mobile=1")  @FormUrlEncoded
     Observable<ShareFileList> getShareList(@Field("file") String file);

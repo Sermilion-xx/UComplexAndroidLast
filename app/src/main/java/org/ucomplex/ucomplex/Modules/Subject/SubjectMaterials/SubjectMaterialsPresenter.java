@@ -2,7 +2,6 @@ package org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials;
 
 
 import android.Manifest;
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -21,7 +20,6 @@ import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
 import org.ucomplex.ucomplex.Common.interfaces.DownloadCallback;
-import org.ucomplex.ucomplex.Domain.Users.MaterialsFile;
 import org.ucomplex.ucomplex.Modules.Portfolio.PortfolioActivity;
 import org.ucomplex.ucomplex.Modules.Portfolio.model.RequestResult;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.MaterialsRaw;
@@ -35,7 +33,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
-import java.util.StringJoiner;
 
 import javax.inject.Inject;
 
@@ -215,16 +212,19 @@ public class SubjectMaterialsPresenter extends AbstractPresenter<
                         if (value.isGeneral()) {
                             file.setName(newName);
                             if (getView() != null) {
-                                ((PortfolioActivity) getView()).notifyAdapter(position);
+                                ((PortfolioActivity) getView()).notifyItemChanged(position);
                             }
                         } else {
-                            onError(new Throwable(getActivityContext().getString(R.string.error)));
+                            onError(new Throwable(getActivityContext().getString(R.string.error_renaming_file)));
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         hideProgress();
+                        if (getView() != null) {
+                            getView().showToast(R.string.error_renaming_file, Toast.LENGTH_LONG);
+                        }
                     }
 
                     @Override
@@ -326,23 +326,31 @@ public class SubjectMaterialsPresenter extends AbstractPresenter<
         }
     }
 
-    public void deleteFile(SubjectItemFile params) {
-        Observable<String> deleteObservable = mModel.deleteFile(params.getAddress());
-        deleteObservable.subscribe(new Observer<String>() {
+    public void deleteFile(SubjectItemFile params, int position) {
+        Observable<RequestResult> deleteObservable = mModel.deleteFile(params.getAddress());
+        deleteObservable.subscribe(new Observer<RequestResult>() {
             @Override
             public void onSubscribe(Disposable d) {
 
             }
 
             @Override
-            public void onNext(String value) {
+            public void onNext(RequestResult value) {
                 getCurrentHistory().remove(params);
-
+                if (value.isGeneral()) {
+                    if (getView() != null) {
+                        ((PortfolioActivity) getView()).notifyItemRemoved(position);
+                    }
+                } else {
+                    onError(new Throwable(getActivityContext().getString(R.string.error_deleting_file)));
+                }
             }
 
             @Override
             public void onError(Throwable e) {
-
+                if (getView() != null) {
+                    getView().showToast(R.string.error_deleting_file, Toast.LENGTH_LONG);
+                }
             }
 
             @Override
@@ -361,7 +369,7 @@ public class SubjectMaterialsPresenter extends AbstractPresenter<
                     showRenameDialog(params.getFile(), params.getPosition());
                     break;
                 case 1:
-                    deleteFile(params.getFile());
+                    deleteFile(params.getFile(), params.getPosition());
                     break;
                 case 2:
                     mModel.shareFile(params.getFileAddress());

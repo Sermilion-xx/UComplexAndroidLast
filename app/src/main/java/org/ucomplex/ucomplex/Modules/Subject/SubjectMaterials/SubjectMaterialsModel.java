@@ -204,7 +204,7 @@ public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<L
         return null;
     }
 
-    Observable<String> deleteFile(String file) {
+    Observable<RequestResult> deleteFile(String file) {
         return fileService.delete(file).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

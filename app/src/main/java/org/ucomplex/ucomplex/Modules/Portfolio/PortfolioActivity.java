@@ -193,8 +193,12 @@ public class PortfolioActivity extends BaseMVPActivity<MVPView, SubjectMaterials
         mAdapter.notifyDataSetChanged();
     }
 
-    public void notifyAdapter(int position) {
+    public void notifyItemChanged(int position) {
         mAdapter.notifyItemChanged(position);
+    }
+
+    public void notifyItemRemoved(int position) {
+        mAdapter.notifyItemRemoved(position);
     }
 
     @Override public void onResume() {

@@ -86,11 +86,15 @@ public class SubjectTimelineModel implements MVPModel<SubjectTimelineRaw, List<S
     }
 
     @Override
-    public void processData(SubjectTimelineRaw data) {
-        mData = new ArrayList<>();
+    public List<SubjectTimelineItem> processData(SubjectTimelineRaw data) {
+        if (mData == null) {
+            mData = new ArrayList<>();
+        }
         Map<Integer, String> teachers = data.getTeachers();
         Map<Integer, String> courses = data.getCourses();
         List<Marks> marks = data.getMarks();
+
+        List<SubjectTimelineItem> items = new ArrayList<>();
         for (Marks mark: marks) {
             SubjectTimelineItem item = new SubjectTimelineItem();
             item.setMark(mark.getMark());
@@ -102,7 +106,9 @@ public class SubjectTimelineModel implements MVPModel<SubjectTimelineRaw, List<S
             item.setTime(timeString);
             item.setType(mark.getType());
             item.setTeacherName(teachers.get(mark.getTeacher()));
-            mData.add(item);
+            items.add(item);
         }
+        mData.addAll(items);
+        return items;
     }
 }

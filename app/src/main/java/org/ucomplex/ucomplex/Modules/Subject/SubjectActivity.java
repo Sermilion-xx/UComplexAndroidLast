@@ -39,7 +39,6 @@ public class SubjectActivity extends BaseActivity {
     private SubjectProfileFragment subjectProfileFragment;
     private SubjectMaterialsFragment subjectMaterialsFragment;
     private SubjectTimelineFragment subjectTimelineFragment;
-    private int currentPage;
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -100,7 +99,7 @@ public class SubjectActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        if(currentPage == 0 && subjectMaterialsFragment.getCurrentPage() > 0){
+        if(subjectMaterialsFragment.getCurrentPage() > 0){
             subjectMaterialsFragment.onBackPress();
         }else{
             super.onBackPressed();

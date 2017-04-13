@@ -32,8 +32,11 @@ public class Teacher extends User {
     private String department;
     private int closed;
     private int agent;
-    private String online;
     private List<Integer> departments;
+
+    public Teacher() {
+        super();
+    }
 
     public int getPost() {
         return post;
@@ -177,14 +180,6 @@ public class Teacher extends User {
 
     public void setAgent(int agent) {
         this.agent = agent;
-    }
-
-    public String getOnline() {
-        return online;
-    }
-
-    public void setOnline(String online) {
-        this.online = online;
     }
 
     public List<Integer> getDepartments() {

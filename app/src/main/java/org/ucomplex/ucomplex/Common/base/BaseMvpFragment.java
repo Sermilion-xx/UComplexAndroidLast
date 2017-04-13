@@ -32,7 +32,7 @@ import butterknife.BindView;
  * ---------------------------------------------------
  */
 
-public abstract class BaseMvpFragment<P extends MvpPresenter<MVPView>> extends MvpFragment<MVPView, P> implements MVPView, ViewExtensions {
+public abstract class BaseMvpFragment<P extends MvpPresenter<MVPView>> extends MvpFragment<MVPView, P> implements MVPView {
 
     @BindView(R.id.progressBar)
     protected ProgressBar mProgress;

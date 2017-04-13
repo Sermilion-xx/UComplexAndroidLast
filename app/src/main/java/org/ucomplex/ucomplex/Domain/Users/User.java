@@ -36,10 +36,28 @@ public class User implements UserInterface, Parcelable{
     private String name;
     private List<Role> roles;
     private int mobile;
+    private long online;
 
-    public User(){
+    public User() {
 
     }
+
+    public String getBitmapUriString() {
+        return bitmapUriString;
+    }
+
+    public int getMobile() {
+        return mobile;
+    }
+
+    public long getOnline() {
+        return online;
+    }
+
+    public void setOnline(long online) {
+        this.online = online;
+    }
+
     public String getBitmapUriStringFromUri(Uri bitmapUri){
         return bitmapUri.toString();
     }

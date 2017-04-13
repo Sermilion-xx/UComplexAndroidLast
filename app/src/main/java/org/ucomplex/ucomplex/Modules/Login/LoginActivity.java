@@ -49,15 +49,14 @@ public class LoginActivity extends BaseMVPActivity<MVPView, LoginPresenter> impl
         UCApplication.getInstance().getAppDiComponent().inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        mProgress = (ProgressBar) findViewById(R.id.progressBar);
         ButterKnife.bind(this);
         mLoginSignInButton.setOnClickListener(this);
         mForgotButton.setOnClickListener(this);
         //check if the user has been logged before. If so, do login
         UserInterface userInterface = UCApplication.getInstance().getLoggedUser();
         if (userInterface != null) {
-            mLoginView.setText(userInterface.getLogin());
-            mPasswordView.setText(userInterface.getPassword());
-            clickLoginButton();
+            startActivity(EventsActivity.creteIntent(this));
         }
     }
 

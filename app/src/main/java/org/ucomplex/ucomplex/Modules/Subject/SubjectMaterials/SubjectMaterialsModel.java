@@ -148,12 +148,13 @@ public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<L
     }
 
     @Override
-    public void processData(MaterialsRaw data) {
+    public List<Pair<List<SubjectItemFile>, String>> processData(MaterialsRaw data) {
         List<SubjectItemFile> list = new ArrayList<>();
         for (MaterialsFile materialsFile : data.getFiles()) {
             list.add(extractFileItem(materialsFile));
         }
         mPageHistory.add(new Pair<>(list, ""));
+        return mPageHistory;
     }
 
     public void processDataToCurrentHistory(MaterialsRaw data) {

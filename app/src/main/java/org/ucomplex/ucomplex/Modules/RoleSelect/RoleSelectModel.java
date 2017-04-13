@@ -59,7 +59,7 @@ public class RoleSelectModel implements MVPModel< UserInterface, List<RoleItem>,
     }
 
     @Override
-    public void processData(UserInterface user) {
+    public List<RoleItem> processData(UserInterface user) {
         List<RoleItem> roles = new ArrayList<>();
         if (user!=null) {
             Random random = new Random();
@@ -80,5 +80,6 @@ public class RoleSelectModel implements MVPModel< UserInterface, List<RoleItem>,
             }
         }
         mData = roles;
+        return mData;
     }
 }

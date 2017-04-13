@@ -42,7 +42,7 @@ public class UCApplication extends Application {
     public void onCreate() {
         super.onCreate();
         INSTANCE = this;
-        authString = FacadePreferences.getLoginDataFromPref(this);
+        authString = FacadePreferences.getTokenFromPref(this);
         loggedUser = FacadePreferences.getUserDataFromPref(this);
         appDiComponent = DaggerAppDiComponent.builder().build();
         configureConnectionTrust();

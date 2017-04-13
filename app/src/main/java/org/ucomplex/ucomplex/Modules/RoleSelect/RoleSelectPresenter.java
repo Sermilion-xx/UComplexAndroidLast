@@ -38,7 +38,7 @@ public class RoleSelectPresenter extends AbstractPresenter<UserInterface, List<R
     public void loadData(UserInterface params) {
         if (getView() != null) {
             mModel.processData(params);
-            ((RoleSelectActivity) getView()).dataLoaded();
+            getView().dataLoaded();
         }
     }
 
@@ -51,7 +51,7 @@ public class RoleSelectPresenter extends AbstractPresenter<UserInterface, List<R
             user.setType(user.getRoles().get(position).getType());
             String encodedAuth = encodeLoginData(login + TOKEN_SEPARATOR + password + TOKEN_SEPARATOR + roleId);
             UCApplication.getInstance().setAuthString(encodedAuth);
-            FacadePreferences.setLoginDataToPref(getActivityContext(), encodedAuth, true);
+            FacadePreferences.setTokenToPref(getActivityContext(), encodedAuth, true);
             UCApplication.getInstance().setLoggedUser(user);
         }
     }

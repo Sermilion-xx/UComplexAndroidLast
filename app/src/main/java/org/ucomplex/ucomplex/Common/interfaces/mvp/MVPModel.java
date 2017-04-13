@@ -18,5 +18,5 @@ public interface MVPModel<L, P, E> {
     void addData(P data);
     void clear();
     P getData();
-    void processData(L data);
+    P processData(L data);
 }

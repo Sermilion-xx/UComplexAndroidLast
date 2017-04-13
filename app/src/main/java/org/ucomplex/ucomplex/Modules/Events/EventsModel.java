@@ -67,7 +67,7 @@ public class EventsModel implements MVPModel<EventsRaw, List<EventItem>, Integer
     }
 
     @Override
-    public void processData(EventsRaw data) {
+    public List<EventItem> processData(EventsRaw data) {
         if (mData == null) {
             mData = new ArrayList<>();
         }
@@ -79,6 +79,7 @@ public class EventsModel implements MVPModel<EventsRaw, List<EventItem>, Integer
             item.setEventText(displayEvent);
             mData.add(item);
         }
+        return mData;
     }
 
 

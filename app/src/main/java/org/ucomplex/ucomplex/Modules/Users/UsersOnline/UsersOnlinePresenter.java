@@ -1,9 +1,10 @@
-package org.ucomplex.ucomplex.Modules.Events;
+package org.ucomplex.ucomplex.Modules.Users.UsersOnline;
 
-import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
 import org.ucomplex.ucomplex.Common.UCApplication;
-import org.ucomplex.ucomplex.Modules.Events.model.EventItem;
-import org.ucomplex.ucomplex.Modules.Events.model.EventsRaw;
+import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
+import org.ucomplex.ucomplex.Domain.Users.User;
+import org.ucomplex.ucomplex.Modules.Users.model.UsersParams;
+import org.ucomplex.ucomplex.Modules.Users.model.UsersRaw;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ import io.reactivex.disposables.Disposable;
 
 /**
  * ---------------------------------------------------
- * Created by Sermilion on 24/03/2017.
+ * Created by Sermilion on 13/04/2017.
  * Project: UComplex
  * ---------------------------------------------------
  * <a href="http://www.ucomplex.org">www.ucomplex.org</a>
@@ -23,28 +24,33 @@ import io.reactivex.disposables.Disposable;
  * ---------------------------------------------------
  */
 
-public class EventsPresenter extends AbstractPresenter<
-        EventsRaw, List<EventItem>,
-        Integer, EventsModel> {
+public class UsersOnlinePresenter extends AbstractPresenter<
+        UsersRaw, List<User>,
+        UsersParams, UsersOnlineModel> {
 
-    public EventsPresenter() {
+    public UsersOnlinePresenter() {
         UCApplication.getInstance().getAppDiComponent().inject(this);
     }
 
+    @Inject
+    public void setModel(UsersOnlineModel model) {
+        mModel = model;
+    }
+
     @Override
-    public void loadData(Integer start) {
-        Observable<EventsRaw> dataObservable = mModel.loadData(start);
-        dataObservable.subscribe(new Observer<EventsRaw>() {
+    public void loadData(UsersParams params) {
+        Observable<UsersRaw> dataObservable = mModel.loadData(params);
+        dataObservable.subscribe(new Observer<UsersRaw>() {
             @Override
             public void onSubscribe(Disposable d) {
                 showProgress();
             }
 
             @Override
-            public void onNext(EventsRaw value) {
-                mModel.processData(value);
+            public void onNext(UsersRaw value) {
+                List<User> users = mModel.processData(value);
                 if(getView()!=null){
-                    getView().dataLoaded();
+                    ((UsersFragment)getView()).dataLoaded(users);
                 }
             }
 

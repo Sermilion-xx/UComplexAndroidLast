@@ -93,7 +93,7 @@ public class SubjectModel implements MVPModel<SubjectRaw, SubjectObject, Integer
     }
 
     @Override
-    public void processData(SubjectRaw data) {
+    public SubjectObject processData(SubjectRaw data) {
         mData = new SubjectObject();
         mTeachers = new HashMap<>();
 
@@ -133,6 +133,7 @@ public class SubjectModel implements MVPModel<SubjectRaw, SubjectObject, Integer
 
         mData.setMaterialsItems(filesItems);
         mData.setProfileItems(profileItemsList);
+        return mData;
     }
 
     private SubjectItemFile extractFileItem(MaterialsFile materialsFile, Map<Integer, Teacher> teachers) {

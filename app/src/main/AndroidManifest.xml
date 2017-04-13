@@ -29,19 +29,24 @@
         <activity
             android:name=".Modules.Events.EventsActivity"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".Modules.RoleSelect.RoleSelectActivity"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".Modules.Subject.SubjectActivity"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".Modules.SubjectsList.SubjectsListActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".Modules.Portfolio.PortfolioActivity"></activity>
+
+        <activity android:name=".Modules.Portfolio.PortfolioActivity" />
 
         <service android:name=".Modules.Subject.SubjectMaterials.NotificationService" />
 
+        <activity android:name=".Modules.Users.UsersActivity"/>
     </application>
 
 </manifest>

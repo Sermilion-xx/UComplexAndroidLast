@@ -65,7 +65,7 @@ public class LoginPresenter extends AbstractPresenter<LoginUser, UserInterface, 
                 } else {
                     mModel.processData(value);
                     if (getView() != null) {
-                        ((LoginActivity) getView()).dataLoaded();
+                        getView().dataLoaded();
                     }
                 }
             }
@@ -74,7 +74,7 @@ public class LoginPresenter extends AbstractPresenter<LoginUser, UserInterface, 
             public void onError(Throwable e) {
                 hideProgress();
                 if (getView() != null) {
-                    ((LoginActivity) getView()).showToast(R.string.authorization_error, Toast.LENGTH_LONG);
+                    getView().showToast(R.string.authorization_error, Toast.LENGTH_LONG);
                 }
             }
 
@@ -85,29 +85,30 @@ public class LoginPresenter extends AbstractPresenter<LoginUser, UserInterface, 
         });
     }
 
-    public void saveLoginData(Role role) {
+    void saveLoginData(Role role) {
         getData().setType(role.getType());
         getData().setId(role.getId());
-        String authData = getData().getLogin() + ":" + getData().getPassword() + ":" + getData().getId();
-        UCApplication.getInstance().setAuthString(FacadeCommon.encodeLoginData(authData));
-        FacadePreferences.setLoginDataToPref(getActivityContext(), authData, true);
         saveLoginBase();
     }
 
-    public void saveLoginData() {
+    void saveLoginData() {
         saveLoginBase();
     }
 
     private void saveLoginBase() {
+        String authData = getData().getLogin() + ":" + getData().getPassword() + ":" + getData().getId();
+        String encodedToken = FacadeCommon.encodeLoginData(authData);
+        UCApplication.getInstance().setAuthString(encodedToken);
+        FacadePreferences.setTokenToPref(getActivityContext(), encodedToken, true);
         FacadePreferences.setUserDataToPrefSync(getActivityContext(), getData());
         UCApplication.getInstance().setLoggedUser(getData());
     }
 
-    public void restorePassword(String email) {
+    void restorePassword(String email) {
         //TODO
     }
 
-    public List<LoginErrorType> checkCredentials(LoginParams mRequestParams) {
+    List<LoginErrorType> checkCredentials(LoginParams mRequestParams) {
         List<LoginErrorType> error = runCheck(mRequestParams);
         if (error.get(0) == NO_ERROR) {
             loadData(mRequestParams);

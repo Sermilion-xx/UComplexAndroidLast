@@ -20,6 +20,7 @@ import org.ucomplex.ucomplex.Modules.Events.EventsActivity;
 import org.ucomplex.ucomplex.Modules.Login.LoginActivity;
 import org.ucomplex.ucomplex.Modules.Portfolio.PortfolioActivity;
 import org.ucomplex.ucomplex.Modules.SubjectsList.SubjectsListActivity;
+import org.ucomplex.ucomplex.Modules.Users.UsersActivity;
 import org.ucomplex.ucomplex.R;
 
 import java.util.List;
@@ -121,7 +122,7 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
                 } else if (position == 3) {
                     mContext.startActivity(PortfolioActivity.creteIntent(mContext));
                 } else if (position == 4) {
-
+                    mContext.startActivity(UsersActivity.creteIntent(mContext));
                 }
             });
         }

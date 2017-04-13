@@ -32,9 +32,12 @@ import org.ucomplex.ucomplex.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 
 public abstract class BaseActivity extends AppCompatActivity implements ViewExtensions {
 
+    @BindView(R.id.progressBar)
     protected ProgressBar mProgress;
     protected Toolbar mToolbar;
     protected DrawerLayout mDrawer;

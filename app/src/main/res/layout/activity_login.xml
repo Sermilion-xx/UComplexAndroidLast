@@ -97,7 +97,6 @@
         </LinearLayout>
     </ScrollView>
 
-    <!-- Login progress -->
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyleLarge"

@@ -66,7 +66,7 @@ public class LoginModel implements MVPModel<LoginUser, UserInterface, LoginParam
     }
 
     @Override
-    public void processData(LoginUser data) {
+    public UserInterface processData(LoginUser data) {
         userInterface = UserFactory.getUserForType(0);
         userInterface.setRoles(data.getRoles());
         userInterface.setMobile(data.getSession().getMobile());
@@ -80,5 +80,6 @@ public class LoginModel implements MVPModel<LoginUser, UserInterface, LoginParam
         userInterface.setSession(data.getSession().getSession());
         userInterface.setPerson(data.getSession().getPerson());
         userInterface.setClient(data.getSession().getClient());
+        return userInterface;
     }
 }

@@ -29,7 +29,7 @@ import io.reactivex.schedulers.Schedulers;
 public class SubjectsListModel implements MVPModel<SubjectsListRaw, List<SubjectsListItem>, Void> {
 
     private final int[] assessmentType = {R.string.zachet, R.string.exam, R.string.samostoyatelnaya, R.string.empty};
-    private List<SubjectsListItem> mDate;
+    private List<SubjectsListItem> mData;
     private SubjectsListService mService;
 
     private SubjectsListModel() {
@@ -63,34 +63,39 @@ public class SubjectsListModel implements MVPModel<SubjectsListRaw, List<Subject
 
     @Override
     public void setData(List<SubjectsListItem> data) {
-        mDate = data;
+        mData = data;
     }
 
     @Override
     public void addData(List<SubjectsListItem> data) {
-        mDate.addAll(data);
+        mData.addAll(data);
     }
 
     @Override
     public void clear() {
-        mDate.clear();
+        mData.clear();
     }
 
     @Override
     public List<SubjectsListItem> getData() {
-        return mDate;
+        return mData;
     }
 
     @Override
-    public void processData(SubjectsListRaw data) {
-        mDate = new ArrayList<>();
+    public List<SubjectsListItem> processData(SubjectsListRaw data) {
+        if (mData == null) {
+            mData = new ArrayList<>();
+        }
+        List<SubjectsListItem> items = new ArrayList<>();
         for (int i = 0; i < data.getStudentSubjectsList().size(); i++) {
             SubjectsListItem item = new SubjectsListItem();
             StudentSubjectList subject = data.getStudentSubjectsList().get(i);
             item.setAssessmentType(assessmentType[data.getCourses_forms().get(subject.getCourse())]);
             item.setCourseId(subject.getId());
             item.setCourseName(data.getCourses().get(subject.getCourse()));
-            mDate.add(item);
+            items.add(item);
         }
+        mData.addAll(items);
+        return items;
     }
 }

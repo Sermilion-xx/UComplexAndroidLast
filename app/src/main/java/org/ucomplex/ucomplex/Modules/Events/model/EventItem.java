@@ -19,7 +19,7 @@ public class EventItem {
     private int type;
     private String time;
     private int seen;
-    EventItem() {
+    public EventItem() {
         paramsObj = new EventParams();
     }
 

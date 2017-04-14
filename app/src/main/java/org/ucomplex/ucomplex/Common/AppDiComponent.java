@@ -39,12 +39,12 @@ import org.ucomplex.ucomplex.Modules.SubjectsList.SubjectsListPresenter;
 import org.ucomplex.ucomplex.Modules.SubjectsList.dagger.SubjectsListModelModule;
 import org.ucomplex.ucomplex.Modules.SubjectsList.dagger.SubjectsListModule;
 import org.ucomplex.ucomplex.Modules.SubjectsList.dagger.SubjectsListPresenterModule;
-import org.ucomplex.ucomplex.Modules.Users.UsersOnline.UsersFragment;
-import org.ucomplex.ucomplex.Modules.Users.UsersOnline.UsersOnlineModel;
-import org.ucomplex.ucomplex.Modules.Users.UsersOnline.UsersOnlinePresenter;
-import org.ucomplex.ucomplex.Modules.Users.dagger.UsersOnlineModelModule;
-import org.ucomplex.ucomplex.Modules.Users.dagger.UsersOnlineModule;
-import org.ucomplex.ucomplex.Modules.Users.dagger.UsersOnlinePresenterModule;
+import org.ucomplex.ucomplex.Modules.Users.UsersFragment;
+import org.ucomplex.ucomplex.Modules.Users.UsersModel;
+import org.ucomplex.ucomplex.Modules.Users.UsersPresenter;
+import org.ucomplex.ucomplex.Modules.Users.dagger.UsersModelModule;
+import org.ucomplex.ucomplex.Modules.Users.dagger.UsersModule;
+import org.ucomplex.ucomplex.Modules.Users.dagger.UsersPresenterModule;
 
 import javax.inject.Singleton;
 
@@ -80,9 +80,9 @@ import dagger.Component;
                 SubjectsListModule.class,
                 SubjectsListModelModule.class,
                 SubjectsListPresenterModule.class,
-                UsersOnlineModelModule.class,
-                UsersOnlinePresenterModule.class,
-                UsersOnlineModule.class
+                UsersModelModule.class,
+                UsersPresenterModule.class,
+                UsersModule.class
         })
 
 public interface AppDiComponent {
@@ -127,9 +127,9 @@ public interface AppDiComponent {
 
     void inject(PortfolioActivity activity);
 
-    void inject(UsersOnlineModel model);
+    void inject(UsersModel model);
 
-    void inject(UsersOnlinePresenter presenter);
+    void inject(UsersPresenter presenter);
 
     void inject(UsersFragment fragment);
 

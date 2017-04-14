@@ -1,6 +1,13 @@
 package org.ucomplex.ucomplex.Modules.Users.dagger;
 
-import org.ucomplex.ucomplex.Modules.Users.UsersOnline.UsersOnlinePresenter;
+import org.ucomplex.ucomplex.Common.interfaces.FragmentScope;
+import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPPresenter;
+import org.ucomplex.ucomplex.Domain.Users.User;
+import org.ucomplex.ucomplex.Modules.Users.UsersModel;
+import org.ucomplex.ucomplex.Modules.Users.UsersPresenter;
+import org.ucomplex.ucomplex.Modules.Users.model.UsersParams;
+
+import java.util.List;
 
 import dagger.Module;
 import dagger.Provides;
@@ -15,11 +22,11 @@ import dagger.Provides;
  * ---------------------------------------------------
  */
 @Module
-public class UsersOnlineModule {
+public class UsersModule {
 
     @Provides
-    UsersOnlinePresenter providePresenter() {
-        return new UsersOnlinePresenter();
+    UsersPresenter providePresenter() {
+        return new UsersPresenter();
     }
 
 }

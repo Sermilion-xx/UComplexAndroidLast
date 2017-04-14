@@ -1,6 +1,7 @@
-package org.ucomplex.ucomplex.Modules.Users.UsersOnline;
+package org.ucomplex.ucomplex.Modules.Users;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,19 +12,22 @@ import android.widget.ProgressBar;
 
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.base.BaseMvpFragment;
-import org.ucomplex.ucomplex.Common.interfaces.OnListItemClicked;
+import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPPresenter;
 import org.ucomplex.ucomplex.Domain.Users.User;
+import org.ucomplex.ucomplex.Modules.Users.model.UserRequestType;
 import org.ucomplex.ucomplex.Modules.Users.model.UsersParams;
 import org.ucomplex.ucomplex.R;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
  * ---------------------------------------------------
- * Created by Sermilion on 13/04/2017.
+ * Created by Sermilion on 14/04/2017.
  * Project: UComplex
  * ---------------------------------------------------
  * <a href="http://www.ucomplex.org">www.ucomplex.org</a>
@@ -31,18 +35,24 @@ import butterknife.ButterKnife;
  * ---------------------------------------------------
  */
 
-public class UsersFragment extends BaseMvpFragment<UsersOnlinePresenter>{
+public class UsersFragment extends BaseMvpFragment<UsersPresenter> {
 
-    public static UsersFragment getInstance() {
-        UsersFragment fragment = new UsersFragment();
-        return fragment;
-    }
+    private UserRequestType userType;
 
     @BindView(R.id.progressBar)
     protected ProgressBar mProgress;
     @BindView(R.id.recyclerView)
     protected RecyclerView mRecyclerView;
     private UsersAdapter mAdapter;
+
+    public void setUserType(UserRequestType userType) {
+        this.userType = userType;
+    }
+
+    @Override @Inject
+    public void setPresenter(@NonNull UsersPresenter presenter) {
+        super.setPresenter(presenter);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,12 +69,7 @@ public class UsersFragment extends BaseMvpFragment<UsersOnlinePresenter>{
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivityContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new UsersAdapter();
-        mAdapter.setOnListItemClicked(new OnListItemClicked<UsersParams>() {
-            @Override
-            public void onClick(UsersParams params) {
-                presenter.loadData(params);
-            }
-        });
+        mAdapter.setOnListItemClicked(params -> presenter.loadData(params));
         mRecyclerView.setAdapter(mAdapter);
         return view;
     }
@@ -73,6 +78,7 @@ public class UsersFragment extends BaseMvpFragment<UsersOnlinePresenter>{
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         presenter.attachView(this);
+        ((UsersPresenter)presenter).setUserRequestType(userType);
         if (presenter.getData() == null) {
             UsersParams params = new UsersParams();
             params.setStart(0);

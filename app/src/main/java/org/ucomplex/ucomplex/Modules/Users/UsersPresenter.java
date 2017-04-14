@@ -1,14 +1,13 @@
-package org.ucomplex.ucomplex.Modules.Users.UsersOnline;
+package org.ucomplex.ucomplex.Modules.Users;
 
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
 import org.ucomplex.ucomplex.Domain.Users.User;
+import org.ucomplex.ucomplex.Modules.Users.model.UserRequestType;
 import org.ucomplex.ucomplex.Modules.Users.model.UsersParams;
 import org.ucomplex.ucomplex.Modules.Users.model.UsersRaw;
 
 import java.util.List;
-
-import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
@@ -16,7 +15,7 @@ import io.reactivex.disposables.Disposable;
 
 /**
  * ---------------------------------------------------
- * Created by Sermilion on 13/04/2017.
+ * Created by Sermilion on 14/04/2017.
  * Project: UComplex
  * ---------------------------------------------------
  * <a href="http://www.ucomplex.org">www.ucomplex.org</a>
@@ -24,21 +23,23 @@ import io.reactivex.disposables.Disposable;
  * ---------------------------------------------------
  */
 
-public class UsersOnlinePresenter extends AbstractPresenter<
+public class UsersPresenter extends AbstractPresenter<
         UsersRaw, List<User>,
-        UsersParams, UsersOnlineModel> {
+        UsersParams, UsersModel> {
 
-    public UsersOnlinePresenter() {
+    private UserRequestType userRequestType;
+
+    public UsersPresenter() {
         UCApplication.getInstance().getAppDiComponent().inject(this);
     }
 
-    @Inject
-    public void setModel(UsersOnlineModel model) {
-        mModel = model;
+    public void setUserRequestType(UserRequestType userRequestType) {
+        this.userRequestType = userRequestType;
     }
 
     @Override
     public void loadData(UsersParams params) {
+        params.setRequestType(userRequestType);
         Observable<UsersRaw> dataObservable = mModel.loadData(params);
         dataObservable.subscribe(new Observer<UsersRaw>() {
             @Override

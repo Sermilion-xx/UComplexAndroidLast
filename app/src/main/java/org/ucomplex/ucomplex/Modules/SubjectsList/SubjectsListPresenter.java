@@ -2,7 +2,6 @@ package org.ucomplex.ucomplex.Modules.SubjectsList;
 
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
-import org.ucomplex.ucomplex.Modules.Subject.SubjectTimeline.SubjectTimelineFragment;
 import org.ucomplex.ucomplex.Modules.SubjectsList.model.SubjectsListItem;
 import org.ucomplex.ucomplex.Modules.SubjectsList.model.SubjectsListRaw;
 

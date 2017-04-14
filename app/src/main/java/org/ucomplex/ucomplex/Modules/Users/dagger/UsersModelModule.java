@@ -2,8 +2,7 @@ package org.ucomplex.ucomplex.Modules.Users.dagger;
 
 import org.ucomplex.ucomplex.Common.ServiceGenerator;
 import org.ucomplex.ucomplex.Common.UCApplication;
-import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.SubjectService;
-import org.ucomplex.ucomplex.Modules.Users.retrofit.UsersOnlineService;
+import org.ucomplex.ucomplex.Modules.Users.retrofit.UsersService;
 
 import dagger.Module;
 import dagger.Provides;
@@ -18,11 +17,11 @@ import dagger.Provides;
  * ---------------------------------------------------
  */
 @Module
-public class UsersOnlineModelModule {
+public class UsersModelModule {
 
     @Provides
-    UsersOnlineService provideService(){
-        return ServiceGenerator.createService(UsersOnlineService.class, UCApplication.getInstance().getAuthString());
+    UsersService provideService(){
+        return ServiceGenerator.createService(UsersService.class, UCApplication.getInstance().getAuthString());
     }
 
 }

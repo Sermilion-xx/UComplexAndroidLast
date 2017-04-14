@@ -57,4 +57,5 @@ dependencies {
     compile 'com.tubb.smrv:swipemenu-recyclerview:5.4.0'
     compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
     testCompile 'junit:junit:4.12'
+    compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
 }

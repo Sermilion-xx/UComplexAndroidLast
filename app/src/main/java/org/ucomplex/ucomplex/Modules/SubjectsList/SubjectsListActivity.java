@@ -3,7 +3,6 @@ package org.ucomplex.ucomplex.Modules.SubjectsList;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ProgressBar;
@@ -11,11 +10,7 @@ import android.widget.ProgressBar;
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.base.BaseMVPActivity;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
-import org.ucomplex.ucomplex.Modules.Events.EventsActivity;
-import org.ucomplex.ucomplex.Modules.Events.EventsAdapter;
 import org.ucomplex.ucomplex.R;
-
-import javax.inject.Inject;
 
 public class SubjectsListActivity extends BaseMVPActivity<MVPView, SubjectsListPresenter> {
 

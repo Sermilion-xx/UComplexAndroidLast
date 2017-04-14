@@ -6,14 +6,20 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 
+import com.astuetz.PagerSlidingTabStrip;
+
 import org.ucomplex.ucomplex.Common.ViewPagerAdapter;
 import org.ucomplex.ucomplex.Common.base.BaseActivity;
-import org.ucomplex.ucomplex.Modules.Users.UsersOnline.UsersFragment;
+import org.ucomplex.ucomplex.Modules.Users.model.UserRequestType;
 import org.ucomplex.ucomplex.R;
 
 public class UsersActivity extends BaseActivity {
 
     private static final String TAG_ONLINE_FRAGMENT = "onlineFragment";
+    private static final String TAG_FRIENDS_FRAGMENT = "friendsFragment";
+    private static final String TAG_GROUP_FRAGMENT = "groupFragment";
+    private static final String TAG_TEACHERS_FRAGMENT = "teachersFragment";
+    private static final String TAG_BLACKLIST_FRAGMENT = "blacklistFragment";
 
     public static Intent creteIntent(Context context) {
         Intent intent = new Intent(context, UsersActivity.class);
@@ -21,10 +27,18 @@ public class UsersActivity extends BaseActivity {
     }
 
     private UsersFragment onlineFragment;
+    private UsersFragment friendsFragment;
+    private UsersFragment groupFragment;
+    private UsersFragment teachersFragment;
+    private UsersFragment blacklistFragment;
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         getSupportFragmentManager().putFragment(outState, TAG_ONLINE_FRAGMENT, onlineFragment);
+        getSupportFragmentManager().putFragment(outState, TAG_FRIENDS_FRAGMENT, friendsFragment);
+        getSupportFragmentManager().putFragment(outState, TAG_GROUP_FRAGMENT, groupFragment);
+        getSupportFragmentManager().putFragment(outState, TAG_TEACHERS_FRAGMENT, teachersFragment);
+        getSupportFragmentManager().putFragment(outState, TAG_BLACKLIST_FRAGMENT, blacklistFragment);
         super.onSaveInstanceState(outState);
     }
 
@@ -32,22 +46,39 @@ public class UsersActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentViewWithNavDrawer(R.layout.activity_users);
-        setupToolbar(getString(R.string.users), R.drawable.ic_menu);
+        setupToolbar(getString(R.string.users));
         setupDrawer();
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        PagerSlidingTabStrip tabLayout = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         viewPager.setOffscreenPageLimit(2);
-        tabLayout.setupWithViewPager(viewPager);
 
         if (savedInstanceState != null) {
             onlineFragment = (UsersFragment) getSupportFragmentManager().getFragment(savedInstanceState, TAG_ONLINE_FRAGMENT);
+            friendsFragment = (UsersFragment) getSupportFragmentManager().getFragment(savedInstanceState, TAG_FRIENDS_FRAGMENT);
+            groupFragment = (UsersFragment) getSupportFragmentManager().getFragment(savedInstanceState, TAG_GROUP_FRAGMENT);
+            teachersFragment = (UsersFragment) getSupportFragmentManager().getFragment(savedInstanceState, TAG_TEACHERS_FRAGMENT);
+            blacklistFragment = (UsersFragment) getSupportFragmentManager().getFragment(savedInstanceState, TAG_BLACKLIST_FRAGMENT);
         } else {
-            onlineFragment = UsersFragment.getInstance();
+            onlineFragment = new UsersFragment();
+            onlineFragment.setUserType(UserRequestType.ONLINE);
+            friendsFragment = new UsersFragment();
+            friendsFragment.setUserType(UserRequestType.FRIENDS);
+            groupFragment = new UsersFragment();
+            groupFragment.setUserType(UserRequestType.GROUP);
+            teachersFragment = new UsersFragment();
+            teachersFragment.setUserType(UserRequestType.TEACHERS);
+            blacklistFragment = new UsersFragment();
+            blacklistFragment.setUserType(UserRequestType.BLACKLIST);
         }
 
         viewPagerAdapter.addFragment(onlineFragment, getString(R.string.online));
+        viewPagerAdapter.addFragment(friendsFragment, getString(R.string.friends));
+        viewPagerAdapter.addFragment(groupFragment, getString(R.string.group));
+        viewPagerAdapter.addFragment(teachersFragment, getString(R.string.teachers));
+        viewPagerAdapter.addFragment(blacklistFragment, getString(R.string.blacklist));
         viewPager.setAdapter(viewPagerAdapter);
+        tabLayout.setViewPager(viewPager);
     }
 }

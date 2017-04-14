@@ -17,13 +17,14 @@ import java.util.List;
  * Created by Sermilion on 01/11/2016.
  */
 
-public class User implements UserInterface, Parcelable{
+public class User implements UserInterface{
 
     private int id;
     private String login;
     private String password;
     private String email;
     private String phone;
+    private boolean friend;
     private int role;
     private int person;
     private Bitmap photoBitmap;
@@ -40,6 +41,14 @@ public class User implements UserInterface, Parcelable{
 
     public User() {
 
+    }
+
+    public boolean isFriend() {
+        return friend;
+    }
+
+    public void setFriend(boolean friend) {
+        this.friend = friend;
     }
 
     public String getBitmapUriString() {
@@ -71,91 +80,8 @@ public class User implements UserInterface, Parcelable{
 
     }
 
-    protected User(Parcel in) {
-        id = in.readInt();
-        login = in.readString();
-        password = in.readString();
-        email = in.readString();
-        phone = in.readString();
-        role = in.readInt();
-        person = in.readInt();
-        photoBitmap = in.readParcelable(Bitmap.class.getClassLoader());
-        bitmapUriString = in.readParcelable(Uri.class.getClassLoader());
-        photo = in.readInt();
-        code = in.readString();
-        client = in.readInt();
-        type = in.readInt();
-        session = in.readString();
-        name = in.readString();
-        roles = in.createTypedArrayList(Role.CREATOR);
-        mobile = in.readInt();
-    }
-
-    public static final Creator<User> CREATOR = new Creator<User>() {
-        @Override
-        public User createFromParcel(Parcel in) {
-            return new User(in);
-        }
-
-        @Override
-        public User[] newArray(int size) {
-            return new User[size];
-        }
-    };
-
     public void addRole(Role role){
         roles.add(role);
-    }
-
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(id);
-        parcel.writeString(login);
-        parcel.writeString(password);
-        parcel.writeString(email);
-        parcel.writeString(phone);
-        parcel.writeInt(role);
-        parcel.writeInt(person);
-        parcel.writeParcelable(photoBitmap, i);
-        parcel.writeString(bitmapUriString);
-        parcel.writeInt(photo);
-        parcel.writeString(code);
-        parcel.writeInt(client);
-        parcel.writeInt(type);
-        parcel.writeString(session);
-        parcel.writeString(name);
-        parcel.writeTypedList(roles);
-        parcel.writeInt(mobile);
-    }
-
-
-    protected class BitmapDataObject implements Serializable {
-        private static final long serialVersionUID = 111696345129311948L;
-        public byte[] imageByteArray;
-    }
-
-    private void writeObject(ObjectOutputStream out) throws IOException {
-
-        if(this.photoBitmap!=null){
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            photoBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            BitmapDataObject bitmapDataObject = new BitmapDataObject();
-            bitmapDataObject.imageByteArray = stream.toByteArray();
-            out.writeObject(bitmapDataObject);
-        }
-    }
-
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException{
-        if(this.photoBitmap!=null) {
-            BitmapDataObject bitmapDataObject = (BitmapDataObject) in.readObject();
-            this.photoBitmap = BitmapFactory.decodeByteArray(bitmapDataObject.imageByteArray, 0, bitmapDataObject.imageByteArray.length);
-        }
     }
 
     @Override
@@ -305,7 +231,4 @@ public class User implements UserInterface, Parcelable{
         this.mobile = mobile;
     }
 
-    public static Creator<User> getCREATOR() {
-        return CREATOR;
-    }
 }

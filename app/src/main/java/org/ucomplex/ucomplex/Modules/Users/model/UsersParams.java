@@ -12,9 +12,18 @@ package org.ucomplex.ucomplex.Modules.Users.model;
 
 public class UsersParams {
 
+    private UserRequestType requestType;
     private boolean isFriend;
     private boolean isBlocked;
     private int start;
+
+    public UserRequestType getRequestType() {
+        return requestType;
+    }
+
+    public void setRequestType(UserRequestType requestType) {
+        this.requestType = requestType;
+    }
 
     public int getStart() {
         return start;

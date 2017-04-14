@@ -10,6 +10,6 @@ package org.ucomplex.ucomplex.Modules.Users.model;
  * ---------------------------------------------------
  */
 
-public enum FriendStatus {
-    FRIEND, REQUESTED, NONE,
+public enum UserRequestType {
+    ONLINE, FRIENDS, GROUP, TEACHERS, BLACKLIST
 }

@@ -1,7 +1,6 @@
 package org.ucomplex.ucomplex.Modules.Users.dagger;
 
-import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.SubjectModel;
-import org.ucomplex.ucomplex.Modules.Users.UsersOnline.UsersOnlineModel;
+import org.ucomplex.ucomplex.Modules.Users.UsersModel;
 
 import dagger.Module;
 import dagger.Provides;
@@ -16,11 +15,11 @@ import dagger.Provides;
  * ---------------------------------------------------
  */
 @Module
-public class UsersOnlinePresenterModule {
+public class UsersPresenterModule {
 
     @Provides
-    UsersOnlineModel provideModel() {
-        return new UsersOnlineModel();
+    UsersModel provideModel() {
+        return new UsersModel();
     }
 
 }

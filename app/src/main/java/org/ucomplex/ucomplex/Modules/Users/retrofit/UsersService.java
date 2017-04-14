@@ -17,7 +17,20 @@ import retrofit2.http.POST;
  * ---------------------------------------------------
  */
 
-public interface UsersOnlineService {
+public interface UsersService {
+
     @POST("/student/online?mobile=1") @FormUrlEncoded
     Observable<UsersRaw> getOnlineUsers(@Field("start") int start);
+
+    @POST("/user/friends?mobile=1") @FormUrlEncoded
+    Observable<UsersRaw> getFriendsUsers(@Field("start") int start);
+
+    @POST("/student/ajax/my_group?mobile=1") @FormUrlEncoded
+    Observable<UsersRaw> getGroupUsers(@Field("start") int start);
+
+    @POST("/student/ajax/my_teachers?mobile=1") @FormUrlEncoded
+    Observable<UsersRaw> getTeachersUsers(@Field("start") int start);
+
+    @POST("/user/blacklist?mobile=1") @FormUrlEncoded
+    Observable<UsersRaw> getBlacklistUsers(@Field("start") int start);
 }

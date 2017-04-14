@@ -117,4 +117,8 @@
     <string name="Done">Готово</string>
     <string name="name_cant_be_empty">Название не может быть пустым.</string>
     <string name="error_renaming_file">Ошибка при переименовании</string>
+    <string name="write_message">Написать сообщение</string>
+    <string name="add_to_friends">Добавить друзья</string>
+    <string name="remove_friend">Удалить из друзей</string>
+    <string name="unblock">Разблокировать</string>
 </resources>

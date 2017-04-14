@@ -42,7 +42,7 @@ public class UsersOnlineModel implements MVPModel<UsersRaw, List<User>, UsersPar
 
     @Override
     public Observable<UsersRaw> loadData(UsersParams params) {
-        return service.getOnlineUsers().subscribeOn(Schedulers.io())
+        return service.getOnlineUsers(params.getStart()).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 

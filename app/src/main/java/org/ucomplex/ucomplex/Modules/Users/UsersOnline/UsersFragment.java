@@ -11,7 +11,9 @@ import android.widget.ProgressBar;
 
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.base.BaseMvpFragment;
+import org.ucomplex.ucomplex.Common.interfaces.OnListItemClicked;
 import org.ucomplex.ucomplex.Domain.Users.User;
+import org.ucomplex.ucomplex.Modules.Users.model.UsersParams;
 import org.ucomplex.ucomplex.R;
 
 import java.util.List;
@@ -57,6 +59,12 @@ public class UsersFragment extends BaseMvpFragment<UsersOnlinePresenter>{
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivityContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new UsersAdapter();
+        mAdapter.setOnListItemClicked(new OnListItemClicked<UsersParams>() {
+            @Override
+            public void onClick(UsersParams params) {
+                presenter.loadData(params);
+            }
+        });
         mRecyclerView.setAdapter(mAdapter);
         return view;
     }
@@ -66,7 +74,9 @@ public class UsersFragment extends BaseMvpFragment<UsersOnlinePresenter>{
         super.onActivityCreated(savedInstanceState);
         presenter.attachView(this);
         if (presenter.getData() == null) {
-            presenter.loadData(null);
+            UsersParams params = new UsersParams();
+            params.setStart(0);
+            presenter.loadData(params);
         } else {
             mAdapter.setItems(presenter.getData());
             mAdapter.notifyDataSetChanged();
@@ -81,6 +91,5 @@ public class UsersFragment extends BaseMvpFragment<UsersOnlinePresenter>{
 
     public void dataLoaded(List<User> users) {
         mAdapter.addItems(users);
-        mAdapter.notifyDataSetChanged();
     }
 }

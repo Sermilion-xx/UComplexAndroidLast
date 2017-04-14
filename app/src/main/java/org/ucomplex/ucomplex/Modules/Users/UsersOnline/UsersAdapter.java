@@ -16,7 +16,9 @@ import com.bumptech.glide.Priority;
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.FacadeMedia;
 import org.ucomplex.ucomplex.Common.base.BaseAdapter;
+import org.ucomplex.ucomplex.Common.interfaces.OnListItemClicked;
 import org.ucomplex.ucomplex.Domain.Users.User;
+import org.ucomplex.ucomplex.Modules.Users.model.UsersParams;
 import org.ucomplex.ucomplex.R;
 
 import java.util.ArrayList;
@@ -47,7 +49,6 @@ public class UsersAdapter extends BaseAdapter<UsersAdapter.UsersViewHolder, List
         private CircleImageView mProfileImage;
         private TextView mName;
         private TextView mType;
-        private Button mMenuButton;
         private Button mLoadMore;
         private RelativeLayout mClickArea;
 
@@ -57,29 +58,36 @@ public class UsersAdapter extends BaseAdapter<UsersAdapter.UsersViewHolder, List
                 mProfileImage = (CircleImageView) itemView.findViewById(R.id.profileImage);
                 mName = (TextView) itemView.findViewById(R.id.name);
                 mType = (TextView) itemView.findViewById(R.id.type);
-                mMenuButton = (Button) itemView.findViewById(R.id.menu_button);
                 mClickArea = (RelativeLayout) itemView.findViewById(R.id.clickArea);
             } else if (viewType == TYPE_FOOTER) {
                 mLoadMore = (Button) itemView.findViewById(R.id.loadMoreButton);
+                System.out.println();
             }
         }
     }
 
-    public UsersAdapter() {
+    private boolean hasMoreItems;
+    private OnListItemClicked<UsersParams> onListItemClicked;
+
+    void setOnListItemClicked(OnListItemClicked<UsersParams> onListItemClicked) {
+        this.onListItemClicked = onListItemClicked;
+    }
+
+    UsersAdapter() {
         mItems = new ArrayList<>();
     }
 
-    private boolean hasMoreItems;
-
-    public void addItems(List<User> users) {
-        int oldEnd = mItems.size();
-        mItems.addAll(users);
-        if (users.size() < 21) {
-            hasMoreItems = false;
+    void addItems(List<User> users) {
+        if (mItems.size() == 0) {
+            mItems = users;
+            hasMoreItems = users.size() >= 21;
+            notifyDataSetChanged();
+        } else {
+            int oldEnd = mItems.size();
+            mItems.addAll(users);
+            hasMoreItems = users.size() >= 21;
+            notifyItemRangeInserted(oldEnd, mItems.size() - 1);
         }
-        notifyItemRangeInserted(oldEnd, mItems.size());
-        notifyItemRangeChanged(oldEnd, mItems.size());
-
     }
 
     @Override
@@ -96,14 +104,20 @@ public class UsersAdapter extends BaseAdapter<UsersAdapter.UsersViewHolder, List
     @Override
     public void onBindViewHolder(UsersViewHolder holder, int position) {
         if (mItems.size() > 0) {
-            if (getItemViewType(position) != TYPE_EMPTY) {
+            if (getItemViewType(position) == TYPE_USER) {
                 Context context = holder.mName.getContext();
                 User user = mItems.get(position);
                 processImageView(holder, user, context);
                 holder.mName.setText(user.getName());
                 holder.mType.setText(FacadeCommon.getStringUserType(context, user.getType()));
-                holder.mMenuButton.setOnClickListener(v -> {
+                holder.mClickArea.setOnClickListener(v -> {
 
+                });
+            } else if (getItemViewType(position) == TYPE_FOOTER) {
+                holder.mLoadMore.setOnClickListener(v -> {
+                    UsersParams params = new UsersParams();
+                    params.setStart(mItems.size());
+                    onListItemClicked.onClick(params);
                 });
             }
         }

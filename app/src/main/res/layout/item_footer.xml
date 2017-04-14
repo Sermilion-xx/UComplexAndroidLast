@@ -12,6 +12,7 @@
         android:text="@string/load_more"
         android:textColor="@color/color_uc_ListText"
         android:background="@drawable/list_item_border_with_shadow"
+        android:foreground="?attr/selectableItemBackground"
         android:textSize="20sp"
         android:textStyle="bold" />
 

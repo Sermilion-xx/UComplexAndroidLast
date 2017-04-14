@@ -11,4 +11,32 @@ package org.ucomplex.ucomplex.Modules.Users.model;
  */
 
 public class UsersParams {
+
+    private boolean isFriend;
+    private boolean isBlocked;
+    private int start;
+
+    public int getStart() {
+        return start;
+    }
+
+    public void setStart(int start) {
+        this.start = start;
+    }
+
+    public boolean isFriend() {
+        return isFriend;
+    }
+
+    public void setFriend(boolean friend) {
+        isFriend = friend;
+    }
+
+    public boolean isBlocked() {
+        return isBlocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        isBlocked = blocked;
+    }
 }

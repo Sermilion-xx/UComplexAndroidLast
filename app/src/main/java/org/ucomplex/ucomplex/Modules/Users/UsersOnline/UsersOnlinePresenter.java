@@ -49,8 +49,8 @@ public class UsersOnlinePresenter extends AbstractPresenter<
             @Override
             public void onNext(UsersRaw value) {
                 List<User> users = mModel.processData(value);
-                if(getView()!=null){
-                    ((UsersFragment)getView()).dataLoaded(users);
+                if (getView() != null) {
+                    ((UsersFragment) getView()).dataLoaded(users);
                 }
             }
 

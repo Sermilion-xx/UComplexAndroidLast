@@ -3,6 +3,8 @@ package org.ucomplex.ucomplex.Modules.Users.retrofit;
 import org.ucomplex.ucomplex.Modules.Users.model.UsersRaw;
 
 import io.reactivex.Observable;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 
 /**
@@ -16,6 +18,6 @@ import retrofit2.http.POST;
  */
 
 public interface UsersOnlineService {
-    @POST("/student/online?mobile=1")
-    Observable<UsersRaw> getOnlineUsers();
+    @POST("/student/online?mobile=1") @FormUrlEncoded
+    Observable<UsersRaw> getOnlineUsers(@Field("start") int start);
 }

@@ -1,4 +1,4 @@
-package org.ucomplex.ucomplex.Common;
+package org.ucomplex.ucomplex.Common.utility;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;

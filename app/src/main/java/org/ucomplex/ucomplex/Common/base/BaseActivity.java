@@ -3,9 +3,6 @@ package org.ucomplex.ucomplex.Common.base;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.util.Pair;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -20,7 +17,6 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import org.ucomplex.ucomplex.Common.FacadeCommon;
-import org.ucomplex.ucomplex.Common.FragmentFactory;
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.ViewExtensions;
 import org.ucomplex.ucomplex.Modules.Navdrawer.DrawerAdapter;
@@ -153,20 +149,6 @@ public abstract class BaseActivity extends AppCompatActivity implements ViewExte
 
     }
     //===========================================================================================//
-
-    protected Fragment setupFragment(Bundle inState, String name, int containerId) {
-        Fragment fragment;
-        FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        if (inState != null) {
-            fragment = manager.getFragment(inState, name);
-        } else {
-            fragment = FragmentFactory.getFragmentForName(name);
-            transaction.add(containerId, fragment, name);
-            transaction.commit();
-        }
-        return fragment;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

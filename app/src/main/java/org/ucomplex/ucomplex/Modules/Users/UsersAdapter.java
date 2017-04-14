@@ -1,13 +1,7 @@
 package org.ucomplex.ucomplex.Modules.Users;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapShader;
-import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,11 +13,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
-import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
-import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
-import com.bumptech.glide.request.target.BitmapImageViewTarget;
 
-import org.ucomplex.ucomplex.Common.CircleTransform;
+import org.ucomplex.ucomplex.Common.utility.CircleTransform;
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.FacadeMedia;
 import org.ucomplex.ucomplex.Common.base.BaseAdapter;
@@ -35,10 +26,7 @@ import org.ucomplex.ucomplex.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
 import static org.ucomplex.ucomplex.Common.UCApplication.PHOTOS_URL;
-import static org.ucomplex.ucomplex.R.id.imageView;
 
 /**
  * ---------------------------------------------------

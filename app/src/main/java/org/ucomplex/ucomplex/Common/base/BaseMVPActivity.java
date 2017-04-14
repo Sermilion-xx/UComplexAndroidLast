@@ -24,11 +24,9 @@ import com.hannesdorfmann.mosby.mvp.MvpActivity;
 import com.hannesdorfmann.mosby.mvp.MvpPresenter;
 
 import org.ucomplex.ucomplex.Common.FacadeCommon;
-import org.ucomplex.ucomplex.Common.FragmentFactory;
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.ViewExtensions;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
-import org.ucomplex.ucomplex.Modules.Login.LoginPresenter;
 import org.ucomplex.ucomplex.Modules.Navdrawer.DrawerAdapter;
 import org.ucomplex.ucomplex.Modules.Navdrawer.DrawerListItem;
 import org.ucomplex.ucomplex.Modules.Navdrawer.FacadeDrawer;
@@ -39,8 +37,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
-
-import butterknife.BindView;
 
 public abstract class BaseMVPActivity<V extends MVPView, Presenter extends MvpPresenter<V>>
         extends MvpActivity<V, Presenter> implements ViewExtensions, MVPView {
@@ -174,20 +170,6 @@ public abstract class BaseMVPActivity<V extends MVPView, Presenter extends MvpPr
 
     }
     //===========================================================================================//
-
-    protected Fragment setupFragment(Bundle inState, String name, int containerId) {
-        Fragment fragment;
-        FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        if (inState != null) {
-            fragment = manager.getFragment(inState, name);
-        } else {
-            fragment = FragmentFactory.getFragmentForName(name);
-            transaction.add(containerId, fragment, name);
-            transaction.commit();
-        }
-        return fragment;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

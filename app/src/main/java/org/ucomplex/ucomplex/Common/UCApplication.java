@@ -49,7 +49,7 @@ public class UCApplication extends Application {
     }
 
     void configureConnectionTrust(){
-        HttpsURLConnection.setDefaultHostnameVerifier(new NullHostNameVerifier());
+        HttpsURLConnection.setDefaultHostnameVerifier((hostname, session) -> true);
         SSLContext context;
         try {
             context = SSLContext.getInstance("TLS");

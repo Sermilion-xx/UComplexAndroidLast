@@ -3,7 +3,7 @@ package org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.model;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 
-import org.ucomplex.ucomplex.Common.FalseAsNullTypeAdapterFactory;
+import org.ucomplex.ucomplex.Common.utility.FalseAsNullTypeAdapterFactory;
 import org.ucomplex.ucomplex.Domain.Users.Teacher;
 
 import java.util.List;

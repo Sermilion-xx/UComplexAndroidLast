@@ -136,7 +136,7 @@ public class PortfolioActivity extends BaseMVPActivity<MVPView, SubjectMaterials
         editText.setTextColor(ContextCompat.getColor(this, R.color.color_uc_ListTextColorPrimary));
         alertDialogBuilder.setCancelable(false)
                 .setPositiveButton(PortfolioActivity.this.getString(R.string.ok), (dialog, id) -> {
-                    if (FacadeCommon.isNetworkConnected(PortfolioActivity.this)) {
+                    if (UCApplication.getInstance().isConnectedToInternet()) {
                         String folderName = editText.getText().toString();
                         presenter.createFolder(folderName);
                     } else {
@@ -176,7 +176,7 @@ public class PortfolioActivity extends BaseMVPActivity<MVPView, SubjectMaterials
         }
 
         if (originalUri != null) {
-            if (FacadeCommon.isNetworkConnected(this)) {
+            if (UCApplication.getInstance().isConnectedToInternet()) {
                 presenter.uploadFile(originalUri);
             } else {
                 showToast(R.string.check_internet, Toast.LENGTH_LONG);

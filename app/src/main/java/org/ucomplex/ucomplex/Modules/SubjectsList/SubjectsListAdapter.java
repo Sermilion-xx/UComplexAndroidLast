@@ -58,7 +58,7 @@ public class SubjectsListAdapter extends BaseAdapter<SubjectsListAdapter.Subject
     @Override
     public SubjectsListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        int layout = FacadeCommon.getAvailableListLayout(mItems.size(), parent.getContext());
+        int layout = FacadeCommon.getAvailableListLayout(mItems.size());
         if (layout == 0) {
             layout = R.layout.item_subject;
         }

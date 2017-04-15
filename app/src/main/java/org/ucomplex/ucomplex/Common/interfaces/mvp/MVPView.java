@@ -20,6 +20,6 @@ public interface MVPView extends MvpView {
     void showProgress();
     void hideProgress();
     void dataLoaded();
-    void showToast(int textId, int length);
+    void showToast(int textId, int...length);
 }
 

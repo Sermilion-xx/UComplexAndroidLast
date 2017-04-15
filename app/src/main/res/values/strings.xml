@@ -122,4 +122,5 @@
     <string name="remove_friend">Удалить из друзей</string>
     <string name="unblock">Разблокировать</string>
     <string name="teachers">Преподаватели</string>
+    <string name="offline_mode">Оффлайн режим</string>
 </resources>

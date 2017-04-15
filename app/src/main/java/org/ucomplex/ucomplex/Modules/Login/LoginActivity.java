@@ -100,7 +100,7 @@ public class LoginActivity extends BaseMVPActivity<MVPView, LoginPresenter> impl
         final EditText editText = (EditText) promptView.findViewById(R.id.edittext);
         alertDialogBuilder.setCancelable(false)
                 .setPositiveButton(getString(R.string.ok), (dialog, id) -> {
-                    if (FacadeCommon.isNetworkConnected(LoginActivity.this)) {
+                    if (UCApplication.getInstance().isConnectedToInternet()) {
                         final String email = editText.getText().toString();
                         presenter.restorePassword(email);
                     } else {

@@ -263,7 +263,7 @@ public class SubjectMaterialsPresenter extends AbstractPresenter<
     }
 
     private void sendRenameRequest(final SubjectItemFile file, final int position, String newName) {
-        if (FacadeCommon.isNetworkConnected(getActivityContext())) {
+        if (UCApplication.getInstance().isConnectedToInternet()) {
             if (!newName.equals("")) {
                 Observable<RequestResult> renameObservable = mModel.renameFile(file.getAddress(), newName);
                 renameObservable.subscribe(new Observer<RequestResult>() {

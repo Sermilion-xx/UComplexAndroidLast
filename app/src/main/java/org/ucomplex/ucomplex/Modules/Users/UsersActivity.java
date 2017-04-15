@@ -3,7 +3,6 @@ package org.ucomplex.ucomplex.Modules.Users;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 
 import com.astuetz.PagerSlidingTabStrip;
@@ -34,11 +33,21 @@ public class UsersActivity extends BaseActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        getSupportFragmentManager().putFragment(outState, TAG_ONLINE_FRAGMENT, onlineFragment);
-        getSupportFragmentManager().putFragment(outState, TAG_FRIENDS_FRAGMENT, friendsFragment);
-        getSupportFragmentManager().putFragment(outState, TAG_GROUP_FRAGMENT, groupFragment);
-        getSupportFragmentManager().putFragment(outState, TAG_TEACHERS_FRAGMENT, teachersFragment);
-        getSupportFragmentManager().putFragment(outState, TAG_BLACKLIST_FRAGMENT, blacklistFragment);
+        if (onlineFragment.isAdded()) {
+            getSupportFragmentManager().putFragment(outState, TAG_ONLINE_FRAGMENT, onlineFragment);
+        }
+        if (friendsFragment.isAdded()) {
+            getSupportFragmentManager().putFragment(outState, TAG_FRIENDS_FRAGMENT, friendsFragment);
+        }
+        if (groupFragment.isAdded()) {
+            getSupportFragmentManager().putFragment(outState, TAG_GROUP_FRAGMENT, groupFragment);
+        }
+        if (teachersFragment.isAdded()) {
+            getSupportFragmentManager().putFragment(outState, TAG_TEACHERS_FRAGMENT, teachersFragment);
+        }
+        if (blacklistFragment.isAdded()) {
+            getSupportFragmentManager().putFragment(outState, TAG_BLACKLIST_FRAGMENT, blacklistFragment);
+        }
         super.onSaveInstanceState(outState);
     }
 

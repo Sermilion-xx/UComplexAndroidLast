@@ -1,7 +1,6 @@
 package org.ucomplex.ucomplex.Common.base;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -12,10 +11,7 @@ import com.hannesdorfmann.mosby.mvp.MvpFragment;
 import com.hannesdorfmann.mosby.mvp.MvpPresenter;
 
 import org.ucomplex.ucomplex.Common.UCApplication;
-import org.ucomplex.ucomplex.Common.interfaces.ViewExtensions;
-import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPPresenter;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
-import org.ucomplex.ucomplex.Modules.Subject.SubjectTimeline.SubjectTimelinePresenter;
 import org.ucomplex.ucomplex.R;
 
 import javax.inject.Inject;
@@ -78,7 +74,15 @@ public abstract class BaseMvpFragment<P extends MvpPresenter<MVPView>> extends M
     }
 
     @Override
-    public void showToast(int textId, int length) {
-        Toast.makeText(getActivityContext(), textId, length).show();
+    public void showToast(int textId, int...length) {
+        int toastLength = Toast.LENGTH_LONG;
+        if (length.length > 0) {
+            toastLength = length[0];
+        }
+        if (toastLength == Toast.LENGTH_LONG) {
+            Toast.makeText(getActivityContext(), textId, Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(getActivityContext(), textId, Toast.LENGTH_SHORT).show();
+        }
     }
 }

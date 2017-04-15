@@ -47,6 +47,13 @@
         <service android:name=".Modules.Subject.SubjectMaterials.NotificationService" />
 
         <activity android:name=".Modules.Users.UsersActivity"/>
+
+        <receiver
+            android:name=".Common.NetworkReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

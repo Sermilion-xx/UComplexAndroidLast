@@ -43,6 +43,7 @@ public class EventsAdapter extends BaseAdapter<EventsAdapter.EventViewHolder, Li
     private static final String FORMAT_JPG = ".jpg";
     private static final int TYPE_COMMON = 0;
     private static final int TYPE_FOOTER = 1;
+    private static final int TYPE_NO_CONTENT = 2;
 
     static class EventViewHolder extends RecyclerView.ViewHolder {
 
@@ -82,7 +83,7 @@ public class EventsAdapter extends BaseAdapter<EventsAdapter.EventViewHolder, Li
     @Override
     public EventViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        int layout = FacadeCommon.getAvailableListLayout(mItems.size(), parent.getContext());
+        int layout = FacadeCommon.getAvailableListLayout(mItems.size());
         if (layout == 0) {
             layout = viewType == TYPE_COMMON ? R.layout.item_event : R.layout.item_footer;
         }
@@ -121,7 +122,7 @@ public class EventsAdapter extends BaseAdapter<EventsAdapter.EventViewHolder, Li
             } else if (getItemViewType(position) == TYPE_FOOTER && holder.loadMoreEventsButton != null) {
                 if (hasMoreEvents) {
                     holder.loadMoreEventsButton.setVisibility(View.VISIBLE);
-                    holder.loadMoreEventsButton.setOnClickListener(v -> mMoreCallback.loadMore(getItemCount()));
+                    holder.loadMoreEventsButton.setOnClickListener(v -> mMoreCallback.loadMore(getItemCount() + 1));
                 } else {
                     holder.loadMoreEventsButton.setVisibility(View.GONE);
                 }
@@ -136,11 +137,17 @@ public class EventsAdapter extends BaseAdapter<EventsAdapter.EventViewHolder, Li
 
     @Override
     public int getItemViewType(int position) {
-        return position == getItemCount() - 1 ? TYPE_FOOTER : TYPE_COMMON;
+        if (mItems.size() > 0 && position == getItemCount() - 1) {
+            return TYPE_FOOTER;
+        } else if(mItems.size() == 0){
+            return TYPE_NO_CONTENT;
+        } else {
+            return TYPE_COMMON;
+        }
     }
 
-    void updateAdapterItems(List<EventItem> items) {
-        setHasMoreEvents(items.size() > 9);
+    void updateAdapterItems(List<EventItem> items, boolean internetConnected) {
+        setHasMoreEvents(items.size() > 9 && internetConnected);
        if (mItems.size() == 0) {
            populateRecyclerView(items);
        } else {

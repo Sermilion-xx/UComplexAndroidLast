@@ -1,13 +1,13 @@
 package org.ucomplex.ucomplex.Modules.Events;
 
-import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
 import org.ucomplex.ucomplex.Common.UCApplication;
+import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
+import org.ucomplex.ucomplex.Common.interfaces.DownloadCallback;
 import org.ucomplex.ucomplex.Modules.Events.model.EventItem;
 import org.ucomplex.ucomplex.Modules.Events.model.EventsRaw;
+import org.ucomplex.ucomplex.R;
 
 import java.util.List;
-
-import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
@@ -27,36 +27,54 @@ public class EventsPresenter extends AbstractPresenter<
         EventsRaw, List<EventItem>,
         Integer, EventsModel> {
 
+    private DownloadCallback<List<EventItem>> downloadCallback;
+
     public EventsPresenter() {
         UCApplication.getInstance().getAppDiComponent().inject(this);
     }
 
+    public void setDownloadCallback(DownloadCallback<List<EventItem>> downloadCallback) {
+        this.downloadCallback = downloadCallback;
+    }
+
     @Override
     public void loadData(Integer start) {
-        Observable<EventsRaw> dataObservable = mModel.loadData(start);
-        dataObservable.subscribe(new Observer<EventsRaw>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-                showProgress();
+        if (!UCApplication.getInstance().isConnectedToInternet()) {
+            if (getView() != null) {
+                getView().showToast(R.string.offline_mode);
             }
-
-            @Override
-            public void onNext(EventsRaw value) {
-                mModel.processData(value);
-                if(getView()!=null){
-                    getView().dataLoaded();
+            showProgress();
+            List<EventItem> items = mModel.getEvents(getActivityContext());
+            downloadCallback.onResponse(items);
+            hideProgress();
+        } else {
+            Observable<EventsRaw> dataObservable = mModel.loadData(start);
+            dataObservable.subscribe(new Observer<EventsRaw>() {
+                @Override
+                public void onSubscribe(Disposable d) {
+                    showProgress();
                 }
-            }
 
-            @Override
-            public void onError(Throwable e) {
-                hideProgress();
-            }
+                @Override
+                public void onNext(EventsRaw value) {
+                    List<EventItem> items = mModel.processData(value);
+                    if (!UCApplication.getInstance().isEventsCached()) {
+                        mModel.saveEvents(getActivityContext(), mModel.getData());
+                        UCApplication.getInstance().setEventsCached(true);
+                    }
+                    downloadCallback.onResponse(items);
+                }
 
-            @Override
-            public void onComplete() {
-                hideProgress();
-            }
-        });
+                @Override
+                public void onError(Throwable e) {
+                    hideProgress();
+                }
+
+                @Override
+                public void onComplete() {
+                    hideProgress();
+                }
+            });
+        }
     }
 }

@@ -15,6 +15,7 @@ import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.base.BaseActivity;
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.base.BaseMVPActivity;
+import org.ucomplex.ucomplex.Common.interfaces.DownloadCallback;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
 import org.ucomplex.ucomplex.Modules.Events.model.EventItem;
 import org.ucomplex.ucomplex.R;
@@ -25,7 +26,7 @@ import javax.inject.Inject;
 
 import static org.ucomplex.ucomplex.Common.FacadeCommon.REQUEST_EXTERNAL_STORAGE;
 
-public class EventsActivity extends BaseMVPActivity<MVPView, EventsPresenter>  {
+public class EventsActivity extends BaseMVPActivity<MVPView, EventsPresenter> implements DownloadCallback<List<EventItem>> {
 
     private static final String EXTRA_REFRESH = "REFRESH";
 
@@ -59,6 +60,7 @@ public class EventsActivity extends BaseMVPActivity<MVPView, EventsPresenter>  {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new EventsAdapter(params -> presenter.loadData(params));
         mRecyclerView.setAdapter(mAdapter);
+        presenter.setDownloadCallback(this);
         if (presenter.getData() == null || getIntent().getBooleanExtra(EXTRA_REFRESH, false)) {
             presenter.loadData(0);
         } else {
@@ -80,8 +82,12 @@ public class EventsActivity extends BaseMVPActivity<MVPView, EventsPresenter>  {
     }
 
     @Override
-    public void dataLoaded(){
-        mAdapter.updateAdapterItems(presenter.getData());
+    public void onResponse(List<EventItem> response) {
+        mAdapter.updateAdapterItems(response, UCApplication.getInstance().isConnectedToInternet());
     }
 
+    @Override
+    public void onError(Throwable t) {
+
+    }
 }

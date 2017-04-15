@@ -5,9 +5,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.util.Pair;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -25,12 +22,11 @@ import com.hannesdorfmann.mosby.mvp.MvpPresenter;
 
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.UCApplication;
-import org.ucomplex.ucomplex.Common.interfaces.ViewExtensions;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
+import org.ucomplex.ucomplex.Domain.Users.UserInterface;
 import org.ucomplex.ucomplex.Modules.Navdrawer.DrawerAdapter;
 import org.ucomplex.ucomplex.Modules.Navdrawer.DrawerListItem;
 import org.ucomplex.ucomplex.Modules.Navdrawer.FacadeDrawer;
-import org.ucomplex.ucomplex.Domain.Users.UserInterface;
 import org.ucomplex.ucomplex.R;
 
 import java.util.ArrayList;
@@ -39,7 +35,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 public abstract class BaseMVPActivity<V extends MVPView, Presenter extends MvpPresenter<V>>
-        extends MvpActivity<V, Presenter> implements ViewExtensions, MVPView {
+        extends MvpActivity<V, Presenter> implements MVPView {
 
     protected ProgressBar mProgress;
     protected Toolbar mToolbar;
@@ -50,7 +46,9 @@ public abstract class BaseMVPActivity<V extends MVPView, Presenter extends MvpPr
     protected DrawerAdapter mDrawerAdapter;
     protected ActionBarDrawerToggle mActionBarDrawerToggle;
 
-    public abstract void dataLoaded();
+    public void dataLoaded() {
+        throw new UnsupportedOperationException("Method not implemented yet.");
+    }
 
     @Inject
     @Override
@@ -182,8 +180,16 @@ public abstract class BaseMVPActivity<V extends MVPView, Presenter extends MvpPr
     }
 
     @Override
-    public void showToast(int textId, int length) {
-        Toast.makeText(this, textId, length).show();
+    public void showToast(int textId, int...length) {
+        int toastLength = Toast.LENGTH_LONG;
+        if (length.length > 0) {
+            toastLength = length[0];
+        }
+        if (toastLength == Toast.LENGTH_LONG) {
+            Toast.makeText(this, textId, Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, textId, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

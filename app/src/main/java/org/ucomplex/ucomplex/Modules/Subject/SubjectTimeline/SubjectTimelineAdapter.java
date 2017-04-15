@@ -77,7 +77,7 @@ public class SubjectTimelineAdapter extends BaseAdapter<SubjectTimelineAdapter.S
     @Override
     public SubjectTimelineViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        int layout = FacadeCommon.getAvailableListLayout(mItems.size(), parent.getContext());
+        int layout = FacadeCommon.getAvailableListLayout(mItems.size());
         if (layout == 0) {
             switch (viewType) {
                 case TYPE_ITEM:

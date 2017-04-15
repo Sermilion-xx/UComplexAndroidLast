@@ -15,12 +15,21 @@ public class EventItem {
     private String eventText;
     private int id;
     private String params;
+    private long paramInsertedId;
     private EventParams paramsObj;
     private int type;
     private String time;
     private int seen;
     public EventItem() {
         paramsObj = new EventParams();
+    }
+
+    public long getParamInsertedId() {
+        return paramInsertedId;
+    }
+
+    public void setParamInsertedId(long paramInsertedId) {
+        this.paramInsertedId = paramInsertedId;
     }
 
     public String getEventText() {

@@ -29,14 +29,16 @@ public class UCApplication extends Application {
     public static final String PHOTOS_URL = BASE_URL + "files/photos/";
 
 
+
     private static UCApplication INSTANCE;
     public  static UCApplication getInstance() {
         return INSTANCE;
     }
     private String authString;
     private UserInterface loggedUser;
-
     private AppDiComponent appDiComponent;
+    private boolean connectedToInternet;
+    private boolean eventsCached;
 
     @Override 
     public void onCreate() {
@@ -46,6 +48,8 @@ public class UCApplication extends Application {
         loggedUser = FacadePreferences.getUserDataFromPref(this);
         appDiComponent = DaggerAppDiComponent.builder().build();
         configureConnectionTrust();
+        connectedToInternet = FacadeCommon.isNetworkConnected(this);
+        eventsCached = false;
     }
 
     void configureConnectionTrust(){
@@ -80,6 +84,21 @@ public class UCApplication extends Application {
         this.loggedUser = loggedUser;
     }
 
+    public boolean isConnectedToInternet() {
+        return connectedToInternet;
+    }
+
+    public void setConnectedToInternet(boolean connectedToInternet) {
+        this.connectedToInternet = connectedToInternet;
+    }
+
+    public boolean isEventsCached() {
+        return eventsCached;
+    }
+
+    public void setEventsCached(boolean eventsCached) {
+        this.eventsCached = eventsCached;
+    }
 
     private static TrustManager[] trustAllCerts = new TrustManager[] {
             new X509TrustManager() {

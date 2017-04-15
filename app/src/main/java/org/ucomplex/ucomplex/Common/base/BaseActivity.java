@@ -11,18 +11,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.UCApplication;
-import org.ucomplex.ucomplex.Common.interfaces.ViewExtensions;
+import org.ucomplex.ucomplex.Domain.Users.UserInterface;
 import org.ucomplex.ucomplex.Modules.Navdrawer.DrawerAdapter;
 import org.ucomplex.ucomplex.Modules.Navdrawer.DrawerListItem;
 import org.ucomplex.ucomplex.Modules.Navdrawer.FacadeDrawer;
-import org.ucomplex.ucomplex.Domain.Users.UserInterface;
 import org.ucomplex.ucomplex.R;
 
 import java.util.ArrayList;
@@ -31,7 +29,7 @@ import java.util.List;
 import butterknife.BindView;
 
 
-public abstract class BaseActivity extends AppCompatActivity implements ViewExtensions {
+public abstract class BaseActivity extends AppCompatActivity {
 
     @BindView(R.id.progressBar)
     protected ProgressBar mProgress;
@@ -150,6 +148,18 @@ public abstract class BaseActivity extends AppCompatActivity implements ViewExte
     }
     //===========================================================================================//
 
+    public void showToast(int textId, int...length) {
+        int toastLength = Toast.LENGTH_LONG;
+        if (length.length > 0) {
+            toastLength = length[0];
+        }
+        if (toastLength == Toast.LENGTH_LONG) {
+            Toast.makeText(this, textId, Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, textId, Toast.LENGTH_SHORT).show();
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -159,24 +169,4 @@ public abstract class BaseActivity extends AppCompatActivity implements ViewExte
         }
         return super.onOptionsItemSelected(item);
     }
-
-    @Override
-    public void showToast(int textId, int length) {
-        Toast.makeText(this, textId, length).show();
-    }
-
-    @Override
-    public void showProgress() {
-        if (mProgress != null) {
-            mProgress.setVisibility(View.VISIBLE);
-        }
-    }
-
-    @Override
-    public void hideProgress() {
-        if (mProgress != null) {
-            mProgress.setVisibility(View.GONE);
-        }
-    }
-
 }

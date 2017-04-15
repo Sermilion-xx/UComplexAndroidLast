@@ -118,7 +118,7 @@ public class SubjectMaterialsAdapter extends BaseAdapter<SubjectMaterialsAdapter
     @Override
     public SubjectMaterialsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        int layout = FacadeCommon.getAvailableListLayout(mItems.size(), parent.getContext());
+        int layout = FacadeCommon.getAvailableListLayout(mItems.size());
         if (layout == 0) {
             switch (viewType) {
                 case TYPE_FILE:

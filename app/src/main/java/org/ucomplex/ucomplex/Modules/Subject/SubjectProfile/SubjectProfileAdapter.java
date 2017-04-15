@@ -68,7 +68,7 @@ public class SubjectProfileAdapter extends BaseAdapter<SubjectProfileAdapter.Sub
     @Override
     public SubjectProfileViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        int layout = FacadeCommon.getAvailableListLayout(mItems.size(), parent.getContext());
+        int layout = FacadeCommon.getAvailableListLayout(mItems.size());
         if (layout == 0) {
             switch (viewType) {
                 case TYPE_HEADER:   layout = R.layout.item_subject_header;  break;

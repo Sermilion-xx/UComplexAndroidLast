@@ -103,7 +103,7 @@ public class UsersAdapter extends BaseAdapter<UsersAdapter.UsersViewHolder, List
     @Override
     public UsersViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        int layout = FacadeCommon.getAvailableListLayout(mItems.size(), parent.getContext());
+        int layout = FacadeCommon.getAvailableListLayout(mItems.size());
         if (layout == 0) {
             layout = viewType == TYPE_USER || viewType == TYPE_REQUESTED ? R.layout.item_users : R.layout.item_footer;
         }

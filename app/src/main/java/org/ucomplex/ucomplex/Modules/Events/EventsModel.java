@@ -62,7 +62,7 @@ public class EventsModel implements MVPModel<EventsRaw, List<EventItem>, Integer
 
     private List<EventItem> mData;
     private EventsService eventsService;
-    private EventsDBOpenHelper eventsDBOpenHelper;
+    private EventsDBOpenHelper dbOpenHelper;
 
     public EventsModel() {
         UCApplication.getInstance().getAppDiComponent().inject(this);
@@ -178,9 +178,8 @@ public class EventsModel implements MVPModel<EventsRaw, List<EventItem>, Integer
         return result;
     }
 
-    public void saveEvents(Context context, List<EventItem> list) {
-        EventsDBOpenHelper.initialize(context, EventsDBOpenHelper.DATABASE_NAME);
-        SQLiteDatabase db = EventsDBOpenHelper.sqliteDb;
+    public void saveEvents(List<EventItem> list, Context context) {
+        SQLiteDatabase db = EventsDBOpenHelper.getConnection(context);
         try {
             db.beginTransaction();
             clearTables(db);
@@ -212,7 +211,7 @@ public class EventsModel implements MVPModel<EventsRaw, List<EventItem>, Integer
         }
     }
 
-    public void insertEvents(SQLiteDatabase db, EventItem item) {
+    private void insertEvents(SQLiteDatabase db, EventItem item) {
         ContentValues values = new ContentValues();
         values.put(KEY_EVENTS_ID, item.getId());
         values.put(KEY_EVENTS_TEXT, item.getEventText());
@@ -223,7 +222,7 @@ public class EventsModel implements MVPModel<EventsRaw, List<EventItem>, Integer
         db.insert(TABLE_EVENTS, null, values);
     }
 
-    public long insertEventParam(SQLiteDatabase db, EventItem.EventParams params) {
+    private long insertEventParam(SQLiteDatabase db, EventItem.EventParams params) {
         ContentValues values = new ContentValues();
         values.put(KEY_EVENT_PARAMS_ID, params.getId());
         values.put(KEY_EVENT_PARAMS_MESSAGE, params.getMessage());
@@ -242,10 +241,9 @@ public class EventsModel implements MVPModel<EventsRaw, List<EventItem>, Integer
     }
 
     public List<EventItem> getEvents(Context context) {
+        SQLiteDatabase db = EventsDBOpenHelper.getConnection(context);
         List<EventItem> items = new ArrayList<>();
         try {
-            EventsDBOpenHelper.initialize(context, EventsDBOpenHelper.DATABASE_NAME);
-            SQLiteDatabase db = EventsDBOpenHelper.sqliteDb;
             final String EVENTS_QUERY = "SELECT * FROM " + TABLE_EVENTS + " e INNER JOIN " + TABLE_EVENT_PARAMS + " p ON e." + KEY_EVENTS_PARAMS + " = p." + KEY_EVENT_PARAMS_PK_ID + "";
             Cursor cursor = db.rawQuery(EVENTS_QUERY, null);
 

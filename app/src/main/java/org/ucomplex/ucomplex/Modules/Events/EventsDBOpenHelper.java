@@ -1,15 +1,9 @@
 package org.ucomplex.ucomplex.Modules.Events;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
-import org.ucomplex.ucomplex.Modules.Events.model.EventItem;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * ---------------------------------------------------
@@ -81,21 +75,20 @@ public class EventsDBOpenHelper extends SQLiteOpenHelper {
             KEY_EVENT_PARAMS_DATE + " text, " +
             KEY_EVENT_PARAMS_AUTHOR + " text);";
 
-    public static SQLiteDatabase sqliteDb;
+    private static SQLiteDatabase sqliteDb;
     private static EventsDBOpenHelper INSTANCE;
 
     public EventsDBOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
 
-    public static  void initialize(Context context, String databaseName) {
+    public static SQLiteDatabase getConnection(Context context) {
         if (INSTANCE == null) {
-            INSTANCE = new EventsDBOpenHelper(context, databaseName,
-                    null, DATABASE_VERSION);
+            INSTANCE = new EventsDBOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION);
             sqliteDb = INSTANCE.getWritableDatabase();
         }
+        return sqliteDb;
     }
-
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -115,8 +108,8 @@ public class EventsDBOpenHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.beginTransaction();
         try {
-            db.execSQL("DROP TABLE IF IT EXISTS " + TABLE_EVENTS);
-            db.execSQL("DROP TABLE IF IT EXISTS " + TABLE_EVENT_PARAMS);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_EVENTS);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_EVENT_PARAMS);
             db.setTransactionSuccessful();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -125,5 +118,4 @@ public class EventsDBOpenHelper extends SQLiteOpenHelper {
         }
         onCreate(db);
     }
-
 }

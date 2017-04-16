@@ -1,8 +1,9 @@
-package org.ucomplex.ucomplex.Modules.Events;
+package org.ucomplex.ucomplex.Common;
 
 import android.content.Context;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 
 /**
@@ -15,10 +16,10 @@ import android.database.sqlite.SQLiteOpenHelper;
  * ---------------------------------------------------
  */
 
-public class EventsDBOpenHelper extends SQLiteOpenHelper {
+public class UCDBOpenHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "org.ucomplex.ucomplex_android.db";
-    private static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 1;
 
     public static final String TABLE_EVENTS = "events";
 
@@ -76,16 +77,24 @@ public class EventsDBOpenHelper extends SQLiteOpenHelper {
             KEY_EVENT_PARAMS_AUTHOR + " text);";
 
     private static SQLiteDatabase sqliteDb;
-    private static EventsDBOpenHelper INSTANCE;
+    private static UCDBOpenHelper INSTANCE;
 
-    public EventsDBOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+    public UCDBOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
+    }
+
+    public UCDBOpenHelper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     public static SQLiteDatabase getConnection(Context context) {
         if (INSTANCE == null) {
-            INSTANCE = new EventsDBOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION);
-            sqliteDb = INSTANCE.getWritableDatabase();
+            INSTANCE = new UCDBOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION);
+            try {
+                sqliteDb = INSTANCE.getWritableDatabase();
+            } catch (SQLiteException ex) {
+                sqliteDb = INSTANCE.getReadableDatabase();
+            }
         }
         return sqliteDb;
     }

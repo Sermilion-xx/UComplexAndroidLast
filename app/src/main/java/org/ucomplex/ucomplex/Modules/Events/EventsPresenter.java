@@ -1,7 +1,9 @@
 package org.ucomplex.ucomplex.Modules.Events;
 
+import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 
+import org.ucomplex.ucomplex.Common.UCDBOpenHelper;
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
 import org.ucomplex.ucomplex.Common.interfaces.DownloadCallback;
@@ -41,7 +43,6 @@ public class EventsPresenter extends AbstractPresenter<
 
     @Override
     public void loadData(Integer start) {
-        SQLiteDatabase db = EventsDBOpenHelper.getConnection(getActivityContext());
         if (!UCApplication.getInstance().isConnectedToInternet()) {
             if (getView() != null) {
                 getView().showToast(R.string.offline_mode);
@@ -62,6 +63,7 @@ public class EventsPresenter extends AbstractPresenter<
                 public void onNext(EventsRaw value) {
                     List<EventItem> items = mModel.processData(value);
                     if (!UCApplication.getInstance().isEventsCached()) {
+                        ContentValues values = new ContentValues();
                         mModel.saveEvents(mModel.getData(), getActivityContext());
                         UCApplication.getInstance().setEventsCached(true);
                     }

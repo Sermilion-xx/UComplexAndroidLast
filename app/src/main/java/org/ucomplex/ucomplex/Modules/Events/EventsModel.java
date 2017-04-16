@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.google.gson.Gson;
 
+import org.ucomplex.ucomplex.Common.UCDBOpenHelper;
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
 import org.ucomplex.ucomplex.Modules.Events.model.EventItem;
@@ -22,31 +23,31 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-import static org.ucomplex.ucomplex.Modules.Events.EventsDBOpenHelper.DB_CREATE_EVENTS;
-import static org.ucomplex.ucomplex.Modules.Events.EventsDBOpenHelper.DB_CREATE_EVENT_PARAMS;
-import static org.ucomplex.ucomplex.Modules.Events.EventsDBOpenHelper.KEY_EVENTS_ID;
-import static org.ucomplex.ucomplex.Modules.Events.EventsDBOpenHelper.KEY_EVENTS_PARAMS;
-import static org.ucomplex.ucomplex.Modules.Events.EventsDBOpenHelper.KEY_EVENTS_SEEN;
-import static org.ucomplex.ucomplex.Modules.Events.EventsDBOpenHelper.KEY_EVENTS_TEXT;
-import static org.ucomplex.ucomplex.Modules.Events.EventsDBOpenHelper.KEY_EVENTS_TIME;
-import static org.ucomplex.ucomplex.Modules.Events.EventsDBOpenHelper.KEY_EVENTS_TYPE;
-import static org.ucomplex.ucomplex.Modules.Events.EventsDBOpenHelper.KEY_EVENT_PARAMS_AUTHOR;
-import static org.ucomplex.ucomplex.Modules.Events.EventsDBOpenHelper.KEY_EVENT_PARAMS_CODE;
-import static org.ucomplex.ucomplex.Modules.Events.EventsDBOpenHelper.KEY_EVENT_PARAMS_COURSE_NAME;
-import static org.ucomplex.ucomplex.Modules.Events.EventsDBOpenHelper.KEY_EVENT_PARAMS_DATE;
-import static org.ucomplex.ucomplex.Modules.Events.EventsDBOpenHelper.KEY_EVENT_PARAMS_EVENT_NAME;
-import static org.ucomplex.ucomplex.Modules.Events.EventsDBOpenHelper.KEY_EVENT_PARAMS_GCOURSE;
-import static org.ucomplex.ucomplex.Modules.Events.EventsDBOpenHelper.KEY_EVENT_PARAMS_HOUT_TYPE;
-import static org.ucomplex.ucomplex.Modules.Events.EventsDBOpenHelper.KEY_EVENT_PARAMS_ID;
-import static org.ucomplex.ucomplex.Modules.Events.EventsDBOpenHelper.KEY_EVENT_PARAMS_MESSAGE;
-import static org.ucomplex.ucomplex.Modules.Events.EventsDBOpenHelper.KEY_EVENT_PARAMS_NAME;
-import static org.ucomplex.ucomplex.Modules.Events.EventsDBOpenHelper.KEY_EVENT_PARAMS_PHOTO;
-import static org.ucomplex.ucomplex.Modules.Events.EventsDBOpenHelper.KEY_EVENT_PARAMS_PK_ID;
-import static org.ucomplex.ucomplex.Modules.Events.EventsDBOpenHelper.KEY_EVENT_PARAMS_SEMESTER;
-import static org.ucomplex.ucomplex.Modules.Events.EventsDBOpenHelper.KEY_EVENT_PARAMS_TYPE;
-import static org.ucomplex.ucomplex.Modules.Events.EventsDBOpenHelper.KEY_EVENT_PARAMS_YEAR;
-import static org.ucomplex.ucomplex.Modules.Events.EventsDBOpenHelper.TABLE_EVENTS;
-import static org.ucomplex.ucomplex.Modules.Events.EventsDBOpenHelper.TABLE_EVENT_PARAMS;
+import static org.ucomplex.ucomplex.Common.UCDBOpenHelper.DB_CREATE_EVENTS;
+import static org.ucomplex.ucomplex.Common.UCDBOpenHelper.DB_CREATE_EVENT_PARAMS;
+import static org.ucomplex.ucomplex.Common.UCDBOpenHelper.KEY_EVENTS_ID;
+import static org.ucomplex.ucomplex.Common.UCDBOpenHelper.KEY_EVENTS_PARAMS;
+import static org.ucomplex.ucomplex.Common.UCDBOpenHelper.KEY_EVENTS_SEEN;
+import static org.ucomplex.ucomplex.Common.UCDBOpenHelper.KEY_EVENTS_TEXT;
+import static org.ucomplex.ucomplex.Common.UCDBOpenHelper.KEY_EVENTS_TIME;
+import static org.ucomplex.ucomplex.Common.UCDBOpenHelper.KEY_EVENTS_TYPE;
+import static org.ucomplex.ucomplex.Common.UCDBOpenHelper.KEY_EVENT_PARAMS_AUTHOR;
+import static org.ucomplex.ucomplex.Common.UCDBOpenHelper.KEY_EVENT_PARAMS_CODE;
+import static org.ucomplex.ucomplex.Common.UCDBOpenHelper.KEY_EVENT_PARAMS_COURSE_NAME;
+import static org.ucomplex.ucomplex.Common.UCDBOpenHelper.KEY_EVENT_PARAMS_DATE;
+import static org.ucomplex.ucomplex.Common.UCDBOpenHelper.KEY_EVENT_PARAMS_EVENT_NAME;
+import static org.ucomplex.ucomplex.Common.UCDBOpenHelper.KEY_EVENT_PARAMS_GCOURSE;
+import static org.ucomplex.ucomplex.Common.UCDBOpenHelper.KEY_EVENT_PARAMS_HOUT_TYPE;
+import static org.ucomplex.ucomplex.Common.UCDBOpenHelper.KEY_EVENT_PARAMS_ID;
+import static org.ucomplex.ucomplex.Common.UCDBOpenHelper.KEY_EVENT_PARAMS_MESSAGE;
+import static org.ucomplex.ucomplex.Common.UCDBOpenHelper.KEY_EVENT_PARAMS_NAME;
+import static org.ucomplex.ucomplex.Common.UCDBOpenHelper.KEY_EVENT_PARAMS_PHOTO;
+import static org.ucomplex.ucomplex.Common.UCDBOpenHelper.KEY_EVENT_PARAMS_PK_ID;
+import static org.ucomplex.ucomplex.Common.UCDBOpenHelper.KEY_EVENT_PARAMS_SEMESTER;
+import static org.ucomplex.ucomplex.Common.UCDBOpenHelper.KEY_EVENT_PARAMS_TYPE;
+import static org.ucomplex.ucomplex.Common.UCDBOpenHelper.KEY_EVENT_PARAMS_YEAR;
+import static org.ucomplex.ucomplex.Common.UCDBOpenHelper.TABLE_EVENTS;
+import static org.ucomplex.ucomplex.Common.UCDBOpenHelper.TABLE_EVENT_PARAMS;
 
 /**
  * ---------------------------------------------------
@@ -62,7 +63,7 @@ public class EventsModel implements MVPModel<EventsRaw, List<EventItem>, Integer
 
     private List<EventItem> mData;
     private EventsService eventsService;
-    private EventsDBOpenHelper dbOpenHelper;
+    private UCDBOpenHelper dbOpenHelper;
 
     public EventsModel() {
         UCApplication.getInstance().getAppDiComponent().inject(this);
@@ -179,7 +180,7 @@ public class EventsModel implements MVPModel<EventsRaw, List<EventItem>, Integer
     }
 
     public void saveEvents(List<EventItem> list, Context context) {
-        SQLiteDatabase db = EventsDBOpenHelper.getConnection(context);
+        SQLiteDatabase db = UCDBOpenHelper.getConnection(context);
         try {
             db.beginTransaction();
             clearTables(db);
@@ -241,7 +242,7 @@ public class EventsModel implements MVPModel<EventsRaw, List<EventItem>, Integer
     }
 
     public List<EventItem> getEvents(Context context) {
-        SQLiteDatabase db = EventsDBOpenHelper.getConnection(context);
+        SQLiteDatabase db = UCDBOpenHelper.getConnection(context);
         List<EventItem> items = new ArrayList<>();
         try {
             final String EVENTS_QUERY = "SELECT * FROM " + TABLE_EVENTS + " e INNER JOIN " + TABLE_EVENT_PARAMS + " p ON e." + KEY_EVENTS_PARAMS + " = p." + KEY_EVENT_PARAMS_PK_ID + "";

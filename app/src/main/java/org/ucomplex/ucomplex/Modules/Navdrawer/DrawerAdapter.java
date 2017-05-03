@@ -104,7 +104,7 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
                             .into(holder.mProfileImageView);
                 } else {
                     Drawable textDrawable = FacadeMedia.getTextDrawable(row.getId(), row.getTitle1(), mContext);
-                    holder.mProfileImageView.setImageBitmap(FacadeMedia.drawableToBitmap(textDrawable));
+                    holder.mProfileImageView.setImageDrawable(textDrawable);
                 }
             }
         } else {

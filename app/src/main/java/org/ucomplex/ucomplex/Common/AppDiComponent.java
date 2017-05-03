@@ -39,6 +39,12 @@ import org.ucomplex.ucomplex.Modules.SubjectsList.SubjectsListPresenter;
 import org.ucomplex.ucomplex.Modules.SubjectsList.dagger.SubjectsListModelModule;
 import org.ucomplex.ucomplex.Modules.SubjectsList.dagger.SubjectsListModule;
 import org.ucomplex.ucomplex.Modules.SubjectsList.dagger.SubjectsListPresenterModule;
+import org.ucomplex.ucomplex.Modules.UserProfile.UserProfileActivity;
+import org.ucomplex.ucomplex.Modules.UserProfile.UserProfileModel;
+import org.ucomplex.ucomplex.Modules.UserProfile.UserProfilePresenter;
+import org.ucomplex.ucomplex.Modules.UserProfile.dagger.UserProfileActivityModule;
+import org.ucomplex.ucomplex.Modules.UserProfile.dagger.UserProfileModelModule;
+import org.ucomplex.ucomplex.Modules.UserProfile.dagger.UserProfilePresenterModule;
 import org.ucomplex.ucomplex.Modules.Users.UsersFragment;
 import org.ucomplex.ucomplex.Modules.Users.UsersModel;
 import org.ucomplex.ucomplex.Modules.Users.UsersPresenter;
@@ -82,7 +88,10 @@ import dagger.Component;
                 SubjectsListPresenterModule.class,
                 UsersModelModule.class,
                 UsersPresenterModule.class,
-                UsersModule.class
+                UsersModule.class,
+                UserProfileModelModule.class,
+                UserProfilePresenterModule.class,
+                UserProfileActivityModule.class
         })
 
 public interface AppDiComponent {
@@ -132,6 +141,12 @@ public interface AppDiComponent {
     void inject(UsersPresenter presenter);
 
     void inject(UsersFragment fragment);
+
+    void inject(UserProfileModel model);
+
+    void inject(UserProfilePresenter presenter);
+
+    void inject(UserProfileActivity activity);
 
 }
 

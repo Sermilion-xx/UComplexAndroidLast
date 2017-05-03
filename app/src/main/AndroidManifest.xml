@@ -29,34 +29,32 @@
         <activity
             android:name=".Modules.Events.EventsActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".Modules.RoleSelect.RoleSelectActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".Modules.Subject.SubjectActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".Modules.SubjectsList.SubjectsListActivity"
             android:screenOrientation="portrait" />
-
         <activity android:name=".Modules.Portfolio.PortfolioActivity" />
 
         <service android:name=".Modules.Subject.SubjectMaterials.NotificationService" />
 
-        <activity android:name=".Modules.Users.UsersActivity"/>
+        <activity android:name=".Modules.Users.UsersActivity" />
 
-        <receiver
-            android:name=".Common.NetworkReceiver">
+        <receiver android:name=".Common.NetworkReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
 
-        <provider android:name=".Common.UCContentProvider"
-            android:authorities="org.ucomplex.ucomplex.Common.UCContentProvider"/>
+        <provider
+            android:name=".Common.UCContentProvider"
+            android:authorities="org.ucomplex.ucomplex.Common.UCContentProvider" />
+
+        <activity android:name=".Modules.UserProfile.UserProfileActivity"></activity>
     </application>
 
 </manifest>

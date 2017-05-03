@@ -1,8 +1,6 @@
 package org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.ucomplex.ucomplex.Common.Constants;
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.base.BaseAdapter;
 import org.ucomplex.ucomplex.Common.interfaces.OnListItemClicked;
@@ -22,11 +21,6 @@ import org.ucomplex.ucomplex.R;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.ucomplex.ucomplex.Common.UCApplication.BASE_URL;
-import static org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.NotificationService.EXTRA_BODY;
-import static org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.NotificationService.EXTRA_LARGE_ICON;
-import static org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.NotificationService.EXTRA_TITLE;
 
 /**
  * ---------------------------------------------------
@@ -119,7 +113,7 @@ public class SubjectMaterialsAdapter extends BaseAdapter<SubjectMaterialsAdapter
     public SubjectMaterialsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         int layout = FacadeCommon.getAvailableListLayout(mItems.size());
-        if (layout == 0) {
+        if (layout == Constants.CUSTOM_ADAPTER_ITEM_LAYOUT_AVAILABLE) {
             switch (viewType) {
                 case TYPE_FILE:
                     layout = R.layout.item_material_file;
@@ -140,7 +134,7 @@ public class SubjectMaterialsAdapter extends BaseAdapter<SubjectMaterialsAdapter
                 SubjectItemFile item = mItems.get(position);
                 holder.mFileName.setText(item.getName());
                 if (item.getTime() != null) {
-                    holder.mFileTime.setText(FacadeCommon.makeDate(item.getTime()));
+                    holder.mFileTime.setText(FacadeCommon.makeHumanReadableDate(item.getTime()));
                 } else {
                     holder.mFileTime.setText(holder.mFileTime.getContext().getString(R.string.just_now));
                 }

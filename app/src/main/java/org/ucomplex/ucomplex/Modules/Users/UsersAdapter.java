@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 
+import org.ucomplex.ucomplex.Common.Constants;
 import org.ucomplex.ucomplex.Common.utility.CircleTransform;
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.FacadeMedia;
@@ -104,7 +105,7 @@ public class UsersAdapter extends BaseAdapter<UsersAdapter.UsersViewHolder, List
     public UsersViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         int layout = FacadeCommon.getAvailableListLayout(mItems.size());
-        if (layout == 0) {
+        if (layout == Constants.CUSTOM_ADAPTER_ITEM_LAYOUT_AVAILABLE) {
             layout = viewType == TYPE_USER || viewType == TYPE_REQUESTED ? R.layout.item_users : R.layout.item_footer;
         }
         View view = inflater.inflate(layout, parent, false);

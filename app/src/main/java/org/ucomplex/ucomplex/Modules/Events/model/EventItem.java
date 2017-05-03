@@ -24,6 +24,32 @@ public class EventItem {
         paramsObj = new EventParams();
     }
 
+    //-----------param hiders-----
+    public String getName() {
+        return paramsObj.getName();
+    }
+
+    public void setName(String name) {
+        paramsObj.setName(name);
+    }
+
+    public int getParamId() {
+        return paramsObj.getId();
+    }
+
+    public String getCode(){
+        return paramsObj.getCode();
+    }
+
+    public int getGcourse() {
+        return paramsObj.getGcourse();
+    }
+
+    public String getCourseName() {
+        return paramsObj.getCourseName();
+    }
+    //--------------------------------
+
     public long getParamInsertedId() {
         return paramInsertedId;
     }

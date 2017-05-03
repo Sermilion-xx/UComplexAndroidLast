@@ -16,6 +16,7 @@ public class Constants {
     public static final String UC_ACTION_DOWNLOAD_COMPLETE = PREFIX+"download_complete";
     public static final String UC_ACTION_DOWNLOAD_CLICKED = PREFIX+"download_clicked";
     public static final String TYPE_FOLDER = "f";
+    public static final int CUSTOM_ADAPTER_ITEM_LAYOUT_AVAILABLE = 0;
 
 
 }

@@ -1,9 +1,5 @@
 package org.ucomplex.ucomplex.Modules.Events;
 
-import android.content.ContentValues;
-import android.database.sqlite.SQLiteDatabase;
-
-import org.ucomplex.ucomplex.Common.UCDBOpenHelper;
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
 import org.ucomplex.ucomplex.Common.interfaces.DownloadCallback;
@@ -48,7 +44,7 @@ public class EventsPresenter extends AbstractPresenter<
                 getView().showToast(R.string.offline_mode);
             }
             showProgress();
-            List<EventItem> items = mModel.getEvents(getActivityContext());
+            List<EventItem> items = mModel.getEventsFromDB(getActivityContext());
             downloadCallback.onResponse(items);
             hideProgress();
         } else {
@@ -63,8 +59,7 @@ public class EventsPresenter extends AbstractPresenter<
                 public void onNext(EventsRaw value) {
                     List<EventItem> items = mModel.processData(value);
                     if (!UCApplication.getInstance().isEventsCached()) {
-                        ContentValues values = new ContentValues();
-                        mModel.saveEvents(mModel.getData(), getActivityContext());
+                        mModel.saveEventsToDB(mModel.getData(), getActivityContext());
                         UCApplication.getInstance().setEventsCached(true);
                     }
                     downloadCallback.onResponse(items);

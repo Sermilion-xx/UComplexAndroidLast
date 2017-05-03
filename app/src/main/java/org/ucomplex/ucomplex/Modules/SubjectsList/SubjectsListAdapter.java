@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import org.ucomplex.ucomplex.Common.Constants;
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.base.BaseAdapter;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectActivity;
@@ -59,7 +60,7 @@ public class SubjectsListAdapter extends BaseAdapter<SubjectsListAdapter.Subject
     public SubjectsListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         int layout = FacadeCommon.getAvailableListLayout(mItems.size());
-        if (layout == 0) {
+        if (layout == Constants.CUSTOM_ADAPTER_ITEM_LAYOUT_AVAILABLE) {
             layout = R.layout.item_subject;
         }
         View view = inflater.inflate(layout, parent, false);

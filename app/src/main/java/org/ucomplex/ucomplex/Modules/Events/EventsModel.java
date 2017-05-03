@@ -61,9 +61,9 @@ import static org.ucomplex.ucomplex.Common.UCDBOpenHelper.TABLE_EVENT_PARAMS;
 
 public class EventsModel implements MVPModel<EventsRaw, List<EventItem>, Integer> {
 
+    private static final String DROP_TABLE_IF_EXISTS = "DROP TABLE IF EXISTS ";
     private List<EventItem> mData;
     private EventsService eventsService;
-    private UCDBOpenHelper dbOpenHelper;
 
     public EventsModel() {
         UCApplication.getInstance().getAppDiComponent().inject(this);
@@ -121,6 +121,9 @@ public class EventsModel implements MVPModel<EventsRaw, List<EventItem>, Integer
 
     private String makeEvent(int type, EventItem.EventParams params)
             throws NumberFormatException {
+        if (params == null) {
+            return "";
+        }
         String result = "";
         String[] hourTypes = new String[]{"протокол занятия",
                 "протокол рубежного контроля", "экзаменационную ведомость",
@@ -179,7 +182,7 @@ public class EventsModel implements MVPModel<EventsRaw, List<EventItem>, Integer
         return result;
     }
 
-    public void saveEvents(List<EventItem> list, Context context) {
+    public void saveEventsToDB(List<EventItem> list, Context context) {
         SQLiteDatabase db = UCDBOpenHelper.getConnection(context);
         try {
             db.beginTransaction();
@@ -200,8 +203,8 @@ public class EventsModel implements MVPModel<EventsRaw, List<EventItem>, Integer
     private void clearTables(SQLiteDatabase db) {
         db.beginTransaction();
         try {
-            db.execSQL("DROP TABLE IF EXISTS " + TABLE_EVENTS);
-            db.execSQL("DROP TABLE IF EXISTS " + TABLE_EVENT_PARAMS);
+            db.execSQL(DROP_TABLE_IF_EXISTS + TABLE_EVENTS);
+            db.execSQL(DROP_TABLE_IF_EXISTS + TABLE_EVENT_PARAMS);
             db.execSQL(DB_CREATE_EVENT_PARAMS);
             db.execSQL(DB_CREATE_EVENTS);
             db.setTransactionSuccessful();
@@ -241,7 +244,7 @@ public class EventsModel implements MVPModel<EventsRaw, List<EventItem>, Integer
         return db.insert(TABLE_EVENT_PARAMS, null, values);
     }
 
-    public List<EventItem> getEvents(Context context) {
+    public List<EventItem> getEventsFromDB(Context context) {
         SQLiteDatabase db = UCDBOpenHelper.getConnection(context);
         List<EventItem> items = new ArrayList<>();
         try {

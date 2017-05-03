@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 
+import org.ucomplex.ucomplex.Common.Constants;
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.FacadeMedia;
 import org.ucomplex.ucomplex.Common.base.BaseAdapter;
@@ -84,7 +85,7 @@ public class EventsAdapter extends BaseAdapter<EventsAdapter.EventViewHolder, Li
     public EventViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         int layout = FacadeCommon.getAvailableListLayout(mItems.size());
-        if (layout == 0) {
+        if (layout == Constants.CUSTOM_ADAPTER_ITEM_LAYOUT_AVAILABLE) {
             layout = viewType == TYPE_COMMON ? R.layout.item_event : R.layout.item_footer;
         }
         View view = inflater.inflate(layout, parent, false);
@@ -97,16 +98,18 @@ public class EventsAdapter extends BaseAdapter<EventsAdapter.EventViewHolder, Li
             if (getItemViewType(position) == TYPE_COMMON && mItems.size() > 0) {
                 Context context = holder.eventPersonName.getContext();
                 EventItem item = mItems.get(position);
-                String personName = item.getParamsObj().getName();
+                String personName = item.getName();
                 if (personName == null || personName.equals("")) {
-                    item.getParamsObj().setName(context.getResources().getString(R.string.app_name));
+                    item.setName(context.getResources().getString(R.string.default_event_name));
                 }
-                holder.eventPersonName.setText(item.getParamsObj().getName());
+                holder.eventPersonName.setText(item.getName());
                 holder.eventTextView.setText(item.getEventText());
-                holder.eventTime.setText(FacadeCommon.makeDate(item.getTime()));
-                Drawable textDrawable = FacadeMedia.getTextDrawable(item.getParamsObj().getId(),
-                        item.getParamsObj().getName(), context);
-                String url = BASE_URL + PHOTOS_PATH + item.getParamsObj().getCode() + FORMAT_JPG;
+                holder.eventTime.setText(FacadeCommon.makeHumanReadableDate(item.getTime()));
+                Drawable textDrawable = FacadeMedia.getTextDrawable(
+                        item.getParamId(),
+                        item.getName(),
+                        context);
+                String url = BASE_URL + PHOTOS_PATH + item.getCode() + FORMAT_JPG;
                 Glide.with(context)
                         .load(url)
                         .asBitmap()
@@ -114,15 +117,15 @@ public class EventsAdapter extends BaseAdapter<EventsAdapter.EventViewHolder, Li
                         .priority(Priority.HIGH)
                         .into(holder.eventsImageView);
                 holder.eventDetailsLayout.setOnClickListener(v -> {
-                    if (!item.getParamsObj().getName().equals(context.getString(R.string.app_name))) {
-                        Intent intent = SubjectActivity.creteIntent(context, item.getParamsObj().getGcourse(), item.getParamsObj().getCourseName());
+                    if (!item.getName().equals(context.getString(R.string.app_name))) {
+                        Intent intent = SubjectActivity.creteIntent(context, item.getGcourse(), item.getCourseName());
                         context.startActivity(intent);
                     }
                 });
             } else if (getItemViewType(position) == TYPE_FOOTER && holder.loadMoreEventsButton != null) {
                 if (hasMoreEvents) {
                     holder.loadMoreEventsButton.setVisibility(View.VISIBLE);
-                    holder.loadMoreEventsButton.setOnClickListener(v -> mMoreCallback.loadMore(getItemCount() + 1));
+                    holder.loadMoreEventsButton.setOnClickListener(v -> mMoreCallback.loadMoreData(getItemCount() + 1));
                 } else {
                     holder.loadMoreEventsButton.setVisibility(View.GONE);
                 }
@@ -158,8 +161,7 @@ public class EventsAdapter extends BaseAdapter<EventsAdapter.EventViewHolder, Li
     private void addMoreToRecyclerView(List<EventItem> newItems) {
         int end = mItems.size();
         mItems.addAll(end, newItems);
-        int itemCount = getItemCount();
-        notifyItemRangeInserted(end, itemCount - 1);
+        notifyItemRangeInserted(end, getItemCount() - 1);
     }
 
     private void populateRecyclerView(List<EventItem> newItems) {

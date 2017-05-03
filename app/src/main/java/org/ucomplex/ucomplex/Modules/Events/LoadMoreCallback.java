@@ -11,5 +11,5 @@ package org.ucomplex.ucomplex.Modules.Events;
  */
 
 public interface LoadMoreCallback<T> {
-    void loadMore(T params);
+    void loadMoreData(T params);
 }

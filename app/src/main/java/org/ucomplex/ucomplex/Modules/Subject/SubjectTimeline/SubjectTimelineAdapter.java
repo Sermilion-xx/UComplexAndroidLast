@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 
+import org.ucomplex.ucomplex.Common.Constants;
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.base.BaseAdapter;
 import org.ucomplex.ucomplex.Common.interfaces.OnListItemClicked;
@@ -78,7 +79,7 @@ public class SubjectTimelineAdapter extends BaseAdapter<SubjectTimelineAdapter.S
     public SubjectTimelineViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         int layout = FacadeCommon.getAvailableListLayout(mItems.size());
-        if (layout == 0) {
+        if (layout == Constants.CUSTOM_ADAPTER_ITEM_LAYOUT_AVAILABLE) {
             switch (viewType) {
                 case TYPE_ITEM:
                     layout = R.layout.item_subject_timeline;

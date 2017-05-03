@@ -97,7 +97,7 @@ public class FacadeCommon {
         return typeStr;
     }
 
-    public static String makeDate(String time, boolean... justDate) {
+    public static String makeHumanReadableDate(String time, boolean... justDate) {
         String r = "";
         String yyyyMMdd = time.split(" ")[0];
         String hhMMss = null;
@@ -212,7 +212,7 @@ public class FacadeCommon {
         } else if (itemCount == 0) {
             return R.layout.item_no_content;
         } else {
-            return 0;
+            return Constants.CUSTOM_ADAPTER_ITEM_LAYOUT_AVAILABLE;
         }
     }
 

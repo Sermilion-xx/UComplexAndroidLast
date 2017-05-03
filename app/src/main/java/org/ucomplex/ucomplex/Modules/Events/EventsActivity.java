@@ -26,7 +26,7 @@ import javax.inject.Inject;
 
 import static org.ucomplex.ucomplex.Common.FacadeCommon.REQUEST_EXTERNAL_STORAGE;
 
-public class EventsActivity extends BaseMVPActivity<MVPView, EventsPresenter> implements DownloadCallback<List<EventItem>> {
+public class EventsActivity extends BaseMVPActivity<MVPView, EventsPresenter> {
 
     private static final String EXTRA_REFRESH = "REFRESH";
 
@@ -55,12 +55,25 @@ public class EventsActivity extends BaseMVPActivity<MVPView, EventsPresenter> im
         setupToolbar(getString(R.string.events), R.drawable.ic_menu);
         mProgress = (ProgressBar) findViewById(R.id.progressBar);
         setupDrawer();
+
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new EventsAdapter(params -> presenter.loadData(params));
         mRecyclerView.setAdapter(mAdapter);
-        presenter.setDownloadCallback(this);
+
+        presenter.setDownloadCallback(new DownloadCallback<List<EventItem>>() {
+            @Override
+            public void onResponse(List<EventItem> response) {
+                mAdapter.updateAdapterItems(response, UCApplication.getInstance().isConnectedToInternet());
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                showToast(R.string.error_loadig_data);
+            }
+        });
+        
         if (presenter.getData() == null || getIntent().getBooleanExtra(EXTRA_REFRESH, false)) {
             presenter.loadData(0);
         } else {
@@ -79,15 +92,5 @@ public class EventsActivity extends BaseMVPActivity<MVPView, EventsPresenter> im
                 }
             }
         }
-    }
-
-    @Override
-    public void onResponse(List<EventItem> response) {
-        mAdapter.updateAdapterItems(response, UCApplication.getInstance().isConnectedToInternet());
-    }
-
-    @Override
-    public void onError(Throwable t) {
-
     }
 }

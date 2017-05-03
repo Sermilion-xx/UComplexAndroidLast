@@ -102,7 +102,7 @@ public class SubjectTimelineModel implements MVPModel<SubjectTimelineRaw, List<S
             Date date = new Date(mark.getTime()*1000);
             SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, new Locale(LOCALE));
             String time = sdf.format(date);
-            String timeString = FacadeCommon.makeDate(time, true);
+            String timeString = FacadeCommon.makeHumanReadableDate(time, true);
             item.setTime(timeString);
             item.setType(mark.getType());
             item.setTeacherName(teachers.get(mark.getTeacher()));

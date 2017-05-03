@@ -200,8 +200,8 @@ public class EventsModel implements MVPModel<EventsRaw, List<EventItem>, Integer
     private void clearTables(SQLiteDatabase db) {
         db.beginTransaction();
         try {
-            db.execSQL("DROP TABLE IF IT EXISTS " + TABLE_EVENTS);
-            db.execSQL("DROP TABLE IF IT EXISTS " + TABLE_EVENT_PARAMS);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_EVENTS);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_EVENT_PARAMS);
             db.execSQL(DB_CREATE_EVENT_PARAMS);
             db.execSQL(DB_CREATE_EVENTS);
             db.setTransactionSuccessful();

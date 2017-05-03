@@ -108,8 +108,10 @@ public class SubjectModel implements MVPModel<SubjectRaw, SubjectObject, Integer
             Files files = data.getFiles().get(i);
             profileItemsSet.add(extractProfileItem(files.getTeacher()));
             mTeachers.put(files.getTeacher().getId(), files.getTeacher());
-            for (MaterialsFile materialsFile : files.getMaterialsFiles()) {
-                filesItems.add(extractFileItem(materialsFile, mTeachers));
+            if (files.getMaterialsFiles() != null) {
+                for (MaterialsFile materialsFile : files.getMaterialsFiles()) {
+                    filesItems.add(extractFileItem(materialsFile, mTeachers));
+                }
             }
         }
 

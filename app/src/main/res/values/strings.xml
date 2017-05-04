@@ -125,4 +125,20 @@
     <string name="offline_mode">Оффлайн режим</string>
     <string name="default_event_name">UComplex</string>
     <string name="message">Сообщение</string>
+    <string name="event_protocol_zanyatiya">протокол занятия</string>
+    <string name="event_protocol_robezhnogo_kontrolya">протокол рубежного контроля</string>
+    <string name="event_ekzamenazionnuyu_vedomost">экзаменационную ведомость</string>
+    <string name="event_individualnoe_zanyatie">индивидуальное занятие</string>
+    <string name="event_zagruzhen_material_po_discipline">Загружен материал по дисциплине</string>
+    <string name="event_propodavatel">Преподаватель</string>
+    <string name="event_zapolnil">заполнил</string>
+    <string name="event_po_discipline">по дисциплине</string>
+    <string name="event_vy_proizveli_oplatu">Вы произвели оплату за</string>
+    <string name="event_j_semester">-й семестр</string>
+    <string name="event_uchebnogo_goda">учебного года</string>
+    <string name="event_vy_priglasheny_na_meropriyatie">Вы приглашены на участие в мероприятии</string>
+    <string name="event_kotoroe_sostoitsya">которое состоится</string>
+    <string name="event_book_added">В книжную полку добавлена книга</string>
+    <string name="event_photo_declined">Ваша фотография отклонена из-за несоответствия условиям загрузки личной фотографии.</string>
+    <string name="event_system_message">СИСТЕМНОЕ СООБЩЕНИЕ</string>
 </resources>

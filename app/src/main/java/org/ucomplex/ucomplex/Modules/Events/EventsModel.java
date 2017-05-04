@@ -13,6 +13,7 @@ import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
 import org.ucomplex.ucomplex.Modules.Events.model.EventItem;
 import org.ucomplex.ucomplex.Modules.Events.model.EventsRaw;
+import org.ucomplex.ucomplex.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -110,7 +111,7 @@ public class EventsModel implements MVPModel<EventsRaw, List<EventItem>, Integer
         for (EventItem item : data.getEvents()) {
             item.setParamsObj(gson.fromJson(item.getParams(), EventItem.EventParams.class));
             item.setParams(null);
-            String displayEvent = makeEvent(item.getType(), item.getParamsObj());
+            String displayEvent = makeEvent(item.getType(), item.getParamsObj(), UCApplication.getInstance());
             item.setEventText(displayEvent);
             items.add(item);
         }
@@ -119,51 +120,51 @@ public class EventsModel implements MVPModel<EventsRaw, List<EventItem>, Integer
     }
 
 
-    private String makeEvent(int type, EventItem.EventParams params)
+    private String makeEvent(int type, EventItem.EventParams params, Context context)
             throws NumberFormatException {
         if (params == null) {
             return "";
         }
         String result = "";
-        String[] hourTypes = new String[]{"протокол занятия",
-                "протокол рубежного контроля", "экзаменационную ведомость",
-                "индивидуальное занятие"};
+        String[] hourTypes = new String[]{context.getString(R.string.event_protocol_zanyatiya),
+                context.getString(R.string.event_protocol_robezhnogo_kontrolya), context.getString(R.string.event_ekzamenazionnuyu_vedomost),
+                context.getString(R.string.event_individualnoe_zanyatie)};
         String courseName;
         String name;
         switch (type) {
 
             case 1:
                 courseName = params.getCourseName();
-                result = "Загружен материал по дисциплине " + courseName + ".";
+                result = context.getString(R.string.event_zagruzhen_material_po_discipline) + courseName + ".";
                 break;
 
             case 2:
                 int hourType = params.getHourType();
                 courseName = params.getCourseName();
                 name = params.getName();
-                result = "Преподаватель " + name + " заполнил "
-                        + hourTypes[hourType] + " по дисциплине " + courseName
+                result = context.getString(R.string.event_propodavatel) + name + context.getString(R.string.event_zapolnil)
+                        + hourTypes[hourType] + context.getString(R.string.event_po_discipline) + courseName
                         + ".";
                 break;
 
             case 3:
                 String semestr = params.getSemester();
                 String year = params.getYear();
-                result = "Вы произвели оплату за " + semestr + "-й семестр " + year
-                        + " учебного года.";
+                result = context.getString(R.string.event_vy_proizveli_oplatu) + semestr + context.getString(R.string.event_j_semester) + year
+                        + context.getString(R.string.event_uchebnogo_goda)+".";
                 break;
 
             case 4:
                 String eventName = params.getEventName();
                 String date = params.getDate();
-                result = "Вы приглашены на участие в мероприятии " + eventName
-                        + ", которое состоится " + date;
+                result = context.getString(R.string.event_vy_priglasheny_na_meropriyatie) + eventName
+                        + ", " +  context.getString(R.string.event_kotoroe_sostoitsya) + " " + date;
                 break;
 
             case 5:
                 name = params.getEventName();
                 String author = params.getAuthor();
-                result = "В книжную полку добавлена книга " + name + ", " + author;
+                result = context.getString(R.string.event_book_added) + " " + name + ", " + author;
                 break;
 
             case 6:
@@ -171,12 +172,12 @@ public class EventsModel implements MVPModel<EventsRaw, List<EventItem>, Integer
                 if (params.getType() != 0) {
                     int t = params.getType();
                     if (t == 1) {
-                        message = "Ваша фотография отклонена из-за несоответствия условиям загрузки личной фотографии.";
+                        message = context.getString(R.string.event_photo_declined);
                     }
                 } else {
                     message = params.getMessage();
                 }
-                result = "СИСТЕМНОЕ СООБЩЕНИЕ: \n" + message;
+                result = context.getString(R.string.event_system_message) + ": \n" + message;
                 break;
         }
         return result;
@@ -280,20 +281,21 @@ public class EventsModel implements MVPModel<EventsRaw, List<EventItem>, Integer
                 item.setSeen(cursor.getInt(KEY_EVENTS_SEEN_INDEX));
                 item.setTime(cursor.getString(KEY_EVENTS_TIME_INDEX));
                 item.setType(cursor.getInt(KEY_EVENTS_TYPE_INDEX));
-                item.getParamsObj().setId(cursor.getInt(KEY_EVENT_PARAMS_ID_INDEX));
-                item.getParamsObj().setMessage(cursor.getString(KEY_EVENT_PARAMS_MESSAGE_INDEX));
-                item.getParamsObj().setName(cursor.getString(KEY_EVENT_PARAMS_NAME_INDEX));
-                item.getParamsObj().setPhoto(cursor.getInt(KEY_EVENT_PARAMS_PHOTO_INDEX));
-                item.getParamsObj().setCode(cursor.getString(KEY_EVENT_PARAMS_CODE_INDEX));
-                item.getParamsObj().setGcourse(cursor.getInt(KEY_EVENT_PARAMS_GCOURSE_INDEX));
-                item.getParamsObj().setCourseName(cursor.getString(KEY_EVENT_PARAMS_COURSE_NAME_INDEX));
-                item.getParamsObj().setHourType(cursor.getInt(KEY_EVENT_PARAMS_HOUT_TYPE_INDEX));
-                item.getParamsObj().setType(cursor.getInt(KEY_EVENT_PARAMS_TYPE_INDEX));
-                item.getParamsObj().setSemester(cursor.getString(KEY_EVENT_PARAMS_SEMESTER_INDEX));
-                item.getParamsObj().setYear(cursor.getString(KEY_EVENT_PARAMS_YEAR_INDEX));
-                item.getParamsObj().setEventName(cursor.getString(KEY_EVENT_PARAMS_EVENT_NAME_INDEX));
-                item.getParamsObj().setDate(cursor.getString(KEY_EVENT_PARAMS_DATE_INDEX));
-                item.getParamsObj().setAuthor(cursor.getString(KEY_EVENT_PARAMS_AUTHOR_INDEX));
+                EventItem.EventParams params = item.getParamsObj();
+                params.setId(cursor.getInt(KEY_EVENT_PARAMS_ID_INDEX));
+                params.setMessage(cursor.getString(KEY_EVENT_PARAMS_MESSAGE_INDEX));
+                params.setName(cursor.getString(KEY_EVENT_PARAMS_NAME_INDEX));
+                params.setPhoto(cursor.getInt(KEY_EVENT_PARAMS_PHOTO_INDEX));
+                params.setCode(cursor.getString(KEY_EVENT_PARAMS_CODE_INDEX));
+                params.setGcourse(cursor.getInt(KEY_EVENT_PARAMS_GCOURSE_INDEX));
+                params.setCourseName(cursor.getString(KEY_EVENT_PARAMS_COURSE_NAME_INDEX));
+                params.setHourType(cursor.getInt(KEY_EVENT_PARAMS_HOUT_TYPE_INDEX));
+                params.setType(cursor.getInt(KEY_EVENT_PARAMS_TYPE_INDEX));
+                params.setSemester(cursor.getString(KEY_EVENT_PARAMS_SEMESTER_INDEX));
+                params.setYear(cursor.getString(KEY_EVENT_PARAMS_YEAR_INDEX));
+                params.setEventName(cursor.getString(KEY_EVENT_PARAMS_EVENT_NAME_INDEX));
+                params.setDate(cursor.getString(KEY_EVENT_PARAMS_DATE_INDEX));
+                params.setAuthor(cursor.getString(KEY_EVENT_PARAMS_AUTHOR_INDEX));
                 items.add(item);
             }
             cursor.close();

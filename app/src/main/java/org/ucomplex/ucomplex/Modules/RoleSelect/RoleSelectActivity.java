@@ -15,6 +15,7 @@ import org.ucomplex.ucomplex.Common.interfaces.IntentCallback;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
 import org.ucomplex.ucomplex.Domain.Users.UserInterface;
 import org.ucomplex.ucomplex.Modules.Events.EventsActivity;
+import org.ucomplex.ucomplex.Modules.Login.model.LoginUser;
 import org.ucomplex.ucomplex.R;
 
 import java.util.List;
@@ -32,9 +33,12 @@ public class RoleSelectActivity extends BaseMVPActivity<MVPView, RoleSelectPrese
     protected RecyclerView mRecyclerView;
     private RoleSelectAdapter mAdapter;
 
-    public static Intent creteIntent (Context context, UserInterface userInterface) {
+    public static Intent creteIntent (@NonNull Context context, @NonNull LoginUser userInterface) {
+        //noinspection ConstantConditions
+        if (userInterface == null || context == null)
+            throw new IllegalArgumentException();
         Intent intent = new Intent(context, RoleSelectActivity.class);
-        intent.putExtra(EXTRA_USER, (Parcelable) userInterface);
+        intent.putExtra(EXTRA_USER, userInterface);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         return intent;
     }

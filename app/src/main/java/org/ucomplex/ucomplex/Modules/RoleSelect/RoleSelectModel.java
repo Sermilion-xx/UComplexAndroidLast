@@ -3,7 +3,9 @@ package org.ucomplex.ucomplex.Modules.RoleSelect;
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
 import org.ucomplex.ucomplex.Domain.Users.Role;
+import org.ucomplex.ucomplex.Domain.Users.User;
 import org.ucomplex.ucomplex.Domain.Users.UserInterface;
+import org.ucomplex.ucomplex.Modules.Login.model.LoginUser;
 import org.ucomplex.ucomplex.R;
 
 import java.util.ArrayList;
@@ -23,9 +25,11 @@ import io.reactivex.Observer;
  * ---------------------------------------------------
  */
 
-public class RoleSelectModel implements MVPModel< UserInterface, List<RoleItem>, UserInterface> {
+public class RoleSelectModel implements MVPModel<LoginUser, List<RoleItem>, LoginUser> {
 
     private List<RoleItem> mData;
+    private LoginUser loginUser;
+
     private int[] roleIcons = {
             R.drawable.role_select_1,
             R.drawable.role_select_2,
@@ -33,9 +37,17 @@ public class RoleSelectModel implements MVPModel< UserInterface, List<RoleItem>,
             R.drawable.role_select_4,
             R.drawable.role_select_5};
 
+    void setLoginUser(LoginUser loginUser) {
+        this.loginUser = loginUser;
+    }
+
+    UserInterface extractUser(int rolePos) {
+        return loginUser.extractUser(rolePos);
+    }
+
     @Override
-    public Observable<UserInterface> loadData(UserInterface params) {
-        return null;
+    public Observable<LoginUser> loadData(LoginUser params) {
+        throw new UnsupportedOperationException("Method is not implemented for selecting role.");
     }
 
     @Override
@@ -59,7 +71,7 @@ public class RoleSelectModel implements MVPModel< UserInterface, List<RoleItem>,
     }
 
     @Override
-    public List<RoleItem> processData(UserInterface user) {
+    public List<RoleItem> processData(LoginUser user) {
         List<RoleItem> roles = new ArrayList<>();
         if (user!=null) {
             Random random = new Random();

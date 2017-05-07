@@ -2,8 +2,8 @@ package org.ucomplex.ucomplex.Modules.Login;
 
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.ServiceGenerator;
+import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
-import org.ucomplex.ucomplex.Domain.Users.UserFactory;
 import org.ucomplex.ucomplex.Domain.Users.UserInterface;
 import org.ucomplex.ucomplex.Modules.Login.model.LoginUser;
 
@@ -27,10 +27,6 @@ public class LoginModel implements MVPModel<LoginUser, UserInterface, LoginParam
 
     private UserInterface userInterface ;
     private LoginService loginService;
-
-    public LoginModel () {
-
-    }
 
     @Inject
     public void setLoginService(LoginService service) {
@@ -67,19 +63,6 @@ public class LoginModel implements MVPModel<LoginUser, UserInterface, LoginParam
 
     @Override
     public UserInterface processData(LoginUser data) {
-        userInterface = UserFactory.getUserForType(0);
-        userInterface.setRoles(data.getRoles());
-        userInterface.setMobile(data.getSession().getMobile());
-        userInterface.setCode(data.getSession().getCode());
-        userInterface.setPhoto(data.getSession().getPhoto());
-        userInterface.setName(data.getSession().getName());
-        userInterface.setLogin(data.getSession().getLogin());
-        userInterface.setPassword(data.getSession().getPass());
-        userInterface.setPhone(data.getSession().getPhone());
-        userInterface.setEmail(data.getSession().getEmail());
-        userInterface.setSession(data.getSession().getSession());
-        userInterface.setPerson(data.getSession().getPerson());
-        userInterface.setClient(data.getSession().getClient());
-        return userInterface;
+        throw new NoSuchMethodError("Method is not supported for login");
     }
 }

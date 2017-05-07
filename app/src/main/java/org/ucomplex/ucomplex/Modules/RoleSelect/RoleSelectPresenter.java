@@ -1,15 +1,14 @@
 package org.ucomplex.ucomplex.Modules.RoleSelect;
 
-import org.ucomplex.ucomplex.Common.FacadePreferences;
-import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
+import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.UCApplication;
+import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
 import org.ucomplex.ucomplex.Domain.Users.UserInterface;
+import org.ucomplex.ucomplex.Modules.Login.model.LoginUser;
 
 import java.util.List;
 
 import javax.inject.Inject;
-
-import static org.ucomplex.ucomplex.Common.FacadeCommon.encodeLoginData;
 
 /**
  * ---------------------------------------------------
@@ -21,7 +20,7 @@ import static org.ucomplex.ucomplex.Common.FacadeCommon.encodeLoginData;
  * ---------------------------------------------------
  */
 
-public class RoleSelectPresenter extends AbstractPresenter<UserInterface, List<RoleItem>, UserInterface, RoleSelectModel> {
+public class RoleSelectPresenter extends AbstractPresenter<LoginUser, List<RoleItem>, LoginUser, RoleSelectModel> {
 
     private static final String TOKEN_SEPARATOR = ":";
 
@@ -35,24 +34,19 @@ public class RoleSelectPresenter extends AbstractPresenter<UserInterface, List<R
     }
 
     @Override
-    public void loadData(UserInterface params) {
+    public void loadData(LoginUser params) {
         if (getView() != null) {
+            mModel.setLoginUser(params);
             mModel.processData(params);
             getView().dataLoaded();
         }
     }
 
     void onRoleSelected(int position) {
-        UserInterface user = UCApplication.getInstance().getLoggedUser();
+        UserInterface user = mModel.extractUser(position);
         if (user != null) {
-            String login = user.getLogin();
-            String password = user.getPassword();
-            int roleId = user.getRoles().get(position).getId();
-            user.setType(user.getRoles().get(position).getType());
-            String encodedAuth = encodeLoginData(login + TOKEN_SEPARATOR + password + TOKEN_SEPARATOR + roleId);
-            UCApplication.getInstance().setAuthString(encodedAuth);
-            FacadePreferences.setTokenToPref(getActivityContext(), encodedAuth, true);
-            UCApplication.getInstance().setLoggedUser(user);
+            String authString = user.getLogin() + TOKEN_SEPARATOR + user.getPassword() + TOKEN_SEPARATOR + user.getRoles().get(position).getRole();
+            FacadeCommon.saveLoginData(authString, user);
         }
     }
 }

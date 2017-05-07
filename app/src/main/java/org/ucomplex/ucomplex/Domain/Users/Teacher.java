@@ -1,5 +1,7 @@
 package org.ucomplex.ucomplex.Domain.Users;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -12,181 +14,297 @@ import java.util.List;
  * ---------------------------------------------------
  */
 
-public class Teacher extends User {
+public final class Teacher implements UserInterface {
 
-    private int post;
-    private String experience;
-    private String dep_experience;
-    private String courses;
-    private int rank;
-    private String academic_awards;
-    private String upqualification;
-    private int degree;
-    private String bio;
-    private String phone_work;
-    private int plan;
-    private int fact;
-    private int fails;
-    private String activity_update;
-    private int selection;
-    private String department;
-    private int closed;
-    private int agent;
-    private List<Integer> departments;
+    private final User user;
+    private final int post;
+    private final String experience;
+    private final String dep_experience;
+    private final String courses;
+    private final int rank;
+    private final String academic_awards;
+    private final String upqualification;
+    private final int degree;
+    private final String bio;
+    private final String phone_work;
+    private final int plan;
+    private final int fact;
+    private final int fails;
+    private final String activity_update;
+    private final int selection;
+    private final String department;
+    private final int closed;
+    private final int agent;
+    private final List<Integer> departments;
 
-    public Teacher() {
-        super();
+    public Teacher(Teacher.TeacherBuilder builder, User user) {
+        this.user = user;
+        this.post = builder.post;
+        this.experience = builder.experience;
+        this.dep_experience = builder.dep_experience;
+        this.courses = builder.courses;
+        this.rank = builder.rank;
+        this.academic_awards = builder.academic_awards;
+        this.upqualification = builder.upqualification;
+        this.degree = builder.degree;
+        this.bio = builder.bio;
+        this.phone_work = builder.phone_work;
+        this.plan = builder.plan;
+        this.fact = builder.fact;
+        this.fails = builder.fails;
+        this.activity_update = builder.activity_update;
+        this.selection = builder.selection;
+        this.department = builder.department;
+        this.closed = builder.closed;
+        this.agent = builder.agent;
+        this.departments = builder.departments;
     }
 
     public int getPost() {
         return post;
     }
 
-    public void setPost(int post) {
-        this.post = post;
-    }
-
     public String getExperience() {
         return experience;
-    }
-
-    public void setExperience(String experience) {
-        this.experience = experience;
     }
 
     public String getDep_experience() {
         return dep_experience;
     }
 
-    public void setDep_experience(String dep_experience) {
-        this.dep_experience = dep_experience;
-    }
-
     public String getCourses() {
         return courses;
-    }
-
-    public void setCourses(String courses) {
-        this.courses = courses;
     }
 
     public int getRank() {
         return rank;
     }
 
-    public void setRank(int rank) {
-        this.rank = rank;
-    }
-
     public String getAcademic_awards() {
         return academic_awards;
-    }
-
-    public void setAcademic_awards(String academic_awards) {
-        this.academic_awards = academic_awards;
     }
 
     public String getUpqualification() {
         return upqualification;
     }
 
-    public void setUpqualification(String upqualification) {
-        this.upqualification = upqualification;
-    }
-
     public int getDegree() {
         return degree;
-    }
-
-    public void setDegree(int degree) {
-        this.degree = degree;
     }
 
     public String getBio() {
         return bio;
     }
 
-    public void setBio(String bio) {
-        this.bio = bio;
-    }
-
     public String getPhone_work() {
         return phone_work;
-    }
-
-    public void setPhone_work(String phone_work) {
-        this.phone_work = phone_work;
     }
 
     public int getPlan() {
         return plan;
     }
 
-    public void setPlan(int plan) {
-        this.plan = plan;
-    }
-
     public int getFact() {
         return fact;
-    }
-
-    public void setFact(int fact) {
-        this.fact = fact;
     }
 
     public int getFails() {
         return fails;
     }
 
-    public void setFails(int fails) {
-        this.fails = fails;
-    }
-
     public String getActivity_update() {
         return activity_update;
-    }
-
-    public void setActivity_update(String activity_update) {
-        this.activity_update = activity_update;
     }
 
     public int getSelection() {
         return selection;
     }
 
-    public void setSelection(int selection) {
-        this.selection = selection;
-    }
-
     public String getDepartment() {
         return department;
-    }
-
-    public void setDepartment(String department) {
-        this.department = department;
     }
 
     public int getClosed() {
         return closed;
     }
 
-    public void setClosed(int closed) {
-        this.closed = closed;
-    }
-
     public int getAgent() {
         return agent;
-    }
-
-    public void setAgent(int agent) {
-        this.agent = agent;
     }
 
     public List<Integer> getDepartments() {
         return departments;
     }
 
-    public void setDepartments(List<Integer> departments) {
-        this.departments = departments;
+    @Override
+    public int getType() {
+        return user.getType();
+    }
+
+    @Override
+    public String getLogin() {
+        return user.getLogin();
+    }
+
+    @Override
+    public String getPassword() {
+        return user.getPassword();
+    }
+
+    @Override
+    public List<Role> getRoles() {
+        return user.getRoles();
+    }
+
+    @Override
+    public int getPhoto() {
+        return user.getPhoto();
+    }
+
+    @Override
+    public String getCode() {
+        return user.getCode();
+    }
+
+    @Override
+    public String getName() {
+        return user.getName();
+    }
+
+    @Override
+    public int getId() {
+        return user.getId();
+    }
+
+    @Override
+    public int getPerson() {
+        return user.getPerson();
+    }
+
+    private static class TeacherBuilder {
+        User user;
+        int post;
+        String experience;
+        String dep_experience;
+        String courses;
+        int rank;
+        String academic_awards;
+        String upqualification;
+        int degree;
+        String bio;
+        String phone_work;
+        int plan;
+        int fact;
+        int fails;
+        String activity_update;
+        int selection;
+        String department;
+        int closed;
+        int agent;
+        List<Integer> departments;
+
+        public Teacher build() {
+            return new Teacher(this, user);
+        }
+
+        public TeacherBuilder user(User user) {
+            this.user = user;
+            return this;
+        }
+
+        public TeacherBuilder post(int post) {
+            this.post = post;
+            return this;
+        }
+
+        public TeacherBuilder experience(String experience) {
+            this.experience = experience;
+            return this;
+        }
+
+        public TeacherBuilder dep_experience(String dep_experience) {
+            this.dep_experience = dep_experience;
+            return this;
+        }
+
+        public TeacherBuilder courses(String courses) {
+            this.courses = courses;
+            return this;
+        }
+
+        public TeacherBuilder rank(int rank) {
+            this.rank = rank;
+            return this;
+        }
+
+        public TeacherBuilder academic_awards(String academic_awards) {
+            this.academic_awards = academic_awards;
+            return this;
+        }
+
+        public TeacherBuilder upqualification(String upqualification) {
+            this.upqualification = upqualification;
+            return this;
+        }
+
+        public TeacherBuilder degree(int degree) {
+            this.degree = degree;
+            return this;
+        }
+
+        public TeacherBuilder bio(String bio) {
+            this.bio = bio;
+            return this;
+        }
+
+        public TeacherBuilder phone_work(String phone_work) {
+            this.phone_work = phone_work;
+            return this;
+        }
+
+        public TeacherBuilder plan(int plan) {
+            this.plan = plan;
+            return this;
+        }
+
+        public TeacherBuilder fact(int fact) {
+            this.fact = fact;
+            return this;
+        }
+
+        public TeacherBuilder fails(int fails) {
+            this.fails = fails;
+            return this;
+        }
+
+        public TeacherBuilder activity_update(String activity_update) {
+            this.activity_update = activity_update;
+            return this;
+        }
+
+        public TeacherBuilder selection(int selection) {
+            this.selection = selection;
+            return this;
+        }
+
+        public TeacherBuilder department(String department) {
+            this.department = department;
+            return this;
+        }
+
+        public TeacherBuilder closed(int closed) {
+            this.closed = closed;
+            return this;
+        }
+
+        public TeacherBuilder agent(int agent) {
+            this.agent = agent;
+            return this;
+        }
+
+        public TeacherBuilder departments(List<Integer> departments) {
+            this.departments = Collections.unmodifiableList(new ArrayList<>(departments));
+            return this;
+        }
     }
 }

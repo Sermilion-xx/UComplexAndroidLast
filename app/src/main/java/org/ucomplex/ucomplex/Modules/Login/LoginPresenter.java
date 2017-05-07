@@ -1,5 +1,6 @@
 package org.ucomplex.ucomplex.Modules.Login;
 
+import android.content.Intent;
 import android.text.TextUtils;
 import android.widget.Toast;
 
@@ -7,10 +8,11 @@ import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.FacadePreferences;
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
+import org.ucomplex.ucomplex.Modules.Events.EventsActivity;
 import org.ucomplex.ucomplex.Modules.Login.model.LoginErrorType;
-import org.ucomplex.ucomplex.Domain.Users.Role;
 import org.ucomplex.ucomplex.Domain.Users.UserInterface;
 import org.ucomplex.ucomplex.Modules.Login.model.LoginUser;
+import org.ucomplex.ucomplex.Modules.RoleSelect.RoleSelectActivity;
 import org.ucomplex.ucomplex.R;
 
 import java.util.ArrayList;
@@ -39,6 +41,8 @@ import static org.ucomplex.ucomplex.Modules.Login.model.LoginErrorType.PASSWORD_
 
 public class LoginPresenter extends AbstractPresenter<LoginUser, UserInterface, LoginParams, LoginModel> {
 
+    private static final int ROLE_ONE = 0;
+
     @Inject
     public void setModel(LoginModel model) {
         mModel = model;
@@ -63,10 +67,7 @@ public class LoginPresenter extends AbstractPresenter<LoginUser, UserInterface, 
                 if (value == null) {
                     onError(new Throwable("Ошибка"));
                 } else {
-                    mModel.processData(value);
-                    if (getView() != null) {
-                        getView().dataLoaded();
-                    }
+                    forwardPostLogin(value);
                 }
             }
 
@@ -85,23 +86,24 @@ public class LoginPresenter extends AbstractPresenter<LoginUser, UserInterface, 
         });
     }
 
-    void saveLoginData(Role role) {
-        getData().setType(role.getType());
-        getData().setId(role.getId());
-        saveLoginBase();
+    private void forwardPostLogin(LoginUser user) {
+        Intent intent;
+        if (user.getRoles().size() == 1) {
+            mModel.setData(user.extractUser(ROLE_ONE));
+            persistLoginInfo();
+            intent = EventsActivity.creteIntent(getActivityContext());
+        } else {
+            intent = RoleSelectActivity.creteIntent(getActivityContext(), user);
+        }
+        if (getView() != null) {
+            getView().dataLoaded();
+        }
+        getActivityContext().startActivity(intent);
     }
 
-    void saveLoginData() {
-        saveLoginBase();
-    }
-
-    private void saveLoginBase() {
+    private void persistLoginInfo() {
         String authData = getData().getLogin() + ":" + getData().getPassword() + ":" + getData().getId();
-        String encodedToken = FacadeCommon.encodeLoginData(authData);
-        UCApplication.getInstance().setAuthString(encodedToken);
-        FacadePreferences.setTokenToPref(getActivityContext(), encodedToken, true);
-        FacadePreferences.setUserDataToPrefSync(getActivityContext(), getData());
-        UCApplication.getInstance().setLoggedUser(getData());
+        FacadeCommon.saveLoginData(authData, getData());
     }
 
     void restorePassword(String email) {

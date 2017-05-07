@@ -18,28 +18,9 @@ public interface UserInterface {
     String getLogin();
     String getPassword();
     List<Role> getRoles();
-    void setRoles(List<Role> roles);
-    void setMobile(int mobile);
-    void setPassword(String password);
-    void setLogin(String login);
-    void setPhone(String phone);
-    void setEmail(String email);
-    void setSession(String session);
-    void setClient(int client);
     int getPhoto();
-    void setPhoto(int photo);
     String getCode();
-    void setCode(String code);
-    void setBitmapUriString(String uri);
-    String getBitmapUriStringFromUri(Uri uri);
     String getName();
-    void setName(String name);
     int getId();
-    void setId(int id);
-    void setType(int type);
     int getPerson();
-    void setPerson(int person);
-
-
-
 }

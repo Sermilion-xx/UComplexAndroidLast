@@ -19,6 +19,7 @@ import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
 import org.ucomplex.ucomplex.Domain.Users.UserInterface;
 import org.ucomplex.ucomplex.Modules.Events.EventsActivity;
 import org.ucomplex.ucomplex.Modules.Login.model.LoginErrorType;
+import org.ucomplex.ucomplex.Modules.Login.model.LoginUser;
 import org.ucomplex.ucomplex.Modules.RoleSelect.RoleSelectActivity;
 import org.ucomplex.ucomplex.R;
 
@@ -115,16 +116,6 @@ public class LoginActivity extends BaseMVPActivity<MVPView, LoginPresenter> impl
 
     @Override
     public void dataLoaded() {
-        Intent intent;
-        if (presenter.getData().getRoles().size() == 1) {
-            presenter.saveLoginData(presenter.getData().getRoles().get(0));
-            intent = EventsActivity.creteIntent(this);
-        } else {
-            presenter.saveLoginData();
-            intent = RoleSelectActivity.creteIntent(this, presenter.getData());
-        }
-        startActivity(intent);
         finish();
     }
-
 }

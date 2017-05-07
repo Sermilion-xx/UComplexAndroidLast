@@ -13,6 +13,7 @@ import android.text.Spanned;
 import android.util.Base64;
 import android.widget.Toast;
 
+import org.ucomplex.ucomplex.Domain.Users.UserInterface;
 import org.ucomplex.ucomplex.R;
 
 import java.io.BufferedReader;
@@ -40,6 +41,15 @@ import java.util.Locale;
  */
 
 public class FacadeCommon {
+
+    public static void saveLoginData(String authString, UserInterface user) {
+        String encodedToken = FacadeCommon.encodeLoginData(authString);
+        UCApplication application = UCApplication.getInstance();
+        application.setAuthString(encodedToken);
+        FacadePreferences.setTokenToPref(application, encodedToken, true);
+        FacadePreferences.setUserDataToPrefSync(application, user);
+        application.setLoggedUser(user);
+    }
 
     public static String encodeLoginData(String loginData) {
         byte[] authBytes;

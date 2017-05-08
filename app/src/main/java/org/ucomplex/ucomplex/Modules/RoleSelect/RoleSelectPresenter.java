@@ -45,7 +45,7 @@ public class RoleSelectPresenter extends AbstractPresenter<LoginUser, List<RoleI
     void onRoleSelected(int position) {
         UserInterface user = mModel.extractUser(position);
         if (user != null) {
-            String authString = user.getLogin() + TOKEN_SEPARATOR + user.getPassword() + TOKEN_SEPARATOR + user.getRoles().get(position).getRole();
+            String authString = user.getLogin() + TOKEN_SEPARATOR + user.getPassword() + TOKEN_SEPARATOR + user.getRoles().get(position).getId();
             FacadeCommon.saveLoginData(authString, user);
         }
     }

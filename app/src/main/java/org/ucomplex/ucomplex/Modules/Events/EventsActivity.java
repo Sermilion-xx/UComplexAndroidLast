@@ -74,10 +74,8 @@ public class EventsActivity extends BaseMVPActivity<MVPView, EventsPresenter> {
             }
         });
         
-        if (presenter.getData() == null || getIntent().getBooleanExtra(EXTRA_REFRESH, false)) {
+        if (presenter.getData().size() == 0 || getIntent().getBooleanExtra(EXTRA_REFRESH, false)) {
             presenter.loadData(0);
-        } else {
-            dataLoaded();
         }
     }
 
@@ -92,5 +90,11 @@ public class EventsActivity extends BaseMVPActivity<MVPView, EventsPresenter> {
                 }
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.onDestroy();
     }
 }

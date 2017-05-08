@@ -68,6 +68,7 @@ public class EventsModel implements MVPModel<EventsRaw, List<EventItem>, Integer
 
     public EventsModel() {
         UCApplication.getInstance().getAppDiComponent().inject(this);
+        mData = new ArrayList<>();
     }
 
     @Inject
@@ -104,9 +105,6 @@ public class EventsModel implements MVPModel<EventsRaw, List<EventItem>, Integer
     @Override
     public List<EventItem> processData(EventsRaw data) {
         List<EventItem> items = new ArrayList<>();
-        if (mData == null) {
-            mData = new ArrayList<>();
-        }
         Gson gson = new Gson();
         for (EventItem item : data.getEvents()) {
             item.setParamsObj(gson.fromJson(item.getParams(), EventItem.EventParams.class));

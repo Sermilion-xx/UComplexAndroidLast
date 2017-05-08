@@ -25,6 +25,7 @@ public final class User implements UserInterface {
     private final String code;
     private final List<Role> roles;
     private int mobile;
+    private boolean friend;
 
     public User(UserBuilder builder) {
         this.id = builder.id;
@@ -42,6 +43,7 @@ public final class User implements UserInterface {
         this.email = builder.email;
         this.session = builder.session;
         this.client = builder.client;
+        this.friend = builder.friend;
     }
 
     @Override
@@ -113,6 +115,10 @@ public final class User implements UserInterface {
         return mobile;
     }
 
+    public boolean isFriend() {
+        return friend;
+    }
+
     public static class UserBuilder {
         int id;
         int person;
@@ -128,6 +134,7 @@ public final class User implements UserInterface {
         String code;
         List<Role> roles;
         int mobile;
+        boolean friend;
 
         public User build() {
             return new User(this);
@@ -205,6 +212,11 @@ public final class User implements UserInterface {
 
         public UserBuilder client(int client) {
             this.client = client;
+            return this;
+        }
+
+        public UserBuilder friend(boolean friend) {
+            this.friend = friend;
             return this;
         }
     }

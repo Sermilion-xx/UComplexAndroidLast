@@ -77,4 +77,8 @@ public class EventsPresenter extends AbstractPresenter<
             });
         }
     }
+
+    public void onDestroy() {
+        mModel.clear();
+    }
 }

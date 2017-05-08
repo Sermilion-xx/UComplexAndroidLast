@@ -2,30 +2,23 @@ package org.ucomplex.ucomplex.Modules.RoleSelect;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
-import android.support.annotation.NonNull;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import org.ucomplex.ucomplex.Common.base.BaseActivity;
 import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Common.base.BaseMVPActivity;
 import org.ucomplex.ucomplex.Common.interfaces.IntentCallback;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
-import org.ucomplex.ucomplex.Domain.Users.UserInterface;
 import org.ucomplex.ucomplex.Modules.Events.EventsActivity;
 import org.ucomplex.ucomplex.Modules.Login.model.LoginUser;
 import org.ucomplex.ucomplex.R;
 
-import java.util.List;
-
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RoleSelectActivity extends BaseMVPActivity<MVPView, RoleSelectPresenter> implements IntentCallback<Integer> {
+public class RoleSelectActivity extends BaseMVPActivity<MVPView, RoleSelectPresenter> {
 
     private static final String EXTRA_USER = "EXTRA_USER";
 
@@ -51,7 +44,11 @@ public class RoleSelectActivity extends BaseMVPActivity<MVPView, RoleSelectPrese
         ButterKnife.bind(this);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new RoleSelectAdapter(this);
+        mAdapter = new RoleSelectAdapter(position -> {
+            presenter.onRoleSelected(position);
+            startActivity(EventsActivity.creteIntent(RoleSelectActivity.this));
+            finish();
+        });
         mRecyclerView.setAdapter(mAdapter);
         if (presenter.getData() == null || presenter.getData().size() == 0) {
             presenter.loadData(getIntent().getParcelableExtra(EXTRA_USER));
@@ -64,12 +61,5 @@ public class RoleSelectActivity extends BaseMVPActivity<MVPView, RoleSelectPrese
     public void dataLoaded() {
         mAdapter.setItems(presenter.getData());
         mAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void startIntent(Integer position) {
-        presenter.onRoleSelected(position);
-        startActivity(EventsActivity.creteIntent(this));
-        finish();
     }
 }

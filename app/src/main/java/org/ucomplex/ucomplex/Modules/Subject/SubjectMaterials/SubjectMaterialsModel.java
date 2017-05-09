@@ -4,11 +4,11 @@ import android.content.Context;
 import android.net.Uri;
 import android.support.v4.util.Pair;
 
-import org.ucomplex.ucomplex.Common.UCApplication;
+import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.DownloadCallback;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
 import org.ucomplex.ucomplex.Domain.Users.MaterialsFile;
-import org.ucomplex.ucomplex.Domain.Users.Teacher;
+import org.ucomplex.ucomplex.Domain.Users.role.RoleTeacher;
 import org.ucomplex.ucomplex.Modules.Portfolio.model.RequestResult;
 import org.ucomplex.ucomplex.Modules.Portfolio.model.ShareFileList;
 import org.ucomplex.ucomplex.Modules.Portfolio.retrofit.DownloadFileService;
@@ -59,14 +59,14 @@ public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<L
     private FileService fileService;
 
     private List<Pair<List<SubjectItemFile>, String>> mPageHistory;
-    private Map<Integer, Teacher> mTeachers;
+    private Map<Integer, RoleTeacher> mTeachers;
 
     private int currentPage = -1;
     private String currentFolder = "null";
     private boolean myFiles;
     private String myName;
 
-    void setTeachers(Map<Integer, Teacher> mTeachers) {
+    void setTeachers(Map<Integer, RoleTeacher> mTeachers) {
         this.mTeachers = mTeachers;
     }
 

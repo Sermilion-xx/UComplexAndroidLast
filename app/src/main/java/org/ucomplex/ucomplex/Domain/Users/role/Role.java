@@ -1,8 +1,10 @@
-package org.ucomplex.ucomplex.Modules.RoleSelect;
+package org.ucomplex.ucomplex.Domain.Users.role;
+
+import android.os.Parcelable;
 
 /**
  * ---------------------------------------------------
- * Created by Sermilion on 26/03/2017.
+ * Created by Sermilion on 09/05/2017.
  * Project: UComplex
  * ---------------------------------------------------
  * <a href="http://www.ucomplex.org">www.ucomplex.org</a>
@@ -10,5 +12,11 @@ package org.ucomplex.ucomplex.Modules.RoleSelect;
  * ---------------------------------------------------
  */
 
-public class RoleSelectParams {
+public interface Role {
+    int getId();
+    int getPerson();
+    int getType();
+    String getName();
+    int getRole();
+    int getPosition();
 }

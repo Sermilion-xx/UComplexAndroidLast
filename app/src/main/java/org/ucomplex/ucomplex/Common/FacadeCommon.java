@@ -13,6 +13,9 @@ import android.text.Spanned;
 import android.util.Base64;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
+import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Domain.Users.UserInterface;
 import org.ucomplex.ucomplex.R;
 
@@ -41,15 +44,6 @@ import java.util.Locale;
  */
 
 public class FacadeCommon {
-
-    public static void saveLoginData(String authString, UserInterface user) {
-        String encodedToken = FacadeCommon.encodeLoginData(authString);
-        UCApplication application = UCApplication.getInstance();
-        application.setAuthString(encodedToken);
-        FacadePreferences.setTokenToPref(application, encodedToken, true);
-        FacadePreferences.setUserDataToPrefSync(application, user);
-        application.setLoggedUser(user);
-    }
 
     public static String encodeLoginData(String loginData) {
         byte[] authBytes;
@@ -192,29 +186,14 @@ public class FacadeCommon {
         return r;
     }
 
-    public static final int REQUEST_EXTERNAL_STORAGE = 1;
-    private static String[] PERMISSIONS_STORAGE = {
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-    };
-
-    public static boolean checkStoragePermissions(Activity activity) {
-        int result;
-        List<String> listPermissionsNeeded = new ArrayList<>();
-        for (String p : PERMISSIONS_STORAGE) {
-            result = ContextCompat.checkSelfPermission(activity, p);
-            if (result != PackageManager.PERMISSION_GRANTED) {
-                listPermissionsNeeded.add(p);
-            }
-        }
-        if (!listPermissionsNeeded.isEmpty()) {
-            ActivityCompat.requestPermissions(activity,
-                    listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]),
-                    REQUEST_EXTERNAL_STORAGE);
-            return false;
-        }
-        return true;
+    public static String readableFileSize(long bytes, boolean si) {
+        int unit = si ? 1000 : 1024;
+        if (bytes < unit) return bytes + " б";
+        int exp = (int) (Math.log(bytes) / Math.log(unit));
+        String pre = (si ? "кмгтпе" : "кмгтпе").charAt(exp - 1) + (si ? "" : "");
+        return String.format(new Locale("Ru"),"%.1f %sб", bytes / Math.pow(unit, exp), pre);
     }
+
 
     public static int getAvailableListLayout(int itemCount) {
         if (!UCApplication.getInstance().isConnectedToInternet() && itemCount == 0) {
@@ -270,13 +249,11 @@ public class FacadeCommon {
         }
     }
 
-    public static String readableFileSize(long bytes, boolean si) {
-        int unit = si ? 1000 : 1024;
-        if (bytes < unit) return bytes + " б";
-        int exp = (int) (Math.log(bytes) / Math.log(unit));
-        String pre = (si ? "кмгтпе" : "кмгтпе").charAt(exp - 1) + (si ? "" : "");
-        return String.format(new Locale("Ru"),"%.1f %sб", bytes / Math.pow(unit, exp), pre);
-    }
+    public static final int REQUEST_EXTERNAL_STORAGE = 1;
+    private static String[] PERMISSIONS_STORAGE = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
 
     public static void requireStoragePermission(Context context) {
         if (ContextCompat.checkSelfPermission(context,
@@ -284,6 +261,29 @@ public class FacadeCommon {
                 != PackageManager.PERMISSION_GRANTED) {
             Toast.makeText(context, context.getString(R.string.need_storage_permissions), Toast.LENGTH_LONG).show();
         }
+    }
+
+    public static boolean checkStoragePermissions(Activity activity) {
+        int result;
+        List<String> listPermissionsNeeded = new ArrayList<>();
+        for (String p : PERMISSIONS_STORAGE) {
+            result = ContextCompat.checkSelfPermission(activity, p);
+            if (result != PackageManager.PERMISSION_GRANTED) {
+                listPermissionsNeeded.add(p);
+            }
+        }
+        if (!listPermissionsNeeded.isEmpty()) {
+            ActivityCompat.requestPermissions(activity,
+                    listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]),
+                    REQUEST_EXTERNAL_STORAGE);
+            return false;
+        }
+        return true;
+    }
+
+    public static  <T> T jsonStringToObject(String jsonString, Class<T> aClass) {
+        Gson gson = new Gson();
+        return gson.fromJson(jsonString, aClass);
     }
 
 }

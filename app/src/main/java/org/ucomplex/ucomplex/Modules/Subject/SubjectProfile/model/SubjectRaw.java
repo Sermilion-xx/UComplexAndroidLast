@@ -4,7 +4,7 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 
 import org.ucomplex.ucomplex.Common.utility.FalseAsNullTypeAdapterFactory;
-import org.ucomplex.ucomplex.Domain.Users.Teacher;
+import org.ucomplex.ucomplex.Domain.Users.role.RoleTeacher;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ import java.util.List;
 public class SubjectRaw {
 
     private Course      course;
-    private Teacher     teacher;
+    private RoleTeacher teacher;
     private Depart      depart;
     @SerializedName("progress")
     @JsonAdapter(FalseAsNullTypeAdapterFactory.class)
@@ -37,11 +37,11 @@ public class SubjectRaw {
         this.course = course;
     }
 
-    public Teacher getTeacher() {
+    public RoleTeacher getTeacher() {
         return teacher;
     }
 
-    public void setTeacher(Teacher teacher) {
+    public void setTeacher(RoleTeacher teacher) {
         this.teacher = teacher;
     }
 

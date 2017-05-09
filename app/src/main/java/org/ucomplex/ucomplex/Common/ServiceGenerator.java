@@ -2,24 +2,13 @@ package org.ucomplex.ucomplex.Common;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
-import java.security.cert.Certificate;
-import java.util.Locale;
-
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.SSLException;
-import javax.net.ssl.SSLSession;
-
-import java.security.cert.X509Certificate;
-
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static java.util.regex.Pattern.matches;
-import static org.apache.http.conn.ssl.AbstractVerifier.getDNSSubjectAlts;
-import static org.ucomplex.ucomplex.Common.UCApplication.BASE_URL;
+import static org.ucomplex.ucomplex.Common.base.UCApplication.BASE_URL;
 
 /**
  * ---------------------------------------------------

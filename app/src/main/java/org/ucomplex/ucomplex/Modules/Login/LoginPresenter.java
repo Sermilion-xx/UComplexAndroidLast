@@ -5,8 +5,7 @@ import android.text.TextUtils;
 import android.widget.Toast;
 
 import org.ucomplex.ucomplex.Common.FacadeCommon;
-import org.ucomplex.ucomplex.Common.FacadePreferences;
-import org.ucomplex.ucomplex.Common.UCApplication;
+import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
 import org.ucomplex.ucomplex.Modules.Events.EventsActivity;
 import org.ucomplex.ucomplex.Modules.Login.model.LoginErrorType;
@@ -103,7 +102,7 @@ public class LoginPresenter extends AbstractPresenter<LoginUser, UserInterface, 
 
     private void persistLoginInfo() {
         String authData = getData().getLogin() + ":" + getData().getPassword() + ":" + getData().getId();
-        FacadeCommon.saveLoginData(authData, getData());
+        UCApplication.getInstance().saveLoginData(authData, getData());
     }
 
     void restorePassword(String email) {

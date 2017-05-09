@@ -1,7 +1,7 @@
 package org.ucomplex.ucomplex.Modules.RoleSelect;
 
 import org.ucomplex.ucomplex.Common.FacadeCommon;
-import org.ucomplex.ucomplex.Common.UCApplication;
+import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
 import org.ucomplex.ucomplex.Domain.Users.UserInterface;
 import org.ucomplex.ucomplex.Modules.Login.model.LoginUser;
@@ -46,7 +46,7 @@ public class RoleSelectPresenter extends AbstractPresenter<LoginUser, List<RoleI
         UserInterface user = mModel.extractUser(position);
         if (user != null) {
             String authString = user.getLogin() + TOKEN_SEPARATOR + user.getPassword() + TOKEN_SEPARATOR + user.getRoles().get(position).getId();
-            FacadeCommon.saveLoginData(authString, user);
+            UCApplication.getInstance().saveLoginData(authString, user);
         }
     }
 }

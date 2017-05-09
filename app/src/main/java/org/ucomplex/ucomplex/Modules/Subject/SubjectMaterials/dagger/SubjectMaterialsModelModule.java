@@ -1,7 +1,7 @@
 package org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.dagger;
 
 import org.ucomplex.ucomplex.Common.ServiceGenerator;
-import org.ucomplex.ucomplex.Common.UCApplication;
+import org.ucomplex.ucomplex.Common.base.UCApplication;
 
 import org.ucomplex.ucomplex.Modules.Portfolio.retrofit.DownloadFileService;
 import org.ucomplex.ucomplex.Modules.Portfolio.retrofit.FileService;
@@ -11,7 +11,7 @@ import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.SubjectTeachersMat
 import dagger.Module;
 import dagger.Provides;
 
-import static org.ucomplex.ucomplex.Common.UCApplication.BASE_FILES_URL;
+import static org.ucomplex.ucomplex.Common.base.UCApplication.BASE_FILES_URL;
 
 /**
  * ---------------------------------------------------

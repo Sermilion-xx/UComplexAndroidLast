@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import org.ucomplex.ucomplex.Common.base.UCApplication;
+
 /**
  * ---------------------------------------------------
  * Created by Sermilion on 15/04/2017.

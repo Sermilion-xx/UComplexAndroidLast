@@ -3,11 +3,11 @@ package org.ucomplex.ucomplex.Modules.Subject.SubjectProfile;
 import android.support.v4.util.Pair;
 
 import org.ucomplex.ucomplex.Common.FacadeCommon;
-import org.ucomplex.ucomplex.Common.UCApplication;
+import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
 import org.ucomplex.ucomplex.Domain.Users.MaterialsFile;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.model.Files;
-import org.ucomplex.ucomplex.Domain.Users.Teacher;
+import org.ucomplex.ucomplex.Domain.Users.role.RoleTeacher;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.SubjectItemFile;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.model.SubjectItemProfile;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.model.SubjectObject;
@@ -38,7 +38,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class SubjectModel implements MVPModel<SubjectRaw, SubjectObject, Integer> {
 
-    private Map<Integer, Teacher> mTeachers;
+    private Map<Integer, RoleTeacher> mTeachers;
     private SubjectObject mData;
     private SubjectService subjectService;
 
@@ -85,7 +85,7 @@ public class SubjectModel implements MVPModel<SubjectRaw, SubjectObject, Integer
         return mData;
     }
 
-    public Pair<List<SubjectItemFile>, Map<Integer, Teacher>> getFilesAndTeachers() {
+    public Pair<List<SubjectItemFile>, Map<Integer, RoleTeacher>> getFilesAndTeachers() {
         if (mData != null) {
             return new Pair<>(mData.getMaterialsItems(), mTeachers);
         }
@@ -100,7 +100,7 @@ public class SubjectModel implements MVPModel<SubjectRaw, SubjectObject, Integer
         Set<SubjectItemProfile> profileItemsSet = new HashSet<>();
         List<SubjectItemFile> filesItems = new ArrayList<>();
 
-        Teacher mainTeacher = data.getTeacher();
+        RoleTeacher mainTeacher = data.getTeacher();
         mTeachers.put(mainTeacher.getId(), mainTeacher);
         profileItemsSet.add(extractProfileItem(mainTeacher));
 
@@ -138,7 +138,7 @@ public class SubjectModel implements MVPModel<SubjectRaw, SubjectObject, Integer
         return mData;
     }
 
-    private SubjectItemFile extractFileItem(MaterialsFile materialsFile, Map<Integer, Teacher> teachers) {
+    private SubjectItemFile extractFileItem(MaterialsFile materialsFile, Map<Integer, RoleTeacher> teachers) {
         SubjectItemFile item = new SubjectItemFile();
         item.setAddress(materialsFile.getAddress());
         item.setName(materialsFile.getName());
@@ -150,7 +150,7 @@ public class SubjectModel implements MVPModel<SubjectRaw, SubjectObject, Integer
         return item;
     }
 
-    private SubjectItemProfile extractProfileItem(Teacher teacher) {
+    private SubjectItemProfile extractProfileItem(RoleTeacher teacher) {
         SubjectItemProfile profileItem = new SubjectItemProfile();
         profileItem.setName(teacher.getName());
         profileItem.setId(teacher.getId());

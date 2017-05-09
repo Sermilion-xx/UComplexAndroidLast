@@ -16,6 +16,15 @@ public class EventsRaw {
 
     private List<EventItem> events;
 
+    public EventsRaw() {
+
+    }
+
+    //for testing
+    public EventsRaw(List<EventItem> events) {
+        this.events = events;
+    }
+
     public List<EventItem> getEvents() {
         return events;
     }

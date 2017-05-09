@@ -16,8 +16,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import org.ucomplex.ucomplex.Common.FacadeCommon;
-import org.ucomplex.ucomplex.Common.UCApplication;
+import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
 import org.ucomplex.ucomplex.Common.interfaces.DownloadCallback;
 import org.ucomplex.ucomplex.Modules.Portfolio.PortfolioActivity;

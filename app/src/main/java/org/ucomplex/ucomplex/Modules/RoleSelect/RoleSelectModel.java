@@ -1,9 +1,8 @@
 package org.ucomplex.ucomplex.Modules.RoleSelect;
 
-import org.ucomplex.ucomplex.Common.UCApplication;
+import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
-import org.ucomplex.ucomplex.Domain.Users.Role;
-import org.ucomplex.ucomplex.Domain.Users.User;
+import org.ucomplex.ucomplex.Domain.Users.role.RoleBase;
 import org.ucomplex.ucomplex.Domain.Users.UserInterface;
 import org.ucomplex.ucomplex.Modules.Login.model.LoginUser;
 import org.ucomplex.ucomplex.R;
@@ -13,7 +12,6 @@ import java.util.List;
 import java.util.Random;
 
 import io.reactivex.Observable;
-import io.reactivex.Observer;
 
 /**
  * ---------------------------------------------------
@@ -76,7 +74,7 @@ public class RoleSelectModel implements MVPModel<LoginUser, List<RoleItem>, Logi
         if (user!=null) {
             Random random = new Random();
             for (int i = 0; i < user.getRoles().size(); i++) {
-                Role role = user.getRoles().get(i);
+                RoleBase role = user.getRoles().get(i);
                 String roleStr = "";
                 if (role.getType() == 3) {
                     roleStr = UCApplication.getInstance().getResources().getString(R.string.prepodvatel);

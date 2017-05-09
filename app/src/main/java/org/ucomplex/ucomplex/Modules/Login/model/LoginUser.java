@@ -4,9 +4,9 @@ package org.ucomplex.ucomplex.Modules.Login.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import org.ucomplex.ucomplex.Domain.Users.Role;
 import org.ucomplex.ucomplex.Domain.Users.User;
 import org.ucomplex.ucomplex.Domain.Users.UserInterface;
+import org.ucomplex.ucomplex.Domain.Users.role.RoleBase;
 
 import java.util.List;
 
@@ -22,12 +22,30 @@ import java.util.List;
 
 public final class LoginUser implements Parcelable {
 
-    private final List<Role> roles;
+    private final List<RoleBase> roles;
     private final Session session;
 
     protected LoginUser(Parcel in) {
-        roles = in.createTypedArrayList(Role.CREATOR);
         session = in.readParcelable(Session.class.getClassLoader());
+        roles = in.createTypedArrayList(RoleBase.CREATOR);
+    }
+
+    public List<RoleBase> getRoles() {
+        return roles;
+    }
+
+    public Session getSession() {
+        return session;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(session, flags);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<LoginUser> CREATOR = new Creator<LoginUser>() {
@@ -41,10 +59,6 @@ public final class LoginUser implements Parcelable {
             return new LoginUser[size];
         }
     };
-
-    public List<Role> getRoles() {
-        return roles;
-    }
 
     public UserInterface extractUser(int rolePos) {
         User.UserBuilder builder = new User.UserBuilder();
@@ -63,16 +77,5 @@ public final class LoginUser implements Parcelable {
         builder.id(roles.get(rolePos).getId());
         builder.type(roles.get(rolePos).getType());
         return new User(builder);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeTypedList(roles);
-        dest.writeParcelable(session, flags);
     }
 }

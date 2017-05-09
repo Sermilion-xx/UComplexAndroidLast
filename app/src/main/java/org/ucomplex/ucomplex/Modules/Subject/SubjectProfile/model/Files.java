@@ -1,7 +1,7 @@
 package org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.model;
 
 import org.ucomplex.ucomplex.Domain.Users.MaterialsFile;
-import org.ucomplex.ucomplex.Domain.Users.Teacher;
+import org.ucomplex.ucomplex.Domain.Users.role.RoleTeacher;
 
 import java.util.List;
 
@@ -17,14 +17,14 @@ import java.util.List;
 
 public class Files {
 
-    private Teacher teacher;
+    private RoleTeacher teacher;
     private List<MaterialsFile> materialsFiles;
 
-    public Teacher getTeacher() {
+    public RoleTeacher getTeacher() {
         return teacher;
     }
 
-    public void setTeacher(Teacher teacher) {
+    public void setTeacher(RoleTeacher teacher) {
         this.teacher = teacher;
     }
 

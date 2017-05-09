@@ -1,7 +1,7 @@
 package org.ucomplex.ucomplex.Modules.Subject.SubjectTimeline.dagger;
 
 import org.ucomplex.ucomplex.Common.ServiceGenerator;
-import org.ucomplex.ucomplex.Common.UCApplication;
+import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectTimeline.SubjectTimelineService;
 
 import dagger.Module;

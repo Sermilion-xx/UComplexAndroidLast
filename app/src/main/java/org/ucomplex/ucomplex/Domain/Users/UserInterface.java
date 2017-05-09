@@ -2,6 +2,8 @@ package org.ucomplex.ucomplex.Domain.Users;
 
 import android.net.Uri;
 
+import org.ucomplex.ucomplex.Domain.Users.role.Role;
+
 import java.util.List;
 
 /**

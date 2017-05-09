@@ -1,6 +1,6 @@
 package org.ucomplex.ucomplex.Modules.Subject.SubjectProfile;
 
-import org.ucomplex.ucomplex.Common.UCApplication;
+import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.model.SubjectObject;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.model.SubjectRaw;

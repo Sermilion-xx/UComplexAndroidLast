@@ -193,7 +193,6 @@ public class FacadeMedia {
                 .buildRound(String.valueOf(firstLetter), getColor(number));
     }
 
-
     public static String getLetter(int mark) {
         if (mark == -1) {
             return "н";
@@ -205,103 +204,4 @@ public class FacadeMedia {
             return String.valueOf(mark);
         }
     }
-
-    public static String getPath(final Context context, final Uri uri) {
-        final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            if (isKitKat) {
-                if (isExternalStorageDocument(uri)) {
-                    final String docId = DocumentsContract.getDocumentId(uri);
-                    final String[] split = docId.split(":");
-                    final String type = split[0];
-                    if ("primary".equalsIgnoreCase(type)) {
-                        return Environment.getExternalStorageDirectory() + "/" + split[1];
-                    }
-                } else if (isDownloadsDocument(uri)) {
-                    final String id = DocumentsContract.getDocumentId(uri);
-                    final Uri contentUri = ContentUris.withAppendedId(
-                            Uri.parse(CONTENT_DOWNLOADS_PUBLIC_DOWNLOADS), Long.valueOf(id));
-                    return getDataColumn(context, contentUri, null, null);
-                } else if (isMediaDocument(uri)) {
-                    final String docId = DocumentsContract.getDocumentId(uri);
-                    final String[] split = docId.split(":");
-                    final String type = split[0];
-                    Uri contentUri = null;
-                    if (IMAGE.equals(type)) {
-                        contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-                    } else if (VIDEO.equals(type)) {
-                        contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
-                    } else if (AUDIO.equals(type)) {
-                        contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-                    }
-                    final String selection = "_id=?";
-                    final String[] selectionArgs = new String[]{
-                            split[1]
-                    };
-                    return getDataColumn(context, contentUri, selection, selectionArgs);
-                } else if (FILE.equalsIgnoreCase(uri.getScheme())) {
-                    return uri.getPath();
-                } else if (CONTENT.equalsIgnoreCase(uri.getScheme())) {
-                    return getDataColumn(context, uri, null, null);
-                }
-            }
-        } else if (CONTENT.equalsIgnoreCase(uri.getScheme())) {
-            return getDataColumn(context, uri, null, null);
-        } else if (FILE.equalsIgnoreCase(uri.getScheme())) {
-            return uri.getPath();
-        }
-        return null;
-    }
-
-    public static String getPath(Uri uri, Context context) {
-        String[] projection = {MediaStore.Images.Media.DATA};
-        Cursor cursor = context.getContentResolver().query(uri, projection, null, null, null);
-        if (cursor == null) return null;
-        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        cursor.moveToFirst();
-        String s = cursor.getString(column_index);
-        cursor.close();
-        return s;
-    }
-
-    private static boolean isExternalStorageDocument(Uri uri) {
-        return EXTERNAL_DOCUMENTS_PROVIDER.equals(uri.getAuthority());
-    }
-
-    private static boolean isDownloadsDocument(Uri uri) {
-        return DOWNLOADS_PROVIDER.equals(uri.getAuthority());
-    }
-
-    private static boolean isMediaDocument(Uri uri) {
-        return MEDIA_DOCUMENTS_PROVIDER.equals(uri.getAuthority());
-    }
-
-    @Nullable
-    private static String getDataColumn(Context context, Uri uri, String selection,
-                                        String[] selectionArgs) {
-        Cursor cursor = null;
-        final String column = COLUMN_DATA;
-        final String[] projection = {column};
-        try {
-            context.grantUriPermission(PACKAGE, uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs, null);
-            } else {
-                cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs, null);
-            }
-            cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs,
-                    null);
-            if (cursor != null && cursor.moveToFirst()) {
-                final int column_index = cursor.getColumnIndexOrThrow(column);
-                return cursor.getString(column_index);
-            }
-            context.revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        } finally {
-            if (cursor != null)
-                cursor.close();
-        }
-        return null;
-    }
-
-
 }

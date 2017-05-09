@@ -1,5 +1,7 @@
 package org.ucomplex.ucomplex.Domain.Users;
 
+import org.ucomplex.ucomplex.Domain.Users.role.Role;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -126,7 +128,8 @@ public final class User implements UserInterface {
         String name;
         String login;
         String password;
-        String phone;String email;
+        String phone;
+        String email;
         String session;
         int client;
         int role;
@@ -190,7 +193,7 @@ public final class User implements UserInterface {
             return this;
         }
 
-        public UserBuilder roles(List<Role> roles) {
+        public UserBuilder roles(List<? extends Role> roles) {
             this.roles = Collections.unmodifiableList(new ArrayList<>(roles));
             return this;
         }
@@ -219,5 +222,7 @@ public final class User implements UserInterface {
             this.friend = friend;
             return this;
         }
+
+
     }
 }

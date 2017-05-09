@@ -26,7 +26,7 @@ import org.ucomplex.ucomplex.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.ucomplex.ucomplex.Common.UCApplication.BASE_URL;
+import static org.ucomplex.ucomplex.Common.base.UCApplication.BASE_URL;
 
 /**
  * ---------------------------------------------------

@@ -1,7 +1,6 @@
 package org.ucomplex.ucomplex.Modules.Login.dagger;
 
 import org.ucomplex.ucomplex.Common.ServiceGenerator;
-import org.ucomplex.ucomplex.Common.UCApplication;
 import org.ucomplex.ucomplex.Modules.Login.LoginService;
 
 import dagger.Module;

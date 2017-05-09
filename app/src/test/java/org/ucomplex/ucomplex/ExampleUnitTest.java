@@ -2,7 +2,11 @@ package org.ucomplex.ucomplex;
 
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -12,6 +16,14 @@ import static org.junit.Assert.*;
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() throws Exception {
-        assertEquals(4, 2 + 2);
+        List<String> mockedList = mock(List.class);
+
+// using mock object - it does not throw any "unexpected interaction" exception
+        mockedList.add("one");
+        mockedList.clear();
+
+// selective, explicit, highly readable verification
+        verify(mockedList).add("one");
+        verify(mockedList).clear();
     }
 }

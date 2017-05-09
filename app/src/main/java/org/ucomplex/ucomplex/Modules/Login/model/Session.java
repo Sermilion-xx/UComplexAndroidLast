@@ -3,7 +3,7 @@ package org.ucomplex.ucomplex.Modules.Login.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import org.ucomplex.ucomplex.Domain.Users.Role;
+import org.ucomplex.ucomplex.Domain.Users.role.RoleBase;
 
 import java.util.List;
 
@@ -30,7 +30,7 @@ public final class Session implements Parcelable {
     private final String session;
     private final int person;
     private final int client;
-    private final List<Role> roles;
+    private final List<RoleBase> roles;
 
 
     protected Session(Parcel in) {
@@ -45,7 +45,7 @@ public final class Session implements Parcelable {
         session = in.readString();
         person = in.readInt();
         client = in.readInt();
-        roles = in.createTypedArrayList(Role.CREATOR);
+        roles = in.createTypedArrayList(RoleBase.CREATOR);
     }
 
     @Override
@@ -125,7 +125,7 @@ public final class Session implements Parcelable {
         return client;
     }
 
-    public List<Role> getRoles() {
+    public List<RoleBase> getRoles() {
         return roles;
     }
 

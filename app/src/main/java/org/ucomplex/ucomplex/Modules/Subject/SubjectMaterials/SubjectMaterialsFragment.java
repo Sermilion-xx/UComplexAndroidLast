@@ -13,9 +13,9 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import org.ucomplex.ucomplex.Common.UCApplication;
+import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.base.BaseMvpFragment;
-import org.ucomplex.ucomplex.Domain.Users.Teacher;
+import org.ucomplex.ucomplex.Domain.Users.role.RoleTeacher;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.SubjectItemFile;
 import org.ucomplex.ucomplex.R;
 
@@ -71,7 +71,7 @@ public class SubjectMaterialsFragment extends BaseMvpFragment<SubjectMaterialsPr
         return presenter.getCurrentPage();
     }
 
-    public void setMaterialsItems(Pair<List<SubjectItemFile>, Map<Integer, Teacher>> items) {
+    public void setMaterialsItems(Pair<List<SubjectItemFile>, Map<Integer, RoleTeacher>> items) {
         presenter.setMaterialsItems(items.first);
         presenter.getModel().setTeachers(items.second);
         mAdapter.setItems(items.first);

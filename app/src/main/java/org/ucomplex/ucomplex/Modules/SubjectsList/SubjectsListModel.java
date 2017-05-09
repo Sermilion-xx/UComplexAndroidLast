@@ -1,6 +1,6 @@
 package org.ucomplex.ucomplex.Modules.SubjectsList;
 
-import org.ucomplex.ucomplex.Common.UCApplication;
+import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
 import org.ucomplex.ucomplex.Modules.SubjectsList.model.StudentSubjectList;
 import org.ucomplex.ucomplex.Modules.SubjectsList.model.SubjectsListItem;

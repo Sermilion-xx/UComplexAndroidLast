@@ -1,5 +1,7 @@
 package org.ucomplex.ucomplex.Domain.Users;
 
+import org.ucomplex.ucomplex.Domain.Users.role.Role;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

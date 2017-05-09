@@ -1,7 +1,7 @@
 package org.ucomplex.ucomplex.Modules.UserProfile.dagger;
 
 import org.ucomplex.ucomplex.Common.ServiceGenerator;
-import org.ucomplex.ucomplex.Common.UCApplication;
+import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Modules.UserProfile.UserProfileService;
 
 import dagger.Module;

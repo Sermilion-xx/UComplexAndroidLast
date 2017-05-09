@@ -1,6 +1,6 @@
 package org.ucomplex.ucomplex.Modules.Users;
 
-import org.ucomplex.ucomplex.Common.UCApplication;
+import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
 import org.ucomplex.ucomplex.Domain.Users.User;
 import org.ucomplex.ucomplex.Modules.Users.model.UserRequestType;

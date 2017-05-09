@@ -86,8 +86,14 @@ public class EventItem {
         return paramsObj;
     }
 
+    /**
+     * Upon setting EventParams object, clears params field
+     * that contained json representation of parmas
+     * @param paramsObj: Parameters of event
+     */
     public void setParamsObj(EventParams paramsObj) {
         this.paramsObj = paramsObj;
+        this.params = "";
     }
 
     public int getType() {

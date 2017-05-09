@@ -8,8 +8,9 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.google.gson.Gson;
 
+import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.UCDBOpenHelper;
-import org.ucomplex.ucomplex.Common.UCApplication;
+import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
 import org.ucomplex.ucomplex.Modules.Events.model.EventItem;
 import org.ucomplex.ucomplex.Modules.Events.model.EventsRaw;
@@ -105,10 +106,9 @@ public class EventsModel implements MVPModel<EventsRaw, List<EventItem>, Integer
     @Override
     public List<EventItem> processData(EventsRaw data) {
         List<EventItem> items = new ArrayList<>();
-        Gson gson = new Gson();
         for (EventItem item : data.getEvents()) {
-            item.setParamsObj(gson.fromJson(item.getParams(), EventItem.EventParams.class));
-            item.setParams(null);
+            EventItem.EventParams params = FacadeCommon.jsonStringToObject(item.getParams(), EventItem.EventParams.class);
+            item.setParamsObj(params);
             String displayEvent = makeEvent(item.getType(), item.getParamsObj(), UCApplication.getInstance());
             item.setEventText(displayEvent);
             items.add(item);
@@ -116,7 +116,6 @@ public class EventsModel implements MVPModel<EventsRaw, List<EventItem>, Integer
         mData.addAll(items);
         return items;
     }
-
 
     private String makeEvent(int type, EventItem.EventParams params, Context context)
             throws NumberFormatException {
@@ -130,12 +129,10 @@ public class EventsModel implements MVPModel<EventsRaw, List<EventItem>, Integer
         String courseName;
         String name;
         switch (type) {
-
             case 1:
                 courseName = params.getCourseName();
                 result = context.getString(R.string.event_zagruzhen_material_po_discipline) + courseName + ".";
                 break;
-
             case 2:
                 int hourType = params.getHourType();
                 courseName = params.getCourseName();
@@ -144,27 +141,23 @@ public class EventsModel implements MVPModel<EventsRaw, List<EventItem>, Integer
                         + hourTypes[hourType] + context.getString(R.string.event_po_discipline) + courseName
                         + ".";
                 break;
-
             case 3:
                 String semestr = params.getSemester();
                 String year = params.getYear();
                 result = context.getString(R.string.event_vy_proizveli_oplatu) + semestr + context.getString(R.string.event_j_semester) + year
                         + context.getString(R.string.event_uchebnogo_goda)+".";
                 break;
-
             case 4:
                 String eventName = params.getEventName();
                 String date = params.getDate();
                 result = context.getString(R.string.event_vy_priglasheny_na_meropriyatie) + eventName
                         + ", " +  context.getString(R.string.event_kotoroe_sostoitsya) + " " + date;
                 break;
-
             case 5:
                 name = params.getEventName();
                 String author = params.getAuthor();
                 result = context.getString(R.string.event_book_added) + " " + name + ", " + author;
                 break;
-
             case 6:
                 String message = "";
                 if (params.getType() != 0) {

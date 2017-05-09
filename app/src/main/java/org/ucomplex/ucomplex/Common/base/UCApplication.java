@@ -1,7 +1,11 @@
-package org.ucomplex.ucomplex.Common;
+package org.ucomplex.ucomplex.Common.base;
 
 import android.app.Application;
 
+import org.ucomplex.ucomplex.Common.AppDiComponent;
+import org.ucomplex.ucomplex.Common.DaggerAppDiComponent;
+import org.ucomplex.ucomplex.Common.FacadeCommon;
+import org.ucomplex.ucomplex.Common.FacadePreferences;
 import org.ucomplex.ucomplex.Domain.Users.UserInterface;
 
 import java.security.KeyManagementException;
@@ -62,6 +66,14 @@ public class UCApplication extends Application {
         } catch (NoSuchAlgorithmException | KeyManagementException e) {
             e.printStackTrace();
         }
+    }
+
+    public void saveLoginData(String authString, UserInterface user) {
+        String encodedToken = FacadeCommon.encodeLoginData(authString);
+        this.setAuthString(encodedToken);
+        FacadePreferences.setTokenToPref(this, encodedToken, true);
+        FacadePreferences.setUserDataToPrefSync(this, user);
+        this.setLoggedUser(user);
     }
 
     public AppDiComponent getAppDiComponent() {

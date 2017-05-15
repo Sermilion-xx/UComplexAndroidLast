@@ -1,7 +1,9 @@
 package org.ucomplex.ucomplex.Domain.Users;
 
 import org.ucomplex.ucomplex.Domain.Users.role.Role;
+import org.ucomplex.ucomplex.Domain.Users.role.RoleBase;
 
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -11,6 +13,10 @@ import java.util.List;
  */
 
 public final class User implements UserInterface {
+
+    public static final int USER_TYPE_STUDENT = 4;
+    public static final int USER_TYPE_TEACHER = 3;
+    public static final int USER_TYPE_STAFF = 0;
 
     private final int id;
     private final int person;
@@ -24,10 +30,12 @@ public final class User implements UserInterface {
     private final int client;
     private final int role;
     private final int photo;
+    private final String statuses;
     private final String code;
-    private final List<Role> roles;
-    private int mobile;
-    private boolean friend;
+    private final List<? extends Role> roles;
+    private final int mobile;
+    private final BlackList black;
+    private final FriendList friend;
 
     public User(UserBuilder builder) {
         this.id = builder.id;
@@ -46,6 +54,8 @@ public final class User implements UserInterface {
         this.session = builder.session;
         this.client = builder.client;
         this.friend = builder.friend;
+        this.black = builder.black;
+        this.statuses = builder.statuses;
     }
 
     @Override
@@ -90,6 +100,10 @@ public final class User implements UserInterface {
         return session;
     }
 
+    public String getStatuses() {
+        return statuses;
+    }
+
     public int getClient() {
         return client;
     }
@@ -109,7 +123,7 @@ public final class User implements UserInterface {
     }
 
     @Override
-    public List<Role> getRoles() {
+    public List<? extends Role> getRoles() {
         return roles;
     }
 
@@ -117,8 +131,12 @@ public final class User implements UserInterface {
         return mobile;
     }
 
-    public boolean isFriend() {
+    public FriendList getIsFriend() {
         return friend;
+    }
+
+    public BlackList getBlack() {
+        return black;
     }
 
     public static class UserBuilder {
@@ -134,10 +152,12 @@ public final class User implements UserInterface {
         int client;
         int role;
         int photo;
+        String statuses;
         String code;
-        List<Role> roles;
+        List<? extends Role> roles;
         int mobile;
-        boolean friend;
+        FriendList friend;
+        BlackList black;
 
         public User build() {
             return new User(this);
@@ -170,6 +190,11 @@ public final class User implements UserInterface {
 
         public UserBuilder password(String password) {
             this.password = password;
+            return this;
+        }
+
+        public UserBuilder statuses(String statuses) {
+            this.statuses = statuses;
             return this;
         }
 
@@ -218,11 +243,14 @@ public final class User implements UserInterface {
             return this;
         }
 
-        public UserBuilder friend(boolean friend) {
+        public UserBuilder friend(FriendList friend) {
             this.friend = friend;
             return this;
         }
 
-
+        public UserBuilder black(BlackList friend) {
+            this.black = friend;
+            return this;
+        }
     }
 }

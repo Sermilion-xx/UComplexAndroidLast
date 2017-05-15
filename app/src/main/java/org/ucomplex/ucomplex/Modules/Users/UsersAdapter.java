@@ -21,7 +21,6 @@ import org.ucomplex.ucomplex.Common.FacadeMedia;
 import org.ucomplex.ucomplex.Common.base.BaseAdapter;
 import org.ucomplex.ucomplex.Common.interfaces.OnListItemClicked;
 import org.ucomplex.ucomplex.Domain.Users.User;
-import org.ucomplex.ucomplex.Modules.Users.model.UsersParams;
 import org.ucomplex.ucomplex.R;
 
 import java.util.ArrayList;
@@ -41,8 +40,8 @@ import static org.ucomplex.ucomplex.Common.base.UCApplication.PHOTOS_URL;
 
 public class UsersAdapter extends BaseAdapter<UsersAdapter.UsersViewHolder, List<User>> {
 
-    private static final int TYPE_USER = 0;
-    private static final int TYPE_FOOTER = 1;
+    public static final int TYPE_USER = 0;
+    public static final int TYPE_FOOTER = 1;
     private static final int TYPE_EMPTY = 2;
     private static final int TYPE_REQUESTED = 3;
 
@@ -69,10 +68,10 @@ public class UsersAdapter extends BaseAdapter<UsersAdapter.UsersViewHolder, List
     }
 
     private boolean hasMoreItems;
-    private OnListItemClicked<UsersParams> onListItemClicked;
+    private OnListItemClicked<Integer, Integer> onListItemClicked;
     private boolean[] friendRequested;
 
-    public void setOnListItemClicked(OnListItemClicked<UsersParams> onListItemClicked) {
+    public void setOnListItemClicked(OnListItemClicked<Integer, Integer> onListItemClicked) {
         this.onListItemClicked = onListItemClicked;
     }
 
@@ -94,7 +93,7 @@ public class UsersAdapter extends BaseAdapter<UsersAdapter.UsersViewHolder, List
             }
             friendRequested = new boolean[mItems.size()];
             for (int i = 0; i < mItems.size(); i++) {
-                if (mItems.get(i).isFriend()) {
+                if (mItems.get(i).getIsFriend().is_friend()) {
                     friendRequested[i] = true;
                 }
             }
@@ -124,15 +123,9 @@ public class UsersAdapter extends BaseAdapter<UsersAdapter.UsersViewHolder, List
                 if (getItemViewType(position) == TYPE_REQUESTED) {
                     holder.mClickArea.setBackgroundResource(R.color.colorFriendRequested);
                 }
-                holder.mClickArea.setOnClickListener(v -> {
-
-                });
+                holder.mClickArea.setOnClickListener(v -> onListItemClicked.onClick(user.getId(), TYPE_USER));
             } else if (getItemViewType(position) == TYPE_FOOTER) {
-                holder.mLoadMore.setOnClickListener(v -> {
-                    UsersParams params = new UsersParams();
-                    params.setStart(mItems.size());
-                    onListItemClicked.onClick(params);
-                });
+                holder.mLoadMore.setOnClickListener(v -> onListItemClicked.onClick(mItems.size(), TYPE_FOOTER));
             }
         }
     }

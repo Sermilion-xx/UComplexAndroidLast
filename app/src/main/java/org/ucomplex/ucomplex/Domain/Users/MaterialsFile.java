@@ -10,78 +10,58 @@ package org.ucomplex.ucomplex.Domain.Users;
  * ---------------------------------------------------
  */
 
-public class MaterialsFile {
+public final class MaterialsFile {
 
-    private String id;
-    private int owner;
-    private String name;
-    private String address;
-    private String type;
-    private int size;
-    private String time;
-    private String data;
+    private final String id;
+    private final int owner;
+    private final String name;
+    private final String address;
+    private final String type;
+    private final int size;
+    private final String time;
+    private final String data;
+
+    public MaterialsFile() {
+        this.id = "";
+        this.owner = 0;
+        this.name = "";
+        this.address = "";
+        this.type = "";
+        this.size = 0;
+        this.time = "";
+        this.data = "";
+    }
 
     public String getId() {
         return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public int getOwner() {
         return owner;
     }
 
-    public void setOwner(int owner) {
-        this.owner = owner;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public String getType() {
         return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public int getSize() {
         return size;
     }
 
-    public void setSize(int size) {
-        this.size = size;
-    }
-
     public String getTime() {
         return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
     }
 
     public String getData() {
         return data;
     }
 
-    public void setData(String data) {
-        this.data = data;
-    }
 }

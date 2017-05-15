@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.base.BaseMvpFragment;
+import org.ucomplex.ucomplex.Common.interfaces.OnListItemClicked;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectTimeline.model.SubjectTimelineParams;
 import org.ucomplex.ucomplex.R;
 
@@ -69,7 +70,7 @@ public class SubjectTimelineFragment extends BaseMvpFragment<SubjectTimelinePres
         View view = inflater.inflate(R.layout.fragment_recycler, container, false);
         ButterKnife.bind(this, view);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivityContext());
-        mAdapter.setOnListItemClicked(params -> {
+        mAdapter.setOnListItemClicked((params, type) -> {
             params.setGcourse(getArguments().getInt(EXTRA_GCOURSE));
             presenter.loadData(params);
         });

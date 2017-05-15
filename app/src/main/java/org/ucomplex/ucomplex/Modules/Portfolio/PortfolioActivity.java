@@ -24,6 +24,7 @@ import org.ucomplex.ucomplex.Common.FacadeMedia;
 import org.ucomplex.ucomplex.Common.PresenterCache;
 import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.base.BaseMVPActivity;
+import org.ucomplex.ucomplex.Common.interfaces.OnListItemClicked;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.SubjectMaterialsAdapter;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.SubjectMaterialsPresenter;
@@ -92,7 +93,7 @@ public class PortfolioActivity extends BaseMVPActivity<MVPView, SubjectMaterials
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter.setMyFiles(true);
-        mAdapter.setOnListItemClicked(this::performFileOperation);
+        mAdapter.setOnListItemClicked((params, type) -> performFileOperation(params));
         mRecyclerView.setAdapter(mAdapter);
         if (presenter.getCurrentHistory() == null || presenter.getCurrentHistory().size() == 0) {
             SubjectMaterialsParams params = new SubjectMaterialsParams(FileOperationType.DOWNLOAD);

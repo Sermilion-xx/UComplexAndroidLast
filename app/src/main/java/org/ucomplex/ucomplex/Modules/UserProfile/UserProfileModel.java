@@ -65,6 +65,7 @@ public class UserProfileModel implements MVPModel<UserProfileRaw, List<UserProfi
 
     @Override
     public List<UserProfileItem> processData(UserProfileRaw data) {
+
         return null;
     }
 }

@@ -69,13 +69,13 @@ public class SubjectMaterialsAdapter extends BaseAdapter<SubjectMaterialsAdapter
     private boolean[] mItemTypes;
     private String filename;
     private boolean mMyFiles;
-    private OnListItemClicked<SubjectMaterialsParams> onListItemClicked;
+    private OnListItemClicked<SubjectMaterialsParams, Void> onListItemClicked;
 
     public SubjectMaterialsAdapter() {
         mItems = new ArrayList<>();
     }
 
-    public void setOnListItemClicked(OnListItemClicked<SubjectMaterialsParams> onListItemClicked) {
+    public void setOnListItemClicked(OnListItemClicked<SubjectMaterialsParams, Void> onListItemClicked) {
         this.onListItemClicked = onListItemClicked;
     }
 

@@ -11,5 +11,5 @@ package org.ucomplex.ucomplex.Modules.Users.model;
  */
 
 public enum UserRequestType {
-    ONLINE, FRIENDS, GROUP, TEACHERS, BLACKLIST
+    ONLINE, FRIENDS, GROUP, TEACHERS, BLACKLIST, DEFAULT
 }

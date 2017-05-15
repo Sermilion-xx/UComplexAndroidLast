@@ -2,6 +2,7 @@ package org.ucomplex.ucomplex.Modules.RoleSelect;
 
 import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
+import org.ucomplex.ucomplex.Domain.Users.User;
 import org.ucomplex.ucomplex.Domain.Users.role.RoleBase;
 import org.ucomplex.ucomplex.Domain.Users.UserInterface;
 import org.ucomplex.ucomplex.Modules.Login.model.LoginUser;
@@ -76,14 +77,12 @@ public class RoleSelectModel implements MVPModel<LoginUser, List<RoleItem>, Logi
             for (int i = 0; i < user.getRoles().size(); i++) {
                 RoleBase role = user.getRoles().get(i);
                 String roleStr = "";
-                if (role.getType() == 3) {
+                if (role.getType() == User.USER_TYPE_TEACHER) {
                     roleStr = UCApplication.getInstance().getResources().getString(R.string.prepodvatel);
-                } else if (role.getType() == 4) {
+                } else if (role.getType() == User.USER_TYPE_STUDENT) {
                     roleStr = UCApplication.getInstance().getResources().getString(R.string.student);
-                } else if (role.getType() == 0) {
+                } else if (role.getType() == User.USER_TYPE_STAFF) {
                     roleStr = UCApplication.getInstance().getResources().getString(R.string.sotrudnik);
-                } else if (role.getType() == 3) {
-                    roleStr = UCApplication.getInstance().getResources().getString(R.string.prepodvatel);
                 }
                 int index = random.nextInt(5);
                 roles.add(new RoleItem(roleIcons[index], roleStr));

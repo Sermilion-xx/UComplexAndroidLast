@@ -22,9 +22,8 @@ public class RoleStudent implements Role, Parcelable{
     private final int year;
     private final int payment;
     private final int contract_year;
-    private final String position_name;
 
-    protected RoleStudent(Parcel in) {
+    private RoleStudent(Parcel in) {
         rolePrimary = in.readParcelable(RoleBase.class.getClassLoader());
         group = in.readInt();
         major = in.readInt();
@@ -32,7 +31,16 @@ public class RoleStudent implements Role, Parcelable{
         year = in.readInt();
         payment = in.readInt();
         contract_year = in.readInt();
-        position_name = in.readString();
+    }
+
+    public RoleStudent(RoleStudentBuilder builder) {
+        rolePrimary = new RoleBase(builder.roleBaseBuilder);
+        this.group = builder.group;
+        this.major = builder.major;
+        this.study = builder.study;
+        this.year = builder.year;
+        this.payment = builder.payment;
+        this.contract_year = builder.contract_year;
     }
 
     public static final Creator<RoleStudent> CREATOR = new Creator<RoleStudent>() {
@@ -75,10 +83,6 @@ public class RoleStudent implements Role, Parcelable{
         return contract_year;
     }
 
-    public String getPosition_name() {
-        return position_name;
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -93,7 +97,6 @@ public class RoleStudent implements Role, Parcelable{
         dest.writeInt(year);
         dest.writeInt(payment);
         dest.writeInt(contract_year);
-        dest.writeString(position_name);
     }
 
     @Override
@@ -124,5 +127,89 @@ public class RoleStudent implements Role, Parcelable{
     @Override
     public int getPosition() {
         return 0;
+    }
+
+    public static class RoleStudentBuilder {
+
+        private RoleBase.RoleBaseBuilder roleBaseBuilder;
+        private int group;
+        private int major;
+        private int study;
+        private int year;
+        private int payment;
+        private int contract_year;
+
+        public RoleStudentBuilder() {
+            roleBaseBuilder = new RoleBase.RoleBaseBuilder();
+        }
+
+        public RoleStudent build() {
+            return new RoleStudent(this);
+        }
+
+        public RoleStudentBuilder id(int id) {
+            roleBaseBuilder.id(id);
+            return this;
+        }
+
+        public RoleStudentBuilder person(int person) {
+            roleBaseBuilder.person(person);
+            return this;
+        }
+
+        public RoleStudentBuilder type(int type) {
+            roleBaseBuilder.type(type);
+            return this;
+        }
+
+        public RoleStudentBuilder name(String name) {
+            roleBaseBuilder.name(name);
+            return this;
+        }
+
+        public RoleStudentBuilder role(int role) {
+            roleBaseBuilder.role(role);
+            return this;
+        }
+
+        public RoleStudentBuilder position(int position) {
+            roleBaseBuilder.position(position);
+            return this;
+        }
+
+        public RoleStudentBuilder position_name(String position_name) {
+            roleBaseBuilder.position_name(position_name);
+            return this;
+        }
+
+        public RoleStudentBuilder group(int group) {
+            this.group = group;
+            return this;
+        }
+
+        public RoleStudentBuilder major(int major) {
+            this.major = major;
+            return this;
+        }
+
+        public RoleStudentBuilder study(int study) {
+            this.study = study;
+            return this;
+        }
+
+        public RoleStudentBuilder year(int year) {
+            this.year = year;
+            return this;
+        }
+
+        public RoleStudentBuilder payment(int payment) {
+            this.payment = payment;
+            return this;
+        }
+
+        public RoleStudentBuilder contract_year(int contract_year) {
+            this.contract_year = contract_year;
+            return this;
+        }
     }
 }

@@ -12,7 +12,9 @@ import android.widget.ProgressBar;
 
 import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.base.BaseMvpFragment;
+import org.ucomplex.ucomplex.Common.interfaces.OnListItemClicked;
 import org.ucomplex.ucomplex.Domain.Users.User;
+import org.ucomplex.ucomplex.Modules.UserProfile.UserProfileActivity;
 import org.ucomplex.ucomplex.Modules.Users.model.UserRequestType;
 import org.ucomplex.ucomplex.Modules.Users.model.UsersParams;
 import org.ucomplex.ucomplex.R;
@@ -68,7 +70,14 @@ public class UsersFragment extends BaseMvpFragment<UsersPresenter> {
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivityContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new UsersAdapter();
-        mAdapter.setOnListItemClicked(params -> presenter.loadData(params));
+        mAdapter.setOnListItemClicked((param, type) -> {
+            if (type[0] == UsersAdapter.TYPE_USER) {
+                startActivity(UserProfileActivity.creteIntent(getActivityContext(), param));
+            } else if (type[0] == UsersAdapter.TYPE_FOOTER) {
+                UsersParams params = UsersParams.createLoadMoreParams(userType, param);
+                presenter.loadData(params);
+            }
+        });
         mRecyclerView.setAdapter(mAdapter);
         return view;
     }
@@ -77,10 +86,8 @@ public class UsersFragment extends BaseMvpFragment<UsersPresenter> {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         presenter.attachView(this);
-        ((UsersPresenter)presenter).setUserRequestType(userType);
         if (presenter.getData() == null) {
-            UsersParams params = new UsersParams();
-            params.setStart(0);
+            UsersParams params = UsersParams.createLoadMoreParams(userType, 0);
             presenter.loadData(params);
         } else {
             mAdapter.setItems(presenter.getData());

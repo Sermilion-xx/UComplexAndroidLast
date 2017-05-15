@@ -25,6 +25,8 @@ public final class Teacher implements UserInterface {
     private final String courses;
     private final int rank;
     private final String academic_awards;
+    private final int academic_rank;
+    private final int academic_degree;
     private final String upqualification;
     private final int degree;
     private final String bio;
@@ -39,8 +41,8 @@ public final class Teacher implements UserInterface {
     private final int agent;
     private final List<Integer> departments;
 
-    public Teacher(Teacher.TeacherBuilder builder, User user) {
-        this.user = user;
+    public Teacher(Teacher.TeacherBuilder builder) {
+        this.user = new User(builder.userBuilder);
         this.post = builder.post;
         this.experience = builder.experience;
         this.dep_experience = builder.dep_experience;
@@ -60,6 +62,8 @@ public final class Teacher implements UserInterface {
         this.closed = builder.closed;
         this.agent = builder.agent;
         this.departments = builder.departments;
+        this.academic_degree = builder.academic_degree;
+        this.academic_rank = builder.academic_rank;
     }
 
     public int getPost() {
@@ -88,6 +92,14 @@ public final class Teacher implements UserInterface {
 
     public String getUpqualification() {
         return upqualification;
+    }
+
+    public int getAcademic_rank() {
+        return academic_rank;
+    }
+
+    public int getAcademic_degree() {
+        return academic_degree;
     }
 
     public int getDegree() {
@@ -154,7 +166,7 @@ public final class Teacher implements UserInterface {
     }
 
     @Override
-    public List<Role> getRoles() {
+    public List<? extends Role> getRoles() {
         return user.getRoles();
     }
 
@@ -183,14 +195,16 @@ public final class Teacher implements UserInterface {
         return user.getPerson();
     }
 
-    private static class TeacherBuilder {
-        User user;
+    public static class TeacherBuilder {
+        User.UserBuilder userBuilder;
         int post;
         String experience;
         String dep_experience;
         String courses;
         int rank;
         String academic_awards;
+        int academic_degree;
+        int academic_rank;
         String upqualification;
         int degree;
         String bio;
@@ -206,11 +220,51 @@ public final class Teacher implements UserInterface {
         List<Integer> departments;
 
         public Teacher build() {
-            return new Teacher(this, user);
+            return new Teacher(this);
         }
 
-        public TeacherBuilder user(User user) {
-            this.user = user;
+        public TeacherBuilder id(int id) {
+            userBuilder.id = id;
+            return this;
+        }
+
+        public TeacherBuilder roles(List<? extends Role> roles) {
+            userBuilder.roles(roles);
+            return this;
+        }
+
+        public TeacherBuilder name(String name) {
+            userBuilder.name = name;
+            return this;
+        }
+
+        public TeacherBuilder statuses(String statuses) {
+            userBuilder.statuses = statuses;
+            return this;
+        }
+
+        public TeacherBuilder photo(int photo) {
+            userBuilder.photo = photo;
+            return this;
+        }
+
+        public TeacherBuilder code(String code) {
+            userBuilder.code = code;
+            return this;
+        }
+
+        public TeacherBuilder email(String email) {
+            userBuilder.email = email;
+            return this;
+        }
+
+        public TeacherBuilder friend(FriendList friend) {
+            userBuilder.friend = friend;
+            return this;
+        }
+
+        public TeacherBuilder black(BlackList black) {
+            userBuilder.black = black;
             return this;
         }
 
@@ -236,6 +290,16 @@ public final class Teacher implements UserInterface {
 
         public TeacherBuilder rank(int rank) {
             this.rank = rank;
+            return this;
+        }
+
+        public TeacherBuilder academic_degree(int academic_degree) {
+            this.academic_degree = academic_degree;
+            return this;
+        }
+
+        public TeacherBuilder academic_rank(int academic_rank) {
+            this.academic_rank = academic_rank;
             return this;
         }
 

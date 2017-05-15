@@ -15,8 +15,10 @@ import android.widget.Toast;
 
 import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.base.BaseMvpFragment;
+import org.ucomplex.ucomplex.Common.interfaces.OnListItemClicked;
 import org.ucomplex.ucomplex.Domain.Users.role.RoleTeacher;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.SubjectItemFile;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.SubjectMaterialsParams;
 import org.ucomplex.ucomplex.R;
 
 import java.util.List;
@@ -104,7 +106,7 @@ public class SubjectMaterialsFragment extends BaseMvpFragment<SubjectMaterialsPr
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivityContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter.setMyFiles(getArguments().getBoolean(MY_FILES));
-        mAdapter.setOnListItemClicked(params -> presenter.loadData(params));
+        mAdapter.setOnListItemClicked((params, type) -> presenter.loadData(params));
         mRecyclerView.setAdapter(mAdapter);
         return view;
     }

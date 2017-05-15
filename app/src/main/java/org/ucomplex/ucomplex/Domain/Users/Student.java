@@ -14,9 +14,13 @@ import java.util.List;
  * ---------------------------------------------------
  */
 
-public class Student implements UserInterface{
+public final class Student implements UserInterface{
 
-    private User user;
+    private final User user;
+
+    public Student() {
+        this.user = null;
+    }
 
     @Override
     public int getType() {
@@ -34,7 +38,7 @@ public class Student implements UserInterface{
     }
 
     @Override
-    public List<Role> getRoles() {
+    public List<? extends Role> getRoles() {
         return user.getRoles();
     }
 

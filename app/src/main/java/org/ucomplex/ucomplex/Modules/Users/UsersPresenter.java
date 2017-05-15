@@ -27,19 +27,13 @@ public class UsersPresenter extends AbstractPresenter<
         UsersRaw, List<User>,
         UsersParams, UsersModel> {
 
-    private UserRequestType userRequestType;
 
     public UsersPresenter() {
         UCApplication.getInstance().getAppDiComponent().inject(this);
     }
 
-    public void setUserRequestType(UserRequestType userRequestType) {
-        this.userRequestType = userRequestType;
-    }
-
     @Override
     public void loadData(UsersParams params) {
-        params.setRequestType(userRequestType);
         Observable<UsersRaw> dataObservable = mModel.loadData(params);
         dataObservable.subscribe(new Observer<UsersRaw>() {
             @Override

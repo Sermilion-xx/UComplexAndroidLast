@@ -10,42 +10,26 @@ package org.ucomplex.ucomplex.Modules.Users.model;
  * ---------------------------------------------------
  */
 
-public class UsersParams {
+public final class UsersParams {
 
-    private UserRequestType requestType;
-    private boolean isFriend;
-    private boolean isBlocked;
-    private int start;
+    private final UserRequestType requestType;
+    private final int start;
+
+    private UsersParams(UserRequestType requestType, int start) {
+        this.requestType = requestType;
+        this.start = start;
+    }
+
+    public static UsersParams createLoadMoreParams(UserRequestType requestType, int start) {
+        return new UsersParams(requestType, start);
+    }
 
     public UserRequestType getRequestType() {
         return requestType;
-    }
-
-    public void setRequestType(UserRequestType requestType) {
-        this.requestType = requestType;
     }
 
     public int getStart() {
         return start;
     }
 
-    public void setStart(int start) {
-        this.start = start;
-    }
-
-    public boolean isFriend() {
-        return isFriend;
-    }
-
-    public void setFriend(boolean friend) {
-        isFriend = friend;
-    }
-
-    public boolean isBlocked() {
-        return isBlocked;
-    }
-
-    public void setBlocked(boolean blocked) {
-        isBlocked = blocked;
-    }
 }

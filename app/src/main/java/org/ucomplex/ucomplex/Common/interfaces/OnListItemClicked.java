@@ -10,7 +10,7 @@ package org.ucomplex.ucomplex.Common.interfaces;
  * ---------------------------------------------------
  */
 
-public interface OnListItemClicked<T> {
+public interface OnListItemClicked<T, E> {
 
-    void onClick(T params);
+    void onClick(T params, E ... type);
 }

@@ -19,7 +19,7 @@ public interface UserInterface {
     int getType();
     String getLogin();
     String getPassword();
-    List<Role> getRoles();
+    List<? extends Role> getRoles();
     int getPhoto();
     String getCode();
     String getName();

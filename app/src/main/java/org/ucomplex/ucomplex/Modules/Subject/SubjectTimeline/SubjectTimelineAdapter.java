@@ -65,13 +65,13 @@ public class SubjectTimelineAdapter extends BaseAdapter<SubjectTimelineAdapter.S
     }
 
     private String[] colors = {"#51cde7", "#fecd71", "#9ece2b", "#d18ec0"};
-    private OnListItemClicked<SubjectTimelineParams> onListItemClicked;
+    private OnListItemClicked<SubjectTimelineParams, Void> onListItemClicked;
 
     public SubjectTimelineAdapter() {
         mItems = new ArrayList<>();
     }
 
-    public void setOnListItemClicked(OnListItemClicked<SubjectTimelineParams> onListItemClicked) {
+    public void setOnListItemClicked(OnListItemClicked<SubjectTimelineParams, Void> onListItemClicked) {
         this.onListItemClicked = onListItemClicked;
     }
 

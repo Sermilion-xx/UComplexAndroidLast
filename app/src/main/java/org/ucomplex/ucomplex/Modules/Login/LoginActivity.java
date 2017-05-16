@@ -72,8 +72,6 @@ public class LoginActivity extends BaseMVPActivity<MVPView, LoginPresenter> impl
         String login = mLoginView.getText().toString();
         String password = mPasswordView.getText().toString();
         LoginParams params = new LoginParams(login, password, this);
-        params.setPassword(password);
-        params.setLogin(login);
         List<LoginErrorType> error = presenter.checkCredentials(params);
         if (error.contains(PASSWORD_REQUIRED)) {
             mPasswordView.setError(getString(R.string.error_field_required));

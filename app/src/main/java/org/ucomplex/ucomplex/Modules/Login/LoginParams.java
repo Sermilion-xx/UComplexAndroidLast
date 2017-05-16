@@ -12,14 +12,13 @@ import android.content.Context;
  * ---------------------------------------------------
  */
 
-public class LoginParams {
+final class LoginParams {
 
-    private String login;
-    private int roleId;
-    private String password;
-    private Context context;
+    private final String login;
+    private final String password;
+    private final Context context;
 
-    public LoginParams(String login, String password, Context context) {
+    LoginParams(String login, String password, Context context) {
         this.login = login;
         this.password = password;
         this.context = context;
@@ -29,31 +28,12 @@ public class LoginParams {
         return login;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getPassword() {
+    String getPassword() {
         return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public int getRole() {
-        return roleId;
-    }
-
-    public void setRole(int role) {
-        this.roleId = role;
     }
 
     public Context getContext() {
         return context;
     }
 
-    public void setContext(Context context) {
-        this.context = context;
-    }
 }

@@ -135,7 +135,7 @@ public final class User implements UserInterface {
         return friend;
     }
 
-    public BlackList getBlack() {
+    public BlackList getIsBlack() {
         return black;
     }
 

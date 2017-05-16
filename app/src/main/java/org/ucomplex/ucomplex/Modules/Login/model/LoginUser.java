@@ -4,6 +4,8 @@ package org.ucomplex.ucomplex.Modules.Login.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.ucomplex.ucomplex.Domain.Users.Student;
+import org.ucomplex.ucomplex.Domain.Users.Teacher;
 import org.ucomplex.ucomplex.Domain.Users.User;
 import org.ucomplex.ucomplex.Domain.Users.UserInterface;
 import org.ucomplex.ucomplex.Domain.Users.role.RoleBase;
@@ -60,7 +62,7 @@ public final class LoginUser implements Parcelable {
         }
     };
 
-    public UserInterface extractUser(int rolePos) {
+    public final UserInterface extractUser(int rolePos) {
         User.UserBuilder builder = new User.UserBuilder();
         builder.roles(roles);
         builder.mobile(session.getMobile());
@@ -76,6 +78,16 @@ public final class LoginUser implements Parcelable {
         builder.client(session.getClient());
         builder.id(roles.get(rolePos).getId());
         builder.type(roles.get(rolePos).getType());
-        return new User(builder);
+
+        UserInterface result;
+        User userInterface = new User(builder);
+        if (userInterface.getType() == User.USER_TYPE_STUDENT) {
+            result = new Student(userInterface);
+        } else if (userInterface.getType() == User.USER_TYPE_TEACHER) {
+            result = new Teacher(userInterface);
+        } else {
+            result = userInterface;
+        }
+        return result;
     }
 }

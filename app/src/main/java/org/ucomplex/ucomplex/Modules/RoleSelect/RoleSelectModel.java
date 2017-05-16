@@ -3,6 +3,7 @@ package org.ucomplex.ucomplex.Modules.RoleSelect;
 import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
 import org.ucomplex.ucomplex.Domain.Users.User;
+import org.ucomplex.ucomplex.Domain.Users.role.Role;
 import org.ucomplex.ucomplex.Domain.Users.role.RoleBase;
 import org.ucomplex.ucomplex.Domain.Users.UserInterface;
 import org.ucomplex.ucomplex.Modules.Login.model.LoginUser;
@@ -75,7 +76,7 @@ public class RoleSelectModel implements MVPModel<LoginUser, List<RoleItem>, Logi
         if (user!=null) {
             Random random = new Random();
             for (int i = 0; i < user.getRoles().size(); i++) {
-                RoleBase role = user.getRoles().get(i);
+                Role role = user.getRoles().get(i);
                 String roleStr = "";
                 if (role.getType() == User.USER_TYPE_TEACHER) {
                     roleStr = UCApplication.getInstance().getResources().getString(R.string.prepodvatel);

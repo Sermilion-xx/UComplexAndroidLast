@@ -5,7 +5,9 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.google.gson.Gson;
-import org.ucomplex.ucomplex.Domain.Users.User;
+import com.google.gson.GsonBuilder;
+
+import org.ucomplex.ucomplex.Domain.Users.InterfaceAdapter;
 import org.ucomplex.ucomplex.Domain.Users.UserInterface;
 
 /**
@@ -38,17 +40,21 @@ public class FacadePreferences {
         }
     }
 
-    public static User getUserDataFromPref(Context mContext) {
+    public static UserInterface getUserDataFromPref(Context mContext) {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(mContext);
-        Gson gson = new Gson();
+        GsonBuilder builder = new GsonBuilder();
+        builder.registerTypeAdapter(UserInterface.class, new InterfaceAdapter());
+        Gson gson = builder.create();
         String json = pref.getString(KEY_PREF_LOGGED_USER, "");
-        return gson.fromJson(json, User.class);
+        return gson.fromJson(json, UserInterface.class);
     }
 
     private static SharedPreferences.Editor makeUserDataToPrefEditor(Context mContext, UserInterface user) {
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(mContext).edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(user);
+        GsonBuilder builder = new GsonBuilder();
+        builder.registerTypeAdapter(UserInterface.class, new InterfaceAdapter<UserInterface>());
+        Gson gson = builder.create();
+        String json = gson.toJson(user, UserInterface.class);
         editor.putString(KEY_PREF_LOGGED_USER, json);
         return editor;
     }

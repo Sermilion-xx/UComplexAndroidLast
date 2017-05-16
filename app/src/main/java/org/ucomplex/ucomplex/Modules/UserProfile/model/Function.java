@@ -1,10 +1,8 @@
-package org.ucomplex.ucomplex.Domain.Users.role;
-
-import android.os.Parcelable;
+package org.ucomplex.ucomplex.Modules.UserProfile.model;
 
 /**
  * ---------------------------------------------------
- * Created by Sermilion on 09/05/2017.
+ * Created by Sermilion on 16/05/2017.
  * Project: UComplex
  * ---------------------------------------------------
  * <a href="http://www.ucomplex.org">www.ucomplex.org</a>
@@ -12,12 +10,6 @@ import android.os.Parcelable;
  * ---------------------------------------------------
  */
 
-public interface Role {
-    int getId();
-    int getPerson();
-    int getType();
-    String getName();
-    int getRole();
-    int getPosition();
-    String getPosition_name();
+public interface Function<T, E>{
+    T apply(E param);
 }

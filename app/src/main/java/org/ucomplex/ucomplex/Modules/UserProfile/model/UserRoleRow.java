@@ -1,8 +1,6 @@
 package org.ucomplex.ucomplex.Modules.UserProfile.model;
 
 import org.ucomplex.ucomplex.Domain.Users.role.Role;
-import org.ucomplex.ucomplex.Domain.Users.role.RoleStudent;
-import org.ucomplex.ucomplex.Domain.Users.role.RoleTeacher;
 
 /**
  * ---------------------------------------------------
@@ -74,51 +72,6 @@ public final class UserRoleRow implements Role {
         this._public = 0;
     }
 
-    //TODO: implement Open/Closed principle
-    public RoleTeacher extractTeacherRole() {
-        RoleTeacher.RoleTeacherBuilder roleTeacherBuilder = new RoleTeacher.RoleTeacherBuilder();
-        roleTeacherBuilder.id(id);
-        roleTeacherBuilder.person(person);
-        roleTeacherBuilder.type(type);
-        roleTeacherBuilder.name(name);
-        roleTeacherBuilder.role(role);
-        roleTeacherBuilder.position(position);
-        roleTeacherBuilder.position_name(position_name);
-
-        roleTeacherBuilder.rate(rate);
-        roleTeacherBuilder.employment_type(employment_type);
-        roleTeacherBuilder.public_role(public_role);
-        roleTeacherBuilder.login(login);
-        roleTeacherBuilder.photo(photo);
-        roleTeacherBuilder.code(code);
-        roleTeacherBuilder.email(email);
-        roleTeacherBuilder.alias(alias);
-        roleTeacherBuilder.section(section);
-        roleTeacherBuilder.section_name(section_name);
-        roleTeacherBuilder.lead(lead);
-        roleTeacherBuilder._public(_public);
-        return new RoleTeacher(roleTeacherBuilder);
-    }
-
-    public RoleStudent extractStudentRole() {
-        RoleStudent.RoleStudentBuilder roleStudentBuilder = new RoleStudent.RoleStudentBuilder();
-        roleStudentBuilder.id(id);
-        roleStudentBuilder.person(person);
-        roleStudentBuilder.type(type);
-        roleStudentBuilder.name(name);
-        roleStudentBuilder.role(role);
-        roleStudentBuilder.position(position);
-        roleStudentBuilder.position_name(position_name);
-
-        roleStudentBuilder.group(group);
-        roleStudentBuilder.major(major);
-        roleStudentBuilder.study(study);
-        roleStudentBuilder.year(year);
-        roleStudentBuilder.payment(payment);
-        roleStudentBuilder.contract_year(contract_year);
-        return new RoleStudent(roleStudentBuilder);
-    }
-
     @Override
     public int getId() {
         return id;
@@ -151,5 +104,77 @@ public final class UserRoleRow implements Role {
 
     public String getPosition_name() {
         return position_name;
+    }
+
+    public int getGroup() {
+        return group;
+    }
+
+    public int getMajor() {
+        return major;
+    }
+
+    public int getStudy() {
+        return study;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public int getPayment() {
+        return payment;
+    }
+
+    public int getContract_year() {
+        return contract_year;
+    }
+
+    public float getRate() {
+        return rate;
+    }
+
+    public int getEmployment_type() {
+        return employment_type;
+    }
+
+    public int getPublic_role() {
+        return public_role;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public int getPhoto() {
+        return photo;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getAlias() {
+        return alias;
+    }
+
+    public int getSection() {
+        return section;
+    }
+
+    public String getSection_name() {
+        return section_name;
+    }
+
+    public int getLead() {
+        return lead;
+    }
+
+    public int get_public() {
+        return _public;
     }
 }

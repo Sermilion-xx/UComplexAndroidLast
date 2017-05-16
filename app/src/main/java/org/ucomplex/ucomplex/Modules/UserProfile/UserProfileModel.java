@@ -1,10 +1,13 @@
 package org.ucomplex.ucomplex.Modules.UserProfile;
 
+import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
+import org.ucomplex.ucomplex.Domain.Users.UserInterface;
 import org.ucomplex.ucomplex.Modules.UserProfile.model.UserProfileItem;
 import org.ucomplex.ucomplex.Modules.UserProfile.model.UserProfileRaw;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -65,7 +68,19 @@ public class UserProfileModel implements MVPModel<UserProfileRaw, List<UserProfi
 
     @Override
     public List<UserProfileItem> processData(UserProfileRaw data) {
-
-        return null;
+        List<UserProfileItem>  items = new ArrayList<>();
+        UserInterface user = data.extractUser();
+        String positionName = FacadeCommon.getStringUserType(UCApplication.getInstance(), user.getType());
+        UserProfileItem header = new UserProfileItem(user.getName(),
+                                                     positionName,
+                                                     user.getIsFriend(),
+                                                     user.getIsBlack());
+        items.add(header);
+        for (int i = 0; i < user.getRoles().size(); i++) {
+            UserProfileItem item = new UserProfileItem(user.getRoles().get(i));
+            items.add(item);
+        }
+        mData = items;
+        return items;
     }
 }

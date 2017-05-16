@@ -7,6 +7,8 @@ import org.ucomplex.ucomplex.Domain.Users.User;
 import org.ucomplex.ucomplex.Domain.Users.UserInterface;
 import org.ucomplex.ucomplex.Domain.Users.role.Role;
 import org.ucomplex.ucomplex.Domain.Users.role.RoleBase;
+import org.ucomplex.ucomplex.Domain.Users.role.RoleStudent;
+import org.ucomplex.ucomplex.Domain.Users.role.RoleTeacher;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +41,7 @@ public final class UserProfileRaw {
     private final BlackList black;
     private final FriendList friend;
 
-    public UserProfileRaw() {
+    private UserProfileRaw() {
         this.id = 0;
         this.name = "";
         this.email = "";
@@ -57,7 +59,7 @@ public final class UserProfileRaw {
         this.friend = new FriendList();
     }
 
-    public UserInterface extractUser() {
+    public final UserInterface extractUser() {
         Teacher.TeacherBuilder teacherBuilder = new Teacher.TeacherBuilder();
         teacherBuilder.id(id);
         teacherBuilder.name(name);
@@ -76,72 +78,56 @@ public final class UserProfileRaw {
         List<Role> userRole = new ArrayList<>();
         for (UserRoleRow role: roles) {
             if (role.getType() == User.USER_TYPE_TEACHER) {
-                userRole.add(role.extractTeacherRole());
+                userRole.add(roleStudentStrategy.apply(role));
             } else if (role.getType() == User.USER_TYPE_STUDENT) {
-                userRole.add(role.extractStudentRole());
+                userRole.add(roleTeacherStrategy.apply(role));
             }
         }
         teacherBuilder.roles(userRole);
         return new Teacher(teacherBuilder);
     }
 
-    public int getId() {
-        return id;
-    }
+    private final Function<RoleStudent, UserRoleRow> roleStudentStrategy = role -> {
+        RoleStudent.RoleStudentBuilder roleStudentBuilder = new RoleStudent.RoleStudentBuilder();
+        roleStudentBuilder.id(role.getId());
+        roleStudentBuilder.person(role.getPerson());
+        roleStudentBuilder.type(role.getType());
+        roleStudentBuilder.name(role.getName());
+        roleStudentBuilder.role(role.getRole());
+        roleStudentBuilder.position(role.getPosition());
+        roleStudentBuilder.position_name(role.getPosition_name());
 
-    public String getName() {
-        return name;
-    }
+        roleStudentBuilder.group(role.getGroup());
+        roleStudentBuilder.major(role.getMajor());
+        roleStudentBuilder.study(role.getStudy());
+        roleStudentBuilder.year(role.getYear());
+        roleStudentBuilder.payment(role.getPayment());
+        roleStudentBuilder.contract_year(role.getContract_year());
+        return new RoleStudent(roleStudentBuilder);
+    };
 
-    public String getEmail() {
-        return email;
-    }
+    private final Function<RoleTeacher, UserRoleRow> roleTeacherStrategy = role -> {
+        RoleTeacher.RoleTeacherBuilder roleTeacherBuilder = new RoleTeacher.RoleTeacherBuilder();
+        roleTeacherBuilder.id(role.getId());
+        roleTeacherBuilder.person(role.getPerson());
+        roleTeacherBuilder.type(role.getType());
+        roleTeacherBuilder.name(role.getName());
+        roleTeacherBuilder.role(role.getRole());
+        roleTeacherBuilder.position(role.getPosition());
+        roleTeacherBuilder.position_name(role.getPosition_name());
 
-    public String getCode() {
-        return code;
-    }
-
-    public int getPhoto() {
-        return photo;
-    }
-
-    public String getStatuses() {
-        return statuses;
-    }
-
-    public String getAcademic_awards() {
-        return academic_awards;
-    }
-
-    public int getAcademic_rank() {
-        return academic_rank;
-    }
-
-    public int getAcademic_degree() {
-        return academic_degree;
-    }
-
-    public String getUpqualification() {
-        return upqualification;
-    }
-
-    public String getPhone_work() {
-        return phone_work;
-    }
-
-    public String getBio() {
-        return bio;
-    }
-
-    public List<UserRoleRow> getRoles() {
-        return roles;
-    }
-
-    public BlackList getBlack() {
-        return black;
-    }
-
-    public FriendList getFriend() {
-        return friend;
-    }
+        roleTeacherBuilder.rate(role.getRate());
+        roleTeacherBuilder.employment_type(role.getEmployment_type());
+        roleTeacherBuilder.public_role(role.getPublic_role());
+        roleTeacherBuilder.login(role.getLogin());
+        roleTeacherBuilder.photo(role.getPhoto());
+        roleTeacherBuilder.code(role.getCode());
+        roleTeacherBuilder.email(role.getEmail());
+        roleTeacherBuilder.alias(role.getAlias());
+        roleTeacherBuilder.section(role.getSection());
+        roleTeacherBuilder.section_name(role.getSection_name());
+        roleTeacherBuilder.lead(role.getLead());
+        roleTeacherBuilder._public(role.get_public());
+        return new RoleTeacher(roleTeacherBuilder);
+    };
 }

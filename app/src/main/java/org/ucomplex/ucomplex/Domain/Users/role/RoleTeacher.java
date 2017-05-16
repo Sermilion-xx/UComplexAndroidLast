@@ -26,7 +26,7 @@ public final class RoleTeacher implements Role {
     private final int lead;
     private final int _public;
 
-    public RoleTeacher() {
+    private RoleTeacher() {
         this.rolePrimary = new RoleTeacher();
         this.rate = 0.0f;
         this.employment_type = 0;
@@ -138,6 +138,11 @@ public final class RoleTeacher implements Role {
     @Override
     public int getPosition() {
         return rolePrimary.getPosition();
+    }
+
+    @Override
+    public String getPosition_name() {
+        return rolePrimary.getPosition_name();
     }
 
     public static class RoleTeacherBuilder {

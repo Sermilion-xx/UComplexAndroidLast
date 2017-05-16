@@ -25,4 +25,6 @@ public interface UserInterface {
     String getName();
     int getId();
     int getPerson();
+    FriendList getIsFriend();
+    BlackList getIsBlack();
 }

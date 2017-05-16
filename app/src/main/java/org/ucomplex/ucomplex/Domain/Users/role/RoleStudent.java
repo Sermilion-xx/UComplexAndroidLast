@@ -63,6 +63,8 @@ public class RoleStudent implements Role, Parcelable{
         return group;
     }
 
+
+
     public int getMajor() {
         return major;
     }
@@ -101,33 +103,39 @@ public class RoleStudent implements Role, Parcelable{
 
     @Override
     public int getId() {
-        return 0;
+        return rolePrimary.getId();
     }
 
     @Override
     public int getPerson() {
-        return 0;
+        return rolePrimary.getPerson();
     }
 
     @Override
     public int getType() {
-        return 0;
+        return rolePrimary.getType();
     }
 
     @Override
     public String getName() {
-        return null;
+        return rolePrimary.getName();
     }
 
     @Override
     public int getRole() {
-        return 0;
+        return rolePrimary.getRole();
     }
 
     @Override
     public int getPosition() {
-        return 0;
+        return rolePrimary.getPosition();
     }
+
+    @Override
+    public String getPosition_name() {
+        return rolePrimary.getPosition_name();
+    }
+
 
     public static class RoleStudentBuilder {
 

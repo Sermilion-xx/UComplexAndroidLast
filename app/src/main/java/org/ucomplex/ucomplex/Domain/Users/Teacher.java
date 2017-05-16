@@ -41,6 +41,31 @@ public final class Teacher implements UserInterface {
     private final int agent;
     private final List<Integer> departments;
 
+    public Teacher(User user) {
+        this.user = user;
+        post = 0;
+        experience = "";
+        dep_experience = "";
+        courses = "";
+        rank = 0;
+        academic_awards = "";
+        academic_rank = 0;
+        academic_degree = 0;
+        upqualification = "";
+        degree = 0;
+        bio = "";
+        phone_work = "";
+        plan = 0;
+        fact = 0;
+        fails = 0;
+        activity_update = "";
+        selection = 0;
+        department = "";
+        closed = 0;
+        agent = 0;
+        departments = new ArrayList<>();
+    }
+
     public Teacher(Teacher.TeacherBuilder builder) {
         this.user = new User(builder.userBuilder);
         this.post = builder.post;
@@ -193,6 +218,16 @@ public final class Teacher implements UserInterface {
     @Override
     public int getPerson() {
         return user.getPerson();
+    }
+
+    @Override
+    public FriendList getIsFriend() {
+        return user.getIsFriend();
+    }
+
+    @Override
+    public BlackList getIsBlack() {
+        return user.getIsBlack();
     }
 
     public static class TeacherBuilder {

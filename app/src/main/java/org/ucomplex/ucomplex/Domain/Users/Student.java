@@ -18,8 +18,8 @@ public final class Student implements UserInterface{
 
     private final User user;
 
-    public Student() {
-        this.user = null;
+    public Student(User user) {
+        this.user = user;
     }
 
     @Override
@@ -65,5 +65,15 @@ public final class Student implements UserInterface{
     @Override
     public int getPerson() {
         return user.getPerson();
+    }
+
+    @Override
+    public FriendList getIsFriend() {
+        return user.getIsFriend();
+    }
+
+    @Override
+    public BlackList getIsBlack() {
+        return user.getIsBlack();
     }
 }

@@ -47,7 +47,6 @@ public class LoginActivity extends BaseMVPActivity<MVPView, LoginPresenter> impl
         ButterKnife.bind(this);
         mLoginSignInButton.setOnClickListener(this);
         mForgotButton.setOnClickListener(this);
-        //check if the user has been logged before. If so, do login
         UserInterface userInterface = UCApplication.getInstance().getLoggedUser();
         if (userInterface != null) {
             startActivity(EventsActivity.creteIntent(this));

@@ -7,6 +7,9 @@ import android.widget.Toast;
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
+import org.ucomplex.ucomplex.Domain.Users.Student;
+import org.ucomplex.ucomplex.Domain.Users.Teacher;
+import org.ucomplex.ucomplex.Domain.Users.User;
 import org.ucomplex.ucomplex.Modules.Events.EventsActivity;
 import org.ucomplex.ucomplex.Modules.Login.model.LoginErrorType;
 import org.ucomplex.ucomplex.Domain.Users.UserInterface;
@@ -85,14 +88,15 @@ public class LoginPresenter extends AbstractPresenter<LoginUser, UserInterface, 
         });
     }
 
-    private void forwardPostLogin(LoginUser user) {
+    private void forwardPostLogin(LoginUser loginUser) {
         Intent intent;
-        if (user.getRoles().size() == 1) {
-            mModel.setData(user.extractUser(ROLE_ONE));
+        if (loginUser.getRoles().size() == 1) {
+            UserInterface userInterface = loginUser.extractUser(ROLE_ONE);
+            mModel.setData(userInterface);
             persistLoginInfo();
             intent = EventsActivity.creteIntent(getActivityContext());
         } else {
-            intent = RoleSelectActivity.creteIntent(getActivityContext(), user);
+            intent = RoleSelectActivity.creteIntent(getActivityContext(), loginUser);
         }
         if (getView() != null) {
             getView().dataLoaded();

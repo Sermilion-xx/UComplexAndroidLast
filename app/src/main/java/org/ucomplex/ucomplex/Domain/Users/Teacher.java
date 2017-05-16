@@ -294,12 +294,12 @@ public final class Teacher implements UserInterface {
         }
 
         public TeacherBuilder friend(FriendList friend) {
-            userBuilder.friend = friend;
+            userBuilder.isFriend = friend;
             return this;
         }
 
         public TeacherBuilder black(BlackList black) {
-            userBuilder.black = black;
+            userBuilder.isBlack = black;
             return this;
         }
 

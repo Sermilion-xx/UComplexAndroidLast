@@ -93,7 +93,7 @@ public class UsersAdapter extends BaseAdapter<UsersAdapter.UsersViewHolder, List
             }
             friendRequested = new boolean[mItems.size()];
             for (int i = 0; i < mItems.size(); i++) {
-                if (mItems.get(i).getIsFriend().is_friend()) {
+                if (mItems.get(i).isFriend()) {
                     friendRequested[i] = true;
                 }
             }

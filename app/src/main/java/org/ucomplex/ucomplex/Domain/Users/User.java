@@ -1,9 +1,7 @@
 package org.ucomplex.ucomplex.Domain.Users;
 
 import org.ucomplex.ucomplex.Domain.Users.role.Role;
-import org.ucomplex.ucomplex.Domain.Users.role.RoleBase;
 
-import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -34,8 +32,9 @@ public final class User implements UserInterface {
     private final String code;
     private final List<Role> roles;
     private final int mobile;
-    private final BlackList black;
-    private final FriendList friend;
+    private final BlackList isBlack;
+    private final FriendList isFriend;
+    private final boolean friend;
 
     public User(UserBuilder builder) {
         this.id = builder.id;
@@ -53,9 +52,10 @@ public final class User implements UserInterface {
         this.email = builder.email;
         this.session = builder.session;
         this.client = builder.client;
-        this.friend = builder.friend;
-        this.black = builder.black;
+        this.isFriend = builder.isFriend;
+        this.isBlack = builder.isBlack;
         this.statuses = builder.statuses;
+        this.friend = builder.friend;
     }
 
     @Override
@@ -86,6 +86,10 @@ public final class User implements UserInterface {
     @Override
     public String getPassword() {
         return password;
+    }
+
+    public boolean isFriend() {
+        return friend;
     }
 
     public String getPhone() {
@@ -132,12 +136,13 @@ public final class User implements UserInterface {
     }
 
     public FriendList getIsFriend() {
-        return friend;
+        return isFriend;
     }
 
     public BlackList getIsBlack() {
-        return black;
+        return isBlack;
     }
+
 
     public static class UserBuilder {
         int id;
@@ -156,8 +161,9 @@ public final class User implements UserInterface {
         String code;
         List<Role> roles;
         int mobile;
-        FriendList friend;
-        BlackList black;
+        FriendList isFriend;
+        BlackList isBlack;
+        boolean friend;
 
         public User build() {
             return new User(this);
@@ -243,13 +249,18 @@ public final class User implements UserInterface {
             return this;
         }
 
-        public UserBuilder friend(FriendList friend) {
-            this.friend = friend;
+        public UserBuilder isFriend(FriendList friend) {
+            this.isFriend = friend;
             return this;
         }
 
-        public UserBuilder black(BlackList friend) {
-            this.black = friend;
+        public UserBuilder isBlack(BlackList friend) {
+            this.isBlack = friend;
+            return this;
+        }
+
+        public UserBuilder friend(boolean friend) {
+            this.friend = friend;
             return this;
         }
     }

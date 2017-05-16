@@ -32,7 +32,7 @@ public final class User implements UserInterface {
     private final int photo;
     private final String statuses;
     private final String code;
-    private final List<? extends Role> roles;
+    private final List<Role> roles;
     private final int mobile;
     private final BlackList black;
     private final FriendList friend;
@@ -154,7 +154,7 @@ public final class User implements UserInterface {
         int photo;
         String statuses;
         String code;
-        List<? extends Role> roles;
+        List<Role> roles;
         int mobile;
         FriendList friend;
         BlackList black;

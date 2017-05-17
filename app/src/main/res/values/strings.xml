@@ -119,7 +119,7 @@
     <string name="error_renaming_file">Ошибка при переименовании</string>
     <string name="write_message">Написать сообщение</string>
     <string name="add_to_friends">В друзья</string>
-    <string name="remove_friend">Удалить из друзей</string>
+    <string name="remove_friend">Убрать</string>
     <string name="unblock">Разблокировать</string>
     <string name="teachers">Преподаватели</string>
     <string name="offline_mode">Оффлайн режим</string>

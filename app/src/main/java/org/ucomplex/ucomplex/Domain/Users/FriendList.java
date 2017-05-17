@@ -15,8 +15,8 @@ import android.os.Parcelable;
 
 public final class FriendList {
 
-    private final boolean is_friend;
-    private final boolean req_sent;
+    private boolean is_friend;
+    private boolean req_sent;
 
     public FriendList() {
         this.is_friend = false;
@@ -31,4 +31,11 @@ public final class FriendList {
         return req_sent;
     }
 
+    public void setIs_friend(boolean is_friend) {
+        this.is_friend = is_friend;
+    }
+
+    public void setReq_sent(boolean req_sent) {
+        this.req_sent = req_sent;
+    }
 }

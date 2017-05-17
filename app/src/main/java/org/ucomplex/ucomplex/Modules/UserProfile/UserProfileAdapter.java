@@ -1,7 +1,9 @@
 package org.ucomplex.ucomplex.Modules.UserProfile;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amulyakhare.textdrawable.TextDrawable;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 
@@ -17,6 +20,7 @@ import org.ucomplex.ucomplex.Common.Constants;
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.FacadeMedia;
 import org.ucomplex.ucomplex.Common.base.BaseAdapter;
+import org.ucomplex.ucomplex.Common.interfaces.OnListItemClicked;
 import org.ucomplex.ucomplex.Domain.Users.BlackList;
 import org.ucomplex.ucomplex.Modules.UserProfile.model.UserProfileItem;
 import org.ucomplex.ucomplex.R;
@@ -25,7 +29,9 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 import static org.ucomplex.ucomplex.Common.base.UCApplication.FORMAT_JPG;
+import static org.ucomplex.ucomplex.Common.base.UCApplication.PHOTOS_ORIGINAL_URL;
 import static org.ucomplex.ucomplex.Common.base.UCApplication.PHOTOS_URL;
 
 /**
@@ -71,6 +77,12 @@ public class UserProfileAdapter extends BaseAdapter<UserProfileAdapter.UserProfi
         }
     }
 
+    private OnListItemClicked<String, Void> onListItemClicked;
+
+    public UserProfileAdapter(OnListItemClicked<String, Void> onListItemClicked) {
+        this.onListItemClicked = onListItemClicked;
+    }
+
     @Override
     public UserProfileViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
@@ -91,18 +103,33 @@ public class UserProfileAdapter extends BaseAdapter<UserProfileAdapter.UserProfi
         if (mItems.size() > 0) {
             UserProfileItem item = mItems.get(position);
             if (getItemViewType(position) == TYPE_HEADER) {
+                Context context = holder.mName.getContext();
                 holder.mName.setText(item.getPersonName());
                 BlackList blackList = item.getBlocked();
+
                 updateBlackListButton(holder.mBlockButton, blackList.is_black());
-                Context context = holder.mName.getContext();
+                updateFriendButton(holder.mFriendButton, item.getFriend().is_friend(), context);
+
                 Drawable textDrawable = FacadeMedia.getTextDrawable(
                         item.getId(), item.getPersonName(), context);
                 String url = PHOTOS_URL + item.getCode() + FORMAT_JPG;
                 Glide.with(context).load(url).asBitmap().placeholder(textDrawable)
                         .priority(Priority.HIGH).into(holder.mProfileImage);
+
                 holder.mBlockButton.setOnClickListener(v -> {
                     item.setBlocked(!item.getBlocked().is_black());
                     updateBlackListButton(holder.mBlockButton, blackList.is_black());
+                });
+                holder.mMessageButton.setOnClickListener(v -> {
+
+                });
+                holder.mFriendButton.setOnClickListener(v -> {
+                    item.setFriend(!item.getFriend().is_friend());
+                    updateFriendButton(holder.mFriendButton, item.getFriend().is_friend(), context);
+                });
+                holder.mProfileImage.setOnClickListener(v -> {
+                    String originalUrl = PHOTOS_ORIGINAL_URL + item.getCode() + FORMAT_JPG;
+                    onListItemClicked.onClick(originalUrl);
                 });
             } else if (getItemViewType(position) == TYPE_INFO) {
                 holder.mInfoKey.setText(item.getPositionName());
@@ -116,6 +143,16 @@ public class UserProfileAdapter extends BaseAdapter<UserProfileAdapter.UserProfi
             view.setImageResource(R.drawable.ic_unlock);
         } else {
             view.setImageResource(R.drawable.ic_lock);
+        }
+    }
+
+    private void updateFriendButton(Button view, boolean friend, Context context) {
+        if (!friend) {
+            view.setText(context.getText(R.string.add_to_friends));
+            view.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_add_as_friend, 0, 0, 0);
+        } else {
+            view.setText(context.getText(R.string.remove_friend));
+            view.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_remove_friend, 0, 0, 0);
         }
     }
 

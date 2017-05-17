@@ -58,6 +58,10 @@ public final class UserProfileItem{
         this.blocked = new BlackList();
     }
 
+    public void setFriend(boolean friend) {
+        this.friend.setIs_friend(friend);
+    }
+
     public String getPersonName() {
         return personName;
     }
@@ -88,10 +92,6 @@ public final class UserProfileItem{
 
     public int getId() {
         return id;
-    }
-
-    public void setFriend(FriendList friend) {
-        this.friend = friend;
     }
 
     public void setBlocked(boolean blocked) {

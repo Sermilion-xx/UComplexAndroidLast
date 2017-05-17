@@ -31,9 +31,8 @@ public class UCApplication extends Application {
     public static final String BASE_URL = "https://ucomplex.org/";
     public static final String BASE_FILES_URL = "https://storage.ucomplex.org/";
     public static final String PHOTOS_URL = BASE_URL + "files/photos/";
+    public static final String PHOTOS_ORIGINAL_URL = BASE_URL + "files/original/";
     public static final String FORMAT_JPG = ".jpg";
-
-
 
     private static UCApplication INSTANCE;
     public  static UCApplication getInstance() {

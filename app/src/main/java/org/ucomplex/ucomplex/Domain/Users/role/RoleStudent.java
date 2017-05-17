@@ -43,6 +43,16 @@ public class RoleStudent implements Role, Parcelable{
         this.contract_year = builder.contract_year;
     }
 
+    public RoleStudent(RoleStudentBuilder builder, RoleBase roleBase) {
+        rolePrimary = roleBase;
+        this.group = builder.group;
+        this.major = builder.major;
+        this.study = builder.study;
+        this.year = builder.year;
+        this.payment = builder.payment;
+        this.contract_year = builder.contract_year;
+    }
+
     public static final Creator<RoleStudent> CREATOR = new Creator<RoleStudent>() {
         @Override
         public RoleStudent createFromParcel(Parcel in) {
@@ -140,6 +150,7 @@ public class RoleStudent implements Role, Parcelable{
     public static class RoleStudentBuilder {
 
         private RoleBase.RoleBaseBuilder roleBaseBuilder;
+        private RoleBase roleBase;
         private int group;
         private int major;
         private int study;
@@ -147,8 +158,12 @@ public class RoleStudent implements Role, Parcelable{
         private int payment;
         private int contract_year;
 
-        public RoleStudentBuilder() {
-            roleBaseBuilder = new RoleBase.RoleBaseBuilder();
+        public RoleStudentBuilder(RoleBase roleBase) {
+            this.roleBase = roleBase;
+        }
+
+        public RoleStudentBuilder(RoleBase.RoleBaseBuilder roleBaseBuilder) {
+            this.roleBaseBuilder = roleBaseBuilder;
         }
 
         public RoleStudent build() {

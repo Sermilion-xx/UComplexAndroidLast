@@ -18,40 +18,44 @@ import org.ucomplex.ucomplex.Domain.Users.role.RoleTeacher;
  * ---------------------------------------------------
  */
 
-public class UserProfileItem {
+public final class UserProfileItem{
 
     private final String personName;
     private final String roleName;
-    private final FriendList friend;
-    private final BlackList blocked;
+    private FriendList friend;
+    private BlackList blocked;
+
     private final String positionName;
     private final String disciplineName;
+
+    private final String code;
+    private final int id;
 
     public UserProfileItem(String personName,
                            String roleName,
                            FriendList friend,
-                           BlackList blocked) {
+                           BlackList blocked,
+                           String code,
+                           int id) {
         this.personName = personName;
         this.roleName = roleName;
         this.friend = friend;
         this.blocked = blocked;
+        this.code = code;
+        this.id = id;
         this.positionName = "";
         this.disciplineName = "";
     }
 
-    public UserProfileItem(Role role) {
-        if (role.getType() == User.USER_TYPE_STUDENT) {
-            this.positionName = FacadeCommon.getStringUserType(UCApplication.getInstance(), role.getType());
-            this.disciplineName = role.getPosition_name();
-        } else {
-            this.positionName = role.getPosition_name();
-            this.disciplineName = ((RoleTeacher)role).getSection_name();
-        }
+    public UserProfileItem(String positionName, String sectionName) {
+        this.positionName = positionName;
+        this.disciplineName = sectionName;
         this.personName = "";
         this.roleName = "";
+        this.code = "";
+        this.id = -1;
         this.friend = new FriendList();
         this.blocked = new BlackList();
-
     }
 
     public String getPersonName() {
@@ -68,5 +72,29 @@ public class UserProfileItem {
 
     public String getDisciplineName() {
         return disciplineName;
+    }
+
+    public FriendList getFriend() {
+        return friend;
+    }
+
+    public BlackList getBlocked() {
+        return blocked;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setFriend(FriendList friend) {
+        this.friend = friend;
+    }
+
+    public void setBlocked(boolean blocked) {
+        this.blocked.setIs_black(blocked);
     }
 }

@@ -14,6 +14,7 @@ public final class User implements UserInterface {
 
     public static final int USER_TYPE_STUDENT = 4;
     public static final int USER_TYPE_TEACHER = 3;
+    public static final int USER_TYPE_ABUTURIENT = 9;
     public static final int USER_TYPE_STAFF = 0;
 
     private final int id;

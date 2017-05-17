@@ -27,6 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.ucomplex.ucomplex.Common.base.UCApplication.BASE_URL;
+import static org.ucomplex.ucomplex.Common.base.UCApplication.FORMAT_JPG;
+import static org.ucomplex.ucomplex.Common.base.UCApplication.PHOTOS_URL;
 
 /**
  * ---------------------------------------------------
@@ -40,8 +42,6 @@ import static org.ucomplex.ucomplex.Common.base.UCApplication.BASE_URL;
 
 public class EventsAdapter extends BaseAdapter<EventsAdapter.EventViewHolder, List<EventItem>> {
 
-    private static final String PHOTOS_PATH = "files/photos/";
-    private static final String FORMAT_JPG = ".jpg";
     private static final int TYPE_COMMON = 0;
     private static final int TYPE_FOOTER = 1;
     private static final int TYPE_NO_CONTENT = 2;
@@ -109,7 +109,7 @@ public class EventsAdapter extends BaseAdapter<EventsAdapter.EventViewHolder, Li
                         item.getParamId(),
                         item.getName(),
                         context);
-                String url = BASE_URL + PHOTOS_PATH + item.getCode() + FORMAT_JPG;
+                String url = BASE_URL + PHOTOS_URL + item.getCode() + FORMAT_JPG;
                 Glide.with(context)
                         .load(url)
                         .asBitmap()

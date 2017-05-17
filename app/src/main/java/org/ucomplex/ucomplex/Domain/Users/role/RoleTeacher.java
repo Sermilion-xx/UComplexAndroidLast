@@ -160,8 +160,8 @@ public final class RoleTeacher implements Role {
         private int lead;
         private int _public;
 
-        public RoleTeacherBuilder() {
-            roleBaseBuilder = new RoleBase.RoleBaseBuilder();
+        public RoleTeacherBuilder(RoleBase.RoleBaseBuilder roleBaseBuilder) {
+            this.roleBaseBuilder = roleBaseBuilder;
         }
 
         public RoleTeacher build() {

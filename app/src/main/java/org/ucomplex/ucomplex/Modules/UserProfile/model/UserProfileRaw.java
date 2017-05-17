@@ -13,6 +13,8 @@ import org.ucomplex.ucomplex.Domain.Users.role.RoleTeacher;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.ucomplex.ucomplex.Domain.Users.User.USER_TYPE_ABUTURIENT;
+
 /**
  * ---------------------------------------------------
  * Created by Sermilion on 03/05/2017.
@@ -78,24 +80,32 @@ public final class UserProfileRaw {
         List<Role> userRole = new ArrayList<>();
         for (UserRoleRow role: roles) {
             if (role.getType() == User.USER_TYPE_TEACHER) {
-                userRole.add(roleStudentStrategy.apply(role));
-            } else if (role.getType() == User.USER_TYPE_STUDENT) {
                 userRole.add(roleTeacherStrategy.apply(role));
+            } else if (role.getType() == User.USER_TYPE_STUDENT) {
+                userRole.add(roleStudentStrategy.apply(role));
+            } else {
+                userRole.add(new RoleBase(roleBaseStrategy.apply(role)));
             }
         }
         teacherBuilder.roles(userRole);
         return new Teacher(teacherBuilder);
     }
 
+    private final Function<RoleBase.RoleBaseBuilder, UserRoleRow> roleBaseStrategy = role -> {
+        RoleBase.RoleBaseBuilder roleBaseBuilder = new RoleBase.RoleBaseBuilder();
+        roleBaseBuilder.id(role.getId());
+        roleBaseBuilder.person(role.getPerson());
+        roleBaseBuilder.type(role.getType());
+        roleBaseBuilder.name(role.getName());
+        roleBaseBuilder.role(role.getRole());
+        roleBaseBuilder.position(role.getPosition());
+        roleBaseBuilder.position_name(role.getPosition_name());
+        return roleBaseBuilder;
+    };
+
     private final Function<RoleStudent, UserRoleRow> roleStudentStrategy = role -> {
-        RoleStudent.RoleStudentBuilder roleStudentBuilder = new RoleStudent.RoleStudentBuilder();
-        roleStudentBuilder.id(role.getId());
-        roleStudentBuilder.person(role.getPerson());
-        roleStudentBuilder.type(role.getType());
-        roleStudentBuilder.name(role.getName());
-        roleStudentBuilder.role(role.getRole());
-        roleStudentBuilder.position(role.getPosition());
-        roleStudentBuilder.position_name(role.getPosition_name());
+        RoleBase.RoleBaseBuilder roleBaseBuilder = roleBaseStrategy.apply(role);
+        RoleStudent.RoleStudentBuilder roleStudentBuilder = new RoleStudent.RoleStudentBuilder(roleBaseBuilder);
 
         roleStudentBuilder.group(role.getGroup());
         roleStudentBuilder.major(role.getMajor());
@@ -107,14 +117,8 @@ public final class UserProfileRaw {
     };
 
     private final Function<RoleTeacher, UserRoleRow> roleTeacherStrategy = role -> {
-        RoleTeacher.RoleTeacherBuilder roleTeacherBuilder = new RoleTeacher.RoleTeacherBuilder();
-        roleTeacherBuilder.id(role.getId());
-        roleTeacherBuilder.person(role.getPerson());
-        roleTeacherBuilder.type(role.getType());
-        roleTeacherBuilder.name(role.getName());
-        roleTeacherBuilder.role(role.getRole());
-        roleTeacherBuilder.position(role.getPosition());
-        roleTeacherBuilder.position_name(role.getPosition_name());
+        RoleBase.RoleBaseBuilder roleBaseBuilder = roleBaseStrategy.apply(role);
+        RoleTeacher.RoleTeacherBuilder roleTeacherBuilder = new RoleTeacher.RoleTeacherBuilder(roleBaseBuilder);
 
         roleTeacherBuilder.rate(role.getRate());
         roleTeacherBuilder.employment_type(role.getEmployment_type());

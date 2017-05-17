@@ -4,6 +4,10 @@ import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
 import org.ucomplex.ucomplex.Domain.Users.UserInterface;
+import org.ucomplex.ucomplex.Domain.Users.role.Role;
+import org.ucomplex.ucomplex.Domain.Users.role.RoleBase;
+import org.ucomplex.ucomplex.Domain.Users.role.RoleStudent;
+import org.ucomplex.ucomplex.Domain.Users.role.RoleTeacher;
 import org.ucomplex.ucomplex.Modules.UserProfile.model.UserProfileItem;
 import org.ucomplex.ucomplex.Modules.UserProfile.model.UserProfileRaw;
 
@@ -74,10 +78,28 @@ public class UserProfileModel implements MVPModel<UserProfileRaw, List<UserProfi
         UserProfileItem header = new UserProfileItem(user.getName(),
                                                      positionName,
                                                      user.getIsFriend(),
-                                                     user.getIsBlack());
+                                                     user.getIsBlack(),
+                                                     user.getCode(),
+                                                     user.getId());
         items.add(header);
         for (int i = 0; i < user.getRoles().size(); i++) {
-            UserProfileItem item = new UserProfileItem(user.getRoles().get(i));
+            //request for user profile returns json which has fields of Teacher role
+            //so we use RoleTeacher class to hold the data
+            Role role = user.getRoles().get(i);
+            int type = role.getType();
+            String rolePositionName;
+            String sectionName;
+            if (role instanceof RoleTeacher) {
+                rolePositionName = role.getPosition_name();
+                sectionName = ((RoleTeacher) role).getSection_name();
+            } else if((role instanceof RoleStudent)) {
+                rolePositionName = FacadeCommon.getStringUserType(UCApplication.getInstance(), role.getType());
+                sectionName = role.getPosition_name();
+            } else {
+                rolePositionName = FacadeCommon.getStringUserType(UCApplication.getInstance(), role.getType());
+                sectionName = role.getPosition_name();
+            }
+            UserProfileItem item = new UserProfileItem(rolePositionName, sectionName);
             items.add(item);
         }
         mData = items;

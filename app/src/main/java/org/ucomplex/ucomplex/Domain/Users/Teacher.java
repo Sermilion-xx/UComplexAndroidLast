@@ -254,6 +254,10 @@ public final class Teacher implements UserInterface {
         int agent;
         List<Integer> departments;
 
+        public TeacherBuilder() {
+            userBuilder = new User.UserBuilder();
+        }
+
         public Teacher build() {
             return new Teacher(this);
         }

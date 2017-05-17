@@ -26,7 +26,7 @@ public final class RoleBase implements Role, Parcelable {
     private final int position;
     private final String position_name;
 
-    RoleBase(RoleBaseBuilder builder) {
+    public RoleBase(RoleBaseBuilder builder) {
         this.id = builder.id;
         this.person = builder.person;
         this.type = builder.type;

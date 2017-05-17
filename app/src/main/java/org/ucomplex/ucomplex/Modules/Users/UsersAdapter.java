@@ -123,7 +123,7 @@ public class UsersAdapter extends BaseAdapter<UsersAdapter.UsersViewHolder, List
                 if (getItemViewType(position) == TYPE_REQUESTED) {
                     holder.mClickArea.setBackgroundResource(R.color.colorFriendRequested);
                 }
-                holder.mClickArea.setOnClickListener(v -> onListItemClicked.onClick(user.getId(), TYPE_USER));
+                holder.mClickArea.setOnClickListener(v -> onListItemClicked.onClick(user.getPerson(), TYPE_USER));
             } else if (getItemViewType(position) == TYPE_FOOTER) {
                 holder.mLoadMore.setOnClickListener(v -> onListItemClicked.onClick(mItems.size(), TYPE_FOOTER));
             }

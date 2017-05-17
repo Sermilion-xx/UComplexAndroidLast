@@ -17,8 +17,8 @@ import com.google.gson.annotations.SerializedName;
 
 public final class BlackList {
 
-    private final boolean me_black;
-    private final boolean is_black;
+    private boolean me_black;
+    private boolean is_black;
 
     public BlackList() {
         this.me_black = false;
@@ -31,5 +31,13 @@ public final class BlackList {
 
     public boolean is_black() {
         return is_black;
+    }
+
+    public void setMe_black(boolean me_black) {
+        this.me_black = me_black;
+    }
+
+    public void setIs_black(boolean is_black) {
+        this.is_black = is_black;
     }
 }

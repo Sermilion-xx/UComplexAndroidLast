@@ -22,6 +22,7 @@ import org.ucomplex.ucomplex.Common.FacadeMedia;
 import org.ucomplex.ucomplex.Common.base.BaseAdapter;
 import org.ucomplex.ucomplex.Common.interfaces.OnListItemClicked;
 import org.ucomplex.ucomplex.Domain.Users.BlackList;
+import org.ucomplex.ucomplex.Modules.UserProfile.model.ProfileRequestType;
 import org.ucomplex.ucomplex.Modules.UserProfile.model.UserProfileItem;
 import org.ucomplex.ucomplex.R;
 
@@ -77,9 +78,9 @@ public class UserProfileAdapter extends BaseAdapter<UserProfileAdapter.UserProfi
         }
     }
 
-    private OnListItemClicked<String, Void> onListItemClicked;
+    private OnListItemClicked<Object, ProfileRequestType> onListItemClicked;
 
-    public UserProfileAdapter(OnListItemClicked<String, Void> onListItemClicked) {
+    public UserProfileAdapter(OnListItemClicked<Object, ProfileRequestType> onListItemClicked) {
         this.onListItemClicked = onListItemClicked;
     }
 
@@ -118,6 +119,12 @@ public class UserProfileAdapter extends BaseAdapter<UserProfileAdapter.UserProfi
 
                 holder.mBlockButton.setOnClickListener(v -> {
                     item.setBlocked(!item.getBlocked().is_black());
+                    boolean blocked = item.getBlocked().is_black();
+                    if (blocked) {
+                        onListItemClicked.onClick(item.getId(), ProfileRequestType.UNBLOCK);
+                    } else {
+                        onListItemClicked.onClick(item.getId(), ProfileRequestType.BLOCK);
+                    }
                     updateBlackListButton(holder.mBlockButton, blackList.is_black());
                 });
                 holder.mMessageButton.setOnClickListener(v -> {
@@ -126,10 +133,11 @@ public class UserProfileAdapter extends BaseAdapter<UserProfileAdapter.UserProfi
                 holder.mFriendButton.setOnClickListener(v -> {
                     item.setFriend(!item.getFriend().is_friend());
                     updateFriendButton(holder.mFriendButton, item.getFriend().is_friend(), context);
+                    onListItemClicked.onClick(item.getId(), ProfileRequestType.FRIEND);
                 });
                 holder.mProfileImage.setOnClickListener(v -> {
                     String originalUrl = PHOTOS_ORIGINAL_URL + item.getCode() + FORMAT_JPG;
-                    onListItemClicked.onClick(originalUrl);
+                    onListItemClicked.onClick(originalUrl, ProfileRequestType.PHOTO);
                 });
             } else if (getItemViewType(position) == TYPE_INFO) {
                 holder.mInfoKey.setText(item.getPositionName());

@@ -19,9 +19,13 @@ import com.bumptech.glide.request.target.Target;
 
 import org.ucomplex.ucomplex.Common.base.BaseMVPActivity;
 import org.ucomplex.ucomplex.Common.base.UCApplication;
+import org.ucomplex.ucomplex.Common.interfaces.DownloadCallback;
 import org.ucomplex.ucomplex.Common.interfaces.OnListItemClicked;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
+import org.ucomplex.ucomplex.Modules.UserProfile.model.ProfileRequestType;
 import org.ucomplex.ucomplex.R;
+
+import static org.ucomplex.ucomplex.Modules.UserProfile.model.ProfileRequestType.PHOTO;
 
 public class UserProfileActivity extends BaseMVPActivity<MVPView, UserProfilePresenter> {
 
@@ -47,7 +51,23 @@ public class UserProfileActivity extends BaseMVPActivity<MVPView, UserProfilePre
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new UserProfileAdapter((params, type) -> expandProfile(params));
+        mAdapter = new UserProfileAdapter((params, type) -> {
+            switch (type[0]) {
+                case PHOTO:  expandProfile((String) params); break;
+                case FRIEND: presenter.addAsFriend((int) params, new DownloadCallback() {
+                    @Override
+                    public void onResponse(Object response) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+
+                    }
+                });
+            }
+
+        });
         mRecyclerView.setAdapter(mAdapter);
         presenter.loadData(getIntent().getIntExtra(USER_ID, -1));
     }

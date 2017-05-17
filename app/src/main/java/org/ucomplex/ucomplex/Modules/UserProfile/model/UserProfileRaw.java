@@ -1,5 +1,6 @@
 package org.ucomplex.ucomplex.Modules.UserProfile.model;
 
+import org.ucomplex.ucomplex.Common.interfaces.Function;
 import org.ucomplex.ucomplex.Domain.Users.BlackList;
 import org.ucomplex.ucomplex.Domain.Users.FriendList;
 import org.ucomplex.ucomplex.Domain.Users.Teacher;
@@ -12,8 +13,6 @@ import org.ucomplex.ucomplex.Domain.Users.role.RoleTeacher;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.ucomplex.ucomplex.Domain.Users.User.USER_TYPE_ABUTURIENT;
 
 /**
  * ---------------------------------------------------

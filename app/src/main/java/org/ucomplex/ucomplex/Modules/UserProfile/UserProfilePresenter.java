@@ -2,6 +2,8 @@ package org.ucomplex.ucomplex.Modules.UserProfile;
 
 import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
+import org.ucomplex.ucomplex.Common.interfaces.DownloadCallback;
+import org.ucomplex.ucomplex.Modules.UserProfile.model.ResponseAddFriend;
 import org.ucomplex.ucomplex.Modules.UserProfile.model.UserProfileItem;
 import org.ucomplex.ucomplex.Modules.UserProfile.model.UserProfileRaw;
 
@@ -55,6 +57,81 @@ public class UserProfilePresenter extends AbstractPresenter<
             @Override
             public void onComplete() {
                 hideProgress();
+            }
+        });
+    }
+
+    public void addAsFriend(int user, DownloadCallback callback) {
+        Observable<ResponseAddFriend> observable = mModel.addAsFriend(user);
+        observable.subscribe(new Observer<ResponseAddFriend>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(ResponseAddFriend value) {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                callback.onError(e);
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    public void block(int user, DownloadCallback callback) {
+        Observable<Void> observable = mModel.block(user);
+        observable.subscribe(new Observer<Void>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(Void value) {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                callback.onError(e);
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    public void unblock(int user, DownloadCallback callback) {
+        Observable<Void> observable = mModel.unblock(user);
+        observable.subscribe(new Observer<Void>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(Void value) {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                callback.onError(e);
+            }
+
+            @Override
+            public void onComplete() {
+
             }
         });
     }

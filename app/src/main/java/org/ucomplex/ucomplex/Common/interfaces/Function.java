@@ -1,4 +1,4 @@
-package org.ucomplex.ucomplex.Modules.UserProfile.model;
+package org.ucomplex.ucomplex.Common.interfaces;
 
 /**
  * ---------------------------------------------------

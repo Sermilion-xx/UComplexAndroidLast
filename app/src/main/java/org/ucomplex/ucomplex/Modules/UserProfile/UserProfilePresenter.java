@@ -28,6 +28,8 @@ public class UserProfilePresenter extends AbstractPresenter<
         UserProfileRaw, List<UserProfileItem>,
         Integer, UserProfileModel> {
 
+    private DownloadCallback callback;
+
     public UserProfilePresenter() {
         UCApplication.getInstance().getAppDiComponent().inject(this);
     }
@@ -89,67 +91,44 @@ public class UserProfilePresenter extends AbstractPresenter<
         });
     }
 
+    public void unfriend(int user, DownloadCallback callback) {
+        this.callback = callback;
+        Observable<Void> observable = mModel.unfriend(user);
+        observable.subscribe(voidObserver);
+    }
+
     public void block(int user, DownloadCallback callback) {
+        this.callback = callback;
         Observable<Void> observable = mModel.block(user);
-        observable.subscribe(new Observer<Void>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-
-            }
-
-            @Override
-            public void onNext(Void value) {
-
-            }
-
-            /**
-             * NullPointerException is expected as server response is always null
-             * @param e: an Exception thrown by Retrofit
-             */
-            @Override
-            public void onError(Throwable e) {
-                if (getView() != null && !(e instanceof NullPointerException)) {
-                    callback.onError(e);
-                    getView().showToast(R.string.error);
-                }
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-        });
+        observable.subscribe(voidObserver);
     }
 
     public void unblock(int user, DownloadCallback callback) {
+        this.callback = callback;
         Observable<Void> observable = mModel.unblock(user);
-        observable.subscribe(new Observer<Void>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-
-            }
-
-            @Override
-            public void onNext(Void value) {
-
-            }
-
-            /**
-             * NullPointerException is expected as server response is always null
-             * @param e: an Exception thrown by Retrofit
-             */
-            @Override
-            public void onError(Throwable e) {
-                if (getView() != null && !(e instanceof NullPointerException)) {
-                    callback.onError(e);
-                    getView().showToast(R.string.error);
-                }
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-        });
+        observable.subscribe(voidObserver);
     }
+
+    private Observer<Void> voidObserver = new Observer<Void>() {
+        @Override
+        public void onSubscribe(Disposable d) {}
+
+        @Override
+        public void onNext(Void value) {}
+
+        /**
+         * NullPointerException is expected as server response is always null
+         * @param e: an Exception thrown by Retrofit
+         */
+        @Override
+        public void onError(Throwable e) {
+            if (getView() != null && !(e instanceof NullPointerException)) {
+                callback.onError(e);
+                getView().showToast(R.string.error);
+            }
+        }
+
+        @Override
+        public void onComplete() {}
+    };
 }

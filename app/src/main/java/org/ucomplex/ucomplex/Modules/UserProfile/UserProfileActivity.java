@@ -74,6 +74,9 @@ public class UserProfileActivity extends BaseMVPActivity<MVPView, UserProfilePre
             case FRIEND:
                 presenter.addAsFriend((int) params, downloadCallback);
                 break;
+            case UNFRIEND:
+                presenter.unfriend((int) params, downloadCallback);
+                break;
             case BLOCK:
                 presenter.block((int) params, downloadCallback);
                 break;

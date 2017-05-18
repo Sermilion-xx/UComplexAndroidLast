@@ -5,7 +5,6 @@ import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
 import org.ucomplex.ucomplex.Domain.Users.UserInterface;
 import org.ucomplex.ucomplex.Domain.Users.role.Role;
-import org.ucomplex.ucomplex.Domain.Users.role.RoleBase;
 import org.ucomplex.ucomplex.Domain.Users.role.RoleStudent;
 import org.ucomplex.ucomplex.Domain.Users.role.RoleTeacher;
 import org.ucomplex.ucomplex.Modules.UserProfile.model.ResponseAddFriend;
@@ -53,6 +52,11 @@ public class UserProfileModel implements MVPModel<UserProfileRaw, List<UserProfi
 
     public Observable<ResponseAddFriend> addAsFriend(Integer user) {
         return mService.addAsFriend(user).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Observable<Void> unfriend(Integer user) {
+        return mService.unfriend(user).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 

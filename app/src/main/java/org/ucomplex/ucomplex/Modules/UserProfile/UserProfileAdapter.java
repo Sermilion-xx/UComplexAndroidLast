@@ -128,6 +128,12 @@ public class UserProfileAdapter extends BaseAdapter<UserProfileAdapter.UserProfi
                 });
                 holder.mFriendButton.setOnClickListener(v -> {
                     item.setFriend(!item.getFriend().is_friend());
+                    boolean friend = item.getFriend().is_friend();
+                    if (friend) {
+                        onListItemClicked.onClick(item.getId(), ProfileRequestType.FRIEND);
+                    } else {
+                        onListItemClicked.onClick(item.getId(), ProfileRequestType.UNFRIEND);
+                    }
                     updateFriendButton(holder.mFriendButton, item.getFriend().is_friend(), context);
                     onListItemClicked.onClick(item.getId(), ProfileRequestType.FRIEND);
                 });

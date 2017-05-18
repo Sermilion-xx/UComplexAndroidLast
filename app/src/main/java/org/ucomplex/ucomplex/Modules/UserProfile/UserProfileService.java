@@ -27,6 +27,9 @@ public interface UserProfileService {
     @POST("/user/friends/add?mobile=1") @FormUrlEncoded
     Observable<ResponseAddFriend> addAsFriend(@Field("user") Integer user);
 
+    @POST("/user/friends/delete") @FormUrlEncoded
+    Observable<Void> unfriend(@Field("user") Integer user);
+
     @POST("/user/blacklist/add") @FormUrlEncoded
     Observable<Void> block(@Field("user") Integer user);
 

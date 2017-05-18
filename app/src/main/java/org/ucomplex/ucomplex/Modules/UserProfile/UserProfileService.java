@@ -1,6 +1,5 @@
 package org.ucomplex.ucomplex.Modules.UserProfile;
 
-import org.ucomplex.ucomplex.Modules.UserProfile.model.ResponseAddFriend;
 import org.ucomplex.ucomplex.Modules.UserProfile.model.UserProfileRaw;
 
 import io.reactivex.Observable;
@@ -25,7 +24,7 @@ public interface UserProfileService {
     Observable<UserProfileRaw> getUserProfile(@Path("id") Integer start);
 
     @POST("/user/friends/add?mobile=1") @FormUrlEncoded
-    Observable<ResponseAddFriend> addAsFriend(@Field("user") Integer user);
+    Observable<Void> addAsFriend(@Field("user") Integer user);
 
     @POST("/user/friends/delete") @FormUrlEncoded
     Observable<Void> unfriend(@Field("user") Integer user);

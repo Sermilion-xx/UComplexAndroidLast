@@ -11,6 +11,9 @@ import org.ucomplex.ucomplex.Modules.Login.LoginPresenter;
 import org.ucomplex.ucomplex.Modules.Login.dagger.LoginActivityModule;
 import org.ucomplex.ucomplex.Modules.Login.dagger.LoginPresenterModule;
 import org.ucomplex.ucomplex.Modules.Portfolio.PortfolioActivity;
+import org.ucomplex.ucomplex.Modules.RoleInfo.RoleInfoActivity;
+import org.ucomplex.ucomplex.Modules.RoleInfo.RoleInfoModel;
+import org.ucomplex.ucomplex.Modules.RoleInfo.RoleInfoPresenter;
 import org.ucomplex.ucomplex.Modules.RoleSelect.RoleSelectActivity;
 import org.ucomplex.ucomplex.Modules.RoleSelect.RoleSelectPresenter;
 import org.ucomplex.ucomplex.Modules.RoleSelect.dagger.RoleSelectActivityModule;
@@ -147,6 +150,12 @@ public interface AppDiComponent {
     void inject(UserProfilePresenter presenter);
 
     void inject(UserProfileActivity activity);
+
+    void inject(RoleInfoModel model);
+
+    void inject(RoleInfoPresenter presenter);
+
+    void inject(RoleInfoActivity activity);
 
 }
 

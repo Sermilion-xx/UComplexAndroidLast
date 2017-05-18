@@ -3,7 +3,6 @@ package org.ucomplex.ucomplex.Modules.UserProfile;
 import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
 import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.DownloadCallback;
-import org.ucomplex.ucomplex.Modules.UserProfile.model.ResponseAddFriend;
 import org.ucomplex.ucomplex.Modules.UserProfile.model.UserProfileItem;
 import org.ucomplex.ucomplex.Modules.UserProfile.model.UserProfileRaw;
 import org.ucomplex.ucomplex.R;
@@ -65,30 +64,9 @@ public class UserProfilePresenter extends AbstractPresenter<
     }
 
     public void addAsFriend(int user, DownloadCallback callback) {
-        Observable<ResponseAddFriend> observable = mModel.addAsFriend(user);
-        observable.subscribe(new Observer<ResponseAddFriend>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-
-            }
-
-            @Override
-            public void onNext(ResponseAddFriend value) {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                callback.onError(e);
-                if (getView() != null)
-                    getView().showToast(R.string.error);
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-        });
+        this.callback = callback;
+        Observable<Void> observable = mModel.addAsFriend(user);
+        observable.subscribe(voidObserver);
     }
 
     public void unfriend(int user, DownloadCallback callback) {
@@ -129,6 +107,7 @@ public class UserProfilePresenter extends AbstractPresenter<
         }
 
         @Override
-        public void onComplete() {}
+        public void onComplete() {
+        }
     };
 }

@@ -1,9 +1,7 @@
 package org.ucomplex.ucomplex.Modules.UserProfile;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +10,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.amulyakhare.textdrawable.TextDrawable;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 
@@ -30,7 +27,6 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 import static org.ucomplex.ucomplex.Common.base.UCApplication.FORMAT_JPG;
 import static org.ucomplex.ucomplex.Common.base.UCApplication.PHOTOS_ORIGINAL_URL;
 import static org.ucomplex.ucomplex.Common.base.UCApplication.PHOTOS_URL;
@@ -121,9 +117,9 @@ public class UserProfileAdapter extends BaseAdapter<UserProfileAdapter.UserProfi
                     item.setBlocked(!item.getBlocked().is_black());
                     boolean blocked = item.getBlocked().is_black();
                     if (blocked) {
-                        onListItemClicked.onClick(item.getId(), ProfileRequestType.UNBLOCK);
-                    } else {
                         onListItemClicked.onClick(item.getId(), ProfileRequestType.BLOCK);
+                    } else {
+                        onListItemClicked.onClick(item.getId(), ProfileRequestType.UNBLOCK);
                     }
                     updateBlackListButton(holder.mBlockButton, blackList.is_black());
                 });
@@ -146,11 +142,27 @@ public class UserProfileAdapter extends BaseAdapter<UserProfileAdapter.UserProfi
         }
     }
 
+    void revertChanges(ProfileRequestType requestType) {
+        UserProfileItem item = mItems.get(0);
+        switch (requestType) {
+            case FRIEND:
+                item.setFriend(!item.getFriend().is_friend());
+                break;
+            case BLOCK:
+                item.setBlocked(!item.getBlocked().is_black());
+                break;
+            case UNBLOCK:
+                item.setBlocked(!item.getBlocked().is_black());
+                break;
+        }
+        notifyItemChanged(0);
+    }
+
     private void updateBlackListButton(ImageView view, boolean blocked) {
         if (blocked) {
-            view.setImageResource(R.drawable.ic_unlock);
-        } else {
             view.setImageResource(R.drawable.ic_lock);
+        } else {
+            view.setImageResource(R.drawable.ic_unlock);
         }
     }
 

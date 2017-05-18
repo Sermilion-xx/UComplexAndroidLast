@@ -27,10 +27,10 @@ public interface UserProfileService {
     @POST("/user/friends/add?mobile=1") @FormUrlEncoded
     Observable<ResponseAddFriend> addAsFriend(@Field("user") Integer user);
 
-    @POST("/user/blacklist/add?mobile=1") @FormUrlEncoded
+    @POST("/user/blacklist/add") @FormUrlEncoded
     Observable<Void> block(@Field("user") Integer user);
 
-    @POST("/user/blacklist/delete?mobile=1") @FormUrlEncoded
+    @POST("/user/blacklist/delete") @FormUrlEncoded
     Observable<Void> unblock(@Field("user") Integer user);
 
 }

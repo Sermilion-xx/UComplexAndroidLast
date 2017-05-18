@@ -25,13 +25,11 @@ import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
 import org.ucomplex.ucomplex.Modules.UserProfile.model.ProfileRequestType;
 import org.ucomplex.ucomplex.R;
 
-import static org.ucomplex.ucomplex.Modules.UserProfile.model.ProfileRequestType.PHOTO;
-
 public class UserProfileActivity extends BaseMVPActivity<MVPView, UserProfilePresenter> {
 
     private static final String USER_ID = "USER_ID";
 
-    public static Intent creteIntent (Context context, int id) {
+    public static Intent creteIntent(Context context, int id) {
         Intent intent = new Intent(context, UserProfileActivity.class);
         intent.putExtra(USER_ID, id);
         return intent;
@@ -51,26 +49,39 @@ public class UserProfileActivity extends BaseMVPActivity<MVPView, UserProfilePre
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new UserProfileAdapter((params, type) -> {
-            switch (type[0]) {
-                case PHOTO:  expandProfile((String) params); break;
-                case FRIEND: presenter.addAsFriend((int) params, new DownloadCallback() {
-                    @Override
-                    public void onResponse(Object response) {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable t) {
-
-                    }
-                });
-            }
-
-        });
+        mAdapter = new UserProfileAdapter(onListItemClicked);
         mRecyclerView.setAdapter(mAdapter);
         presenter.loadData(getIntent().getIntExtra(USER_ID, -1));
     }
+
+    OnListItemClicked<Object, ProfileRequestType> onListItemClicked = (params, type) -> {
+
+        DownloadCallback downloadCallback = new DownloadCallback() {
+            @Override
+            public void onResponse(Object response) {
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                mAdapter.revertChanges(type[0]);
+            }
+        };
+
+        switch (type[0]) {
+            case PHOTO:
+                expandProfile((String) params);
+                break;
+            case FRIEND:
+                presenter.addAsFriend((int) params, downloadCallback);
+                break;
+            case BLOCK:
+                presenter.block((int) params, downloadCallback);
+                break;
+            case UNBLOCK:
+                presenter.unblock((int) params, downloadCallback);
+                break;
+        }
+    };
 
     @Override
     public void dataLoaded() {

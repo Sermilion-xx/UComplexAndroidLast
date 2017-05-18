@@ -17,7 +17,7 @@
     <ImageView
         android:layout_width="22dp"
         android:layout_height="28dp"
-        android:src="@drawable/ic_lock"
+        android:src="@drawable/ic_unlock"
         android:layout_marginStart="24dp"
         android:id="@+id/block"
         android:layout_alignTop="@+id/profile_picture"

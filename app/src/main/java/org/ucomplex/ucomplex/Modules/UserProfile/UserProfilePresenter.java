@@ -1,11 +1,12 @@
 package org.ucomplex.ucomplex.Modules.UserProfile;
 
-import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
+import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.DownloadCallback;
 import org.ucomplex.ucomplex.Modules.UserProfile.model.ResponseAddFriend;
 import org.ucomplex.ucomplex.Modules.UserProfile.model.UserProfileItem;
 import org.ucomplex.ucomplex.Modules.UserProfile.model.UserProfileRaw;
+import org.ucomplex.ucomplex.R;
 
 import java.util.List;
 
@@ -44,7 +45,7 @@ public class UserProfilePresenter extends AbstractPresenter<
             @Override
             public void onNext(UserProfileRaw value) {
                 mModel.processData(value);
-                if(getView()!=null){
+                if (getView() != null) {
                     getView().dataLoaded();
                 }
             }
@@ -77,6 +78,8 @@ public class UserProfilePresenter extends AbstractPresenter<
             @Override
             public void onError(Throwable e) {
                 callback.onError(e);
+                if (getView() != null)
+                    getView().showToast(R.string.error);
             }
 
             @Override
@@ -99,9 +102,16 @@ public class UserProfilePresenter extends AbstractPresenter<
 
             }
 
+            /**
+             * NullPointerException is expected as server response is always null
+             * @param e: an Exception thrown by Retrofit
+             */
             @Override
             public void onError(Throwable e) {
-                callback.onError(e);
+                if (getView() != null && !(e instanceof NullPointerException)) {
+                    callback.onError(e);
+                    getView().showToast(R.string.error);
+                }
             }
 
             @Override
@@ -124,9 +134,16 @@ public class UserProfilePresenter extends AbstractPresenter<
 
             }
 
+            /**
+             * NullPointerException is expected as server response is always null
+             * @param e: an Exception thrown by Retrofit
+             */
             @Override
             public void onError(Throwable e) {
-                callback.onError(e);
+                if (getView() != null && !(e instanceof NullPointerException)) {
+                    callback.onError(e);
+                    getView().showToast(R.string.error);
+                }
             }
 
             @Override

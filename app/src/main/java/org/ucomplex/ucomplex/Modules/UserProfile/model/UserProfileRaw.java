@@ -40,7 +40,7 @@ public final class UserProfileRaw {
     private final String bio;
     private final List<UserRoleRow> roles;
     private final BlackList black;
-    private final FriendList friend;
+    private final FriendList friends;
 
     private UserProfileRaw() {
         this.id = 0;
@@ -57,7 +57,7 @@ public final class UserProfileRaw {
         this.bio = "";
         this.roles = new ArrayList<>();
         this.black = new BlackList();
-        this.friend = new FriendList();
+        this.friends = new FriendList();
     }
 
     public final UserInterface extractUser() {
@@ -74,7 +74,7 @@ public final class UserProfileRaw {
         teacherBuilder.upqualification(upqualification);
         teacherBuilder.phone_work(phone_work);
         teacherBuilder.bio(bio);
-        teacherBuilder.friend(friend);
+        teacherBuilder.friend(friends);
         teacherBuilder.black(black);
         List<Role> userRole = new ArrayList<>();
         for (UserRoleRow role: roles) {

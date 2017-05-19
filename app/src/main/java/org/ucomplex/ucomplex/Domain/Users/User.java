@@ -59,6 +59,28 @@ public final class User implements UserInterface {
         this.friend = builder.friend;
     }
 
+    public User() {
+        this.id = 0;
+        this.person = 0;
+        this.type = 0;
+        this.name = "John Doe";
+        this.login = "";
+        this.password = "";
+        this.phone = "";
+        this.photo = 0;
+        this.code = "";
+        this.roles = new ArrayList<>();
+        this.role = -1;
+        this.mobile = 0;
+        this.email = "";
+        this.session = "";
+        this.client = 0;
+        this.isFriend = new FriendList();
+        this.isBlack = new BlackList();
+        this.statuses = "";
+        this.friend = false;
+    }
+
     @Override
     public int getId() {
         return id;

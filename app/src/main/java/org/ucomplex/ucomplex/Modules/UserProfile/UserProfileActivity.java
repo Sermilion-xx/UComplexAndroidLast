@@ -22,6 +22,7 @@ import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.DownloadCallback;
 import org.ucomplex.ucomplex.Common.interfaces.OnListItemClicked;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
+import org.ucomplex.ucomplex.Modules.RoleInfo.RoleInfoActivity;
 import org.ucomplex.ucomplex.Modules.UserProfile.model.ProfileRequestType;
 import org.ucomplex.ucomplex.R;
 
@@ -51,7 +52,7 @@ public class UserProfileActivity extends BaseMVPActivity<MVPView, UserProfilePre
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new UserProfileAdapter(onListItemClicked);
         mRecyclerView.setAdapter(mAdapter);
-        presenter.loadData(getIntent().getIntExtra(USER_ID, -1));
+        presenter.loadData(getIntent().getIntExtra(USER_ID, 1951));
     }
 
     OnListItemClicked<Object, ProfileRequestType> onListItemClicked = (params, type) -> {
@@ -82,6 +83,9 @@ public class UserProfileActivity extends BaseMVPActivity<MVPView, UserProfilePre
                 break;
             case UNBLOCK:
                 presenter.unblock((int) params, downloadCallback);
+                break;
+            case OPEN_ROLE:
+                startActivity(RoleInfoActivity.creteIntent(this, (int) params));
                 break;
         }
     };

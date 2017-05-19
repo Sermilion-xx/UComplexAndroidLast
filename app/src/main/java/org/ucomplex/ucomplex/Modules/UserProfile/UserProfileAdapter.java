@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -57,6 +58,7 @@ public class UserProfileAdapter extends BaseAdapter<UserProfileAdapter.UserProfi
 
         TextView mInfoKey;
         TextView mInfoValue;
+        RelativeLayout mClickArea;
 
         public UserProfileViewHolder(View itemView, int viewType) {
             super(itemView);
@@ -70,6 +72,7 @@ public class UserProfileAdapter extends BaseAdapter<UserProfileAdapter.UserProfi
                 mInfoKey =       (TextView) itemView.findViewById(R.id.profile_role_key);
                 mInfoValue =     (TextView) itemView.findViewById(R.id.profile_role_value);
                 mRole =          (CircleImageView) itemView.findViewById(R.id.profile_role_icon);
+                mClickArea =     (RelativeLayout) itemView.findViewById(R.id.clickArea);
             }
         }
     }
@@ -103,49 +106,54 @@ public class UserProfileAdapter extends BaseAdapter<UserProfileAdapter.UserProfi
                 Context context = holder.mName.getContext();
                 holder.mName.setText(item.getPersonName());
                 BlackList blackList = item.getBlocked();
-
                 updateBlackListButton(holder.mBlockButton, blackList.is_black());
                 updateFriendButton(holder.mFriendButton, item.getFriend().is_friend(), context);
-
                 Drawable textDrawable = FacadeMedia.getTextDrawable(
                         item.getId(), item.getPersonName(), context);
                 String url = PHOTOS_URL + item.getCode() + FORMAT_JPG;
                 Glide.with(context).load(url).asBitmap().placeholder(textDrawable)
                         .priority(Priority.HIGH).into(holder.mProfileImage);
-
-                holder.mBlockButton.setOnClickListener(v -> {
-                    item.setBlocked(!item.getBlocked().is_black());
-                    boolean blocked = item.getBlocked().is_black();
-                    if (blocked) {
-                        onListItemClicked.onClick(item.getId(), ProfileRequestType.BLOCK);
-                    } else {
-                        onListItemClicked.onClick(item.getId(), ProfileRequestType.UNBLOCK);
-                    }
-                    updateBlackListButton(holder.mBlockButton, blackList.is_black());
-                });
-                holder.mMessageButton.setOnClickListener(v -> {
-
-                });
-                holder.mFriendButton.setOnClickListener(v -> {
-                    item.setFriend(!item.getFriend().is_friend());
-                    boolean friend = item.getFriend().is_friend();
-                    if (friend) {
-                        onListItemClicked.onClick(item.getId(), ProfileRequestType.FRIEND);
-                    } else {
-                        onListItemClicked.onClick(item.getId(), ProfileRequestType.UNFRIEND);
-                    }
-                    updateFriendButton(holder.mFriendButton, item.getFriend().is_friend(), context);
-                    onListItemClicked.onClick(item.getId(), ProfileRequestType.FRIEND);
-                });
-                holder.mProfileImage.setOnClickListener(v -> {
-                    String originalUrl = PHOTOS_ORIGINAL_URL + item.getCode() + FORMAT_JPG;
-                    onListItemClicked.onClick(originalUrl, ProfileRequestType.PHOTO);
-                });
+                setupButtonListeners(holder, item, context, blackList);
             } else if (getItemViewType(position) == TYPE_INFO) {
                 holder.mInfoKey.setText(item.getPositionName());
                 holder.mInfoValue.setText(item.getDisciplineName());
+                holder.mClickArea.setOnClickListener(v -> onListItemClicked.onClick(item.getRoleId(), ProfileRequestType.OPEN_ROLE));
             }
         }
+    }
+
+    private void setupButtonListeners(UserProfileViewHolder holder, UserProfileItem item, Context context, BlackList blackList) {
+        holder.mBlockButton.setOnClickListener(v -> {
+            item.setBlocked(!item.getBlocked().is_black());
+            boolean blocked = item.getBlocked().is_black();
+            if (blocked) {
+                onListItemClicked.onClick(item.getId(), ProfileRequestType.BLOCK);
+            } else {
+                onListItemClicked.onClick(item.getId(), ProfileRequestType.UNBLOCK);
+            }
+            updateBlackListButton(holder.mBlockButton, blackList.is_black());
+        });
+
+        holder.mMessageButton.setOnClickListener(v -> {
+
+        });
+
+        holder.mFriendButton.setOnClickListener(v -> {
+            item.setFriend(!item.getFriend().is_friend());
+            boolean friend = item.getFriend().is_friend();
+            if (friend) {
+                onListItemClicked.onClick(item.getId(), ProfileRequestType.FRIEND);
+            } else {
+                onListItemClicked.onClick(item.getId(), ProfileRequestType.UNFRIEND);
+            }
+            updateFriendButton(holder.mFriendButton, item.getFriend().is_friend(), context);
+            onListItemClicked.onClick(item.getId(), ProfileRequestType.FRIEND);
+        });
+
+        holder.mProfileImage.setOnClickListener(v -> {
+            String originalUrl = PHOTOS_ORIGINAL_URL + item.getCode() + FORMAT_JPG;
+            onListItemClicked.onClick(originalUrl, ProfileRequestType.PHOTO);
+        });
     }
 
     void revertChanges(ProfileRequestType requestType) {

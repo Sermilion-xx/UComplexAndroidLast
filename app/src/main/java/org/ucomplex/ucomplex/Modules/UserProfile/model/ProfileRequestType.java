@@ -11,5 +11,5 @@ package org.ucomplex.ucomplex.Modules.UserProfile.model;
  */
 
 public enum ProfileRequestType {
-    PHOTO, FRIEND, UNFRIEND, BLOCK, UNBLOCK
+    PHOTO, FRIEND, UNFRIEND, BLOCK, UNBLOCK, OPEN_ROLE
 }

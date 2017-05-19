@@ -6,6 +6,7 @@ import org.ucomplex.ucomplex.Common.AppDiComponent;
 import org.ucomplex.ucomplex.Common.DaggerAppDiComponent;
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.FacadePreferences;
+import org.ucomplex.ucomplex.Domain.Users.User;
 import org.ucomplex.ucomplex.Domain.Users.UserInterface;
 
 import java.security.KeyManagementException;

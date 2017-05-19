@@ -115,7 +115,7 @@ public class UserProfileModel implements MVPModel<UserProfileRaw, List<UserProfi
                 rolePositionName = FacadeCommon.getStringUserType(UCApplication.getInstance(), role.getType());
                 sectionName = role.getPosition_name();
             }
-            UserProfileItem item = new UserProfileItem(rolePositionName, sectionName);
+            UserProfileItem item = new UserProfileItem(rolePositionName, sectionName, role.getId());
             items.add(item);
         }
         mData = items;

@@ -1,12 +1,7 @@
 package org.ucomplex.ucomplex.Modules.UserProfile.model;
 
-import org.ucomplex.ucomplex.Common.FacadeCommon;
-import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Domain.Users.BlackList;
 import org.ucomplex.ucomplex.Domain.Users.FriendList;
-import org.ucomplex.ucomplex.Domain.Users.User;
-import org.ucomplex.ucomplex.Domain.Users.role.Role;
-import org.ucomplex.ucomplex.Domain.Users.role.RoleTeacher;
 
 /**
  * ---------------------------------------------------
@@ -30,6 +25,7 @@ public final class UserProfileItem{
 
     private final String code;
     private final int id;
+    private final int roleId;
 
     public UserProfileItem(String personName,
                            String roleName,
@@ -43,17 +39,19 @@ public final class UserProfileItem{
         this.blocked = blocked;
         this.code = code;
         this.id = id;
+        this.roleId = -1;
         this.positionName = "";
         this.disciplineName = "";
     }
 
-    public UserProfileItem(String positionName, String sectionName) {
+    public UserProfileItem(String positionName, String sectionName, int roleId) {
         this.positionName = positionName;
         this.disciplineName = sectionName;
         this.personName = "";
         this.roleName = "";
         this.code = "";
         this.id = -1;
+        this.roleId = roleId;
         this.friend = new FriendList();
         this.blocked = new BlackList();
     }
@@ -96,5 +94,9 @@ public final class UserProfileItem{
 
     public void setBlocked(boolean blocked) {
         this.blocked.setIs_black(blocked);
+    }
+
+    public int getRoleId() {
+        return roleId;
     }
 }

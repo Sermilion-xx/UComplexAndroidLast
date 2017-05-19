@@ -107,9 +107,22 @@ public abstract class BaseMVPActivity<V extends MVPView, Presenter extends MvpPr
         if (user.getPhoto() == 1) {
             code = user.getCode();
         }
-        DrawerListItem headerItem = new DrawerListItem(code, user.getName().split(" ")[1],
+        String name;
+        name = extractFirstName(user);
+        DrawerListItem headerItem = new DrawerListItem(code, name,
                 FacadeCommon.getStringUserType(this, user.getType()), user.getPerson());
         return setupDrawerArrayList(headerItem, mDrawerIcons, mDrawerTitles);
+    }
+
+    private String extractFirstName(UserInterface user) {
+        String name = "";
+        String[] nameComponents = user.getName().split(" ");
+        if (nameComponents.length > 1) {
+            name = nameComponents[1];
+        } else if (nameComponents.length == 1) {
+            name = nameComponents[0];
+        }
+        return name;
     }
 
     protected void setContentViewWithNavDrawer(int layout) {

@@ -4,12 +4,8 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.widget.Toast;
 
-import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
-import org.ucomplex.ucomplex.Domain.Users.Student;
-import org.ucomplex.ucomplex.Domain.Users.Teacher;
-import org.ucomplex.ucomplex.Domain.Users.User;
 import org.ucomplex.ucomplex.Modules.Events.EventsActivity;
 import org.ucomplex.ucomplex.Modules.Login.model.LoginErrorType;
 import org.ucomplex.ucomplex.Domain.Users.UserInterface;
@@ -26,7 +22,7 @@ import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
-import static org.ucomplex.ucomplex.Modules.Login.model.LoginErrorType.EMPTY_EMAIL;
+import static org.ucomplex.ucomplex.Modules.Login.model.LoginErrorType.LOGIN_REQUIRED;
 import static org.ucomplex.ucomplex.Modules.Login.model.LoginErrorType.INVALID_PASSWORD;
 import static org.ucomplex.ucomplex.Modules.Login.model.LoginErrorType.NO_ERROR;
 import static org.ucomplex.ucomplex.Modules.Login.model.LoginErrorType.PASSWORD_REQUIRED;
@@ -115,23 +111,20 @@ public class LoginPresenter extends AbstractPresenter<LoginUser, UserInterface, 
 
     List<LoginErrorType> checkCredentials(LoginParams mRequestParams) {
         List<LoginErrorType> error = runCheck(mRequestParams);
-        if (error.get(0) == NO_ERROR) {
-            loadData(mRequestParams);
-        }
         return error;
     }
 
     private List<LoginErrorType> runCheck(LoginParams mRequestParams) {
         List<LoginErrorType> errors = new ArrayList<>();
-        String password = mRequestParams.getLogin();
-        String login = mRequestParams.getPassword();
+        String login = mRequestParams.getLogin();
+        String password = mRequestParams.getPassword();
         if (TextUtils.isEmpty(password)) {
             errors.add(PASSWORD_REQUIRED);
         } else if (!isPasswordValid(password)) {
             errors.add(INVALID_PASSWORD);
         }
         if (TextUtils.isEmpty(login)) {
-            errors.add(EMPTY_EMAIL);
+            errors.add(LOGIN_REQUIRED);
         }
         if (errors.size() == 0) {
             errors.add(NO_ERROR);

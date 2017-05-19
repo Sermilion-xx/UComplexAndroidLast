@@ -13,6 +13,6 @@ package org.ucomplex.ucomplex.Modules.Login.model;
 public enum LoginErrorType {
     PASSWORD_REQUIRED,
     INVALID_PASSWORD,
-    EMPTY_EMAIL,
+    LOGIN_REQUIRED,
     NO_ERROR
 }

@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -23,14 +22,15 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static org.ucomplex.ucomplex.Modules.Login.model.LoginErrorType.EMPTY_EMAIL;
+import static org.ucomplex.ucomplex.Modules.Login.model.LoginErrorType.LOGIN_REQUIRED;
 import static org.ucomplex.ucomplex.Modules.Login.model.LoginErrorType.INVALID_PASSWORD;
+import static org.ucomplex.ucomplex.Modules.Login.model.LoginErrorType.NO_ERROR;
 import static org.ucomplex.ucomplex.Modules.Login.model.LoginErrorType.PASSWORD_REQUIRED;
 
 public class LoginActivity extends BaseMVPActivity<MVPView, LoginPresenter> implements View.OnClickListener {
 
     @BindView(R.id.login)
-    AutoCompleteTextView mLoginView;
+    EditText mLoginView;
     @BindView(R.id.password)
     EditText mPasswordView;
     @BindView(R.id.forgot_pass_button)
@@ -73,13 +73,17 @@ public class LoginActivity extends BaseMVPActivity<MVPView, LoginPresenter> impl
         String password = mPasswordView.getText().toString();
         LoginParams params = new LoginParams(login, password, this);
         List<LoginErrorType> error = presenter.checkCredentials(params);
-        if (error.contains(PASSWORD_REQUIRED)) {
-            mPasswordView.setError(getString(R.string.error_field_required));
-        } else if (error.contains(INVALID_PASSWORD)) {
-            mPasswordView.setError(getString(R.string.error_incorrect_password));
-        }
-        if (error.contains(EMPTY_EMAIL)) {
-            mLoginView.setError(getString(R.string.error_field_required));
+        if (error.get(0) == NO_ERROR) {
+            presenter.loadData(params);
+        } else {
+            if (error.contains(PASSWORD_REQUIRED)) {
+                mPasswordView.setError(getString(R.string.error_field_required));
+            } else if (error.contains(INVALID_PASSWORD)) {
+                mPasswordView.setError(getString(R.string.error_incorrect_password));
+            }
+            if (error.contains(LOGIN_REQUIRED)) {
+                mLoginView.setError(getString(R.string.error_field_required));
+            }
         }
     }
 

@@ -14,6 +14,9 @@ import org.ucomplex.ucomplex.Modules.Portfolio.PortfolioActivity;
 import org.ucomplex.ucomplex.Modules.RoleInfo.RoleInfoActivity;
 import org.ucomplex.ucomplex.Modules.RoleInfo.RoleInfoModel;
 import org.ucomplex.ucomplex.Modules.RoleInfo.RoleInfoPresenter;
+import org.ucomplex.ucomplex.Modules.RoleInfo.dagger.RoleInfoActivityModule;
+import org.ucomplex.ucomplex.Modules.RoleInfo.dagger.RoleInfoModelModule;
+import org.ucomplex.ucomplex.Modules.RoleInfo.dagger.RoleInfoPresenterModule;
 import org.ucomplex.ucomplex.Modules.RoleSelect.RoleSelectActivity;
 import org.ucomplex.ucomplex.Modules.RoleSelect.RoleSelectPresenter;
 import org.ucomplex.ucomplex.Modules.RoleSelect.dagger.RoleSelectActivityModule;
@@ -94,7 +97,10 @@ import dagger.Component;
                 UsersModule.class,
                 UserProfileModelModule.class,
                 UserProfilePresenterModule.class,
-                UserProfileActivityModule.class
+                UserProfileActivityModule.class,
+                RoleInfoModelModule.class,
+                RoleInfoPresenterModule.class,
+                RoleInfoActivityModule.class
         })
 
 public interface AppDiComponent {

@@ -33,6 +33,10 @@ public class UserProfilePresenter extends AbstractPresenter<
         UCApplication.getInstance().getAppDiComponent().inject(this);
     }
 
+    public String getPersonName() {
+        return getData().get(0).getPersonName();
+    }
+
     @Override
     public void loadData(Integer params) {
         Observable<UserProfileRaw> dataObservable = mModel.loadData(params);

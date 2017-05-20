@@ -46,13 +46,14 @@ public class UserProfileActivity extends BaseMVPActivity<MVPView, UserProfilePre
         setupToolbar(getString(R.string.events), R.drawable.ic_menu);
         mProgress = (ProgressBar) findViewById(R.id.progressBar);
         setupDrawer();
-
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new UserProfileAdapter(onListItemClicked);
         mRecyclerView.setAdapter(mAdapter);
-        presenter.loadData(getIntent().getIntExtra(USER_ID, 1951));
+        if (presenter.getData() == null) {
+            presenter.loadData(getIntent().getIntExtra(USER_ID, -1));
+        }
     }
 
     private OnListItemClicked<Object, ProfileRequestType> onListItemClicked = (params, type) -> {
@@ -85,7 +86,7 @@ public class UserProfileActivity extends BaseMVPActivity<MVPView, UserProfilePre
                 presenter.unblock((int) params, downloadCallback);
                 break;
             case OPEN_ROLE:
-                startActivity(RoleInfoActivity.creteIntent(this, (int) params));
+                startActivity(RoleInfoActivity.creteIntent(this, (int) params, presenter.getPersonName()));
                 break;
         }
     };

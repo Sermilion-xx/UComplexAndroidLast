@@ -31,22 +31,22 @@ public class SubjectModelTest {
 
     //------------------------------- SubjectModel ------------------------------------------------/
 
-    private SubjectRaw getSubjectRawFromJson(String fileName) {
+    private SubjectRaw jsonToRaw(String fileName) {
         String json = FacadeCommon.readFile(fileName);
         Gson gson = new Gson();
         return gson.fromJson(json, SubjectRaw.class);
     }
 
     @Test
-    public void jsonStringToSubjectRaw() {
-        SubjectRaw subjectRaw = getSubjectRawFromJson(SUBJECT_JSON);
+    public void jsonToSubjectRaw() {
+        SubjectRaw subjectRaw = jsonToRaw(SUBJECT_JSON);
         assertThat("SubjectRaw must not be null", subjectRaw != null);
     }
 
     @Test
-    public void getMarkReturnsMark() {
+    public void rawToSubjectItems() {
         SubjectModel model = SubjectModel.createTestModel();
-        model.processData(getSubjectRawFromJson(SUBJECT_JSON));
+        model.processData(jsonToRaw(SUBJECT_JSON));
         assertThat("Wrong number of generated items. Must be: 4 and 40.", model.getData().getProfileItems().size() == 4 &&
                 model.getData().getMaterialsItems().size() == 40);
     }
@@ -71,7 +71,7 @@ public class SubjectModelTest {
     }
 
     @Test
-    public void SubjectTimelineRawToSubjectTimelineListItems() {
+    public void rawToTimelineItems() {
         SubjectTimelineRaw raw = getSubjectTimelineRawFromJson(SUBJECT_TIMELINE_JSON);
         SubjectTimelineModel model = SubjectTimelineModel.getTestInstance();
         model.processData(raw);

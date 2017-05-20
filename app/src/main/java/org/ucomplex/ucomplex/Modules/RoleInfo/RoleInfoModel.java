@@ -118,6 +118,6 @@ public class RoleInfoModel implements MVPModel<RoleInfoRaw, List<Pair<String, St
         Date date = new Date(lastOnlineMilliseconds*1000);
         Locale locale = new Locale("ru", "RU");
         SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", locale);
-        return sdfDate.format(date);
+        return FacadeCommon.makeHumanReadableDate(sdfDate.format(date));
     }
 }

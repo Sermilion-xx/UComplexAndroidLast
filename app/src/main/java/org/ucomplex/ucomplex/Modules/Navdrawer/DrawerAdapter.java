@@ -20,6 +20,7 @@ import org.ucomplex.ucomplex.Modules.Events.EventsActivity;
 import org.ucomplex.ucomplex.Modules.Login.LoginActivity;
 import org.ucomplex.ucomplex.Modules.Portfolio.PortfolioActivity;
 import org.ucomplex.ucomplex.Modules.SubjectsList.SubjectsListActivity;
+import org.ucomplex.ucomplex.Modules.UserProfile.UserProfileActivity;
 import org.ucomplex.ucomplex.Modules.Users.UsersActivity;
 import org.ucomplex.ucomplex.R;
 
@@ -114,7 +115,7 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
                 if (position == getItemCount() - 1) {
                     logout();
                 } else if (position == 0) {
-                    //TODO: go to profile
+                    mContext.startActivity(UserProfileActivity.creteIntent(mContext, UCApplication.getInstance().getLoggedUser().getPerson()));
                 } else if (position == 1) {
                     mContext.startActivity(EventsActivity.creteRefreshIntent(mContext));
                 } else if (position == 2) {

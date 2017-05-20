@@ -1,7 +1,6 @@
 package org.ucomplex.ucomplex.Modules.RoleInfo;
 
 import android.support.v4.util.Pair;
-import android.support.v4.widget.TextViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,15 +58,14 @@ public class RoleInfoAdapter extends BaseAdapter<RoleInfoAdapter.RoleInfoViewHol
 
     @Override
     public void onBindViewHolder(RoleInfoViewHolder holder, int position) {
-        Pair<String, String> item = mItems.get(0);
-        if (getItemViewType(position) == TYPE_HEADER) {
-            holder.key.setText(item.first);
-            holder.value.setText(item.second);
-        }
+        Pair<String, String> item = mItems.get(position);
+        holder.key.setText(item.first);
+        holder.value.setText(item.second);
     }
 
     @Override
     public int getItemViewType(int position) {
         return position == 0 ? TYPE_HEADER : TYPE_INFO;
     }
+
 }

@@ -33,7 +33,7 @@ public class RoleInfoActivity extends BaseMVPActivity<MVPView, RoleInfoPresenter
         UCApplication.getInstance().getAppDiComponent().inject(this);
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
-        setContentView(R.layout.activity_role_info);
+        setContentViewWithNavDrawer(R.layout.activity_role_info);
         setupToolbar(intent.getStringExtra(NAME), R.drawable.ic_menu);
         mProgress = (ProgressBar) findViewById(R.id.progressBar);
         setupDrawer();
@@ -42,9 +42,7 @@ public class RoleInfoActivity extends BaseMVPActivity<MVPView, RoleInfoPresenter
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new RoleInfoAdapter();
         mRecyclerView.setAdapter(mAdapter);
-        if (presenter.getData() == null) {
-            presenter.loadData(intent.getIntExtra(ROLE_ID, -1));
-        }
+        presenter.loadData(intent.getIntExtra(ROLE_ID, -1));
     }
 
     @Override

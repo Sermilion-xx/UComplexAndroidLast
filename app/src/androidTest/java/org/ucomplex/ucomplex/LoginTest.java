@@ -3,6 +3,7 @@ package org.ucomplex.ucomplex;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,6 +29,11 @@ import static org.ucomplex.ucomplex.TestUtils.editTextHasError;
  */
 @RunWith(AndroidJUnit4.class)
 public class LoginTest {
+
+    @Before
+    public void setup() {
+        closeSoftKeyboard();
+    }
 
     @Rule
     public ActivityTestRule<LoginActivity> mLoginActivityRule = new ActivityTestRule<>(LoginActivity.class);

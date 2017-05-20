@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.base.BaseMvpFragment;
 import org.ucomplex.ucomplex.Common.interfaces.OnPresenterInjectedListener;
+import org.ucomplex.ucomplex.Domain.Users.role.Role;
 import org.ucomplex.ucomplex.Domain.Users.role.RoleTeacher;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.SubjectItemFile;
 import org.ucomplex.ucomplex.R;
@@ -50,9 +51,9 @@ public class SubjectProfileFragment extends BaseMvpFragment<SubjectPresenter> {
     @BindView(R.id.recyclerView)
     protected RecyclerView mRecyclerView;
     private SubjectProfileAdapter mAdapter;
-    private OnPresenterInjectedListener<Pair<List<SubjectItemFile>, Map<Integer, RoleTeacher>>> onPresenterInjectedListener;
+    private OnPresenterInjectedListener<Pair<List<SubjectItemFile>, Map<Integer, Role>>> onPresenterInjectedListener;
 
-    public void setOnPresenterInjectedListener(OnPresenterInjectedListener<Pair<List<SubjectItemFile>, Map<Integer, RoleTeacher>>> onPresenterInjectedListener) {
+    public void setOnPresenterInjectedListener(OnPresenterInjectedListener<Pair<List<SubjectItemFile>, Map<Integer, Role>>> onPresenterInjectedListener) {
         this.onPresenterInjectedListener = onPresenterInjectedListener;
     }
 

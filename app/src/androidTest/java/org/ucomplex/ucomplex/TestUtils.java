@@ -4,15 +4,9 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
-import android.support.design.widget.TextInputLayout;
-import android.support.test.espresso.UiController;
-import android.support.test.espresso.contrib.RecyclerViewActions;
-import android.support.test.espresso.ViewAction;
-import android.support.test.espresso.matcher.BoundedMatcher;
+import android.support.test.espresso.*;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,8 +14,11 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
-import static android.support.test.espresso.core.deps.guava.base.Preconditions.checkNotNull;
+import java.util.ArrayList;
+
+
 import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
+import static android.view.View.FIND_VIEWS_WITH_TEXT;
 
 /**
  * ---------------------------------------------------

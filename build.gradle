@@ -6,7 +6,8 @@ ext {
     RETROFIT_VERSION ='2.1.0'
     RXJAVA_VERSION = '2.0.1'
     BUTTERKNIFE_VERSION = '8.5.1'
-    robolectricVersion = "3.0"
+    robolectricVersion = "3.3.2"
+    POWER_MOCK_VERSION = "1.6.6"
 }
 
 buildscript {

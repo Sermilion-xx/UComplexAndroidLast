@@ -1,8 +1,10 @@
-package org.ucomplex.ucomplex.Domain.Users.role;
+package org.ucomplex.ucomplex.Domain.Users.role.RoleExtractorFactory;
+
+import org.ucomplex.ucomplex.Domain.Users.role.Role;
 
 /**
  * ---------------------------------------------------
- * Created by Sermilion on 09/05/2017.
+ * Created by Sermilion on 20/05/2017.
  * Project: UComplex
  * ---------------------------------------------------
  * <a href="http://www.ucomplex.org">www.ucomplex.org</a>
@@ -10,13 +12,8 @@ package org.ucomplex.ucomplex.Domain.Users.role;
  * ---------------------------------------------------
  */
 
-public interface Role {
-    int getId();
-    int getPerson();
-    int getType();
-    String getName();
-    int getRole();
-    String getCode();
-    int getPosition();
-    String getPosition_name();
+public interface AbstractRoleExtractorFactory {
+
+    Role extractRole();
+
 }

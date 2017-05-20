@@ -18,7 +18,6 @@ public final class RoleTeacher implements Role {
     private final int public_role;
     private final String login;
     private final int photo;
-    private final String code;
     private final String email;
     private final String alias;
     private final int section;
@@ -26,14 +25,13 @@ public final class RoleTeacher implements Role {
     private final int lead;
     private final int _public;
 
-    private RoleTeacher() {
-        this.rolePrimary = new RoleTeacher();
+    public RoleTeacher() {
+        this.rolePrimary = new RoleBase();
         this.rate = 0.0f;
         this.employment_type = 0;
         this.public_role = 0;
         this.login = "";
         this.photo = 0;
-        this.code = "";
         this.email = "";
         this.alias = "";
         this.section = 0;
@@ -49,7 +47,6 @@ public final class RoleTeacher implements Role {
         this.public_role = builder.public_role;
         this.login = builder.login;
         this.photo = builder.photo;
-        this.code = builder.code;
         this.email = builder.email;
         this.alias = builder.alias;
         this.section = builder.section;
@@ -80,10 +77,6 @@ public final class RoleTeacher implements Role {
 
     public int getPhoto() {
         return photo;
-    }
-
-    public String getCode() {
-        return code;
     }
 
     public String getEmail() {
@@ -133,6 +126,11 @@ public final class RoleTeacher implements Role {
     @Override
     public int getRole() {
         return rolePrimary.getRole();
+    }
+
+    @Override
+    public String getCode() {
+        return rolePrimary.getCode();
     }
 
     @Override

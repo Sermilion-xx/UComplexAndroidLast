@@ -1,12 +1,10 @@
 package org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.model;
 
-import com.google.gson.annotations.JsonAdapter;
-import com.google.gson.annotations.SerializedName;
-
-import org.ucomplex.ucomplex.Common.utility.FalseAsNullTypeAdapterFactory;
+import org.ucomplex.ucomplex.Domain.Users.MaterialsFile;
 import org.ucomplex.ucomplex.Domain.Users.role.Role;
 import org.ucomplex.ucomplex.Domain.Users.role.RoleExtractorFactory.RoleExtractorFactory;
 import org.ucomplex.ucomplex.Domain.Users.role.RoleExtractorFactory.TeacherExtractorFactory;
+import org.ucomplex.ucomplex.Domain.Users.role.RoleTeacher;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,47 +19,28 @@ import java.util.List;
  * ---------------------------------------------------
  */
 
-public final class SubjectRaw {
+public final class FilesRaw {
 
-    private final Course course;
     private TeacherRaw teacher;
     private Role roleTeacher;
-    private final Depart depart;
-    @SerializedName("progress")
-    @JsonAdapter(FalseAsNullTypeAdapterFactory.class)
-    private final Progress progress;
-    private final List<FilesRaw> files;
+    private final List<MaterialsFile> files;
 
-    public SubjectRaw() {
-        this.course = new Course();
+    public FilesRaw() {
         this.teacher = new TeacherRaw();
         this.roleTeacher = null;
-        this.depart = new Depart();
-        this.progress = new Progress();
         this.files = new ArrayList<>();
-    }
-
-    public Course getCourse() {
-        return course;
     }
 
     public Role getTeacher() {
         if (roleTeacher == null) {
-            this.roleTeacher = RoleExtractorFactory.extractRole(new TeacherExtractorFactory(teacher));
+            this.roleTeacher =  RoleExtractorFactory.extractRole(new TeacherExtractorFactory(teacher));
             this.teacher = null;
         }
         return roleTeacher;
     }
 
-    public Depart getDepart() {
-        return depart;
-    }
-
-    public Progress getProgress() {
-        return progress;
-    }
-
-    public List<FilesRaw> getFiles() {
+    public List<MaterialsFile> getFiles() {
         return files;
     }
+
 }

@@ -42,6 +42,11 @@ dependencies {
     androidTestCompile("com.android.support.test.espresso:espresso-intents:2.2.2")
     testCompile "org.robolectric:robolectric:${robolectricVersion}"
     androidTestCompile 'com.android.support:support-annotations:25.3.1'
+    testCompile "org.powermock:powermock-api-mockito:$POWER_MOCK_VERSION"
+    testCompile "org.powermock:powermock-module-junit4-rule-agent:$POWER_MOCK_VERSION"
+    testCompile "org.powermock:powermock-module-junit4-rule:$POWER_MOCK_VERSION"
+    testCompile "org.powermock:powermock-module-junit4:$POWER_MOCK_VERSION"
+    testCompile "com.google.truth:truth:0.31"
 
     compile "com.android.support:appcompat-v7:$support_version"
     compile "com.android.support:recyclerview-v7:$support_version"
@@ -73,3 +78,7 @@ dependencies {
 }
 
 repositories { jcenter() }
+
+buildscript {
+    repositories.mavenLocal()
+}

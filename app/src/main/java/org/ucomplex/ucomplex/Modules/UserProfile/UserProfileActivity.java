@@ -55,7 +55,7 @@ public class UserProfileActivity extends BaseMVPActivity<MVPView, UserProfilePre
         presenter.loadData(getIntent().getIntExtra(USER_ID, 1951));
     }
 
-    OnListItemClicked<Object, ProfileRequestType> onListItemClicked = (params, type) -> {
+    private OnListItemClicked<Object, ProfileRequestType> onListItemClicked = (params, type) -> {
 
         DownloadCallback downloadCallback = new DownloadCallback() {
             @Override

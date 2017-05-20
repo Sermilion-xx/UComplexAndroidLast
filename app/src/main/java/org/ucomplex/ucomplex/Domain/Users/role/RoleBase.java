@@ -25,6 +25,7 @@ public final class RoleBase implements Role, Parcelable {
     private final int role;
     private final int position;
     private final String position_name;
+    private final String code;
 
     public RoleBase(RoleBaseBuilder builder) {
         this.id = builder.id;
@@ -34,6 +35,7 @@ public final class RoleBase implements Role, Parcelable {
         this.role = builder.role;
         this.position = builder.position;
         this.position_name = builder.position_name;
+        this.code = builder.code;
     }
 
     public RoleBase() {
@@ -44,6 +46,7 @@ public final class RoleBase implements Role, Parcelable {
         this.role = 0;
         this.position = 0;
         this.position_name = "";
+        this.code = "";
     }
 
     protected RoleBase(Parcel in) {
@@ -54,6 +57,7 @@ public final class RoleBase implements Role, Parcelable {
         role = in.readInt();
         position = in.readInt();
         position_name = in.readString();
+        code = in.readString();
     }
 
     public static final Creator<RoleBase> CREATOR = new Creator<RoleBase>() {
@@ -88,6 +92,11 @@ public final class RoleBase implements Role, Parcelable {
         return role;
     }
 
+    @Override
+    public String getCode() {
+        return null;
+    }
+
     public String getPosition_name() {
         return position_name;
     }
@@ -111,6 +120,7 @@ public final class RoleBase implements Role, Parcelable {
         dest.writeInt(role);
         dest.writeInt(position);
         dest.writeString(position_name);
+        dest.writeString(code);
     }
 
     public static class RoleBaseBuilder {
@@ -122,6 +132,7 @@ public final class RoleBase implements Role, Parcelable {
         protected int role;
         protected int position;
         protected String position_name;
+        protected String code;
 
         public RoleBase build() {
             return new RoleBase(this);
@@ -159,6 +170,11 @@ public final class RoleBase implements Role, Parcelable {
 
         public RoleBaseBuilder position_name(String position_name) {
             this.position_name = position_name;
+            return this;
+        }
+
+        public RoleBaseBuilder code(String code) {
+            this.code = code;
             return this;
         }
     }

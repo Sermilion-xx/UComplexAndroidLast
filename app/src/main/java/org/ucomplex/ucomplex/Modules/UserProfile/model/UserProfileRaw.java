@@ -42,7 +42,7 @@ public final class UserProfileRaw {
     private final BlackList black;
     private final FriendList friends;
 
-    private UserProfileRaw() {
+    public UserProfileRaw() {
         this.id = 0;
         this.name = "";
         this.email = "";

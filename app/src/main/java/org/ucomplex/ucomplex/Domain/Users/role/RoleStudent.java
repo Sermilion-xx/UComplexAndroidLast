@@ -137,6 +137,11 @@ public class RoleStudent implements Role, Parcelable{
     }
 
     @Override
+    public String getCode() {
+        return null;
+    }
+
+    @Override
     public int getPosition() {
         return rolePrimary.getPosition();
     }

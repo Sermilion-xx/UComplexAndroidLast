@@ -117,7 +117,7 @@ public class UserProfileAdapter extends BaseAdapter<UserProfileAdapter.UserProfi
             } else if (getItemViewType(position) == TYPE_INFO) {
                 holder.mInfoKey.setText(item.getPositionName());
                 holder.mInfoValue.setText(item.getDisciplineName());
-                holder.mClickArea.setOnClickListener(v -> onListItemClicked.onClick(item.getRoleId(), ProfileRequestType.OPEN_ROLE));
+                holder.mClickArea.setOnClickListener(v -> onListItemClicked.onClick(item.getPerson(), ProfileRequestType.OPEN_ROLE));
             }
         }
     }

@@ -61,8 +61,8 @@ public class UserProfileAdapterTest {
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         adapter = new UserProfileAdapter(onListItemClicked);
         list = new ArrayList<>();
-        list.add(new UserProfileItem("Student", "Role", 1951));
-        list.add(new UserProfileItem("Student", "Role", 1951));
+        list.add(new UserProfileItem("Student", "Role", 1951, 4));
+        list.add(new UserProfileItem("Student", "Role", 1951, 4));
         list.add(new UserProfileItem("Name", "Role", new FriendList(), new BlackList(), "code", 1951));
         adapter.setItems(list);
         recyclerView.setAdapter(adapter);

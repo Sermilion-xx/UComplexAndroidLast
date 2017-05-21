@@ -2,10 +2,10 @@ package org.ucomplex.ucomplex.Modules.RoleSelect;
 
 import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
-import org.ucomplex.ucomplex.Domain.Users.User;
-import org.ucomplex.ucomplex.Domain.Users.role.Role;
-import org.ucomplex.ucomplex.Domain.Users.role.RoleBase;
-import org.ucomplex.ucomplex.Domain.Users.UserInterface;
+import org.ucomplex.ucomplex.Domain.users.User;
+import org.ucomplex.ucomplex.Domain.role.Role;
+import org.ucomplex.ucomplex.Domain.role.RoleBase;
+import org.ucomplex.ucomplex.Domain.users.UserInterface;
 import org.ucomplex.ucomplex.Modules.Login.model.LoginUser;
 import org.ucomplex.ucomplex.R;
 

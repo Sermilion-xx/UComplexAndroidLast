@@ -1,7 +1,6 @@
 package org.ucomplex.ucomplex.Modules.Users.model;
 
-import org.ucomplex.ucomplex.Domain.Users.User;
-import org.ucomplex.ucomplex.Domain.Users.UserInterface;
+import org.ucomplex.ucomplex.Domain.users.User;
 
 import java.util.List;
 

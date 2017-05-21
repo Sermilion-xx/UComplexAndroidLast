@@ -3,10 +3,10 @@ package org.ucomplex.ucomplex.Modules.UserProfile;
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
-import org.ucomplex.ucomplex.Domain.Users.UserInterface;
-import org.ucomplex.ucomplex.Domain.Users.role.Role;
-import org.ucomplex.ucomplex.Domain.Users.role.RoleStudent;
-import org.ucomplex.ucomplex.Domain.Users.role.RoleTeacher;
+import org.ucomplex.ucomplex.Domain.users.UserInterface;
+import org.ucomplex.ucomplex.Domain.role.Role;
+import org.ucomplex.ucomplex.Domain.role.RoleStudent;
+import org.ucomplex.ucomplex.Domain.role.RoleTeacher;
 import org.ucomplex.ucomplex.Modules.UserProfile.model.UserProfileItem;
 import org.ucomplex.ucomplex.Modules.UserProfile.model.UserProfileRaw;
 
@@ -115,7 +115,7 @@ public class UserProfileModel implements MVPModel<UserProfileRaw, List<UserProfi
                 rolePositionName = FacadeCommon.getStringUserType(UCApplication.getInstance(), role.getType());
                 sectionName = role.getPosition_name();
             }
-            UserProfileItem item = new UserProfileItem(rolePositionName, sectionName, role.getPerson(), role.getType());
+            UserProfileItem item = new UserProfileItem(rolePositionName, sectionName, role.getRole(), role.getType());
             items.add(item);
         }
         mData = items;

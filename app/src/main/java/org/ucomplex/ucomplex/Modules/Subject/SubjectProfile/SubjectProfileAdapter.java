@@ -101,7 +101,7 @@ public class SubjectProfileAdapter extends BaseAdapter<SubjectProfileAdapter.Sub
             Context context = holder.mAttendance.getContext();
             String text = context.getString(R.string.absence, item.getAttendance());
             holder.mAttendance.setText(FacadeCommon.fromHtml(text));
-            String average = context.getString(R.string.average_mark, item.getMark());
+            String average = context.getString(R.string.average_mark_formatter, item.getMark());
             holder.mAverageGrade.setText(average);
         }
     }

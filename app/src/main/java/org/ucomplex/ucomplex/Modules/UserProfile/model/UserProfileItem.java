@@ -1,7 +1,7 @@
 package org.ucomplex.ucomplex.Modules.UserProfile.model;
 
-import org.ucomplex.ucomplex.Domain.Users.BlackList;
-import org.ucomplex.ucomplex.Domain.Users.FriendList;
+import org.ucomplex.ucomplex.Domain.BlackList;
+import org.ucomplex.ucomplex.Domain.FriendList;
 
 /**
  * ---------------------------------------------------

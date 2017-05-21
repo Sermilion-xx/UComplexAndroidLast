@@ -53,7 +53,7 @@ public class RoleSelectAdapter extends RecyclerView.Adapter<RoleSelectAdapter.Ro
     @Override
     public RoleSelectViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View viewRow = inflater.inflate(R.layout.item_role, parent, false);
+        View viewRow = inflater.inflate(R.layout.item_role_select, parent, false);
         return new RoleSelectViewHolder(viewRow);
     }
 

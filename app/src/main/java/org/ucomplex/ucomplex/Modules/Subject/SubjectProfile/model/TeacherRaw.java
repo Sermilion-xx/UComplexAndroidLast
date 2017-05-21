@@ -1,7 +1,7 @@
 package org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.model;
 
-import org.ucomplex.ucomplex.Domain.Users.role.RoleBase;
-import org.ucomplex.ucomplex.Domain.Users.role.RoleTeacher;
+import org.ucomplex.ucomplex.Domain.role.RoleBase;
+import org.ucomplex.ucomplex.Domain.role.RoleTeacher;
 
 /**
  * ---------------------------------------------------

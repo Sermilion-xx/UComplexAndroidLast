@@ -85,6 +85,7 @@ public class UserProfileTest {
         onView(withId(R.id.recyclerView)).perform(scrollToPosition(0));
         onView(withId(R.id.recyclerView)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(position, TestUtils.clickChildViewWithId(view)));
+
     }
 
 }

@@ -40,7 +40,7 @@ public class ServiceGenerator {
         }
         buildRetrofitBuilder(base_url);
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.addInterceptor(interceptor);
         httpClient.hostnameVerifier((hostname, session) -> true);

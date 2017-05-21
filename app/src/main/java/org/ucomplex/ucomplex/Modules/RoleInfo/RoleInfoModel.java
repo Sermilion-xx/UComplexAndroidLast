@@ -6,8 +6,10 @@ import android.support.v4.util.Pair;
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
+import org.ucomplex.ucomplex.Domain.users.User;
 import org.ucomplex.ucomplex.Modules.RoleInfo.model.RoleInfoRaw;
 import org.ucomplex.ucomplex.Modules.RoleInfo.model.RoleInfoUtils;
+import org.ucomplex.ucomplex.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -83,22 +85,25 @@ public class RoleInfoModel implements MVPModel<RoleInfoRaw, List<Pair<String, St
     public List<Pair<String, String>> processData(RoleInfoRaw data) {
         Context context = UCApplication.getInstance();
         String[] keys = new String[] {
-                "Год поступления:",
-                "Форма обучения:",
-                "Уровень образования:",
-                "Форма оплаты:",
-                "Факультет:",
-                "Специальность:",
-                "Группа:",
-                "Общая посещаемость:",
-                "Средняя успеваемость:",
-                "Место в общем рейтинге:",
-                "Место в рейтинге по факультету:",
-                "Профиль закрыт"};
+                context.getString(R.string.enrolment_year) + ":",
+                context.getString(R.string.study_form) + ":",
+                context.getString(R.string.education_level) + ":",
+                context.getString(R.string.payment_form) + ":",
+                context.getString(R.string.faculty) + ":",
+                context.getString(R.string.speciality) + ":",
+                context.getString(R.string.group) + ":",
+                context.getString(R.string.overall_attendance) + ":",
+                context.getString(R.string.average_mark) + ":",
+                context.getString(R.string.average_rating) + ":",
+                context.getString(R.string.average_rating_in_faculty) + ":",
+                context.getString(R.string.profile_is_closed)};
         List<Pair<String, String>> items = new ArrayList<>();
-        String lastOnline = getLastOnline(data.getOnline());
+        String lastOnline = context.getString(R.string.never_been_online);
+        if (data.getOnline() != 0) {
+            lastOnline = getLastOnline(data.getOnline());
+        }
         items.add(new Pair<>(FacadeCommon.getStringUserType(context, data.getType()), lastOnline));
-        if (data.getClosed() != 1 && UCApplication.getInstance().getLoggedUser().getId() == data.getId()) {
+        if (data.getClosed() != 1 && data.getType() == User.USER_TYPE_STUDENT) {
             items.add(new Pair<>(keys[0], String.valueOf(data.getYear())));
             items.add(new Pair<>(keys[1], RoleInfoUtils.getStudyForm(context, data.getStudy())));
             items.add(new Pair<>(keys[2], RoleInfoUtils.getStudyLevel(context, data.getStudy_level())));

@@ -1,10 +1,10 @@
 package org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.model;
 
-import org.ucomplex.ucomplex.Domain.Users.MaterialsFile;
-import org.ucomplex.ucomplex.Domain.Users.role.Role;
-import org.ucomplex.ucomplex.Domain.Users.role.RoleExtractorFactory.RoleExtractorFactory;
-import org.ucomplex.ucomplex.Domain.Users.role.RoleExtractorFactory.TeacherExtractorFactory;
-import org.ucomplex.ucomplex.Domain.Users.role.RoleTeacher;
+import org.ucomplex.ucomplex.Domain.MaterialsFile;
+import org.ucomplex.ucomplex.Domain.role.Role;
+import org.ucomplex.ucomplex.Domain.role.RoleExtractorFactory.RoleExtractorFactory;
+import org.ucomplex.ucomplex.Domain.role.RoleExtractorFactory.TeacherExtractorFactory;
+import org.ucomplex.ucomplex.Domain.role.RoleTeacher;
 
 import java.util.ArrayList;
 import java.util.List;

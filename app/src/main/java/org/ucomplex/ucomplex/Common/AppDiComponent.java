@@ -17,12 +17,12 @@ import org.ucomplex.ucomplex.Modules.RoleInfo.RoleInfoPresenter;
 import org.ucomplex.ucomplex.Modules.RoleInfo.dagger.RoleInfoActivityModule;
 import org.ucomplex.ucomplex.Modules.RoleInfo.dagger.RoleInfoModelModule;
 import org.ucomplex.ucomplex.Modules.RoleInfo.dagger.RoleInfoPresenterModule;
-import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherActivity;
-import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherModel;
-import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherPresenter;
-import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.dagger.RoleInfoTeacherActivityModule;
-import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.dagger.RoleInfoTeacherModelModule;
-import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.dagger.RoleInfoTeacherPresenterModule;
+import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherProfile.RoleInfoTeacherProfileFragment;
+import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherProfile.RoleInfoTeacherProfileModel;
+import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherProfile.RoleInfoTeacherProfilePresenter;
+import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherProfile.dagger.RoleInfoTeacherProfileFragmentModule;
+import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherProfile.dagger.RoleInfoTeacherProfileModelModule;
+import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherProfile.dagger.RoleInfoTeacherProfilePresenterModule;
 import org.ucomplex.ucomplex.Modules.RoleSelect.RoleSelectActivity;
 import org.ucomplex.ucomplex.Modules.RoleSelect.RoleSelectPresenter;
 import org.ucomplex.ucomplex.Modules.RoleSelect.dagger.RoleSelectActivityModule;
@@ -107,9 +107,9 @@ import dagger.Component;
                 RoleInfoModelModule.class,
                 RoleInfoPresenterModule.class,
                 RoleInfoActivityModule.class,
-                RoleInfoTeacherModelModule.class,
-                RoleInfoTeacherPresenterModule.class,
-                RoleInfoTeacherActivityModule.class
+                RoleInfoTeacherProfileModelModule.class,
+                RoleInfoTeacherProfilePresenterModule.class,
+                RoleInfoTeacherProfileFragmentModule.class
         })
 
 public interface AppDiComponent {
@@ -172,11 +172,12 @@ public interface AppDiComponent {
 
     void inject(RoleInfoActivity activity);
 
-    void inject(RoleInfoTeacherModel model);
+    void inject(RoleInfoTeacherProfileModel model);
 
-    void inject(RoleInfoTeacherPresenter presenter);
+    void inject(RoleInfoTeacherProfilePresenter presenter);
 
-    void inject(RoleInfoTeacherActivity activity);
+    void inject(RoleInfoTeacherProfileFragment fragment);
+
 
 }
 

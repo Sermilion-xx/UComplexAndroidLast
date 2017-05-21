@@ -20,7 +20,8 @@ import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.FacadeMedia;
 import org.ucomplex.ucomplex.Common.base.BaseAdapter;
 import org.ucomplex.ucomplex.Common.interfaces.OnListItemClicked;
-import org.ucomplex.ucomplex.Domain.Users.User;
+import org.ucomplex.ucomplex.Domain.users.User;
+import org.ucomplex.ucomplex.Modules.Users.model.UserRequestType;
 import org.ucomplex.ucomplex.R;
 
 import java.util.ArrayList;
@@ -70,13 +71,15 @@ public class UsersAdapter extends BaseAdapter<UsersAdapter.UsersViewHolder, List
     private boolean hasMoreItems;
     private OnListItemClicked<Integer, Integer> onListItemClicked;
     private boolean[] friendRequested;
+    private UserRequestType requestType;
 
     public void setOnListItemClicked(OnListItemClicked<Integer, Integer> onListItemClicked) {
         this.onListItemClicked = onListItemClicked;
     }
 
-    public UsersAdapter() {
+    public UsersAdapter(UserRequestType requestType) {
         mItems = new ArrayList<>();
+        this.requestType = requestType;
     }
 
     public void addItems(List<User> users) {
@@ -123,7 +126,13 @@ public class UsersAdapter extends BaseAdapter<UsersAdapter.UsersViewHolder, List
                 if (getItemViewType(position) == TYPE_REQUESTED) {
                     holder.mClickArea.setBackgroundResource(R.color.colorFriendRequested);
                 }
-                holder.mClickArea.setOnClickListener(v -> onListItemClicked.onClick(user.getPerson(), TYPE_USER));
+                final int requestId;
+                if (requestType == UserRequestType.FRIENDS) {
+                    requestId = user.getId();
+                } else {
+                    requestId = user.getPerson();
+                }
+                holder.mClickArea.setOnClickListener(v -> onListItemClicked.onClick(requestId, TYPE_USER));
             } else if (getItemViewType(position) == TYPE_FOOTER) {
                 holder.mLoadMore.setOnClickListener(v -> onListItemClicked.onClick(mItems.size(), TYPE_FOOTER));
             }

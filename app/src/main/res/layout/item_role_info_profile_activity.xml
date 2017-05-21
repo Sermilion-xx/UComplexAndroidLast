@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/key"
+        android:textColor="@color/color_uc_ListText"
+        android:textSize="15sp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/value"
+        android:textColor="@color/color_uc_ListText"
+        android:layout_alignBottom="@+id/key"
+        android:layout_toEndOf="@+id/key"
+        android:layout_marginStart="10dp" />
+
+    <View
+        android:id="@+id/below"
+        android:layout_width="345dp"
+        android:layout_height="8dp"
+        android:background="@drawable/rectangle_gray"
+        android:layout_below="@+id/key"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:paddingBottom="10dp"/>
+
+    <View
+        android:id="@+id/above"
+        android:layout_width="200dp"
+        android:layout_height="8dp"
+        android:background="@drawable/rectangle_green"
+        android:layout_alignTop="@+id/below"
+        android:layout_alignParentStart="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp" />
+
+</RelativeLayout>

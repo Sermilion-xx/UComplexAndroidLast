@@ -29,7 +29,7 @@
     <TextView
         style="@style/StyleTextViewPrimary"
         android:id="@+id/subjects_subject_mark"
-        android:text="@string/average_mark"
+        android:text="@string/average_mark_formatter"
         android:layout_marginTop="5dp" />
 
 </LinearLayout>

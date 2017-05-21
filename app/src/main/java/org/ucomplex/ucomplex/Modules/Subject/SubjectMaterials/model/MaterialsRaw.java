@@ -1,6 +1,6 @@
 package org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model;
 
-import org.ucomplex.ucomplex.Domain.Users.MaterialsFile;
+import org.ucomplex.ucomplex.Domain.MaterialsFile;
 
 import java.util.List;
 

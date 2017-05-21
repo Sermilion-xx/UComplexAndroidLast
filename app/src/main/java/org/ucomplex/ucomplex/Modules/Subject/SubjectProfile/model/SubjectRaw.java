@@ -4,9 +4,9 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 
 import org.ucomplex.ucomplex.Common.utility.FalseAsNullTypeAdapterFactory;
-import org.ucomplex.ucomplex.Domain.Users.role.Role;
-import org.ucomplex.ucomplex.Domain.Users.role.RoleExtractorFactory.RoleExtractorFactory;
-import org.ucomplex.ucomplex.Domain.Users.role.RoleExtractorFactory.TeacherExtractorFactory;
+import org.ucomplex.ucomplex.Domain.role.Role;
+import org.ucomplex.ucomplex.Domain.role.RoleExtractorFactory.RoleExtractorFactory;
+import org.ucomplex.ucomplex.Domain.role.RoleExtractorFactory.TeacherExtractorFactory;
 
 import java.util.ArrayList;
 import java.util.List;

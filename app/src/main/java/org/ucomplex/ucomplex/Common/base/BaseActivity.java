@@ -16,7 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import org.ucomplex.ucomplex.Common.FacadeCommon;
-import org.ucomplex.ucomplex.Domain.Users.UserInterface;
+import org.ucomplex.ucomplex.Domain.users.UserInterface;
 import org.ucomplex.ucomplex.Modules.Navdrawer.DrawerAdapter;
 import org.ucomplex.ucomplex.Modules.Navdrawer.DrawerListItem;
 import org.ucomplex.ucomplex.Modules.Navdrawer.FacadeDrawer;

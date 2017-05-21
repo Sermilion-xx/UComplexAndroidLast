@@ -3,7 +3,7 @@ package org.ucomplex.ucomplex.Modules.Login.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import org.ucomplex.ucomplex.Domain.Users.role.RoleBase;
+import org.ucomplex.ucomplex.Domain.role.RoleBase;
 
 import java.util.List;
 

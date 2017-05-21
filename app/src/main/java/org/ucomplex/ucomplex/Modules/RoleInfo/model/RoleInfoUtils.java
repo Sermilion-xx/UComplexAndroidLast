@@ -2,6 +2,8 @@ package org.ucomplex.ucomplex.Modules.RoleInfo.model;
 
 import android.content.Context;
 
+import org.ucomplex.ucomplex.R;
+
 /**
  * ---------------------------------------------------
  * Created by Sermilion on 20/05/2017.
@@ -96,7 +98,7 @@ public class RoleInfoUtils {
         } else if (type == 4) {
             return "Второе высшее";
         }
-        return "Ошибка";
+        return "";
     }
 
     public static String getPayment(Context context, int type) {
@@ -110,11 +112,10 @@ public class RoleInfoUtils {
         } else if (type == 4) {
             return "Льготы";
         }
-        return "Ошибка";
+        return "";
     }
 
     public static String getStudyLevel(Context context, int type) {
-        String typeStr = null;
         if (type == 1) {
             return "Бакалавриат";
         } else if (type == 2) {
@@ -124,6 +125,6 @@ public class RoleInfoUtils {
         } else if (type == 4) {
             return "Аспирантура";
         }
-        return "Ошибка";
+        return "";
     }
 }

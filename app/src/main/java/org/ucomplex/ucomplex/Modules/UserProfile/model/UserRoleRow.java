@@ -1,6 +1,6 @@
 package org.ucomplex.ucomplex.Modules.UserProfile.model;
 
-import org.ucomplex.ucomplex.Domain.Users.role.Role;
+import org.ucomplex.ucomplex.Domain.role.Role;
 
 /**
  * ---------------------------------------------------

@@ -1,15 +1,15 @@
 package org.ucomplex.ucomplex.Modules.UserProfile.model;
 
 import org.ucomplex.ucomplex.Common.interfaces.Function;
-import org.ucomplex.ucomplex.Domain.Users.BlackList;
-import org.ucomplex.ucomplex.Domain.Users.FriendList;
-import org.ucomplex.ucomplex.Domain.Users.Teacher;
-import org.ucomplex.ucomplex.Domain.Users.User;
-import org.ucomplex.ucomplex.Domain.Users.UserInterface;
-import org.ucomplex.ucomplex.Domain.Users.role.Role;
-import org.ucomplex.ucomplex.Domain.Users.role.RoleBase;
-import org.ucomplex.ucomplex.Domain.Users.role.RoleStudent;
-import org.ucomplex.ucomplex.Domain.Users.role.RoleTeacher;
+import org.ucomplex.ucomplex.Domain.BlackList;
+import org.ucomplex.ucomplex.Domain.FriendList;
+import org.ucomplex.ucomplex.Domain.users.Teacher;
+import org.ucomplex.ucomplex.Domain.users.User;
+import org.ucomplex.ucomplex.Domain.users.UserInterface;
+import org.ucomplex.ucomplex.Domain.role.Role;
+import org.ucomplex.ucomplex.Domain.role.RoleBase;
+import org.ucomplex.ucomplex.Domain.role.RoleStudent;
+import org.ucomplex.ucomplex.Domain.role.RoleTeacher;
 
 import java.util.ArrayList;
 import java.util.List;

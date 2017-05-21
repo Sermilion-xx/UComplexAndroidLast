@@ -12,8 +12,7 @@ import android.widget.ProgressBar;
 
 import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.base.BaseMvpFragment;
-import org.ucomplex.ucomplex.Common.interfaces.OnListItemClicked;
-import org.ucomplex.ucomplex.Domain.Users.User;
+import org.ucomplex.ucomplex.Domain.users.User;
 import org.ucomplex.ucomplex.Modules.UserProfile.UserProfileActivity;
 import org.ucomplex.ucomplex.Modules.Users.model.UserRequestType;
 import org.ucomplex.ucomplex.Modules.Users.model.UsersParams;
@@ -69,7 +68,7 @@ public class UsersFragment extends BaseMvpFragment<UsersPresenter> {
         ButterKnife.bind(this, view);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivityContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new UsersAdapter();
+        mAdapter = new UsersAdapter(userType);
         mAdapter.setOnListItemClicked((param, type) -> {
             if (type[0] == UsersAdapter.TYPE_USER) {
                 startActivity(UserProfileActivity.creteIntent(getActivityContext(), param));

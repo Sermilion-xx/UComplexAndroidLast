@@ -8,7 +8,7 @@ import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
 import org.ucomplex.ucomplex.Modules.Events.EventsActivity;
 import org.ucomplex.ucomplex.Modules.Login.model.LoginErrorType;
-import org.ucomplex.ucomplex.Domain.Users.UserInterface;
+import org.ucomplex.ucomplex.Domain.users.UserInterface;
 import org.ucomplex.ucomplex.Modules.Login.model.LoginUser;
 import org.ucomplex.ucomplex.Modules.RoleSelect.RoleSelectActivity;
 import org.ucomplex.ucomplex.R;

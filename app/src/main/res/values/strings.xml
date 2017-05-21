@@ -83,7 +83,8 @@
     <string name="lecturers">Преподаватели</string>
 
     <string name="absence" formatted="false">Посещаемость: %1$s</string>
-    <string name="average_mark">Средняя успеваемость: %1$s</string>
+    <string name="average_mark_formatter">Средняя успеваемость: %1$s</string>
+    <string name="average_mark">Средняя успеваемость</string>
     <string name="subject_attendance">Посещаемость по предмету:</string>
     <string name="subject_image">Subject Image</string>
     <string name="clock_icon"></string>
@@ -141,4 +142,19 @@
     <string name="event_book_added">В книжную полку добавлена книга</string>
     <string name="event_photo_declined">Ваша фотография отклонена из-за несоответствия условиям загрузки личной фотографии.</string>
     <string name="event_system_message">СИСТЕМНОЕ СООБЩЕНИЕ</string>
+    <string name="activity">Активность</string>
+    <string name="faculty">Факультет</string>
+    <string name="department">Кафедра:</string>
+    <string name="profile_is_closed">Профиль закрыт</string>
+    <string name="profile">Профиль</string>
+    <string name="never_been_online">Не было в сети</string>
+    <string name="enrolment_year">Год поступления</string>
+    <string name="study_form">Форма обучения</string>
+    <string name="education_level">Уровень образования</string>
+    <string name="payment_form">Форма оплаты</string>
+    <string name="speciality">Специальность</string>
+    <string name="overall_attendance">Общая посещаемость</string>
+    <string name="average_rating">Место в общем рейтинге</string>
+    <string name="average_rating_in_faculty">Место в рейтинге по факультету</string>
+    <string name="no_information">Нет информации</string>
 </resources>

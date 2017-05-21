@@ -7,9 +7,8 @@ import android.preference.PreferenceManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import org.ucomplex.ucomplex.Domain.Users.InterfaceAdapter;
-import org.ucomplex.ucomplex.Domain.Users.InterfaceTypeAdapterFactory;
-import org.ucomplex.ucomplex.Domain.Users.UserInterface;
+import org.ucomplex.ucomplex.Common.utility.InterfaceTypeAdapterFactory;
+import org.ucomplex.ucomplex.Domain.users.UserInterface;
 
 /**
  * ---------------------------------------------------

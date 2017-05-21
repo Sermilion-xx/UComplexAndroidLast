@@ -4,11 +4,11 @@ package org.ucomplex.ucomplex.Modules.Login.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import org.ucomplex.ucomplex.Domain.Users.Student;
-import org.ucomplex.ucomplex.Domain.Users.Teacher;
-import org.ucomplex.ucomplex.Domain.Users.User;
-import org.ucomplex.ucomplex.Domain.Users.UserInterface;
-import org.ucomplex.ucomplex.Domain.Users.role.RoleBase;
+import org.ucomplex.ucomplex.Domain.users.Student;
+import org.ucomplex.ucomplex.Domain.users.Teacher;
+import org.ucomplex.ucomplex.Domain.users.User;
+import org.ucomplex.ucomplex.Domain.users.UserInterface;
+import org.ucomplex.ucomplex.Domain.role.RoleBase;
 
 import java.util.List;
 

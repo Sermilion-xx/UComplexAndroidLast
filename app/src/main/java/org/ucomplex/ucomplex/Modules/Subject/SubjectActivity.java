@@ -94,10 +94,6 @@ public class SubjectActivity extends BaseActivity {
         }
     }
 
-    public void loadSubject(int gcourse){
-        subjectProfileFragment.getPresenter().loadData(gcourse);
-    }
-
     @Override
     public void onBackPressed() {
         if(subjectMaterialsFragment.getCurrentPage() > 0){

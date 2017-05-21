@@ -16,7 +16,6 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 import org.ucomplex.ucomplex.Common.base.UCApplication;
-import org.ucomplex.ucomplex.Domain.Users.UserInterface;
 import org.ucomplex.ucomplex.R;
 
 import java.io.BufferedReader;

@@ -3,24 +3,18 @@ package org.ucomplex.ucomplex;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.LinearLayout;
 
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 import org.ucomplex.ucomplex.Common.interfaces.OnListItemClicked;
-import org.ucomplex.ucomplex.Domain.Users.BlackList;
-import org.ucomplex.ucomplex.Domain.Users.FriendList;
-import org.ucomplex.ucomplex.Modules.UserProfile.UserProfileActivity;
+import org.ucomplex.ucomplex.Domain.BlackList;
+import org.ucomplex.ucomplex.Domain.FriendList;
 import org.ucomplex.ucomplex.Modules.UserProfile.UserProfileAdapter;
-import org.ucomplex.ucomplex.Modules.UserProfile.UserProfileModel;
 import org.ucomplex.ucomplex.Modules.UserProfile.model.ProfileRequestType;
 import org.ucomplex.ucomplex.Modules.UserProfile.model.UserProfileItem;
 
@@ -28,10 +22,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 /**
  * ---------------------------------------------------

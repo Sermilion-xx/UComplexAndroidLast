@@ -13,8 +13,8 @@ import android.widget.ProgressBar;
 import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.base.BaseMvpFragment;
 import org.ucomplex.ucomplex.Common.interfaces.OnPresenterInjectedListener;
-import org.ucomplex.ucomplex.Domain.Users.role.Role;
-import org.ucomplex.ucomplex.Domain.Users.role.RoleTeacher;
+import org.ucomplex.ucomplex.Domain.role.Role;
+import org.ucomplex.ucomplex.Domain.role.RoleTeacher;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.SubjectItemFile;
 import org.ucomplex.ucomplex.R;
 

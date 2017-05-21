@@ -6,7 +6,6 @@ import org.junit.Test;
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Modules.RoleInfo.RoleInfoModel;
 import org.ucomplex.ucomplex.Modules.RoleInfo.model.RoleInfoRaw;
-import org.ucomplex.ucomplex.Modules.Subject.SubjectProfile.model.SubjectRaw;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 

@@ -39,8 +39,6 @@ public class PortfolioActivity extends BaseMVPActivity<MVPView, SubjectMaterials
     private static final int GALLERY_KITKAT_INTENT_CALLED = 0;
     private static final int GALLERY_INTENT_CALLED = 1;
     private static final String TAG =  PortfolioActivity.class.getName();
-    private static final String DESTROYED_BY_SYSTEM = "DESTROYED_BY_SYSTEM";
-
 
     public static Intent creteIntent(Context context) {
         return new Intent(context, PortfolioActivity.class);

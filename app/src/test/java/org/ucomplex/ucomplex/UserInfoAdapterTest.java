@@ -1,7 +1,6 @@
 package org.ucomplex.ucomplex;
 
 import android.content.Context;
-import android.support.v4.graphics.PaintCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,12 +13,8 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 import org.ucomplex.ucomplex.Common.interfaces.OnListItemClicked;
-import org.ucomplex.ucomplex.Domain.Users.BlackList;
-import org.ucomplex.ucomplex.Domain.Users.FriendList;
 import org.ucomplex.ucomplex.Modules.RoleInfo.RoleInfoAdapter;
-import org.ucomplex.ucomplex.Modules.UserProfile.UserProfileAdapter;
 import org.ucomplex.ucomplex.Modules.UserProfile.model.ProfileRequestType;
-import org.ucomplex.ucomplex.Modules.UserProfile.model.UserProfileItem;
 
 import java.util.ArrayList;
 import java.util.List;

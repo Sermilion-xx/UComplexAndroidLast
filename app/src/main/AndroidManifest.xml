@@ -55,7 +55,8 @@
             android:authorities="org.ucomplex.ucomplex.Common.UCContentProvider" />
 
         <activity android:name=".Modules.UserProfile.UserProfileActivity" />
-        <activity android:name=".Modules.RoleInfo.RoleInfoActivity"></activity>
+        <activity android:name=".Modules.RoleInfo.RoleInfoActivity" />
+        <activity android:name=".Modules.RoleInfoTeacher.RoleInfoTeacherActivity"></activity>
     </application>
 
 </manifest>

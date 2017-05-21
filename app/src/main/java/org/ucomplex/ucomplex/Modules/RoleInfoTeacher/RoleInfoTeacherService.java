@@ -1,6 +1,6 @@
-package org.ucomplex.ucomplex.Modules.RoleInfo;
+package org.ucomplex.ucomplex.Modules.RoleInfoTeacher;
 
-import org.ucomplex.ucomplex.Modules.RoleInfo.model.RoleInfoRaw;
+import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.model.RoleInfoTeacherRaw;
 
 import io.reactivex.Observable;
 import retrofit2.http.POST;
@@ -16,7 +16,7 @@ import retrofit2.http.Path;
  * ---------------------------------------------------
  */
 
-public interface RoleInfoService {
+public interface RoleInfoTeacherService {
     @POST("/user/page/{roleId}?mobile=1")
-    Observable<RoleInfoRaw> getRoleInfo(@Path("roleId") Integer roleId);
+    Observable<RoleInfoTeacherRaw> getRoleInfo(@Path("roleId") Integer roleId);
 }

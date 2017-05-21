@@ -20,6 +20,8 @@ import org.ucomplex.ucomplex.Common.FacadeMedia;
 import org.ucomplex.ucomplex.Common.base.BaseAdapter;
 import org.ucomplex.ucomplex.Common.interfaces.OnListItemClicked;
 import org.ucomplex.ucomplex.Domain.Users.BlackList;
+import org.ucomplex.ucomplex.Domain.Users.User;
+import org.ucomplex.ucomplex.Domain.Users.role.Role;
 import org.ucomplex.ucomplex.Modules.UserProfile.model.ProfileRequestType;
 import org.ucomplex.ucomplex.Modules.UserProfile.model.UserProfileItem;
 import org.ucomplex.ucomplex.R;
@@ -117,7 +119,11 @@ public class UserProfileAdapter extends BaseAdapter<UserProfileAdapter.UserProfi
             } else if (getItemViewType(position) == TYPE_INFO) {
                 holder.mInfoKey.setText(item.getPositionName());
                 holder.mInfoValue.setText(item.getDisciplineName());
-                holder.mClickArea.setOnClickListener(v -> onListItemClicked.onClick(item.getPerson(), ProfileRequestType.OPEN_ROLE));
+                if (item.getType() != User.USER_TYPE_TEACHER) {
+                    holder.mClickArea.setOnClickListener(v -> onListItemClicked.onClick(item.getPerson(), ProfileRequestType.OPEN_ROLE));
+                } else {
+                    holder.mClickArea.setOnClickListener(v -> onListItemClicked.onClick(item.getPerson(), ProfileRequestType.OPEN_TEACHER_ROLE));
+                }
             }
         }
     }

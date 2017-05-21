@@ -27,7 +27,7 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile ('com.android.support.test.espresso:espresso-contrib:2.2.2'){
+    androidTestCompile('com.android.support.test.espresso:espresso-contrib:2.2.2') {
         exclude module: 'support-annotations'
         exclude module: 'support-v4'
         exclude module: 'support-v13'
@@ -35,18 +35,11 @@ dependencies {
         exclude module: 'design'
         exclude group: 'com.android.support'
     }
-    compile 'junit:junit:4.12'
-    testCompile 'junit:junit:4.12'
-    testCompile 'org.mockito:mockito-core:2.8.9'
-    testCompile 'org.assertj:assertj-core:1.7.0'
-    androidTestCompile("com.android.support.test.espresso:espresso-intents:2.2.2")
     testCompile "org.robolectric:robolectric:${robolectricVersion}"
-    androidTestCompile 'com.android.support:support-annotations:25.3.1'
     testCompile "org.powermock:powermock-api-mockito:$POWER_MOCK_VERSION"
     testCompile "org.powermock:powermock-module-junit4-rule-agent:$POWER_MOCK_VERSION"
     testCompile "org.powermock:powermock-module-junit4-rule:$POWER_MOCK_VERSION"
     testCompile "org.powermock:powermock-module-junit4:$POWER_MOCK_VERSION"
-    testCompile "com.google.truth:truth:0.31"
 
     compile "com.android.support:appcompat-v7:$support_version"
     compile "com.android.support:recyclerview-v7:$support_version"
@@ -61,10 +54,11 @@ dependencies {
     compile "io.reactivex.rxjava2:rxjava:$RXJAVA_VERSION"
     compile "com.jakewharton:butterknife:$BUTTERKNIFE_VERSION"
     annotationProcessor "com.jakewharton:butterknife-compiler:$BUTTERKNIFE_VERSION"
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
-    compile 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
     compile 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
+    compile 'junit:junit:4.12'
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
+    compile 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
     compile 'com.squareup.okhttp3:logging-interceptor:3.3.1'
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.github.bumptech.glide:glide:3.7.0'
@@ -75,6 +69,12 @@ dependencies {
     compile 'com.tubb.smrv:swipemenu-recyclerview:5.4.0'
     compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
     compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-core:2.8.9'
+    testCompile 'org.assertj:assertj-core:1.7.0'
+    testCompile 'com.google.truth:truth:0.31'
+    androidTestCompile 'com.android.support.test.espresso:espresso-intents:2.2.2'
+    androidTestCompile 'com.android.support:support-annotations:25.3.1'
 }
 
 repositories { jcenter() }

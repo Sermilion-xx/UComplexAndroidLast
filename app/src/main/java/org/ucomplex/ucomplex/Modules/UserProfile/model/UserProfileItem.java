@@ -26,6 +26,7 @@ public final class UserProfileItem{
     private final String code;
     private final int id;
     private final int person;
+    private final int type;
 
     public UserProfileItem(String personName,
                            String roleName,
@@ -40,18 +41,20 @@ public final class UserProfileItem{
         this.code = code;
         this.id = id;
         this.person = -1;
+        this.type = -1;
         this.positionName = "";
         this.disciplineName = "";
     }
 
-    public UserProfileItem(String positionName, String sectionName, int person) {
+    public UserProfileItem(String positionName, String sectionName, int person, int type) {
         this.positionName = positionName;
         this.disciplineName = sectionName;
+        this.person = person;
+        this.type = type;
         this.personName = "";
         this.roleName = "";
         this.code = "";
         this.id = -1;
-        this.person = person;
         this.friend = new FriendList();
         this.blocked = new BlackList();
     }
@@ -98,5 +101,9 @@ public final class UserProfileItem{
 
     public int getPerson() {
         return person;
+    }
+
+    public int getType() {
+        return type;
     }
 }

@@ -1,8 +1,8 @@
-package org.ucomplex.ucomplex.Modules.UserProfile.model;
+package org.ucomplex.ucomplex.Modules.RoleInfoTeacher.model;
 
 /**
  * ---------------------------------------------------
- * Created by Sermilion on 18/05/2017.
+ * Created by Sermilion on 21/05/2017.
  * Project: UComplex
  * ---------------------------------------------------
  * <a href="http://www.ucomplex.org">www.ucomplex.org</a>
@@ -10,6 +10,5 @@ package org.ucomplex.ucomplex.Modules.UserProfile.model;
  * ---------------------------------------------------
  */
 
-public enum ProfileRequestType {
-    PHOTO, FRIEND, UNFRIEND, BLOCK, UNBLOCK, OPEN_ROLE, OPEN_TEACHER_ROLE
+public class RoleInfoteacherItem {
 }

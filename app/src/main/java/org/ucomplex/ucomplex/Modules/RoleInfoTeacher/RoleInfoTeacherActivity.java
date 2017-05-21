@@ -1,4 +1,4 @@
-package org.ucomplex.ucomplex.Modules.RoleInfo;
+package org.ucomplex.ucomplex.Modules.RoleInfoTeacher;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,9 +10,10 @@ import android.widget.ProgressBar;
 import org.ucomplex.ucomplex.Common.base.BaseMVPActivity;
 import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
+import org.ucomplex.ucomplex.Modules.RoleInfo.RoleInfoActivity;
 import org.ucomplex.ucomplex.R;
 
-public class RoleInfoActivity extends BaseMVPActivity<MVPView, RoleInfoPresenter> {
+public class RoleInfoTeacherActivity extends BaseMVPActivity<MVPView, RoleInfoTeacherPresenter> {
 
     public static final String ROLE_ID = "roleId";
     public static final String NAME = "name";
@@ -24,21 +25,21 @@ public class RoleInfoActivity extends BaseMVPActivity<MVPView, RoleInfoPresenter
         return intent;
     }
 
-    private RoleInfoAdapter mAdapter;
+    private RoleInfoTeacherAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         UCApplication.getInstance().getAppDiComponent().inject(this);
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
-        setContentViewWithNavDrawer(R.layout.activity_role_info);
+        setContentViewWithNavDrawer(R.layout.activity_role_info_teacher);
         setupToolbar(intent.getStringExtra(NAME), R.drawable.ic_menu);
         mProgress = (ProgressBar) findViewById(R.id.progressBar);
         setupDrawer();
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new RoleInfoAdapter();
+        mAdapter = new RoleInfoTeacherAdapter();
         mRecyclerView.setAdapter(mAdapter);
         presenter.loadData(intent.getIntExtra(ROLE_ID, -1));
     }

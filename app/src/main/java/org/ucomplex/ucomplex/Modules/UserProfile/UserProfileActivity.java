@@ -23,6 +23,7 @@ import org.ucomplex.ucomplex.Common.interfaces.DownloadCallback;
 import org.ucomplex.ucomplex.Common.interfaces.OnListItemClicked;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
 import org.ucomplex.ucomplex.Modules.RoleInfo.RoleInfoActivity;
+import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherActivity;
 import org.ucomplex.ucomplex.Modules.UserProfile.model.ProfileRequestType;
 import org.ucomplex.ucomplex.R;
 
@@ -85,6 +86,9 @@ public class UserProfileActivity extends BaseMVPActivity<MVPView, UserProfilePre
                 break;
             case OPEN_ROLE:
                 startActivity(RoleInfoActivity.creteIntent(this, (int) params, presenter.getPersonName()));
+                break;
+            case OPEN_TEACHER_ROLE:
+                startActivity(RoleInfoTeacherActivity.creteIntent(this, (int) params, presenter.getPersonName()));
                 break;
         }
     };

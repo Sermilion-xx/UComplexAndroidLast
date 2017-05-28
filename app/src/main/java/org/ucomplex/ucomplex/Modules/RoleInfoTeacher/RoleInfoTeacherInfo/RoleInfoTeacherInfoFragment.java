@@ -51,6 +51,7 @@ public class RoleInfoTeacherInfoFragment extends BaseMvpFragment<RoleInfoTeacher
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        setUserVisibleHint(false);
         View view = inflater.inflate(R.layout.fragment_recycler, container, false);
         ButterKnife.bind(this, view);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivityContext());
@@ -64,11 +65,19 @@ public class RoleInfoTeacherInfoFragment extends BaseMvpFragment<RoleInfoTeacher
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         presenter.attachView(this);
-        if (presenter.getData() == null) {
-            presenter.loadData(null);
-        } else {
-            mAdapter.setItems(presenter.getData());
-            mAdapter.notifyDataSetChanged();
+
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            if (presenter.getData() == null) {
+                presenter.loadData(null);
+            } else {
+                mAdapter.setItems(presenter.getData());
+                mAdapter.notifyDataSetChanged();
+            }
         }
     }
 

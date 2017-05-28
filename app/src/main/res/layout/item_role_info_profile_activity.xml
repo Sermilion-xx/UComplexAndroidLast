@@ -11,8 +11,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/key"
+        android:text="@string/activity"
         android:textColor="@color/color_uc_ListText"
-        android:textSize="15sp"
+        android:textSize="16sp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp" />
 
@@ -21,9 +22,11 @@
         android:layout_height="wrap_content"
         android:id="@+id/value"
         android:textColor="@color/color_uc_ListText"
+        android:textSize="16sp"
         android:layout_alignBottom="@+id/key"
         android:layout_toEndOf="@+id/key"
-        android:layout_marginStart="10dp" />
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"/>
 
     <View
         android:id="@+id/below"
@@ -45,5 +48,14 @@
         android:layout_alignParentStart="true"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp" />
+
+    <TextView
+        android:id="@+id/online"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/below"
+        android:layout_alignEnd="@+id/below"
+        android:textSize="16sp"
+        android:textColor="@color/color_uc_ListText" />
 
 </RelativeLayout>

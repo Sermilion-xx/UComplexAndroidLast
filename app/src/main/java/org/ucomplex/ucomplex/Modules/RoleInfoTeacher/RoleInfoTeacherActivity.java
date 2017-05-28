@@ -64,7 +64,7 @@ public class RoleInfoTeacherActivity extends BaseActivity {
         }
 
         viewPagerAdapter.addFragment(profileFragment, getString(R.string.profile));
-        viewPagerAdapter.addFragment(profileFragment, getString(R.string.personal_info));
+        viewPagerAdapter.addFragment(infoFragment, getString(R.string.personal_info));
         viewPager.setAdapter(viewPagerAdapter);
     }
 }

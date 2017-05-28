@@ -57,14 +57,6 @@ public class RoleInfoTeacherRaw {
         this.faculty_name = "";
     }
 
-    public static RoleInfoTeacherRaw getInstance() {
-        return RoleInfoTeacherRawSingletonHelper.INSTANCE;
-    }
-
-    private static class RoleInfoTeacherRawSingletonHelper {
-        private static final RoleInfoTeacherRaw INSTANCE = new RoleInfoTeacherRaw();
-    }
-
     public int getId() {
         return id;
     }

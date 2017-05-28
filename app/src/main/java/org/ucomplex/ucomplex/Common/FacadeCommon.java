@@ -204,6 +204,13 @@ public class FacadeCommon {
         }
     }
 
+    public static String getLastOnline(long lastOnlineMilliseconds) {
+        Date date = new Date(lastOnlineMilliseconds*1000);
+        Locale locale = new Locale("ru", "RU");
+        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", locale);
+        return FacadeCommon.makeHumanReadableDate(sdfDate.format(date));
+    }
+
     public static double round(double value, int places) {
         if (places < 0) throw new IllegalArgumentException();
         BigDecimal bd;

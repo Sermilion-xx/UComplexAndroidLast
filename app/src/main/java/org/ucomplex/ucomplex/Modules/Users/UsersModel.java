@@ -90,12 +90,11 @@ public class UsersModel implements MVPModel<UsersRaw, List<User>, UsersParams> {
 
     @Override
     public List<User> processData(UsersRaw data) {
-        if (data.getFriends() != null) {
+        if (data.getFriends().size() > 0) {
             mData = data.getFriends();
-            return data.getFriends();
         } else {
             mData = data.getUsers();
-            return data.getUsers();
         }
+        return mData;
     }
 }

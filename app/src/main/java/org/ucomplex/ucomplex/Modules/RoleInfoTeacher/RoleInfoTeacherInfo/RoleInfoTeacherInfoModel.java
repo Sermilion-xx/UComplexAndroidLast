@@ -6,6 +6,7 @@ import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
 import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.model.RoleInfoTeacherInfoItem;
 import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.model.RoleInfoTeacherRaw;
+import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.model.RoleInfoTeacherRawSingleton;
 import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.model.TimetableCourse;
 import org.ucomplex.ucomplex.R;
 
@@ -35,7 +36,7 @@ public class RoleInfoTeacherInfoModel implements MVPModel<RoleInfoTeacherRaw, Li
         return new Observable<RoleInfoTeacherRaw>() {
             @Override
             protected void subscribeActual(Observer<? super RoleInfoTeacherRaw> observer) {
-                observer.onNext(RoleInfoTeacherRaw.getInstance());
+                observer.onNext(RoleInfoTeacherRawSingleton.getInstance().getRawData());
             }
         };
     }
@@ -80,13 +81,20 @@ public class RoleInfoTeacherInfoModel implements MVPModel<RoleInfoTeacherRaw, Li
         RoleInfoTeacherInfoItem degree = new RoleInfoTeacherInfoItem(context.getString(R.string.study_degree), getDegree(data.getDegree()));
         mData.add(degree);
 
-        RoleInfoTeacherInfoItem upqualification = new RoleInfoTeacherInfoItem(context.getString(R.string.upqualifications), data.getUpqualification());
+        RoleInfoTeacherInfoItem upqualification = new RoleInfoTeacherInfoItem(context.getString(R.string.upqualifications), getUpqualification(data));
         mData.add(upqualification);
 
         RoleInfoTeacherInfoItem bio = new RoleInfoTeacherInfoItem(context.getString(R.string.short_bio), data.getBio());
         mData.add(bio);
 
         return mData;
+    }
+
+    private String getUpqualification(RoleInfoTeacherRaw data) {
+        if (!data.getUpqualification().equals("")) {
+            return data.getUpqualification();
+        }
+        return context.getString(R.string.not_specified);
     }
 
     private String[] ranks = new String[]{context.getString(R.string.docent),

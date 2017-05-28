@@ -35,6 +35,7 @@ public class RoleInfoTeacherProfileAdapter extends BaseAdapter<RoleInfoTeacherPr
 
         TextView key;
         TextView value;
+        TextView online;
         View above;
         View below;
 
@@ -43,6 +44,7 @@ public class RoleInfoTeacherProfileAdapter extends BaseAdapter<RoleInfoTeacherPr
             if (viewType == TYPE_HEADER) {
                 above = itemView.findViewById(R.id.above);
                 below = itemView.findViewById(R.id.below);
+                online = (TextView) itemView.findViewById(R.id.online);
             }
             key = (TextView) itemView.findViewById(R.id.key);
             value = (TextView) itemView.findViewById(R.id.value);
@@ -89,7 +91,8 @@ public class RoleInfoTeacherProfileAdapter extends BaseAdapter<RoleInfoTeacherPr
                 long width = (Math.round(item.getValueInt()) * fullWidth / 100);
                 fillProgress(holder.above, percent);
                 holder.above.getLayoutParams().width = (int) width;
-                holder.value.setText(Math.round(item.getValueInt())+" %");
+                holder.value.setText(": "+Math.round(item.getValueInt())+" %");
+                holder.online.setText(item.getOnline());
             } else {
                 holder.key.setText(item.getKey());
                 holder.value.setText(item.getValue());

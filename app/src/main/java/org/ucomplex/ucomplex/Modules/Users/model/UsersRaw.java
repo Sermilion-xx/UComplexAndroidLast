@@ -28,7 +28,7 @@ public final class UsersRaw {
     }
 
     public List<User> getFriends() {
-        return new ArrayList<>(friends);
+        return friends;
     }
 
     public boolean isOnline() {
@@ -36,6 +36,6 @@ public final class UsersRaw {
     }
 
     public List<User> getUsers() {
-        return new ArrayList<>(users);
+        return users;
     }
 }

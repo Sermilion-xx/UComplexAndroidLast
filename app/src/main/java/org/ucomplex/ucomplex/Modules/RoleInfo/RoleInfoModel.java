@@ -100,7 +100,7 @@ public class RoleInfoModel implements MVPModel<RoleInfoRaw, List<Pair<String, St
         List<Pair<String, String>> items = new ArrayList<>();
         String lastOnline = context.getString(R.string.never_been_online);
         if (data.getOnline() != 0) {
-            lastOnline = getLastOnline(data.getOnline());
+            lastOnline = FacadeCommon.getLastOnline(data.getOnline());
         }
         items.add(new Pair<>(FacadeCommon.getStringUserType(context, data.getType()), lastOnline));
         if (data.getClosed() != 1 && data.getType() == User.USER_TYPE_STUDENT) {
@@ -123,12 +123,5 @@ public class RoleInfoModel implements MVPModel<RoleInfoRaw, List<Pair<String, St
         }
         mData = items;
         return items;
-    }
-
-    private String getLastOnline(long lastOnlineMilliseconds) {
-        Date date = new Date(lastOnlineMilliseconds*1000);
-        Locale locale = new Locale("ru", "RU");
-        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", locale);
-        return FacadeCommon.makeHumanReadableDate(sdfDate.format(date));
     }
 }

@@ -2,10 +2,12 @@ package org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherProfile;
 
 import android.content.Context;
 
+import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
 import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.model.RoleInfoTeacherRaw;
 import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.model.RoleInfoTeacherProfileItem;
+import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.model.RoleInfoTeacherRawSingleton;
 import org.ucomplex.ucomplex.R;
 
 import java.util.ArrayList;
@@ -77,9 +79,16 @@ public class RoleInfoTeacherProfileModel implements MVPModel<RoleInfoTeacherRaw,
 
     @Override
     public List<RoleInfoTeacherProfileItem> processData(RoleInfoTeacherRaw data) {
+        RoleInfoTeacherRawSingleton rawSingleton = RoleInfoTeacherRawSingleton.getInstance();
+        rawSingleton.setRawData(data);
+
         Context context = UCApplication.getInstance();
         List<RoleInfoTeacherProfileItem> list = new ArrayList<>();
-        list.add(new RoleInfoTeacherProfileItem(context.getString(R.string.activity), data.getActivity()));
+        String lastOnline = context.getString(R.string.never_been_online);
+        if (data.getOnline() != 0) {
+            lastOnline = FacadeCommon.getLastOnline(data.getOnline());
+        }
+        list.add(new RoleInfoTeacherProfileItem(context.getString(R.string.activity), data.getActivity(), lastOnline));
         if(data.getFaculty_name().length() > 0 && data.getDepartment_name().length() > 0){
             list.add(new RoleInfoTeacherProfileItem(context.getString(R.string.faculty), data.getFaculty_name()));
             list.add(new RoleInfoTeacherProfileItem(context.getString(R.string.department), data.getDepartment_name()));

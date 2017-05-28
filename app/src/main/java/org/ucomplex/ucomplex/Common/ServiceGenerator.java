@@ -22,8 +22,6 @@ import static org.ucomplex.ucomplex.Common.base.UCApplication.BASE_URL;
 
 public class ServiceGenerator {
 
-
-
     private static Retrofit.Builder builder;
 
     private static void buildRetrofitBuilder(String baseUrl) {

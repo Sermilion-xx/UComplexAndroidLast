@@ -2,6 +2,7 @@ package org.ucomplex.ucomplex.Modules.Users.model;
 
 import org.ucomplex.ucomplex.Domain.users.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,32 +15,27 @@ import java.util.List;
  * ---------------------------------------------------
  */
 
-public class UsersRaw {
-    private boolean online;
-    private List<User> users;
-    private List<User> friends;
+public final class UsersRaw {
 
-    public List<User> getFriends() {
-        return friends;
+    private final boolean online;
+    private final List<User> users;
+    private final List<User> friends;
+
+    public UsersRaw() {
+        this.online = false;
+        this.users = new ArrayList<>();
+        this.friends = new ArrayList<>();
     }
 
-    public void setFriends(List<User> friends) {
-        this.friends = friends;
+    public List<User> getFriends() {
+        return new ArrayList<>(friends);
     }
 
     public boolean isOnline() {
         return online;
     }
 
-    public void setOnline(boolean online) {
-        this.online = online;
-    }
-
     public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
+        return new ArrayList<>(users);
     }
 }

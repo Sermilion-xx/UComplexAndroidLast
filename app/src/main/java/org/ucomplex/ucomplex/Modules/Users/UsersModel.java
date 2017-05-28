@@ -13,6 +13,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
+import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -44,21 +45,27 @@ public class UsersModel implements MVPModel<UsersRaw, List<User>, UsersParams> {
     public Observable<UsersRaw> loadData(UsersParams params) {
         Observable<UsersRaw> observable = null;
         if (params.getRequestType() == UserRequestType.ONLINE) {
-            observable =  usersService.getOnlineUsers(params.getStart());
+            observable = usersService.getOnlineUsers(params.getStart());
         } else if (params.getRequestType() == UserRequestType.FRIENDS) {
-            observable =  usersService.getFriendsUsers(params.getStart());
+            observable = usersService.getFriendsUsers(params.getStart());
         } else if (params.getRequestType() == UserRequestType.GROUP) {
-            observable =  usersService.getGroupUsers(params.getStart());
+            observable = usersService.getGroupUsers(params.getStart());
         } else if (params.getRequestType() == UserRequestType.TEACHERS) {
-            observable =  usersService.getTeachersUsers(params.getStart());
+            observable = usersService.getTeachersUsers(params.getStart());
         } else if (params.getRequestType() == UserRequestType.BLACKLIST) {
-            observable =  usersService.getBlacklistUsers(params.getStart());
+            observable = usersService.getBlacklistUsers(params.getStart());
         }
         if (observable != null) {
             return observable.subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread());
+        } else {
+            return new Observable<UsersRaw>() {
+                @Override
+                protected void subscribeActual(Observer<? super UsersRaw> observer) {
+                    observer.onNext(new UsersRaw());
+                }
+            };
         }
-        return null;
     }
 
     @Override

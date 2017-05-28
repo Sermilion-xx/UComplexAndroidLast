@@ -10,7 +10,7 @@ import android.widget.TextView;
 import org.ucomplex.ucomplex.Common.Constants;
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.base.BaseAdapter;
-import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.model.RoleInfoTeacherItem;
+import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.model.RoleInfoTeacherProfileItem;
 import org.ucomplex.ucomplex.R;
 
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ import java.util.List;
  * ---------------------------------------------------
  */
 
-public class RoleInfoTeacherProfileAdapter extends BaseAdapter<RoleInfoTeacherProfileAdapter.RoleInfoTeacherViewHolder, List<RoleInfoTeacherItem>> {
+public class RoleInfoTeacherProfileAdapter extends BaseAdapter<RoleInfoTeacherProfileAdapter.RoleInfoTeacherViewHolder, List<RoleInfoTeacherProfileItem>> {
 
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_INFO = 1;
@@ -81,7 +81,7 @@ public class RoleInfoTeacherProfileAdapter extends BaseAdapter<RoleInfoTeacherPr
 
     @Override
     public void onBindViewHolder(RoleInfoTeacherViewHolder holder, int position) {
-        RoleInfoTeacherItem item = mItems.get(position);
+        RoleInfoTeacherProfileItem item = mItems.get(position);
         if (mItems.size() > 0) {
             if (getItemViewType(position) == TYPE_HEADER) {
                 int fullWidth = holder.below.getLayoutParams().width;

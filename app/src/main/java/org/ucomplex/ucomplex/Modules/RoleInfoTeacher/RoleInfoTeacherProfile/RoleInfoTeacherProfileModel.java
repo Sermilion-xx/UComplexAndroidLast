@@ -5,7 +5,7 @@ import android.content.Context;
 import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
 import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.model.RoleInfoTeacherRaw;
-import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.model.RoleInfoTeacherItem;
+import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.model.RoleInfoTeacherProfileItem;
 import org.ucomplex.ucomplex.R;
 
 import java.util.ArrayList;
@@ -27,9 +27,9 @@ import io.reactivex.schedulers.Schedulers;
  * ---------------------------------------------------
  */
 
-public class RoleInfoTeacherProfileModel implements MVPModel<RoleInfoTeacherRaw, List<RoleInfoTeacherItem>, Integer> {
+public class RoleInfoTeacherProfileModel implements MVPModel<RoleInfoTeacherRaw, List<RoleInfoTeacherProfileItem>, Integer> {
 
-    private List<RoleInfoTeacherItem> mData;
+    private List<RoleInfoTeacherProfileItem> mData;
     private RoleInfoTeacherProfileService mService;
 
     public RoleInfoTeacherProfileModel() {
@@ -56,12 +56,12 @@ public class RoleInfoTeacherProfileModel implements MVPModel<RoleInfoTeacherRaw,
     }
 
     @Override
-    public void setData(List<RoleInfoTeacherItem> data) {
+    public void setData(List<RoleInfoTeacherProfileItem> data) {
         this.mData = data;
     }
 
     @Override
-    public void addData(List<RoleInfoTeacherItem> data) {
+    public void addData(List<RoleInfoTeacherProfileItem> data) {
         mData.addAll(data);
     }
 
@@ -71,20 +71,20 @@ public class RoleInfoTeacherProfileModel implements MVPModel<RoleInfoTeacherRaw,
     }
 
     @Override
-    public List<RoleInfoTeacherItem> getData() {
+    public List<RoleInfoTeacherProfileItem> getData() {
         return mData;
     }
 
     @Override
-    public List<RoleInfoTeacherItem> processData(RoleInfoTeacherRaw data) {
+    public List<RoleInfoTeacherProfileItem> processData(RoleInfoTeacherRaw data) {
         Context context = UCApplication.getInstance();
-        List<RoleInfoTeacherItem> list = new ArrayList<>();
-        list.add(new RoleInfoTeacherItem(context.getString(R.string.activity), data.getActivity()));
+        List<RoleInfoTeacherProfileItem> list = new ArrayList<>();
+        list.add(new RoleInfoTeacherProfileItem(context.getString(R.string.activity), data.getActivity()));
         if(data.getFaculty_name().length() > 0 && data.getDepartment_name().length() > 0){
-            list.add(new RoleInfoTeacherItem(context.getString(R.string.faculty), data.getFaculty_name()));
-            list.add(new RoleInfoTeacherItem(context.getString(R.string.department), data.getDepartment_name()));
+            list.add(new RoleInfoTeacherProfileItem(context.getString(R.string.faculty), data.getFaculty_name()));
+            list.add(new RoleInfoTeacherProfileItem(context.getString(R.string.department), data.getDepartment_name()));
         }else {
-            list.add(new RoleInfoTeacherItem(context.getString(R.string.profile_is_closed), ""));
+            list.add(new RoleInfoTeacherProfileItem(context.getString(R.string.profile_is_closed), ""));
         }
         mData = list;
         return mData;

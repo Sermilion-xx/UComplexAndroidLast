@@ -17,6 +17,11 @@ import org.ucomplex.ucomplex.Modules.RoleInfo.RoleInfoPresenter;
 import org.ucomplex.ucomplex.Modules.RoleInfo.dagger.RoleInfoActivityModule;
 import org.ucomplex.ucomplex.Modules.RoleInfo.dagger.RoleInfoModelModule;
 import org.ucomplex.ucomplex.Modules.RoleInfo.dagger.RoleInfoPresenterModule;
+import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherInfo.RoleInfoTeacherInfoFragment;
+import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherInfo.RoleInfoTeacherInfoModel;
+import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherInfo.RoleInfoTeacherInfoPresenter;
+import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherInfo.dagger.RoleInfoTeacherInfoFragmentModule;
+import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherInfo.dagger.RoleInfoTeacherInfoPresenterModule;
 import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherProfile.RoleInfoTeacherProfileFragment;
 import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherProfile.RoleInfoTeacherProfileModel;
 import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherProfile.RoleInfoTeacherProfilePresenter;
@@ -109,7 +114,9 @@ import dagger.Component;
                 RoleInfoActivityModule.class,
                 RoleInfoTeacherProfileModelModule.class,
                 RoleInfoTeacherProfilePresenterModule.class,
-                RoleInfoTeacherProfileFragmentModule.class
+                RoleInfoTeacherProfileFragmentModule.class,
+                RoleInfoTeacherInfoPresenterModule.class,
+                RoleInfoTeacherInfoFragmentModule.class
         })
 
 public interface AppDiComponent {
@@ -177,6 +184,10 @@ public interface AppDiComponent {
     void inject(RoleInfoTeacherProfilePresenter presenter);
 
     void inject(RoleInfoTeacherProfileFragment fragment);
+
+    void inject(RoleInfoTeacherInfoPresenter presenter);
+
+    void inject(RoleInfoTeacherInfoFragment fragment);
 
 
 }

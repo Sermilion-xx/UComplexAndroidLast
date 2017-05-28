@@ -1,9 +1,11 @@
-package org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherProfile;
+package org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherInfo;
 
 import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
 import org.ucomplex.ucomplex.Common.base.UCApplication;
-import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.model.RoleInfoTeacherRaw;
+import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherProfile.RoleInfoTeacherProfileModel;
+import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.model.RoleInfoTeacherInfoItem;
 import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.model.RoleInfoTeacherProfileItem;
+import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.model.RoleInfoTeacherRaw;
 
 import java.util.List;
 
@@ -21,16 +23,16 @@ import io.reactivex.disposables.Disposable;
  * ---------------------------------------------------
  */
 
-public class RoleInfoTeacherProfilePresenter extends AbstractPresenter<
-        RoleInfoTeacherRaw, List<RoleInfoTeacherProfileItem>,
-        Integer, RoleInfoTeacherProfileModel> {
+public class RoleInfoTeacherInfoPresenter extends AbstractPresenter<
+        RoleInfoTeacherRaw, List<RoleInfoTeacherInfoItem>,
+        Void, RoleInfoTeacherInfoModel> {
 
-    public RoleInfoTeacherProfilePresenter() {
+    public RoleInfoTeacherInfoPresenter() {
         UCApplication.getInstance().getAppDiComponent().inject(this);
     }
 
     @Override
-    public void loadData(Integer params) {
+    public void loadData(Void params) {
         Observable<RoleInfoTeacherRaw> dataObservable = mModel.loadData(params);
         dataObservable.subscribe(new Observer<RoleInfoTeacherRaw>() {
 

@@ -157,4 +157,16 @@
     <string name="average_rating">Место в общем рейтинге</string>
     <string name="average_rating_in_faculty">Место в рейтинге по факультету</string>
     <string name="no_information">Нет информации</string>
+    <string name="teaching_disciplines">Преподаваемые дисциплины</string>
+    <string name="disciplines_in_timetable">Дисциплины в расписании</string>
+    <string name="study_rank">Ученое звание</string>
+    <string name="docent">доцент</string>
+    <string name="professor">профессор</string>
+    <string name="member_correspondent">член-корреспондент</string>
+    <string name="academic">академик</string>
+    <string name="not_specified">не указанно</string>
+    <string name="study_degree">Ученая степень</string>
+    <string name="upqualifications">Повышение квалификации и переподготовка</string>
+    <string name="short_bio">Краткая биография</string>
+    <string name="personal_info">Личная информация</string>
 </resources>

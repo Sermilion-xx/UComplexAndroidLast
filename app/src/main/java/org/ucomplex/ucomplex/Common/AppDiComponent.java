@@ -28,6 +28,11 @@ import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherProfile.Role
 import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherProfile.dagger.RoleInfoTeacherProfileFragmentModule;
 import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherProfile.dagger.RoleInfoTeacherProfileModelModule;
 import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherProfile.dagger.RoleInfoTeacherProfilePresenterModule;
+import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherRank.RoleInfoTeacherRankFragment;
+import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherRank.RoleInfoTeacherRankModel;
+import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherRank.RoleInfoTeacherRankPresenter;
+import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherRank.dagger.RoleInfoTeacherRankFragmentModule;
+import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherRank.dagger.RoleInfoTeacherRankPresenterModule;
 import org.ucomplex.ucomplex.Modules.RoleSelect.RoleSelectActivity;
 import org.ucomplex.ucomplex.Modules.RoleSelect.RoleSelectPresenter;
 import org.ucomplex.ucomplex.Modules.RoleSelect.dagger.RoleSelectActivityModule;
@@ -116,7 +121,10 @@ import dagger.Component;
                 RoleInfoTeacherProfilePresenterModule.class,
                 RoleInfoTeacherProfileFragmentModule.class,
                 RoleInfoTeacherInfoPresenterModule.class,
-                RoleInfoTeacherInfoFragmentModule.class
+                RoleInfoTeacherInfoFragmentModule.class,
+                RoleInfoTeacherRankFragmentModule.class,
+                RoleInfoTeacherRankPresenterModule.class,
+                RoleInfoTeacherRankFragmentModule.class
         })
 
 public interface AppDiComponent {
@@ -188,6 +196,12 @@ public interface AppDiComponent {
     void inject(RoleInfoTeacherInfoPresenter presenter);
 
     void inject(RoleInfoTeacherInfoFragment fragment);
+
+    void inject(RoleInfoTeacherRankFragment fragment);
+
+    void inject(RoleInfoTeacherRankPresenter presenter);
+
+    void inject(RoleInfoTeacherRankModel fragment);
 
 
 }

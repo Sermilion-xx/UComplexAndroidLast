@@ -2,9 +2,7 @@ package org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherInfo;
 
 import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
 import org.ucomplex.ucomplex.Common.base.UCApplication;
-import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherProfile.RoleInfoTeacherProfileModel;
-import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.model.RoleInfoTeacherInfoItem;
-import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.model.RoleInfoTeacherProfileItem;
+import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherInfo.model.RoleInfoTeacherInfoItem;
 import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.model.RoleInfoTeacherRaw;
 
 import java.util.List;

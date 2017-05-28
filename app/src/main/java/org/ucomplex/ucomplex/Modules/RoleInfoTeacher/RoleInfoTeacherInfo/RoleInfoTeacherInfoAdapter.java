@@ -9,7 +9,7 @@ import android.widget.TextView;
 import org.ucomplex.ucomplex.Common.Constants;
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.base.BaseAdapter;
-import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.model.RoleInfoTeacherInfoItem;
+import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherInfo.model.RoleInfoTeacherInfoItem;
 import org.ucomplex.ucomplex.R;
 
 import java.util.List;

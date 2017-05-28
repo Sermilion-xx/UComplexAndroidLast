@@ -3,7 +3,7 @@ package org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherProfile;
 import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
 import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.model.RoleInfoTeacherRaw;
-import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.model.RoleInfoTeacherProfileItem;
+import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherProfile.model.RoleInfoTeacherProfileItem;
 
 import java.util.List;
 

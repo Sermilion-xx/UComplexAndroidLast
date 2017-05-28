@@ -4,7 +4,7 @@ import android.content.Context;
 
 import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
-import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.model.RoleInfoTeacherInfoItem;
+import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherInfo.model.RoleInfoTeacherInfoItem;
 import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.model.RoleInfoTeacherRaw;
 import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.model.RoleInfoTeacherRawSingleton;
 import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.model.TimetableCourse;

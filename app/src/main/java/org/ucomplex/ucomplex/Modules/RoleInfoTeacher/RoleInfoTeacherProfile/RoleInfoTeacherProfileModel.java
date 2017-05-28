@@ -6,7 +6,7 @@ import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
 import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.model.RoleInfoTeacherRaw;
-import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.model.RoleInfoTeacherProfileItem;
+import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherProfile.model.RoleInfoTeacherProfileItem;
 import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.model.RoleInfoTeacherRawSingleton;
 import org.ucomplex.ucomplex.R;
 

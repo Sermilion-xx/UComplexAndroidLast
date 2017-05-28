@@ -1,4 +1,4 @@
-package org.ucomplex.ucomplex.Modules.RoleInfoTeacher.model;
+package org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherProfile.model;
 
 /**
  * ---------------------------------------------------

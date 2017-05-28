@@ -10,7 +10,7 @@ import android.widget.TextView;
 import org.ucomplex.ucomplex.Common.Constants;
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.base.BaseAdapter;
-import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.model.RoleInfoTeacherProfileItem;
+import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherProfile.model.RoleInfoTeacherProfileItem;
 import org.ucomplex.ucomplex.R;
 
 import java.util.ArrayList;

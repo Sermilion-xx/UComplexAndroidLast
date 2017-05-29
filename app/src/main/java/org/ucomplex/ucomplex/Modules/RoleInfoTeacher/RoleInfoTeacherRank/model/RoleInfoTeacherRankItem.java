@@ -12,25 +12,25 @@ package org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherRank.model;
 
 public final class RoleInfoTeacherRankItem {
 
-    private final String question;
-    private final String hint;
-    private final int score;
+    private final int question;
+    private final int hint;
+    private final double score;
 
-    public RoleInfoTeacherRankItem(String question, String hint, int score) {
+    public RoleInfoTeacherRankItem(int question, int hint, double score) {
         this.question = question;
         this.hint = hint;
         this.score = score;
     }
 
-    public String getQuestion() {
+    public int getQuestion() {
         return question;
     }
 
-    public String getHint() {
+    public int getHint() {
         return hint;
     }
 
-    public int getScore() {
+    public double getScore() {
         return score;
     }
 }

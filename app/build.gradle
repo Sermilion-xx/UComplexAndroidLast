@@ -50,6 +50,7 @@ dependencies {
     annotationProcessor "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
     compile "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
     compile "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
+    compile "com.squareup.retrofit2:converter-scalars:$RETROFIT_VERSION"
     compile "io.reactivex.rxjava2:rxandroid:$RXJAVA_VERSION"
     compile "io.reactivex.rxjava2:rxjava:$RXJAVA_VERSION"
     compile "com.jakewharton:butterknife:$BUTTERKNIFE_VERSION"

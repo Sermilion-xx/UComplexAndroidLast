@@ -23,13 +23,13 @@
         android:background="@color/color_uc_ListSeparator">
 
         <View
-            android:id="@+id/mask10"
+            android:id="@+id/mask1"
             android:layout_width="32dp"
             android:layout_height="25dp"
-            android:background="@color/rating10" />
+            android:background="@color/rating1" />
 
         <Button
-            android:id="@+id/question_button_10"
+            android:id="@+id/question_button_1"
             android:layout_width="32dp"
             android:layout_height="25dp"
             android:background="@android:color/transparent"
@@ -38,54 +38,74 @@
 
 
         <View
-            android:id="@+id/mask9"
+            android:id="@+id/mask2"
             android:layout_width="32dp"
             android:layout_height="25dp"
-            android:background="@color/rating9"
-            android:layout_toEndOf="@+id/question_button_10"/>
+            android:background="@color/rating2"
+            android:layout_toEndOf="@+id/question_button_1"/>
 
         <Button
-            android:id="@+id/question_button_9"
+            android:id="@+id/question_button_2"
             android:layout_width="32dp"
             android:layout_height="25dp"
-            android:layout_alignTop="@+id/question_button_10"
-            android:layout_toEndOf="@+id/question_button_10"
+            android:layout_alignTop="@+id/question_button_1"
+            android:layout_toEndOf="@+id/question_button_1"
             android:background="@android:color/transparent"
             android:text="@string/_2"
             android:textColor="@color/colorBlack" />
 
+
         <View
-            android:id="@+id/mask8"
+            android:id="@+id/mask3"
             android:layout_width="32dp"
             android:layout_height="25dp"
-            android:background="@color/rating8"
-            android:layout_toEndOf="@+id/question_button_9"/>
+            android:background="@color/rating3"
+            android:layout_toEndOf="@+id/question_button_2"/>
 
         <Button
-            android:id="@+id/question_button_8"
+            android:id="@+id/question_button_3"
             android:layout_width="32dp"
             android:layout_height="25dp"
-            android:layout_alignTop="@+id/question_button_9"
-            android:layout_toEndOf="@+id/question_button_9"
+            android:layout_alignTop="@+id/question_button_2"
+            android:layout_toEndOf="@+id/question_button_2"
             android:background="@android:color/transparent"
             android:text="@string/_3"
             android:textColor="@color/colorBlack" />
 
+
         <View
-            android:id="@+id/mask7"
-            android:layout_width="32dp"
-            android:layout_height="25dp"
-            android:background="@color/rating7"
-            android:layout_toEndOf="@+id/question_button_8"/>
+        android:id="@+id/mask4"
+        android:layout_width="32dp"
+        android:layout_height="25dp"
+        android:background="@color/rating4"
+        android:layout_toEndOf="@+id/question_button_3"/>
 
         <Button
-            android:id="@+id/question_button_7"
+            android:id="@+id/question_button_4"
             android:layout_width="32dp"
             android:layout_height="25dp"
-            android:layout_alignTop="@+id/question_button_8"
-            android:layout_toEndOf="@+id/question_button_8"
+            android:layout_alignTop="@+id/question_button_3"
+            android:layout_toEndOf="@+id/question_button_3"
             android:background="@android:color/transparent"
             android:text="@string/_4"
+            android:textColor="@color/colorBlack" />
+
+
+        <View
+            android:id="@+id/mask5"
+            android:layout_width="32dp"
+            android:layout_height="25dp"
+            android:background="@color/rating5"
+            android:layout_toEndOf="@+id/question_button_4"/>
+
+        <Button
+            android:id="@+id/question_button_5"
+            android:layout_width="32dp"
+            android:layout_height="25dp"
+            android:layout_alignTop="@+id/question_button_4"
+            android:layout_toEndOf="@+id/question_button_4"
+            android:background="@android:color/transparent"
+            android:text="@string/_5"
             android:textColor="@color/colorBlack" />
 
         <View
@@ -93,102 +113,88 @@
             android:layout_width="32dp"
             android:layout_height="25dp"
             android:background="@color/rating6"
-            android:layout_toEndOf="@+id/question_button_7"/>
+            android:layout_toEndOf="@+id/question_button_5"/>
 
         <Button
             android:id="@+id/question_button_6"
             android:layout_width="32dp"
             android:layout_height="25dp"
-            android:layout_alignTop="@+id/question_button_7"
-            android:layout_toEndOf="@+id/question_button_7"
-            android:background="@android:color/transparent"
-            android:text="@string/_5"
-            android:textColor="@color/colorBlack" />
-
-        <View
-            android:id="@+id/mask5"
-            android:layout_width="32dp"
-            android:layout_height="25dp"
-            android:background="@color/rating5"
-            android:layout_toEndOf="@+id/question_button_6"/>
-
-        <Button
-            android:id="@+id/question_button_5"
-            android:layout_width="32dp"
-            android:layout_height="25dp"
-            android:layout_alignTop="@+id/question_button_6"
-            android:layout_toEndOf="@+id/question_button_6"
+            android:layout_alignTop="@+id/question_button_5"
+            android:layout_toEndOf="@+id/question_button_5"
             android:background="@android:color/transparent"
             android:text="@string/_6"
             android:textColor="@color/colorBlack" />
 
         <View
-            android:id="@+id/mask4"
+            android:id="@+id/mask7"
             android:layout_width="32dp"
             android:layout_height="25dp"
-            android:background="@color/rating4"
-            android:layout_toEndOf="@+id/question_button_5"/>
+            android:background="@color/rating7"
+            android:layout_toEndOf="@+id/question_button_6"/>
 
         <Button
-            android:id="@+id/question_button_4"
+            android:id="@+id/question_button_7"
             android:layout_width="32dp"
             android:layout_height="25dp"
-            android:layout_alignTop="@+id/question_button_5"
-            android:layout_toEndOf="@+id/question_button_5"
+            android:layout_alignTop="@+id/question_button_6"
+            android:layout_toEndOf="@+id/question_button_6"
             android:background="@android:color/transparent"
             android:text="@string/_7"
             android:textColor="@color/colorBlack" />
 
+
         <View
-            android:id="@+id/mask3"
+            android:id="@+id/mask8"
             android:layout_width="32dp"
             android:layout_height="25dp"
-            android:background="@color/rating3"
-            android:layout_toEndOf="@+id/question_button_4"/>
+            android:background="@color/rating8"
+            android:layout_toEndOf="@+id/question_button_7"/>
 
         <Button
-            android:id="@+id/question_button_3"
+            android:id="@+id/question_button_8"
             android:layout_width="32dp"
             android:layout_height="25dp"
-            android:layout_alignTop="@+id/question_button_4"
-            android:layout_toEndOf="@+id/question_button_4"
+            android:layout_alignTop="@+id/question_button_7"
+            android:layout_toEndOf="@+id/question_button_7"
             android:background="@android:color/transparent"
             android:text="@string/_8"
             android:textColor="@color/colorBlack" />
 
         <View
-            android:id="@+id/mask2"
+            android:id="@+id/mask9"
             android:layout_width="32dp"
             android:layout_height="25dp"
-            android:background="@color/rating2"
-            android:layout_toEndOf="@+id/question_button_3"/>
+            android:background="@color/rating9"
+            android:layout_toEndOf="@+id/question_button_8"/>
 
         <Button
-            android:id="@+id/question_button_2"
+            android:id="@+id/question_button_9"
             android:layout_width="32dp"
             android:layout_height="25dp"
-            android:layout_alignTop="@+id/question_button_3"
-            android:layout_toEndOf="@+id/question_button_3"
+            android:layout_alignTop="@+id/question_button_8"
+            android:layout_toEndOf="@+id/question_button_8"
             android:background="@android:color/transparent"
             android:text="@string/_9"
             android:textColor="@color/colorBlack" />
 
         <View
-            android:id="@+id/mask1"
+            android:id="@+id/mask10"
             android:layout_width="32dp"
             android:layout_height="25dp"
-            android:background="@color/rating1"
-            android:layout_toEndOf="@+id/question_button_2"/>
+            android:background="@color/rating10"
+            android:layout_toEndOf="@+id/question_button_9"/>
 
         <Button
-            android:id="@+id/question_button_1"
+            android:id="@+id/question_button_10"
             android:layout_width="32dp"
             android:layout_height="25dp"
-            android:layout_alignTop="@+id/question_button_2"
-            android:layout_toEndOf="@+id/question_button_2"
+            android:layout_alignTop="@+id/question_button_9"
+            android:layout_toEndOf="@+id/question_button_9"
             android:background="@android:color/transparent"
             android:text="@string/_10"
             android:textColor="@color/colorBlack" />
+
+
 
     </RelativeLayout>
 

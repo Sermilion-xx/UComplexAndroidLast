@@ -16,24 +16,18 @@ import java.util.Map;
 public final class RoleInfoTeacherRankRaw {
 
     private final int teacher;
-    private final Map<String, Map<String, Integer>> votes;
-    private final int count;
+    private final Map<String, Object> votes;
 
     public RoleInfoTeacherRankRaw() {
         this.teacher = 0;
-        this.votes = new HashMap<>();
-        this.count = 0;
+        votes = new HashMap<>();
     }
 
     public int getTeacher() {
         return teacher;
     }
 
-    public Map<String, Map<String, Integer>> getVotes() {
+    public Map<String, Object> getVotes() {
         return votes;
-    }
-
-    public int getCount() {
-        return count;
     }
 }

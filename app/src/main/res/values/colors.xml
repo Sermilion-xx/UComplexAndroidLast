@@ -33,15 +33,15 @@
     <color name="color_uc_placeholder15">#4dbcbb</color>
     <color name="color_uc_placeholder16">#4da8b6</color>
 
-    <color name="rating10">#E77272</color>
-    <color name="rating9">#E77D72</color>
-    <color name="rating8">#E78D72</color>
-    <color name="rating7">#E7A472</color>
-    <color name="rating6">#E8B472</color>
-    <color name="rating5">#E8C272</color>
-    <color name="rating4">#E8C272</color>
-    <color name="rating3">#E6E773</color>
-    <color name="rating2">#c3e874</color>
-    <color name="rating1">#89e874</color>
+    <color name="rating1">#E77272</color>
+    <color name="rating2">#E77D72</color>
+    <color name="rating3">#E78D72</color>
+    <color name="rating4">#E7A472</color>
+    <color name="rating5">#E8B472</color>
+    <color name="rating6">#E8C272</color>
+    <color name="rating7">#E8C272</color>
+    <color name="rating8">#E6E773</color>
+    <color name="rating9">#c3e874</color>
+    <color name="rating10">#89e874</color>
 
 </resources>

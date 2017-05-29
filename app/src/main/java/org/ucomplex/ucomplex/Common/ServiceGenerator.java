@@ -7,6 +7,7 @@ import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 import static org.ucomplex.ucomplex.Common.base.UCApplication.BASE_URL;
 
@@ -28,7 +29,8 @@ public class ServiceGenerator {
         builder = new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create());
+                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(ScalarsConverterFactory.create());
     }
 
     public static <S> S createService(Class<S> serviceClass, String authString, String ... baseUrl) {

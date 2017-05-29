@@ -72,6 +72,7 @@ public class RoleInfoTeacherRankModel implements MVPModel<RoleInfoTeacherRankRaw
 
     @Override
     public List<RoleInfoTeacherRankItem> processData(RoleInfoTeacherRankRaw data) {
+
         return mData;
     }
 

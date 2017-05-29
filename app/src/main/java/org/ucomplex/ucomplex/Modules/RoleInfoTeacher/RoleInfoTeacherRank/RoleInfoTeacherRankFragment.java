@@ -32,8 +32,8 @@ public class RoleInfoTeacherRankFragment extends BaseMvpFragment<RoleInfoTeacher
 
     private static final String TEACHER_ID = "teacherId";
 
-    public static RoleInfoTeacherProfileFragment getInstance(int id) {
-        RoleInfoTeacherProfileFragment fragment = new RoleInfoTeacherProfileFragment();
+    public static RoleInfoTeacherRankFragment getInstance(int id) {
+        RoleInfoTeacherRankFragment fragment = new RoleInfoTeacherRankFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(TEACHER_ID, id);
         fragment.setArguments(bundle);

@@ -32,6 +32,7 @@ import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherRank.RoleInf
 import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherRank.RoleInfoTeacherRankModel;
 import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherRank.RoleInfoTeacherRankPresenter;
 import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherRank.dagger.RoleInfoTeacherRankFragmentModule;
+import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherRank.dagger.RoleInfoTeacherRankModelModule;
 import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherRank.dagger.RoleInfoTeacherRankPresenterModule;
 import org.ucomplex.ucomplex.Modules.RoleSelect.RoleSelectActivity;
 import org.ucomplex.ucomplex.Modules.RoleSelect.RoleSelectPresenter;
@@ -124,7 +125,7 @@ import dagger.Component;
                 RoleInfoTeacherInfoFragmentModule.class,
                 RoleInfoTeacherRankFragmentModule.class,
                 RoleInfoTeacherRankPresenterModule.class,
-                RoleInfoTeacherRankFragmentModule.class
+                RoleInfoTeacherRankModelModule.class
         })
 
 public interface AppDiComponent {
@@ -202,7 +203,5 @@ public interface AppDiComponent {
     void inject(RoleInfoTeacherRankPresenter presenter);
 
     void inject(RoleInfoTeacherRankModel fragment);
-
-
 }
 

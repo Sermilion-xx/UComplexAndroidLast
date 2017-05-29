@@ -4,6 +4,8 @@ import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherRank.model.R
 import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.model.RoleInfoTeacherRaw;
 
 import io.reactivex.Observable;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
@@ -18,6 +20,6 @@ import retrofit2.http.Path;
  */
 
 public interface RoleInfoTeacherRankService {
-    @POST("/user/page/{roleId}?mobile=1")
-    Observable<RoleInfoTeacherRankRaw> getRank(@Path("roleId") Integer roleId);
+    @POST("/user/get_teacher_votes?mobile=1") @FormUrlEncoded
+    Observable<RoleInfoTeacherRankRaw> getRank(@Field("teacher") Integer teacher);
 }

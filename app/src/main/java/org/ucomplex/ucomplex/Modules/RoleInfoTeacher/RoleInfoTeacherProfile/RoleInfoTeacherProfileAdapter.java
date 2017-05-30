@@ -89,7 +89,7 @@ public class RoleInfoTeacherProfileAdapter extends BaseAdapter<RoleInfoTeacherPr
                 int fullWidth = holder.below.getLayoutParams().width;
                 long percent = Math.round(item.getValueInt());
                 long width = (Math.round(item.getValueInt()) * fullWidth / 100);
-                fillProgress(holder.above, percent);
+                setProgressColor(holder.above, percent);
                 holder.above.getLayoutParams().width = (int) width;
                 holder.value.setText(": "+Math.round(item.getValueInt())+" %");
                 holder.online.setText(item.getOnline());
@@ -100,7 +100,7 @@ public class RoleInfoTeacherProfileAdapter extends BaseAdapter<RoleInfoTeacherPr
         }
     }
 
-    private void fillProgress(View view, long percent) {
+    private void setProgressColor(View view, long percent) {
         if(percent <= 10){
             view.setBackgroundColor(Color.parseColor(colors.get(0)));
         }else if(percent<=20 && percent>10){

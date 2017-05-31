@@ -1,9 +1,11 @@
 package org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherRank;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import org.ucomplex.ucomplex.Common.Constants;
@@ -27,7 +29,6 @@ import java.util.List;
 
 public class RoleInfoTeacherRankAdapter extends BaseAdapter<RoleInfoTeacherRankAdapter.RoleInfoTeacherRankViewHolder, List<RoleInfoTeacherRankItem>> {
 
-
     static class RoleInfoTeacherRankViewHolder extends RecyclerView.ViewHolder {
 
         TextView question;
@@ -42,12 +43,14 @@ public class RoleInfoTeacherRankAdapter extends BaseAdapter<RoleInfoTeacherRankA
         View view8;
         View view9;
         View view10;
+        Button button;
         final List<View> masks = new ArrayList<>();
 
         RoleInfoTeacherRankViewHolder(View itemView) {
             super(itemView);
             question = (TextView) itemView.findViewById(R.id.question);
             hint = (TextView) itemView.findViewById(R.id.question_hint);
+            button = (Button) itemView.findViewById(R.id.question_button_1);
             view1 = itemView.findViewById(R.id.mask1);
             view2 = itemView.findViewById(R.id.mask2);
             view3 = itemView.findViewById(R.id.mask3);
@@ -58,7 +61,7 @@ public class RoleInfoTeacherRankAdapter extends BaseAdapter<RoleInfoTeacherRankA
             view8 = itemView.findViewById(R.id.mask8);
             view9 = itemView.findViewById(R.id.mask9);
             view10 = itemView.findViewById(R.id.mask10);
-            rankCellWidth = view10.getLayoutParams().width;
+
             masks.add(view1);
             masks.add(view2);
             masks.add(view3);
@@ -72,7 +75,7 @@ public class RoleInfoTeacherRankAdapter extends BaseAdapter<RoleInfoTeacherRankA
         }
     }
 
-    private static int rankCellWidth;
+    private static int rankCellWidth = 0;
 
     @Override
     public RoleInfoTeacherRankViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -93,19 +96,27 @@ public class RoleInfoTeacherRankAdapter extends BaseAdapter<RoleInfoTeacherRankA
             holder.question.setText(item.getQuestion());
             int score = (int) item.getScore();
             double fraction = item.getScore() - score;
-            for (int i = 0; i <= score; i++) {
-                View mask = holder.masks.get(i);
+            if (rankCellWidth == 0) { // getting original mask width for restoring it
+                rankCellWidth = holder.masks.get(position).getLayoutParams().width;
+            }
+            fillRatingBar(score, holder, fraction);
+        }
+    }
+
+    private void fillRatingBar(int score, RoleInfoTeacherRankViewHolder holder, double fraction) {
+        for (int i = 0; i <= score; i++) {
+            View mask = holder.masks.get(i);
+            if (i == score) {
+                long width = (Math.round(fraction * 100) * rankCellWidth) / 100;
+                mask.getLayoutParams().width = (int) width;
+            } else {
                 mask.getLayoutParams().width = rankCellWidth;
-                mask.setVisibility(View.VISIBLE);
-                if (i == score) {
-                    int fullWidth = mask.getLayoutParams().width;
-                    long width = (Math.round(fraction * 100) * fullWidth) / 100;
-                    mask.getLayoutParams().width = (int) width;
-                }
             }
-            for (int k = score + 1; k < 10; k++) {
-                holder.masks.get(k).setVisibility(View.INVISIBLE);
-            }
+            mask.setVisibility(View.VISIBLE);
+        }
+        for (int k = score + 1; k < 10; k++) {
+            holder.masks.get(k).setVisibility(View.INVISIBLE);
+            holder.masks.get(k).getLayoutParams().width = rankCellWidth;
         }
     }
 }

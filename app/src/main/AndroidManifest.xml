@@ -38,11 +38,20 @@
         <activity
             android:name=".Modules.SubjectsList.SubjectsListActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".Modules.Portfolio.PortfolioActivity" />
+        <activity android:name=".Modules.Portfolio.PortfolioActivity"
+            android:screenOrientation="portrait"/>
 
         <service android:name=".Modules.Subject.SubjectMaterials.NotificationService" />
 
-        <activity android:name=".Modules.Users.UsersActivity" />
+        <activity android:name=".Modules.Users.UsersActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".Modules.UserProfile.UserProfileActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Modules.RoleInfo.RoleInfoActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Modules.RoleInfoTeacher.RoleInfoTeacherActivity"
+            android:screenOrientation="portrait" />
 
         <receiver android:name=".Common.NetworkReceiver">
             <intent-filter>
@@ -53,10 +62,6 @@
         <provider
             android:name=".Common.UCContentProvider"
             android:authorities="org.ucomplex.ucomplex.Common.UCContentProvider" />
-
-        <activity android:name=".Modules.UserProfile.UserProfileActivity" />
-        <activity android:name=".Modules.RoleInfo.RoleInfoActivity" />
-        <activity android:name=".Modules.RoleInfoTeacher.RoleInfoTeacherActivity"></activity>
     </application>
 
 </manifest>

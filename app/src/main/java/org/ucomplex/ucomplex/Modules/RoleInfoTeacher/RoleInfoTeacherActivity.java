@@ -35,6 +35,7 @@ public class RoleInfoTeacherActivity extends BaseActivity {
     private RoleInfoTeacherProfileFragment profileFragment;
     private RoleInfoTeacherInfoFragment infoFragment;
     private RoleInfoTeacherRankFragment rankFragment;
+    private boolean menuStateHidden = true;
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -54,6 +55,24 @@ public class RoleInfoTeacherActivity extends BaseActivity {
         setupDrawer();
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            public void onPageScrollStateChanged(int state) {
+
+            }
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            public void onPageSelected(int position) {
+                if (position != 2) {
+                    menuStateHidden = true;
+                    invalidateOptionsMenu();
+                } else {
+                    menuStateHidden = false;
+                    invalidateOptionsMenu();
+                }
+            }
+        });
         viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
@@ -80,6 +99,9 @@ public class RoleInfoTeacherActivity extends BaseActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_teacher_rating, menu);
+        if (menuStateHidden)  {
+            menu.getItem(0).setVisible(false);
+        }
         return true;
     }
 

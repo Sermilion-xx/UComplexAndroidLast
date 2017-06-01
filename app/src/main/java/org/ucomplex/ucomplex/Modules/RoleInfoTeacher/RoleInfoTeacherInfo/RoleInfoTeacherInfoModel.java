@@ -63,30 +63,30 @@ public class RoleInfoTeacherInfoModel implements MVPModel<RoleInfoTeacherRaw, Li
 
     @Override
     public List<RoleInfoTeacherInfoItem> processData(RoleInfoTeacherRaw data) {
-        mData = new ArrayList<>();
+        if (data != null) {
+            mData = new ArrayList<>();
+            RoleInfoTeacherInfoItem courses = new RoleInfoTeacherInfoItem(context.getString(R.string.teaching_disciplines), data.getCourses());
+            mData.add(courses);
 
-        RoleInfoTeacherInfoItem courses = new RoleInfoTeacherInfoItem(context.getString(R.string.teaching_disciplines), data.getCourses());
-        mData.add(courses);
+            StringBuilder disciplinesInTimetableBuilder = new StringBuilder();
+            for (TimetableCourse timetableCourse : data.getTimetable_courses()) {
+                disciplinesInTimetableBuilder.append(timetableCourse.getName()).append("\n");
+            }
+            RoleInfoTeacherInfoItem disciplinesInTimetable = new RoleInfoTeacherInfoItem(context.getString(R.string.disciplines_in_timetable), disciplinesInTimetableBuilder.toString());
+            mData.add(disciplinesInTimetable);
 
-        StringBuilder disciplinesInTimetableBuilder = new StringBuilder();
-        for (TimetableCourse timetableCourse: data.getTimetable_courses()) {
-            disciplinesInTimetableBuilder.append(timetableCourse.getName()).append("\n");
+            RoleInfoTeacherInfoItem rank = new RoleInfoTeacherInfoItem(context.getString(R.string.study_rank), getRank(data.getRank()));
+            mData.add(rank);
+
+            RoleInfoTeacherInfoItem degree = new RoleInfoTeacherInfoItem(context.getString(R.string.study_degree), getDegree(data.getDegree()));
+            mData.add(degree);
+
+            RoleInfoTeacherInfoItem upqualification = new RoleInfoTeacherInfoItem(context.getString(R.string.upqualifications), getUpqualification(data));
+            mData.add(upqualification);
+
+            RoleInfoTeacherInfoItem bio = new RoleInfoTeacherInfoItem(context.getString(R.string.short_bio), data.getBio());
+            mData.add(bio);
         }
-        RoleInfoTeacherInfoItem disciplinesInTimetable = new RoleInfoTeacherInfoItem(context.getString(R.string.disciplines_in_timetable), disciplinesInTimetableBuilder.toString());
-        mData.add(disciplinesInTimetable);
-
-        RoleInfoTeacherInfoItem rank = new RoleInfoTeacherInfoItem(context.getString(R.string.study_rank), getRank(data.getRank()));
-        mData.add(rank);
-
-        RoleInfoTeacherInfoItem degree = new RoleInfoTeacherInfoItem(context.getString(R.string.study_degree), getDegree(data.getDegree()));
-        mData.add(degree);
-
-        RoleInfoTeacherInfoItem upqualification = new RoleInfoTeacherInfoItem(context.getString(R.string.upqualifications), getUpqualification(data));
-        mData.add(upqualification);
-
-        RoleInfoTeacherInfoItem bio = new RoleInfoTeacherInfoItem(context.getString(R.string.short_bio), data.getBio());
-        mData.add(bio);
-
         return mData;
     }
 
@@ -102,7 +102,7 @@ public class RoleInfoTeacherInfoModel implements MVPModel<RoleInfoTeacherRaw, Li
             context.getString(R.string.member_correspondent),
             context.getString(R.string.academic)};
 
-    private String getRank(int degree){
+    private String getRank(int degree) {
         switch (degree) {
             case 1:
                 return ranks[0];
@@ -112,7 +112,8 @@ public class RoleInfoTeacherInfoModel implements MVPModel<RoleInfoTeacherRaw, Li
                 return ranks[2];
             case 4:
                 return ranks[4];
-            default:return context.getString(R.string.not_specified);
+            default:
+                return context.getString(R.string.not_specified);
         }
     }
 
@@ -142,32 +143,56 @@ public class RoleInfoTeacherInfoModel implements MVPModel<RoleInfoTeacherRaw, Li
             "Культурологии",
             "не указанно"};
 
-    public String getDegree(int degree){
-        switch (degree){
-            case 1:return  degrees[0];
-            case 2:return  degrees[1];
-            case 3:return  degrees[2];
-            case 4:return  degrees[3];
-            case 5:return  degrees[4];
-            case 6:return  degrees[5];
-            case 7:return  degrees[6];
-            case 8:return  degrees[7];
-            case 9:return  degrees[8];
-            case 10:return degrees[9];
-            case 11:return degrees[10];
-            case 12:return degrees[11];
-            case 13:return degrees[12];
-            case 14:return degrees[13];
-            case 15:return degrees[14];
-            case 16:return degrees[15];
-            case 17:return degrees[16];
-            case 18:return degrees[17];
-            case 19:return degrees[18];
-            case 20:return degrees[19];
-            case 21:return degrees[20];
-            case 22:return degrees[21];
-            case 23:return degrees[22];
-            default:return degrees[23];
+    public String getDegree(int degree) {
+        switch (degree) {
+            case 1:
+                return degrees[0];
+            case 2:
+                return degrees[1];
+            case 3:
+                return degrees[2];
+            case 4:
+                return degrees[3];
+            case 5:
+                return degrees[4];
+            case 6:
+                return degrees[5];
+            case 7:
+                return degrees[6];
+            case 8:
+                return degrees[7];
+            case 9:
+                return degrees[8];
+            case 10:
+                return degrees[9];
+            case 11:
+                return degrees[10];
+            case 12:
+                return degrees[11];
+            case 13:
+                return degrees[12];
+            case 14:
+                return degrees[13];
+            case 15:
+                return degrees[14];
+            case 16:
+                return degrees[15];
+            case 17:
+                return degrees[16];
+            case 18:
+                return degrees[17];
+            case 19:
+                return degrees[18];
+            case 20:
+                return degrees[19];
+            case 21:
+                return degrees[20];
+            case 22:
+                return degrees[21];
+            case 23:
+                return degrees[22];
+            default:
+                return degrees[23];
         }
     }
 }

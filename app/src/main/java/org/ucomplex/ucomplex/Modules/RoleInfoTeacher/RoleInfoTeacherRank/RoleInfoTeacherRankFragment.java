@@ -5,12 +5,16 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import org.ucomplex.ucomplex.Common.base.BaseMvpFragment;
 import org.ucomplex.ucomplex.Common.base.UCApplication;
+import org.ucomplex.ucomplex.Common.interfaces.OnListItemClicked;
 import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherProfile.RoleInfoTeacherProfileAdapter;
 import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherProfile.RoleInfoTeacherProfileFragment;
 import org.ucomplex.ucomplex.R;
@@ -86,4 +90,8 @@ public class RoleInfoTeacherRankFragment extends BaseMvpFragment<RoleInfoTeacher
         mAdapter.notifyDataSetChanged();
     }
 
+    public void sendVote() {
+        presenter.rate(mAdapter.getVotes());
+        mAdapter.resetVotedRatings();
+    }
 }

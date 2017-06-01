@@ -1,6 +1,8 @@
 package org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherRank;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseBooleanArray;
+import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,14 +44,45 @@ public class RoleInfoTeacherRankAdapter extends BaseAdapter<RoleInfoTeacherRankA
         View view8;
         View view9;
         View view10;
-        Button button;
+        Button button1;
+        Button button2;
+        Button button3;
+        Button button4;
+        Button button5;
+        Button button6;
+        Button button7;
+        Button button8;
+        Button button9;
+        Button button10;
         final List<View> masks = new ArrayList<>();
+        final List<Button> buttons = new ArrayList<>();
 
         RoleInfoTeacherRankViewHolder(View itemView) {
             super(itemView);
             question = (TextView) itemView.findViewById(R.id.question);
             hint = (TextView) itemView.findViewById(R.id.question_hint);
-            button = (Button) itemView.findViewById(R.id.question_button_1);
+            button1 = (Button) itemView.findViewById(R.id.question_button_1);
+            button2 = (Button) itemView.findViewById(R.id.question_button_2);
+            button3 = (Button) itemView.findViewById(R.id.question_button_3);
+            button4 = (Button) itemView.findViewById(R.id.question_button_4);
+            button5 = (Button) itemView.findViewById(R.id.question_button_5);
+            button6 = (Button) itemView.findViewById(R.id.question_button_6);
+            button7 = (Button) itemView.findViewById(R.id.question_button_7);
+            button8 = (Button) itemView.findViewById(R.id.question_button_8);
+            button9 = (Button) itemView.findViewById(R.id.question_button_9);
+            button10 = (Button) itemView.findViewById(R.id.question_button_10);
+
+            buttons.add(button1);
+            buttons.add(button2);
+            buttons.add(button3);
+            buttons.add(button4);
+            buttons.add(button5);
+            buttons.add(button6);
+            buttons.add(button7);
+            buttons.add(button8);
+            buttons.add(button9);
+            buttons.add(button10);
+
             view1 = itemView.findViewById(R.id.mask1);
             view2 = itemView.findViewById(R.id.mask2);
             view3 = itemView.findViewById(R.id.mask3);
@@ -86,6 +119,14 @@ public class RoleInfoTeacherRankAdapter extends BaseAdapter<RoleInfoTeacherRankA
     private static final int TYPE_9 = 9;
     private static final int TYPE_10 = 10;
 
+    private SparseIntArray votes = new SparseIntArray();
+
+    public SparseIntArray getVotes() {
+        for (int i = 0; i < mItems.size(); i++) {
+            votes.append(i, (int) mItems.get(i).getScore());
+        }
+        return votes;
+    }
 
     @Override
     public RoleInfoTeacherRankViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -109,13 +150,21 @@ public class RoleInfoTeacherRankAdapter extends BaseAdapter<RoleInfoTeacherRankA
             if (rankCellWidth == 0) { // getting original mask width for restoring it
                 rankCellWidth = holder.masks.get(position).getLayoutParams().width;
             }
-            fillRatingBar(score, holder, fraction);
+            fillRatingBar(score, holder, fraction, position);
         }
     }
+    
+    public void resetVotedRatings() {
+        for (int i = 0; i < mItems.size(); i++) {
+            mItems.get(i).resetScore();
+        }
+        notifyDataSetChanged();
+    }
 
-    private void fillRatingBar(int score, RoleInfoTeacherRankViewHolder holder, double fraction) {
-        for (int i = 0; i <= score; i++) {
+    private void fillRatingBar(int score, RoleInfoTeacherRankViewHolder holder, double fraction, int position) {
+        for (int i = 0; i <= score - 1; i++) {
             View mask = holder.masks.get(i);
+            setButtonListener(holder, position, i);
             if (i == score) {
                 long width = (Math.round(fraction * 100) * rankCellWidth) / 100;
                 mask.getLayoutParams().width = (int) width;
@@ -124,10 +173,18 @@ public class RoleInfoTeacherRankAdapter extends BaseAdapter<RoleInfoTeacherRankA
             }
             mask.setVisibility(View.VISIBLE);
         }
-        for (int k = score + 1; k < 10; k++) {
+        for (int k = score; k < 10; k++) {
+            setButtonListener(holder, position, k);
             holder.masks.get(k).setVisibility(View.INVISIBLE);
             holder.masks.get(k).getLayoutParams().width = rankCellWidth;
         }
+    }
+
+    private void setButtonListener(RoleInfoTeacherRankViewHolder holder, int position, int i) {
+        holder.buttons.get(i).setOnClickListener(v -> {
+            mItems.get(position).setScore((double) i + 1, position);
+            notifyItemChanged(position);
+        });
     }
 
     @Override

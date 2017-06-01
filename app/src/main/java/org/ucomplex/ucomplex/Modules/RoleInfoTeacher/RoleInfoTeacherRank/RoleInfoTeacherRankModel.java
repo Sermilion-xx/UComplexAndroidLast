@@ -1,9 +1,12 @@
 package org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherRank;
 
 import android.support.v4.util.Pair;
+import android.util.SparseBooleanArray;
+import android.util.SparseIntArray;
 
 import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
+import org.ucomplex.ucomplex.Modules.Login.model.LoginUser;
 import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherRank.model.RoleInfoTeacherRankItem;
 import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherRank.model.RoleInfoTeacherRankRaw;
 import org.ucomplex.ucomplex.R;
@@ -123,5 +126,20 @@ public class RoleInfoTeacherRankModel implements MVPModel<RoleInfoTeacherRankRaw
             }
         }
         return mData;
+    }
+
+    Observable<LoginUser> rate(SparseIntArray rating) {
+        return mService.sendRank(
+                rating.get(0),
+                rating.get(1),
+                rating.get(2),
+                rating.get(3),
+                rating.get(4),
+                rating.get(5),
+                rating.get(6),
+                rating.get(7),
+                rating.get(8),
+                rating.get(9)).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 }

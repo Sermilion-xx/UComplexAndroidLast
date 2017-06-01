@@ -14,7 +14,9 @@ public final class RoleInfoTeacherRankItem {
 
     private final int question;
     private final int hint;
-    private final double score;
+    private double score;
+    private double tempScore;
+    private int tempScorePosition;
 
     public RoleInfoTeacherRankItem(int question, int hint, double score) {
         this.question = question;
@@ -32,5 +34,21 @@ public final class RoleInfoTeacherRankItem {
 
     public double getScore() {
         return score;
+    }
+
+    public void setScore(double score, int position) {
+        this.score = score;
+        if (this.tempScore == 0) {
+            this.tempScore = this.score;
+            this.tempScorePosition = position;
+        }
+    }
+
+    public void resetScore() {
+        if (tempScore > 0) {
+            this.score = tempScore;
+            this.tempScore = 0;
+            this.tempScorePosition = -1;
+        }
     }
 }

@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ProgressBar;
 
 import org.ucomplex.ucomplex.Common.ViewPagerAdapter;
@@ -73,5 +75,21 @@ public class RoleInfoTeacherActivity extends BaseActivity {
         viewPagerAdapter.addFragment(infoFragment, getString(R.string.personal_info));
         viewPagerAdapter.addFragment(rankFragment, getString(R.string.rating));
         viewPager.setAdapter(viewPagerAdapter);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_teacher_rating, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_vote:
+                rankFragment.sendVote();
+                break;
+        }
+        return true;
     }
 }

@@ -1,7 +1,11 @@
 package org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherRank;
 
+import android.util.SparseBooleanArray;
+import android.util.SparseIntArray;
+
 import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
 import org.ucomplex.ucomplex.Common.base.UCApplication;
+import org.ucomplex.ucomplex.Modules.Login.model.LoginUser;
 import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherRank.model.RoleInfoTeacherRankItem;
 import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherRank.model.RoleInfoTeacherRankRaw;
 
@@ -45,6 +49,36 @@ public class RoleInfoTeacherRankPresenter extends AbstractPresenter<
             @Override
             public void onComplete() {
                 hideProgress();
+            }
+        });
+    }
+
+    public void rate(SparseIntArray rating) {
+        mModel.rate(rating).subscribe(new Observer<LoginUser>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                showProgress();
+            }
+
+            @Override
+            public void onNext(LoginUser value) {
+                if (getView() != null) {
+                    getView().dataLoaded();
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                hideProgress();
+
+            }
+
+            @Override
+            public void onComplete() {
+                hideProgress();
+                if (getView() != null) {
+                    getView().dataLoaded();
+                }
             }
         });
     }

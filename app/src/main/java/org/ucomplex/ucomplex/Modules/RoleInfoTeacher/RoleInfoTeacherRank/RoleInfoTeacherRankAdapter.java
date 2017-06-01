@@ -1,7 +1,6 @@
 package org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherRank;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,6 +75,17 @@ public class RoleInfoTeacherRankAdapter extends BaseAdapter<RoleInfoTeacherRankA
     }
 
     private static int rankCellWidth = 0;
+    private static final int TYPE_1 = 1;
+    private static final int TYPE_2 = 2;
+    private static final int TYPE_3 = 3;
+    private static final int TYPE_4 = 4;
+    private static final int TYPE_5 = 5;
+    private static final int TYPE_6 = 6;
+    private static final int TYPE_7 = 7;
+    private static final int TYPE_8 = 8;
+    private static final int TYPE_9 = 9;
+    private static final int TYPE_10 = 10;
+
 
     @Override
     public RoleInfoTeacherRankViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -117,6 +127,34 @@ public class RoleInfoTeacherRankAdapter extends BaseAdapter<RoleInfoTeacherRankA
         for (int k = score + 1; k < 10; k++) {
             holder.masks.get(k).setVisibility(View.INVISIBLE);
             holder.masks.get(k).getLayoutParams().width = rankCellWidth;
+        }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        switch (position) {
+            case 0:
+                return TYPE_1;
+            case 1:
+                return TYPE_2;
+            case 2:
+                return TYPE_3;
+            case 3:
+                return TYPE_4;
+            case 4:
+                return TYPE_5;
+            case 5:
+                return TYPE_6;
+            case 6:
+                return TYPE_7;
+            case 7:
+                return TYPE_8;
+            case 8:
+                return TYPE_9;
+            case 9:
+                return TYPE_10;
+            default:
+                return TYPE_1;
         }
     }
 }

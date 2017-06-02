@@ -1,4 +1,4 @@
-package org.ucomplex.ucomplex.Modules.Navdrawer;
+package org.ucomplex.ucomplex.Common.Navdrawer;
 
 import android.content.Context;
 import android.support.v4.util.Pair;

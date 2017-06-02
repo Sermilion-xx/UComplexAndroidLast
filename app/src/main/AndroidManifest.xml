@@ -53,6 +53,9 @@
         <activity android:name=".Modules.RoleInfoTeacher.RoleInfoTeacherActivity"
             android:screenOrientation="portrait" />
 
+        <activity android:name=".Modules.MessagesList.MessagesListActivity"
+            android:screenOrientation="portrait" />
+
         <receiver android:name=".Common.NetworkReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/clickArea"
+    android:clickable="true"
+    android:foreground="?attr/selectableItemBackground">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="45dp"
+        android:layout_height="50dp"
+        android:id="@+id/profile_image"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="10dp" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:id="@+id/list_profile"
+        android:layout_alignBottom="@+id/last_message"
+        android:layout_toEndOf="@+id/profile_image"
+        android:layout_marginStart="10dp" />
+
+    <TextView
+        android:id="@+id/user_name"
+        android:textColor="@color/colorBlack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="17sp"
+        android:layout_toEndOf="@+id/profile_image"
+        android:layout_toStartOf="@+id/time"
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="18dp" />
+
+    <TextView
+        android:id="@+id/time"
+        android:textColor="@color/colorMessagesListGray"
+        android:text="Сегодня в 11:30"
+        android:lines="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:layout_alignTop="@+id/user_name"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp" />
+
+    <TextView
+        android:id="@+id/last_message"
+        android:textColor="@color/colorMessagesListGray"
+        android:text="Last message"
+        android:lines="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:layout_below="@+id/user_name"
+        android:layout_toEndOf="@+id/list_profile"
+        android:layout_marginBottom="17dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="2dp" />
+
+</RelativeLayout>

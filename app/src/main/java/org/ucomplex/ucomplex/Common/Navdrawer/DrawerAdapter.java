@@ -1,4 +1,4 @@
-package org.ucomplex.ucomplex.Modules.Navdrawer;
+package org.ucomplex.ucomplex.Common.Navdrawer;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -18,6 +18,7 @@ import org.ucomplex.ucomplex.Common.FacadePreferences;
 import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Modules.Events.EventsActivity;
 import org.ucomplex.ucomplex.Modules.Login.LoginActivity;
+import org.ucomplex.ucomplex.Modules.MessagesList.MessagesListActivity;
 import org.ucomplex.ucomplex.Modules.Portfolio.PortfolioActivity;
 import org.ucomplex.ucomplex.Modules.SubjectsList.SubjectsListActivity;
 import org.ucomplex.ucomplex.Modules.UserProfile.UserProfileActivity;
@@ -124,6 +125,8 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
                     mContext.startActivity(PortfolioActivity.creteIntent(mContext));
                 } else if (position == 4) {
                     mContext.startActivity(UsersActivity.creteIntent(mContext));
+                } else if (position == 5) {
+                    mContext.startActivity(MessagesListActivity.creteIntent(mContext));
                 }
             });
         }

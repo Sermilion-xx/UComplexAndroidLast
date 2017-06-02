@@ -3,7 +3,7 @@
     <color name="colorPrimary">#20bbfc</color>
     <color name="colorPrimaryDark">#1db0ed</color>
     <color name="colorAccent">#7ac9e5</color>
-    <color name="colorFriendRequested">#ecfbfe</color>
+    <color name="colorNotSeen">#ecfbfe</color>
     <color name="colorWhite">#ffffff</color>
     <color name="colorBlack">#000000</color>
     <color name="color_uc_ListTextColorPrimary">#222222</color>
@@ -14,6 +14,7 @@
     <color name="color_uc_menuHeader">#515765</color>
     <color name="color_uc_activity_background">#f1f1f2</color>
     <color name="colorCardView">#fbfbfb</color>
+    <color name="colorMessagesListGray">#a9a9a9</color>
 
     <!-- Placeholder images colors-->
     <color name="color_uc_placeholder1">#f6a6c1</color>

@@ -124,7 +124,7 @@ public class UsersAdapter extends BaseAdapter<UsersAdapter.UsersViewHolder, List
                 holder.mName.setText(user.getName());
                 holder.mType.setText(FacadeCommon.getStringUserType(context, user.getType()));
                 if (getItemViewType(position) == TYPE_REQUESTED) {
-                    holder.mClickArea.setBackgroundResource(R.color.colorFriendRequested);
+                    holder.mClickArea.setBackgroundResource(R.color.colorNotSeen);
                 }
                 final int requestId;
                 if (requestType == UserRequestType.FRIENDS) {

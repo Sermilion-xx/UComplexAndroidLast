@@ -10,6 +10,12 @@ import org.ucomplex.ucomplex.Modules.Login.LoginActivity;
 import org.ucomplex.ucomplex.Modules.Login.LoginPresenter;
 import org.ucomplex.ucomplex.Modules.Login.dagger.LoginActivityModule;
 import org.ucomplex.ucomplex.Modules.Login.dagger.LoginPresenterModule;
+import org.ucomplex.ucomplex.Modules.MessagesList.MessagesListActivity;
+import org.ucomplex.ucomplex.Modules.MessagesList.MessagesListModel;
+import org.ucomplex.ucomplex.Modules.MessagesList.MessagesListPresenter;
+import org.ucomplex.ucomplex.Modules.MessagesList.dagger.MessagesListActivityModule;
+import org.ucomplex.ucomplex.Modules.MessagesList.dagger.MessagesListModelModule;
+import org.ucomplex.ucomplex.Modules.MessagesList.dagger.MessagesListPresenterModule;
 import org.ucomplex.ucomplex.Modules.Portfolio.PortfolioActivity;
 import org.ucomplex.ucomplex.Modules.RoleInfo.RoleInfoActivity;
 import org.ucomplex.ucomplex.Modules.RoleInfo.RoleInfoModel;
@@ -125,7 +131,10 @@ import dagger.Component;
                 RoleInfoTeacherInfoFragmentModule.class,
                 RoleInfoTeacherRankFragmentModule.class,
                 RoleInfoTeacherRankPresenterModule.class,
-                RoleInfoTeacherRankModelModule.class
+                RoleInfoTeacherRankModelModule.class,
+                MessagesListActivityModule.class,
+                MessagesListPresenterModule.class,
+                MessagesListModelModule.class
         })
 
 public interface AppDiComponent {
@@ -203,5 +212,11 @@ public interface AppDiComponent {
     void inject(RoleInfoTeacherRankPresenter presenter);
 
     void inject(RoleInfoTeacherRankModel fragment);
+
+    void inject(MessagesListActivity fragment);
+
+    void inject(MessagesListPresenter presenter);
+
+    void inject(MessagesListModel fragment);
 }
 

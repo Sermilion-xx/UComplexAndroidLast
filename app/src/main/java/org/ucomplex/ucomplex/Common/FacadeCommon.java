@@ -104,7 +104,7 @@ public class FacadeCommon {
         String r = "";
         String yyyyMMdd = time.split(" ")[0];
         String hhMMss = null;
-        if (time.length() == 2) {
+        if (time.split(" ").length == 2) {
             hhMMss = time.split(" ")[1];
         }
         try {

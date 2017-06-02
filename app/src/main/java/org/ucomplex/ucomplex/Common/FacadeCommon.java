@@ -193,11 +193,22 @@ public class FacadeCommon {
         return String.format(new Locale("Ru"),"%.1f %sб", bytes / Math.pow(unit, exp), pre);
     }
 
+    public enum NoContentLayoutType {
+        DEFAULT, MESSAGES
+    }
 
-    public static int getAvailableListLayout(int itemCount) {
+    public static int getAvailableListLayout(int itemCount, NoContentLayoutType...type) {
         if (!UCApplication.getInstance().isConnectedToInternet() && itemCount == 0) {
             return R.layout.item_no_internet;
         } else if (itemCount == 0) {
+            if (type.length > 0) {
+                switch (type[0]) {
+                    case MESSAGES:
+                        return R.layout.item_no_messages;
+                    default:
+                        return R.layout.item_no_content;
+                }
+            }
             return R.layout.item_no_content;
         } else {
             return Constants.CUSTOM_ADAPTER_ITEM_LAYOUT_AVAILABLE;

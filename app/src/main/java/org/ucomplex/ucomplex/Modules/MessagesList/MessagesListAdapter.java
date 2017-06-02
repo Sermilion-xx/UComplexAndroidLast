@@ -25,6 +25,7 @@ import org.ucomplex.ucomplex.Domain.users.UserInterface;
 import org.ucomplex.ucomplex.Modules.MessagesList.model.MessagesListItem;
 import org.ucomplex.ucomplex.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -65,13 +66,14 @@ class MessagesListAdapter extends BaseAdapter<MessagesListAdapter.MessagesListVi
 
     MessagesListAdapter(IntentCallback<Integer> intentCallback) {
         this.intentCallback = intentCallback;
+        this.mItems = new ArrayList<>();
     }
 
 
     @Override
     public MessagesListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        int layout = FacadeCommon.getAvailableListLayout(mItems.size());
+        int layout = FacadeCommon.getAvailableListLayout(mItems.size(), FacadeCommon.NoContentLayoutType.MESSAGES);
         if (layout == Constants.CUSTOM_ADAPTER_ITEM_LAYOUT_AVAILABLE) {
             layout = R.layout.item_messages_list;
         }
@@ -132,5 +134,11 @@ class MessagesListAdapter extends BaseAdapter<MessagesListAdapter.MessagesListVi
             holder.profileImage.setImageDrawable(FacadeMedia.getTextDrawable(item.getFrom(), item.getName(), context));
         }
     }
+
+    @Override
+    public int getItemCount() {
+        return (mItems == null || mItems.size() == 0) ? 1 : mItems.size();
+    }
+
 
 }

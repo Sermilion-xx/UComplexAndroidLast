@@ -172,4 +172,6 @@ public class UsersAdapter extends BaseAdapter<UsersAdapter.UsersViewHolder, List
         return mItems == null || mItems.size() == 0 ? 1 : mItems.size();
     }
 
+
+
 }

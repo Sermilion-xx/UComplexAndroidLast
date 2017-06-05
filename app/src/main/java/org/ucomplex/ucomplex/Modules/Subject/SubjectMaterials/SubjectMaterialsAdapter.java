@@ -152,7 +152,7 @@ public class SubjectMaterialsAdapter extends BaseAdapter<SubjectMaterialsAdapter
                             params.setFileName(filename);
                             params.setOwnersId(item.getOwnersId());
 
-                            onListItemClicked.onClick(params);
+                            onListItemClicked.onClick(params, null);
                         }
                     });
                 } else if (getItemViewType(position) == TYPE_FOLDER) {
@@ -164,7 +164,7 @@ public class SubjectMaterialsAdapter extends BaseAdapter<SubjectMaterialsAdapter
                             params.setFileAddress(item.getAddress());
                             params.setFileName(item.getName());
                             params.setMyFolder(mMyFiles);
-                            onListItemClicked.onClick(params);
+                            onListItemClicked.onClick(params, null);
                         }
                     });
                 }
@@ -174,7 +174,7 @@ public class SubjectMaterialsAdapter extends BaseAdapter<SubjectMaterialsAdapter
                         SubjectMaterialsParams params = new SubjectMaterialsParams(FileOperationType.MENU);
                         params.setPosition(position);
                         params.setFile(item);
-                        onListItemClicked.onClick(params);
+                        onListItemClicked.onClick(params, null);
                     });
                 } else {
                     holder.mMenuButton.setVisibility(View.GONE);

@@ -14,7 +14,9 @@ import java.util.List;
  * ---------------------------------------------------
  */
 
-public abstract class BaseAdapter<T extends RecyclerView.ViewHolder, D> extends RecyclerView.Adapter<T>{
+public abstract class BaseAdapter<T extends RecyclerView.ViewHolder, D extends List> extends RecyclerView.Adapter<T>{
+
+    protected final int TYPE_EMPTY = -1;
 
     protected D mItems;
 
@@ -28,7 +30,11 @@ public abstract class BaseAdapter<T extends RecyclerView.ViewHolder, D> extends 
 
     @Override
     public int getItemCount() {
-        return mItems == null ? 0 : ((List)mItems).size() ;
+        return mItems == null ? 0 : mItems.size() ;
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return mItems.size() == 0 ? TYPE_EMPTY : 0;
+    }
 }

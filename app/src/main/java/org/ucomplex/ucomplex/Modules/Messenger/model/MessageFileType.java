@@ -1,8 +1,8 @@
-package org.ucomplex.ucomplex.Common.interfaces;
+package org.ucomplex.ucomplex.Modules.Messenger.model;
 
 /**
  * ---------------------------------------------------
- * Created by Sermilion on 01/04/2017.
+ * Created by Sermilion on 05/06/2017.
  * Project: UComplex
  * ---------------------------------------------------
  * <a href="http://www.ucomplex.org">www.ucomplex.org</a>
@@ -10,7 +10,6 @@ package org.ucomplex.ucomplex.Common.interfaces;
  * ---------------------------------------------------
  */
 
-public interface OnListItemClicked<T, E> {
-
-    void onClick(T params, E type);
+public enum MessageFileType {
+    IMAGE, FILE
 }

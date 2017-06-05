@@ -120,7 +120,7 @@ public class SubjectTimelineAdapter extends BaseAdapter<SubjectTimelineAdapter.S
                 holder.loadMoreButton.setOnClickListener(view -> {
                     SubjectTimelineParams params = new SubjectTimelineParams();
                     params.setStart(getItemCount());
-                    onListItemClicked.onClick(params);
+                    onListItemClicked.onClick(params, null);
                 });
             }
         }

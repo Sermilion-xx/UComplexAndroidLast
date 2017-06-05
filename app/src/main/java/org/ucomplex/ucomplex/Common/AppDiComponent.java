@@ -16,6 +16,12 @@ import org.ucomplex.ucomplex.Modules.MessagesList.MessagesListPresenter;
 import org.ucomplex.ucomplex.Modules.MessagesList.dagger.MessagesListActivityModule;
 import org.ucomplex.ucomplex.Modules.MessagesList.dagger.MessagesListModelModule;
 import org.ucomplex.ucomplex.Modules.MessagesList.dagger.MessagesListPresenterModule;
+import org.ucomplex.ucomplex.Modules.Messenger.MessengerActivity;
+import org.ucomplex.ucomplex.Modules.Messenger.MessengerModel;
+import org.ucomplex.ucomplex.Modules.Messenger.MessengerPresenter;
+import org.ucomplex.ucomplex.Modules.Messenger.dagger.MessengerActivityModule;
+import org.ucomplex.ucomplex.Modules.Messenger.dagger.MessengerModelModule;
+import org.ucomplex.ucomplex.Modules.Messenger.dagger.MessengerPresenterModule;
 import org.ucomplex.ucomplex.Modules.Portfolio.PortfolioActivity;
 import org.ucomplex.ucomplex.Modules.RoleInfo.RoleInfoActivity;
 import org.ucomplex.ucomplex.Modules.RoleInfo.RoleInfoModel;
@@ -134,7 +140,10 @@ import dagger.Component;
                 RoleInfoTeacherRankModelModule.class,
                 MessagesListActivityModule.class,
                 MessagesListPresenterModule.class,
-                MessagesListModelModule.class
+                MessagesListModelModule.class,
+                MessengerActivityModule.class,
+                MessengerPresenterModule.class,
+                MessengerModelModule.class
         })
 
 public interface AppDiComponent {
@@ -218,5 +227,11 @@ public interface AppDiComponent {
     void inject(MessagesListPresenter presenter);
 
     void inject(MessagesListModel fragment);
+
+    void inject(MessengerActivity fragment);
+
+    void inject(MessengerPresenter presenter);
+
+    void inject(MessengerModel fragment);
 }
 

@@ -3,6 +3,7 @@ package org.ucomplex.ucomplex.Modules.MessagesList;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,13 +63,12 @@ class MessagesListAdapter extends BaseAdapter<MessagesListAdapter.MessagesListVi
         }
     }
 
-    private IntentCallback<Integer> intentCallback;
+    private IntentCallback<Pair<String, Integer>> intentCallback;
 
-    MessagesListAdapter(IntentCallback<Integer> intentCallback) {
+    MessagesListAdapter(IntentCallback<Pair<String, Integer>> intentCallback) {
         this.intentCallback = intentCallback;
         this.mItems = new ArrayList<>();
     }
-
 
     @Override
     public MessagesListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -94,7 +94,7 @@ class MessagesListAdapter extends BaseAdapter<MessagesListAdapter.MessagesListVi
             if (item.getStatus() == 0 && item.getFrom() != me.getId()) {
                 holder.clickArea.setBackgroundResource(R.color.colorNotSeen);
             }
-            holder.clickArea.setOnClickListener(v -> intentCallback.startIntent(item.getCompanion()));
+            holder.clickArea.setOnClickListener(v -> intentCallback.startIntent(new Pair<>(item.getName(), item.getCompanion())));
         }
     }
 
@@ -139,6 +139,5 @@ class MessagesListAdapter extends BaseAdapter<MessagesListAdapter.MessagesListVi
     public int getItemCount() {
         return (mItems == null || mItems.size() == 0) ? 1 : mItems.size();
     }
-
 
 }

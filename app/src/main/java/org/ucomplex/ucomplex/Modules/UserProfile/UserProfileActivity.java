@@ -64,11 +64,11 @@ public class UserProfileActivity extends BaseMVPActivity<MVPView, UserProfilePre
 
             @Override
             public void onError(Throwable t) {
-                mAdapter.revertChanges(type[0]);
+                mAdapter.revertChanges(type);
             }
         };
 
-        switch (type[0]) {
+        switch (type) {
             case PHOTO:
                 expandProfile((String) params);
                 break;

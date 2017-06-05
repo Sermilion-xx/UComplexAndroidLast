@@ -70,9 +70,9 @@ public class UsersFragment extends BaseMvpFragment<UsersPresenter> {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new UsersAdapter(userType);
         mAdapter.setOnListItemClicked((param, type) -> {
-            if (type[0] == UsersAdapter.TYPE_USER) {
+            if (type == UsersAdapter.TYPE_USER) {
                 startActivity(UserProfileActivity.creteIntent(getActivityContext(), param));
-            } else if (type[0] == UsersAdapter.TYPE_FOOTER) {
+            } else if (type == UsersAdapter.TYPE_FOOTER) {
                 UsersParams params = UsersParams.createLoadMoreParams(userType, param);
                 presenter.loadData(params);
             }

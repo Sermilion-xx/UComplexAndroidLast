@@ -203,4 +203,5 @@
     <string name="questionHint8">1 - не приводит, 10 - курс насыщен практическими примерами</string>
     <string name="questionHint9">1 - не успеваю ничего зафиксировать, 10 - успеваю все зафиксировать</string>
     <string name="questionHint10">1 - совершенно не соответствует, 10 - полностью соответствует</string>
+    <string name="attachment">Прикрепленный файл</string>
 </resources>

@@ -69,7 +69,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/FullscreenVieTheme"/>
 
-        <receiver android:name=".Common.NetworkReceiver">
+        <receiver android:name=".Common.utility.NetworkStateReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
@@ -78,6 +78,8 @@
         <provider
             android:name=".Common.UCContentProvider"
             android:authorities="org.ucomplex.ucomplex.Common.UCContentProvider" />
+
+        <service android:name=".Common.download.DownloadService"/>
     </application>
 
 </manifest>

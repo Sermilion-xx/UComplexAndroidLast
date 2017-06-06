@@ -21,10 +21,9 @@ import android.widget.Toast;
 
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.FacadeMedia;
-import org.ucomplex.ucomplex.Common.PresenterCache;
+import org.ucomplex.ucomplex.Common.utility.PresenterCache;
 import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.base.BaseMVPActivity;
-import org.ucomplex.ucomplex.Common.interfaces.OnListItemClicked;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.SubjectMaterialsAdapter;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.SubjectMaterialsPresenter;
@@ -222,7 +221,7 @@ public class PortfolioActivity extends BaseMVPActivity<MVPView, SubjectMaterials
         } else if (params.getOperationType() == FileOperationType.MENU) {
             presenter.createItemMenu(params).show();
         }  else if (params.getOperationType() == FileOperationType.DOWNLOAD) {
-            presenter.loadData(params);
+            presenter.downloadFile(params.getOwnersId(), params.getFileName());
         }
     }
 }

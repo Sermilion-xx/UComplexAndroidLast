@@ -3,6 +3,7 @@ package org.ucomplex.ucomplex.Modules.Messenger.dagger;
 import org.ucomplex.ucomplex.Common.ServiceGenerator;
 import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Modules.Messenger.MessengerService;
+import org.ucomplex.ucomplex.Modules.Portfolio.retrofit.DownloadFileService;
 
 import dagger.Module;
 import dagger.Provides;

@@ -49,9 +49,9 @@ class MessengerAdapter extends BaseAdapter<MessengerAdapter.MessengerViewHolder,
 
     private int myId;
     private String companionName;
-    private OnListItemClicked<String, MessageFileType> onListItemClicked;
+    private OnListItemClicked<String, String> onListItemClicked;
 
-    MessengerAdapter(int myId, String companionName, OnListItemClicked<String, MessageFileType> onListItemClicked) {
+    MessengerAdapter(int myId, String companionName, OnListItemClicked<String, String> onListItemClicked) {
         this.myId = myId;
         this.onListItemClicked = onListItemClicked;
         this.mItems = new ArrayList<>();
@@ -86,9 +86,10 @@ class MessengerAdapter extends BaseAdapter<MessengerAdapter.MessengerViewHolder,
             Context context = holder.time.getContext();
             holder.time.setText(FacadeCommon.makeHumanReadableDate(item.getTime(), true));
             MessengerMessageFilesAdapter messageFilesAdapter = new MessengerMessageFilesAdapter(
-                    (params, type) -> onListItemClicked.onClick(params, type),
+                    (params, name) -> onListItemClicked.onClick(params, name),
                     uri -> context.startActivity(FullscreenViewActivity.creteIntent(context, this.companionName, item.getTime(), uri)),
-                    UCApplication.getInstance().getLoggedUser().getId());
+                    UCApplication.getInstance().getLoggedUser().getId()
+            );
             messageFilesAdapter.setItems(item.getFiles());
             messageFilesAdapter.notifyDataSetChanged();
             holder.filesRecyclerView.setAdapter(messageFilesAdapter);

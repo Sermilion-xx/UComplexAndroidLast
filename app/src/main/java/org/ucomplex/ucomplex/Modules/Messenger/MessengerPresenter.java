@@ -1,15 +1,24 @@
 package org.ucomplex.ucomplex.Modules.Messenger;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.support.v4.content.ContextCompat;
+import android.widget.Toast;
+
 import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
 import org.ucomplex.ucomplex.Common.base.UCApplication;
+import org.ucomplex.ucomplex.Common.download.DownloadService;
 import org.ucomplex.ucomplex.Modules.Messenger.model.MessengerItem;
 import org.ucomplex.ucomplex.Modules.Messenger.model.MessengerRaw;
+import org.ucomplex.ucomplex.R;
 
 import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
+
+import static org.ucomplex.ucomplex.Common.base.UCApplication.MESSAGE_FILES_URL;
 
 public class MessengerPresenter extends AbstractPresenter<
         MessengerRaw, List<MessengerItem>,
@@ -47,5 +56,21 @@ public class MessengerPresenter extends AbstractPresenter<
                 hideProgress();
             }
         });
+    }
+
+    void downloadFile(String name, String address) {
+        checkStoragePermissions();
+        String url = MESSAGE_FILES_URL + address;
+        getActivityContext().startService(DownloadService.createIntent(getAppContext(), url, name));
+    }
+
+    private void checkStoragePermissions() {
+        if (ContextCompat.checkSelfPermission(getActivityContext(),
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            if (getView() != null) {
+                getView().showToast(R.string.need_storage_permissions, Toast.LENGTH_LONG);
+            }
+        }
     }
 }

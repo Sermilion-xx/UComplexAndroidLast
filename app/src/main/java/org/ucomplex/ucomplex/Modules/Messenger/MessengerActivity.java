@@ -5,19 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 
 import org.ucomplex.ucomplex.Common.base.BaseMVPActivity;
 import org.ucomplex.ucomplex.Common.base.UCApplication;
-import org.ucomplex.ucomplex.Common.interfaces.OnListItemClicked;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
-import org.ucomplex.ucomplex.Modules.Messenger.model.MessageFileType;
 import org.ucomplex.ucomplex.R;
 
 public class MessengerActivity extends BaseMVPActivity<MVPView, MessengerPresenter> {
@@ -33,11 +25,13 @@ public class MessengerActivity extends BaseMVPActivity<MVPView, MessengerPresent
     }
 
     private MessengerAdapter mAdapter;
+    private int myId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         UCApplication.getInstance().getAppDiComponent().inject(this);
         super.onCreate(savedInstanceState);
+        myId = UCApplication.getInstance().getLoggedUser().getId();
         Intent intent = getIntent();
         setContentViewWithNavDrawer(R.layout.activity_messenger);
         String companionName =intent.getStringExtra(EXTRA_NAME);
@@ -47,26 +41,13 @@ public class MessengerActivity extends BaseMVPActivity<MVPView, MessengerPresent
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new MessengerAdapter(UCApplication.getInstance().getLoggedUser().getId(), companionName, (params, type) -> {
-            switch (type) {
-                case IMAGE:
-
-                    break;
-                case FILE:
-                    downloadFile();
-                    break;
-            }
-        });
+        mAdapter = new MessengerAdapter(myId, companionName, (params, name) -> presenter.downloadFile(name, params));
         mRecyclerView.setAdapter(mAdapter);
         if (presenter.getData() == null) {
             presenter.loadData(intent.getIntExtra(EXTRA_COMPANION, -1));
         } else {
             dataLoaded();
         }
-    }
-
-    private void downloadFile() {
-
     }
 
     @Override

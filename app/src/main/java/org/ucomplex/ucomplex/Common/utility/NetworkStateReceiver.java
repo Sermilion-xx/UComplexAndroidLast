@@ -1,4 +1,4 @@
-package org.ucomplex.ucomplex.Common;
+package org.ucomplex.ucomplex.Common.utility;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -18,7 +18,7 @@ import org.ucomplex.ucomplex.Common.base.UCApplication;
  * ---------------------------------------------------
  */
 
-public class NetworkReceiver extends BroadcastReceiver {
+public class NetworkStateReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {

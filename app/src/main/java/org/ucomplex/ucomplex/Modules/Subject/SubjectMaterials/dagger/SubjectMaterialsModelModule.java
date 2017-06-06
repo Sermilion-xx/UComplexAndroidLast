@@ -36,11 +36,6 @@ public class SubjectMaterialsModelModule {
     }
 
     @Provides
-    DownloadFileService provideDownloadService(){
-        return ServiceGenerator.createService(DownloadFileService.class, UCApplication.getInstance().getAuthString(), BASE_FILES_URL);
-    }
-
-    @Provides
     FileService provideFileService(){
         return ServiceGenerator.createService(FileService.class, UCApplication.getInstance().getAuthString());
     }

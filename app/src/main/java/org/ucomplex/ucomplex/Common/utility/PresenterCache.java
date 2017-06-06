@@ -1,7 +1,6 @@
-package org.ucomplex.ucomplex.Common;
+package org.ucomplex.ucomplex.Common.utility;
 
 import android.support.v4.util.SimpleArrayMap;
-import android.util.Log;
 
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPPresenter;
 

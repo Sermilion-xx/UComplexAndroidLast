@@ -1,10 +1,12 @@
 package org.ucomplex.ucomplex.Modules.Messenger;
 
 import org.ucomplex.ucomplex.Common.base.UCApplication;
+import org.ucomplex.ucomplex.Common.interfaces.DownloadCallback;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
 import org.ucomplex.ucomplex.Modules.Messenger.model.CompanionInfo;
 import org.ucomplex.ucomplex.Modules.Messenger.model.MessengerItem;
 import org.ucomplex.ucomplex.Modules.Messenger.model.MessengerRaw;
+import org.ucomplex.ucomplex.Modules.Portfolio.retrofit.DownloadFileService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +16,10 @@ import javax.inject.Inject;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * ---------------------------------------------------

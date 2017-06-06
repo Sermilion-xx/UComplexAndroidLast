@@ -2,12 +2,9 @@ package org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials;
 
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.Environment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AlertDialog;
@@ -16,9 +13,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import org.ucomplex.ucomplex.Common.base.UCApplication;
+import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
-import org.ucomplex.ucomplex.Common.interfaces.DownloadCallback;
+import org.ucomplex.ucomplex.Common.base.UCApplication;
+import org.ucomplex.ucomplex.Common.download.DownloadService;
 import org.ucomplex.ucomplex.Modules.Portfolio.PortfolioActivity;
 import org.ucomplex.ucomplex.Modules.Portfolio.model.RequestResult;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.MaterialsRaw;
@@ -27,10 +25,6 @@ import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.SubjectMater
 import org.ucomplex.ucomplex.R;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -38,14 +32,9 @@ import javax.inject.Inject;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
-import okhttp3.ResponseBody;
-import retrofit2.Response;
 
 import static org.ucomplex.ucomplex.Common.Constants.TYPE_FOLDER;
 import static org.ucomplex.ucomplex.Common.Constants.UC_ACTION_DOWNLOAD_COMPLETE;
-import static org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.NotificationService.EXTRA_BODY;
-import static org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.NotificationService.EXTRA_LARGE_ICON;
-import static org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.NotificationService.EXTRA_TITLE;
 
 /**
  * ---------------------------------------------------
@@ -60,65 +49,7 @@ import static org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.Notificatio
 public class SubjectMaterialsPresenter extends AbstractPresenter<
         MaterialsRaw, List<Pair<List<SubjectItemFile>, String>>, SubjectMaterialsParams, SubjectMaterialsModel> {
 
-    private static class DownloadTask extends AsyncTask<SubjectMaterialsParams, Void, Void> {
-
-        private Response<ResponseBody> response;
-        private Context context;
-
-        DownloadTask(Response<ResponseBody> responseBodyResponse, Context context) {
-            this.response = responseBodyResponse;
-            this.context = context;
-        }
-
-        @Override
-        protected Void doInBackground(SubjectMaterialsParams... params) {
-            try {
-                String name = params[0].getFileName();
-                File materialsFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), name);
-                InputStream inputStream = null;
-                OutputStream outputStream = null;
-                try {
-                    byte[] fileReader = new byte[4096];
-                    long fileSize = response.body().contentLength();
-                    long fileSizeDownloaded = 0;
-                    inputStream = response.body().byteStream();
-                    outputStream = new FileOutputStream(materialsFile);
-                    while (true) {
-                        int read = inputStream.read(fileReader);
-                        if (read == -1) {
-                            break;
-                        }
-                        outputStream.write(fileReader, 0, read);
-                        fileSizeDownloaded += read;
-                    }
-                    outputStream.flush();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally {
-                    if (inputStream != null) {
-                        inputStream.close();
-                    }
-                    if (outputStream != null) {
-                        outputStream.close();
-                    }
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            Intent intent = new Intent();
-            intent.setAction(UC_ACTION_DOWNLOAD_COMPLETE);
-            context.sendBroadcast(intent);
-            Toast.makeText(context, R.string.file_download_complete, Toast.LENGTH_LONG).show();
-        }
-    }
-
-    private DownloadTask saveFileTask;
+    private static final String FILES_PATH = "/files/users/";
     private String[] folderMenuActions;
     private String[] fileMenuActions;
 
@@ -155,10 +86,6 @@ public class SubjectMaterialsPresenter extends AbstractPresenter<
         return mModel.getCurrentPage();
     }
 
-    private void addHistory(Pair<List<SubjectItemFile>, String> list) {
-        mModel.addHistory(list);
-    }
-
     private Pair<List<SubjectItemFile>, String> getHistory(int index) {
         return mModel.getHistory(index);
     }
@@ -171,77 +98,55 @@ public class SubjectMaterialsPresenter extends AbstractPresenter<
         return null;
     }
 
-    public int getCurrentHistorySize() {
-        Pair<List<SubjectItemFile>, String> pair = mModel.getHistory(mModel.getCurrentPage());
-        if (pair != null) {
-            return pair.first.size();
-        }
-        return 0;
-    }
-
     @Override
     public void loadData(SubjectMaterialsParams params) {
-        if (params.getFileName() == null) {
-            if (mModel.getHistoryCount() > 1 && !params.isMyFolder()) {
-                if (getView() != null) {
-                    pageUp();
-                    getView().dataLoaded();
-                }
-            } else {
-                Observable<MaterialsRaw> dataObservable = mModel.loadData(params);
-                dataObservable.subscribe(new Observer<MaterialsRaw>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        showProgress();
-                    }
-
-                    @Override
-                    public void onNext(MaterialsRaw value) {
-                        mModel.processData(value);
-                        if (getView() != null) {
-                            mModel.setCurrentFolder(params.getFileName());
-                            pageUp();
-                            getView().dataLoaded();
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        hideProgress();
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        hideProgress();
-                    }
-                });
+        if (mModel.getHistoryCount() > 1 && !params.isMyFolder()) {
+            if (getView() != null) {
+                pageUp();
+                getView().dataLoaded();
             }
         } else {
-            if (ContextCompat.checkSelfPermission(getActivityContext(),
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    != PackageManager.PERMISSION_GRANTED) {
-                if (getView() != null) {
-                    getView().showToast(R.string.need_storage_permissions, Toast.LENGTH_LONG);
-                }
-            }
-            startNotificationService(params.getFileName(), R.string.file_download_started, null, getActivityContext());
-
-            mModel.downloadFile(params, new DownloadCallback<Response<ResponseBody>>() {
+            Observable<MaterialsRaw> dataObservable = mModel.loadData(params);
+            dataObservable.subscribe(new Observer<MaterialsRaw>() {
                 @Override
-                public void onResponse(Response<ResponseBody> response) {
-                    saveFileTask = new DownloadTask(response, getActivityContext());
-                    saveFileTask.execute(params);
+                public void onSubscribe(Disposable d) {
+                    showProgress();
                 }
 
                 @Override
-                public void onError(Throwable t) {
-                    t.printStackTrace();
+                public void onNext(MaterialsRaw value) {
+                    mModel.processData(value);
                     if (getView() != null) {
-                        getView().showToast(R.string.error_loadig_file, Toast.LENGTH_LONG);
+                        mModel.setCurrentFolder(params.getFileName());
+                        pageUp();
+                        getView().dataLoaded();
                     }
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    hideProgress();
+                }
+
+                @Override
+                public void onComplete() {
+                    hideProgress();
                 }
             });
         }
+    }
+
+    public void downloadFile(int ownerId, String fileName) {
+        String url = FILES_PATH + ownerId + "/" + fileName;
+        if (ContextCompat.checkSelfPermission(getActivityContext(),
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            if (getView() != null) {
+                getView().showToast(R.string.need_storage_permissions, Toast.LENGTH_LONG);
+            }
+        }
+        getView().showToast(R.string.download_started);
+        getActivityContext().startService(DownloadService.createIntent(getAppContext(), url, fileName));
     }
 
     private void showRenameDialog(SubjectItemFile file, int position) {
@@ -312,7 +217,7 @@ public class SubjectMaterialsPresenter extends AbstractPresenter<
         Intent intent = new Intent();
         intent.setAction(UC_ACTION_DOWNLOAD_COMPLETE);
         File file = new File(uri.getPath());
-        startNotificationService(file.getName(), R.string.upload_started, uri, getActivityContext());
+        FacadeCommon.startNotificationService(file.getName(), R.string.upload_started, uri, getActivityContext());
         Observable<MaterialsRaw> observable = mModel.uploadFile(uri, getActivityContext());
         observable.subscribe(new Observer<MaterialsRaw>() {
             @Override
@@ -345,17 +250,6 @@ public class SubjectMaterialsPresenter extends AbstractPresenter<
         mModel.createFolder(folderName);
     }
 
-
-    private void startNotificationService(String filename, int messageRes, Uri largeIcon, Context context) {
-        String message = context.getString(messageRes);
-        Intent notificationIntent = new Intent(context, NotificationService.class);
-        notificationIntent.putExtra(EXTRA_TITLE, filename);
-        notificationIntent.putExtra(EXTRA_BODY, message);
-        if (largeIcon != null) {
-            notificationIntent.putExtra(EXTRA_LARGE_ICON, largeIcon);
-        }
-        context.startService(notificationIntent);
-    }
 
     private void deleteFile(SubjectItemFile params, int position) {
         Observable<RequestResult> deleteObservable = mModel.deleteFile(params.getAddress());

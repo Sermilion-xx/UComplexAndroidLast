@@ -3,8 +3,10 @@ package org.ucomplex.ucomplex.Common;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
+import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 import org.ucomplex.ucomplex.Common.base.UCApplication;
+import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.NotificationService;
 import org.ucomplex.ucomplex.R;
 
 import java.io.BufferedReader;
@@ -31,6 +34,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import static org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.NotificationService.EXTRA_BODY;
+import static org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.NotificationService.EXTRA_LARGE_ICON;
+import static org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.NotificationService.EXTRA_TITLE;
 
 /**
  * ---------------------------------------------------
@@ -54,6 +61,17 @@ public class FacadeCommon {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static void startNotificationService(String filename, int messageRes, Uri largeIcon, Context context) {
+        String message = context.getString(messageRes);
+        Intent notificationIntent = new Intent(context, NotificationService.class);
+        notificationIntent.putExtra(EXTRA_TITLE, filename);
+        notificationIntent.putExtra(EXTRA_BODY, message);
+        if (largeIcon != null) {
+            notificationIntent.putExtra(EXTRA_LARGE_ICON, largeIcon);
+        }
+        context.startService(notificationIntent);
     }
 
     public static boolean isNetworkConnected(Context context) {

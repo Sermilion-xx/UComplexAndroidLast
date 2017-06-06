@@ -1,17 +1,11 @@
 package org.ucomplex.ucomplex.Modules.Messenger;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.os.Environment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -25,15 +19,12 @@ import org.ucomplex.ucomplex.Common.FacadeMedia;
 import org.ucomplex.ucomplex.Common.base.BaseAdapter;
 import org.ucomplex.ucomplex.Common.interfaces.IntentCallback;
 import org.ucomplex.ucomplex.Common.interfaces.OnListItemClicked;
-import org.ucomplex.ucomplex.Common.utility.CapturePhotoUtils;
-import org.ucomplex.ucomplex.Modules.Messenger.FullscreenView.FullscreenViewActivity;
 import org.ucomplex.ucomplex.Modules.Messenger.model.MessageFile;
 import org.ucomplex.ucomplex.Modules.Messenger.model.MessageFileType;
 import org.ucomplex.ucomplex.R;
 
 import java.util.List;
 
-import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 import static org.ucomplex.ucomplex.Common.Constants.imageFormats;
 import static org.ucomplex.ucomplex.Common.base.UCApplication.MESSAGE_FILES_URL;
 
@@ -68,11 +59,11 @@ public class MessengerMessageFilesAdapter extends BaseAdapter<MessengerMessageFi
         }
     }
 
-    private OnListItemClicked<String, MessageFileType> onListItemClicked;
+    private OnListItemClicked<String, String> onListItemClicked;
     private IntentCallback<String> intentCallback;
     private int myId;
 
-    public MessengerMessageFilesAdapter(OnListItemClicked<String, MessageFileType> onListItemClicked,
+    public MessengerMessageFilesAdapter(OnListItemClicked<String, String> onListItemClicked,
                                         IntentCallback<String> intentCallback,
                                         int myId) {
         this.onListItemClicked = onListItemClicked;
@@ -105,32 +96,21 @@ public class MessengerMessageFilesAdapter extends BaseAdapter<MessengerMessageFi
         if (getItemViewType(position) == TYPE_FILE_IN || getItemViewType(position) == TYPE_FILE_OUT) {
             holder.fileName.setText(item.getName());
             holder.attachment.setImageResource(R.drawable.ic_file);
-            holder.attachment.setOnClickListener(v -> onListItemClicked.onClick(address, MessageFileType.FILE));
+            holder.fileName.setOnClickListener(v -> onListItemClicked.onClick(address, item.getName()));
         } else {
             Context context = holder.attachment.getContext();
             downloadImage(holder.attachment, holder.progressBar, item, holder.attachment.getContext());
             holder.attachment.setOnClickListener(v -> {
-                String bitmapUri = CapturePhotoUtils.insertImage(context.getContentResolver(),
-                        FacadeMedia.drawableToBitmap(holder.attachment.getDrawable()),
-                                item.getAddress(), "");
+                Bitmap bitmap = FacadeMedia.drawableToBitmap(holder.attachment.getDrawable());
+                String bitmapUri = FacadeMedia.saveBitmapToStorage(
+                        context.getContentResolver(),
+                        bitmap,
+                        item.getAddress(),
+                        "");
                 intentCallback.startIntent(bitmapUri);
             });
         }
     }
-
-//    private void showImagePopup(Context context, Drawable drawable) {
-//        LayoutInflater layoutInflater
-//                = (LayoutInflater) context
-//                .getSystemService(LAYOUT_INFLATER_SERVICE);
-//        Dialog settingsDialog = new Dialog(context, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
-//        if (settingsDialog.getWindow() != null) {
-//            settingsDialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-//            settingsDialog.setContentView(layoutInflater.inflate(R.layout.dialog_image_popup, null));
-//            ImageView imageView = (ImageView) settingsDialog.findViewById(R.id.image);
-//            imageView.setImageDrawable(drawable);
-//            settingsDialog.show();
-//        }
-//    }
 
     private String extractExtension(String address) {
         String[] nameComponents = address.split("\\.");

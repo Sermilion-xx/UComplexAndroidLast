@@ -116,4 +116,10 @@ public class NotificationService extends Service {
             }
         }
     };
+
+    public static void sendDownloadCompleteBroadcast(Context context) {
+        Intent intent = new Intent();
+        intent.setAction(UC_ACTION_DOWNLOAD_COMPLETE);
+        context.sendBroadcast(intent);
+    }
 }

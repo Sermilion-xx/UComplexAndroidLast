@@ -56,7 +56,6 @@ public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<L
 
     private SubjectTeachersMaterialsService subjectTeachersMaterialsService;
     private PortfolioService portfolioService;
-    private DownloadFileService downloadService;
     private FileService fileService;
 
     private List<Pair<List<SubjectItemFile>, String>> mPageHistory;
@@ -87,11 +86,6 @@ public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<L
     }
 
     @Inject
-    void setDownloadService(DownloadFileService service) {
-        this.downloadService = service;
-    }
-
-    @Inject
     void setFileService(FileService service) {
         this.fileService = service;
     }
@@ -107,25 +101,6 @@ public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<L
             return portfolioService.getPortfolio().subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread());
         }
-    }
-
-    void downloadFile(SubjectMaterialsParams params, DownloadCallback<Response<ResponseBody>> callback) {
-        String mUrl = FILES_PATH + params.getOwnersId() + "/" + params.getFileName();
-        Call<ResponseBody> call = downloadService.downloadFileWithDynamicUrlSync(mUrl);
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful()) {
-                    callback.onResponse(response);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                t.printStackTrace();
-                callback.onError(t);
-            }
-        });
     }
 
     @Override

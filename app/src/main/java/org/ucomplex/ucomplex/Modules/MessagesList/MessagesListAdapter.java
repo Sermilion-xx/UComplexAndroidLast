@@ -89,7 +89,11 @@ class MessagesListAdapter extends BaseAdapter<MessagesListAdapter.MessagesListVi
             UserInterface me = UCApplication.getInstance().getLoggedUser();
             setImage(holder, context, item, me);
             holder.name.setText(item.getName());
-            holder.lastMessage.setText(item.getMessage());
+            if (item.getMessage().length() == 0) {
+                holder.lastMessage.setText(context.getString(R.string.three_dots));
+            } else {
+                holder.lastMessage.setText(item.getMessage());holder.lastMessage.setText(item.getMessage());
+            }
             holder.time.setText(FacadeCommon.makeHumanReadableDate(item.getTime(), true));
             if (item.getStatus() == 0 && item.getFrom() != me.getId()) {
                 holder.clickArea.setBackgroundResource(R.color.colorNotSeen);

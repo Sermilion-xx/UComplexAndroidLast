@@ -16,6 +16,10 @@ import org.ucomplex.ucomplex.Modules.MessagesList.MessagesListPresenter;
 import org.ucomplex.ucomplex.Modules.MessagesList.dagger.MessagesListActivityModule;
 import org.ucomplex.ucomplex.Modules.MessagesList.dagger.MessagesListModelModule;
 import org.ucomplex.ucomplex.Modules.MessagesList.dagger.MessagesListPresenterModule;
+import org.ucomplex.ucomplex.Modules.Messenger.FullscreenView.FullscreenViewActivity;
+import org.ucomplex.ucomplex.Modules.Messenger.FullscreenView.FullscreenViewPresenter;
+import org.ucomplex.ucomplex.Modules.Messenger.FullscreenView.dagger.FullscreenViewActivityModule;
+import org.ucomplex.ucomplex.Modules.Messenger.FullscreenView.dagger.FullscreenViewPresenterModule;
 import org.ucomplex.ucomplex.Modules.Messenger.MessengerActivity;
 import org.ucomplex.ucomplex.Modules.Messenger.MessengerModel;
 import org.ucomplex.ucomplex.Modules.Messenger.MessengerPresenter;
@@ -30,7 +34,6 @@ import org.ucomplex.ucomplex.Modules.RoleInfo.dagger.RoleInfoActivityModule;
 import org.ucomplex.ucomplex.Modules.RoleInfo.dagger.RoleInfoModelModule;
 import org.ucomplex.ucomplex.Modules.RoleInfo.dagger.RoleInfoPresenterModule;
 import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherInfo.RoleInfoTeacherInfoFragment;
-import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherInfo.RoleInfoTeacherInfoModel;
 import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherInfo.RoleInfoTeacherInfoPresenter;
 import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherInfo.dagger.RoleInfoTeacherInfoFragmentModule;
 import org.ucomplex.ucomplex.Modules.RoleInfoTeacher.RoleInfoTeacherInfo.dagger.RoleInfoTeacherInfoPresenterModule;
@@ -143,7 +146,9 @@ import dagger.Component;
                 MessagesListModelModule.class,
                 MessengerActivityModule.class,
                 MessengerPresenterModule.class,
-                MessengerModelModule.class
+                MessengerModelModule.class,
+                FullscreenViewActivityModule.class,
+                FullscreenViewPresenterModule.class,
         })
 
 public interface AppDiComponent {
@@ -222,16 +227,21 @@ public interface AppDiComponent {
 
     void inject(RoleInfoTeacherRankModel fragment);
 
-    void inject(MessagesListActivity fragment);
+    void inject(MessagesListActivity activity);
 
     void inject(MessagesListPresenter presenter);
 
     void inject(MessagesListModel fragment);
 
-    void inject(MessengerActivity fragment);
+    void inject(MessengerActivity activity);
 
     void inject(MessengerPresenter presenter);
 
     void inject(MessengerModel fragment);
+
+    void inject(FullscreenViewActivity activity);
+
+    void inject(FullscreenViewPresenter presenter);
+
 }
 

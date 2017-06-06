@@ -13,10 +13,12 @@ import android.util.Log;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 
+import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Domain.users.UserInterface;
 import org.ucomplex.ucomplex.R;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -47,7 +49,7 @@ public class FacadeMedia {
     private static final String COLUMN_DATA = "_data";
     private static final String UCOMPLEX_PROFILE = "ucomplex_profile";
 
-    private static File getOutputMediaFile(int type, String directory, String fileName) {
+    public static File getOutputMediaFile(int type, String directory, String fileName) {
         File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
                 directory), "UComplex");
         if (!mediaStorageDir.exists()) {
@@ -74,7 +76,7 @@ public class FacadeMedia {
             return k;
     }
 
-    public static Bitmap getThumbnail(Uri uri, Context activity, int... thumbnail_size) throws IOException {
+    public static Bitmap getBitmapFromStorage(Uri uri, Context activity, int... thumbnail_size) throws IOException {
         if (uri != null) {
 
             if (thumbnail_size.length == 0) {
@@ -165,7 +167,26 @@ public class FacadeMedia {
         return bitmap;
     }
 
-    public static Uri createFileForBitmap(String directory) {
+    public static Uri saveBitmapToStorage(Bitmap finalBitmap, String name) {
+        String root = FacadeMedia.getOutputMediaFile(MEDIA_TYPE_IMAGE, Environment.DIRECTORY_PICTURES, UCOMPLEX_PROFILE).toString();
+        File fileDir = new File(root + "/" + UCApplication.getInstance().getString(R.string.app_name));
+        fileDir.mkdirs();
+        File file = new File(fileDir, name);
+        if (file.exists())
+            file.delete();
+        try {
+            FileOutputStream out = new FileOutputStream(file);
+            finalBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+            out.flush();
+            out.close();
+            return Uri.fromFile(file);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static Uri createFileForBitmap() {
         File bitmapFile = FacadeMedia.getOutputMediaFile(MEDIA_TYPE_IMAGE, Environment.DIRECTORY_PICTURES, UCOMPLEX_PROFILE);
         if (bitmapFile != null) {
             return Uri.fromFile(bitmapFile);

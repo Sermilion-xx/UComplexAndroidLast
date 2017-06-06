@@ -1,6 +1,7 @@
 package org.ucomplex.ucomplex.Modules.Messenger;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,7 +13,9 @@ import org.ucomplex.ucomplex.Common.Constants;
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.base.BaseAdapter;
 import org.ucomplex.ucomplex.Common.base.UCApplication;
+import org.ucomplex.ucomplex.Common.interfaces.IntentCallback;
 import org.ucomplex.ucomplex.Common.interfaces.OnListItemClicked;
+import org.ucomplex.ucomplex.Modules.Messenger.FullscreenView.FullscreenViewActivity;
 import org.ucomplex.ucomplex.Modules.Messenger.model.MessageFileType;
 import org.ucomplex.ucomplex.Modules.Messenger.model.MessengerItem;
 import org.ucomplex.ucomplex.R;
@@ -45,12 +48,14 @@ class MessengerAdapter extends BaseAdapter<MessengerAdapter.MessengerViewHolder,
     }
 
     private int myId;
+    private String companionName;
     private OnListItemClicked<String, MessageFileType> onListItemClicked;
 
-    MessengerAdapter(int myId, OnListItemClicked<String, MessageFileType> onListItemClicked) {
+    MessengerAdapter(int myId, String companionName, OnListItemClicked<String, MessageFileType> onListItemClicked) {
         this.myId = myId;
         this.onListItemClicked = onListItemClicked;
         this.mItems = new ArrayList<>();
+        this.companionName = companionName;
     }
 
     @Override
@@ -78,8 +83,11 @@ class MessengerAdapter extends BaseAdapter<MessengerAdapter.MessengerViewHolder,
                 holder.message.setVisibility(View.VISIBLE);
                 holder.message.setText(item.getMessage());
             }
+            Context context = holder.time.getContext();
             holder.time.setText(FacadeCommon.makeHumanReadableDate(item.getTime(), true));
-            MessengerMessageFilesAdapter messageFilesAdapter = new MessengerMessageFilesAdapter((params, type) -> onListItemClicked.onClick(params, type),
+            MessengerMessageFilesAdapter messageFilesAdapter = new MessengerMessageFilesAdapter(
+                    (params, type) -> onListItemClicked.onClick(params, type),
+                    uri -> context.startActivity(FullscreenViewActivity.creteIntent(context, this.companionName, item.getTime(), uri)),
                     UCApplication.getInstance().getLoggedUser().getId());
             messageFilesAdapter.setItems(item.getFiles());
             messageFilesAdapter.notifyDataSetChanged();

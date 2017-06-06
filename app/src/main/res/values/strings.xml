@@ -204,4 +204,8 @@
     <string name="questionHint9">1 - не успеваю ничего зафиксировать, 10 - успеваю все зафиксировать</string>
     <string name="questionHint10">1 - совершенно не соответствует, 10 - полностью соответствует</string>
     <string name="attachment">Прикрепленный файл</string>
+    <string name="empty_message">Пустое сообщение</string>
+    <string name="three_dots">...</string>
+    <string name="fullscreen_image">Полноэкранная картинка</string>
+    <string name="image_saved">Картинка сохранена</string>
 </resources>

@@ -5,6 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 
 import org.ucomplex.ucomplex.Common.base.BaseMVPActivity;
@@ -34,14 +40,22 @@ public class MessengerActivity extends BaseMVPActivity<MVPView, MessengerPresent
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         setContentViewWithNavDrawer(R.layout.activity_messenger);
-        setupToolbar(intent.getStringExtra(EXTRA_NAME),R.drawable.ic_menu);
+        String companionName =intent.getStringExtra(EXTRA_NAME);
+        setupToolbar(companionName,R.drawable.ic_menu);
         mProgress = (ProgressBar) findViewById(R.id.progressBar);
         setupDrawer();
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new MessengerAdapter(UCApplication.getInstance().getLoggedUser().getId(), (params, type) -> {
+        mAdapter = new MessengerAdapter(UCApplication.getInstance().getLoggedUser().getId(), companionName, (params, type) -> {
+            switch (type) {
+                case IMAGE:
 
+                    break;
+                case FILE:
+                    downloadFile();
+                    break;
+            }
         });
         mRecyclerView.setAdapter(mAdapter);
         if (presenter.getData() == null) {
@@ -49,6 +63,10 @@ public class MessengerActivity extends BaseMVPActivity<MVPView, MessengerPresent
         } else {
             dataLoaded();
         }
+    }
+
+    private void downloadFile() {
+
     }
 
     @Override

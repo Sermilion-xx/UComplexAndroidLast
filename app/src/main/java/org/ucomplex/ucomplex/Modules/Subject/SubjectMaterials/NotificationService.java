@@ -50,7 +50,7 @@ public class NotificationService extends Service {
             try {
                 Uri largeIconUri = intent.getParcelableExtra(EXTRA_LARGE_ICON);
 //                largeIcon = MediaStore.Images.Media.getBitmap(this.getContentResolver(), largeIconUri);
-                largeIcon = FacadeMedia.getThumbnail(largeIconUri, this, 100);
+                largeIcon = FacadeMedia.getBitmapFromStorage(largeIconUri, this, 100);
             } catch (IOException e) {
                 e.printStackTrace();
             }

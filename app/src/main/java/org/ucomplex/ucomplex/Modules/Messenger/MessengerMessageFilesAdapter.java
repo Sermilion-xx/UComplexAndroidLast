@@ -24,8 +24,6 @@ import org.ucomplex.ucomplex.R;
 import java.util.List;
 
 import static org.ucomplex.ucomplex.Common.Constants.imageFormats;
-import static org.ucomplex.ucomplex.Common.base.UCApplication.BASE_URL;
-import static org.ucomplex.ucomplex.Common.base.UCApplication.FORMAT_JPG;
 import static org.ucomplex.ucomplex.Common.base.UCApplication.MESSAGE_FILES_URL;
 
 /**
@@ -39,6 +37,11 @@ import static org.ucomplex.ucomplex.Common.base.UCApplication.MESSAGE_FILES_URL;
  */
 
 public class MessengerMessageFilesAdapter extends BaseAdapter<MessengerMessageFilesAdapter.MessengerMessageFilesViewHolder, List<MessageFile>> {
+
+    private final static int TYPE_FILE_IN = 0;
+    private final static int TYPE_FILE_OUT = 1;
+    private final static int TYPE_IMAGE_IN = 2;
+    private final static int TYPE_IMAGE_OUT = 3;
 
     static class MessengerMessageFilesViewHolder extends RecyclerView.ViewHolder {
 
@@ -55,38 +58,55 @@ public class MessengerMessageFilesAdapter extends BaseAdapter<MessengerMessageFi
     }
 
     private OnListItemClicked<String, MessageFileType> onListItemClicked;
+    private int myId;
 
-    public MessengerMessageFilesAdapter(OnListItemClicked<String, MessageFileType> onListItemClicked) {
+    public MessengerMessageFilesAdapter(OnListItemClicked<String, MessageFileType> onListItemClicked, int myId) {
         this.onListItemClicked = onListItemClicked;
+        this.myId = myId;
     }
 
     @Override
     public MessengerMessageFilesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.item_message_file, parent, false);
+        int layout = -1;
+        if (viewType == TYPE_FILE_OUT) {
+            layout = R.layout.item_message_file_out;
+        } else if (viewType == TYPE_FILE_IN) {
+            layout = R.layout.item_message_file_in;
+        } else if (viewType == TYPE_IMAGE_OUT) {
+            layout = R.layout.item_message_image_out;
+        } else if (viewType == TYPE_IMAGE_IN) {
+            layout = R.layout.item_message_image_in;
+        }
+        View view = inflater.inflate(layout, parent, false);
         return new MessengerMessageFilesViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(MessengerMessageFilesViewHolder holder, int position) {
         MessageFile item = mItems.get(position);
-        String[] nameComponents = item.getAddress().split("\\.");
         String address = item.getFrom() + "/" + item.getAddress();
-        if (nameComponents.length > 1) {
-            if (imageFormats.contains(nameComponents[1])) {
-                downloadImage(holder.attachment, holder.progressBar, item, holder.attachment.getContext());
-                onListItemClicked.onClick(address, MessageFileType.IMAGE);
-            } else {
-                holder.fileName.setText(item.getName());
-                holder.attachment.setImageResource(R.drawable.ic_file);
-                onListItemClicked.onClick(address, MessageFileType.FILE);
-            }
+        if (getItemViewType(position) == TYPE_FILE_IN || getItemViewType(position) == TYPE_FILE_OUT) {
+            holder.fileName.setText(item.getName());
+            holder.attachment.setImageResource(R.drawable.ic_file);
+            onListItemClicked.onClick(address, MessageFileType.FILE);
+        } else {
+            downloadImage(holder.attachment, holder.progressBar, item, holder.attachment.getContext());
+            onListItemClicked.onClick(address, MessageFileType.IMAGE);
         }
+    }
+
+    private String extractExtension(String address) {
+        String[] nameComponents = address.split("\\.");
+        if (nameComponents.length > 1) {
+            return nameComponents[1];
+        }
+        return "";
     }
 
     private void downloadImage(ImageView attachment, ProgressBar progressBar, MessageFile item, Context context) {
         progressBar.setVisibility(View.VISIBLE);
-        String url =  MESSAGE_FILES_URL + item.getFrom() +"/" + item.getAddress();
+        String url = MESSAGE_FILES_URL + item.getFrom() + "/" + item.getAddress();
         Glide.with(context)
                 .load(url)
                 .asBitmap()
@@ -103,5 +123,17 @@ public class MessengerMessageFilesAdapter extends BaseAdapter<MessengerMessageFi
                 return false;
             }
         }).into(attachment);
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (mItems.size() == 0) {
+            return TYPE_EMPTY;
+        }
+        String extension = extractExtension(mItems.get(position).getAddress());
+        if (imageFormats.contains(extension)) {
+            return mItems.get(position).getFrom() == myId ? TYPE_IMAGE_OUT : TYPE_IMAGE_IN;
+        }
+        return mItems.get(position).getFrom() == myId ? TYPE_FILE_OUT : TYPE_FILE_IN;
     }
 }

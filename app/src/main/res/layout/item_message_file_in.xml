@@ -1,13 +1,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="horizontal"
+    android:layout_gravity="">
 
     <TextView
         android:id="@+id/file_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"/>
+        android:layout_margin="5dp"
+        android:layout_gravity="center"
+        android:text="sfasdfasdfasdfasd"/>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -17,10 +20,11 @@
 
         <ImageView
             android:id="@+id/attachment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:background="@drawable/ic_no_image"
-            android:contentDescription="@string/attachment" />
+            android:contentDescription="@string/attachment"
+            android:layout_gravity="center"/>
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -28,7 +32,8 @@
             android:layout_height="30dp"
             android:layout_gravity="center"
             android:indeterminate="true"
-             />
+            android:visibility="gone"/>
 
     </FrameLayout>
+
 </LinearLayout>

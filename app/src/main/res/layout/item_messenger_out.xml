@@ -3,7 +3,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:gravity="end"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_marginStart="70dp">
 
     <LinearLayout
         android:id="@+id/message_layout"
@@ -24,13 +25,12 @@
             android:layout_marginTop="3dp"
             android:maxWidth="200dp"
             android:textColor="@color/colorBlack"
-            android:textSize="14sp"
-            android:text="sdfdssdfgsdfgsdfgsdfgsdfgsdfgsdfgsdfgsdfgsfdgf"/>
+            android:textSize="14sp" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 

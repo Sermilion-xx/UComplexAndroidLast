@@ -11,6 +11,7 @@ import android.widget.TextView;
 import org.ucomplex.ucomplex.Common.Constants;
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.base.BaseAdapter;
+import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.OnListItemClicked;
 import org.ucomplex.ucomplex.Modules.Messenger.model.MessageFileType;
 import org.ucomplex.ucomplex.Modules.Messenger.model.MessengerItem;
@@ -71,9 +72,15 @@ class MessengerAdapter extends BaseAdapter<MessengerAdapter.MessengerViewHolder,
     public void onBindViewHolder(MessengerViewHolder holder, int position) {
         if (mItems.size() > 0) {
             MessengerItem item = mItems.get(position);
-            holder.message.setText(item.getMessage());
+            if (item.getMessage().length() == 0) {
+                holder.message.setVisibility(View.GONE);
+            } else {
+                holder.message.setVisibility(View.VISIBLE);
+                holder.message.setText(item.getMessage());
+            }
             holder.time.setText(FacadeCommon.makeHumanReadableDate(item.getTime(), true));
-            MessengerMessageFilesAdapter messageFilesAdapter = new MessengerMessageFilesAdapter((params, type) -> onListItemClicked.onClick(params, type));
+            MessengerMessageFilesAdapter messageFilesAdapter = new MessengerMessageFilesAdapter((params, type) -> onListItemClicked.onClick(params, type),
+                    UCApplication.getInstance().getLoggedUser().getId());
             messageFilesAdapter.setItems(item.getFiles());
             messageFilesAdapter.notifyDataSetChanged();
             holder.filesRecyclerView.setAdapter(messageFilesAdapter);

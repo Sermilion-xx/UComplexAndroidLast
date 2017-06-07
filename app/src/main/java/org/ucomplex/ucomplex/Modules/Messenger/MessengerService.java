@@ -24,10 +24,14 @@ import retrofit2.http.Url;
  */
 
 public interface MessengerService {
+
     @POST("/user/messages/list?mobile=1") @FormUrlEncoded
     Observable<MessengerRaw> getMessages(@Field("companion") Integer companion);
 
-    @GET @Streaming
-    Call<ResponseBody> downloadFileWithDynamicUrlSync(@Url String fileUrl);
+    @POST("/user/messages/add?mobile=1") @FormUrlEncoded
+    Observable<MessengerRaw> sendMessages(@Field("msg") String message,
+                                          @Field("companion") Integer companion);
+
+
 
 }

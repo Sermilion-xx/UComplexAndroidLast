@@ -65,7 +65,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".Modules.Messenger.FullscreenView.FullscreenViewActivity"
+            android:name=".Modules.FullscreenImageView.FullscreenViewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/FullscreenVieTheme"/>
 

@@ -2,6 +2,7 @@ package org.ucomplex.ucomplex.Modules.Messenger;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
@@ -72,5 +73,9 @@ public class MessengerPresenter extends AbstractPresenter<
                 getView().showToast(R.string.need_storage_permissions, Toast.LENGTH_LONG);
             }
         }
+    }
+
+    public void sendMessage(String message, List<Uri> filesToSend) {
+
     }
 }

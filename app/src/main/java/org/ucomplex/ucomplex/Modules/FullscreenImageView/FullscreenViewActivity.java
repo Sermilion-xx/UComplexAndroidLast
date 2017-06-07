@@ -1,4 +1,4 @@
-package org.ucomplex.ucomplex.Modules.Messenger.FullscreenView;
+package org.ucomplex.ucomplex.Modules.FullscreenImageView;
 
 import android.content.ContentResolver;
 import android.content.ContentUris;
@@ -59,13 +59,7 @@ public class FullscreenViewActivity extends BaseMVPActivity<MVPView, FullscreenV
         name.setText(intent.getStringExtra(EXTRA_NAME));
         time.setText(intent.getStringExtra(EXTRA_TIME));
         this.imageUri = Uri.parse(intent.getStringExtra(EXTRA_URI));
-
-        if (presenter.getData() == null) {
-            presenter.loadData(this.imageUri);
-        } else {
-            dataLoaded();
-        }
-
+        presenter.loadData(this.imageUri);
         download.setOnClickListener(v -> {
             saved = true;
             showToast(R.string.image_saved);

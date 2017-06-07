@@ -20,7 +20,6 @@ import org.ucomplex.ucomplex.Common.base.BaseAdapter;
 import org.ucomplex.ucomplex.Common.interfaces.IntentCallback;
 import org.ucomplex.ucomplex.Common.interfaces.OnListItemClicked;
 import org.ucomplex.ucomplex.Modules.Messenger.model.MessageFile;
-import org.ucomplex.ucomplex.Modules.Messenger.model.MessageFileType;
 import org.ucomplex.ucomplex.R;
 
 import java.util.List;
@@ -38,12 +37,10 @@ import static org.ucomplex.ucomplex.Common.base.UCApplication.MESSAGE_FILES_URL;
  * ---------------------------------------------------
  */
 
-public class MessengerMessageFilesAdapter extends BaseAdapter<MessengerMessageFilesAdapter.MessengerMessageFilesViewHolder, List<MessageFile>> {
+public class MessengerFilesAdapter extends BaseAdapter<MessengerFilesAdapter.MessengerMessageFilesViewHolder, List<MessageFile>> {
 
-    private final static int TYPE_FILE_IN = 0;
-    private final static int TYPE_FILE_OUT = 1;
-    private final static int TYPE_IMAGE_IN = 2;
-    private final static int TYPE_IMAGE_OUT = 3;
+    private final static int TYPE_FILE = 0;
+    private final static int TYPE_IMAGE = 1;
 
     static class MessengerMessageFilesViewHolder extends RecyclerView.ViewHolder {
 
@@ -63,9 +60,9 @@ public class MessengerMessageFilesAdapter extends BaseAdapter<MessengerMessageFi
     private IntentCallback<String> intentCallback;
     private int myId;
 
-    public MessengerMessageFilesAdapter(OnListItemClicked<String, String> onListItemClicked,
-                                        IntentCallback<String> intentCallback,
-                                        int myId) {
+    public MessengerFilesAdapter(OnListItemClicked<String, String> onListItemClicked,
+                                 IntentCallback<String> intentCallback,
+                                 int myId) {
         this.onListItemClicked = onListItemClicked;
         this.intentCallback = intentCallback;
         this.myId = myId;
@@ -75,14 +72,10 @@ public class MessengerMessageFilesAdapter extends BaseAdapter<MessengerMessageFi
     public MessengerMessageFilesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         int layout = -1;
-        if (viewType == TYPE_FILE_OUT) {
-            layout = R.layout.item_message_file_out;
-        } else if (viewType == TYPE_FILE_IN) {
-            layout = R.layout.item_message_file_in;
-        } else if (viewType == TYPE_IMAGE_OUT) {
-            layout = R.layout.item_message_image_out;
-        } else if (viewType == TYPE_IMAGE_IN) {
-            layout = R.layout.item_message_image_in;
+        if (viewType == TYPE_FILE) {
+            layout = R.layout.item_message_file;
+        } else if (viewType == TYPE_IMAGE) {
+            layout = R.layout.item_message_image;
         }
         View view = inflater.inflate(layout, parent, false);
         return new MessengerMessageFilesViewHolder(view);
@@ -92,12 +85,11 @@ public class MessengerMessageFilesAdapter extends BaseAdapter<MessengerMessageFi
     public void onBindViewHolder(MessengerMessageFilesViewHolder holder, int position) {
         MessageFile item = mItems.get(position);
         String address = item.getFrom() + "/" + item.getAddress();
-
-        if (getItemViewType(position) == TYPE_FILE_IN || getItemViewType(position) == TYPE_FILE_OUT) {
+        if (getItemViewType(position) == TYPE_FILE) {
             holder.fileName.setText(item.getName());
             holder.attachment.setImageResource(R.drawable.ic_file);
             holder.fileName.setOnClickListener(v -> onListItemClicked.onClick(address, item.getName()));
-        } else {
+        } else if (getItemViewType(position) == TYPE_IMAGE) {
             Context context = holder.attachment.getContext();
             downloadImage(holder.attachment, holder.progressBar, item, holder.attachment.getContext());
             holder.attachment.setOnClickListener(v -> {
@@ -126,7 +118,8 @@ public class MessengerMessageFilesAdapter extends BaseAdapter<MessengerMessageFi
         Glide.with(context)
                 .load(url)
                 .asBitmap()
-                .priority(Priority.HIGH).listener(new RequestListener<String, Bitmap>() {
+                .priority(Priority.HIGH)
+                .listener(new RequestListener<String, Bitmap>() {
             @Override
             public boolean onException(Exception e, String model, Target<Bitmap> target, boolean isFirstResource) {
                 progressBar.setVisibility(View.GONE);
@@ -148,8 +141,8 @@ public class MessengerMessageFilesAdapter extends BaseAdapter<MessengerMessageFi
         }
         String extension = extractExtension(mItems.get(position).getAddress());
         if (imageFormats.contains(extension)) {
-            return mItems.get(position).getFrom() == myId ? TYPE_IMAGE_OUT : TYPE_IMAGE_IN;
+            return TYPE_IMAGE;
         }
-        return mItems.get(position).getFrom() == myId ? TYPE_FILE_OUT : TYPE_FILE_IN;
+        return TYPE_FILE;
     }
 }

@@ -1,6 +1,6 @@
-package org.ucomplex.ucomplex.Modules.Messenger.FullscreenView.dagger;
+package org.ucomplex.ucomplex.Modules.FullscreenImageView.dagger;
 
-import org.ucomplex.ucomplex.Modules.Messenger.FullscreenView.FullscreenViewPresenter;
+import org.ucomplex.ucomplex.Modules.FullscreenImageView.FullscreenViewModel;
 
 import javax.inject.Singleton;
 
@@ -17,11 +17,12 @@ import dagger.Provides;
  * ---------------------------------------------------
  */
 @Module
-public class FullscreenViewActivityModule {
+public class FullscreenViewPresenterModule {
 
     @Provides
     @Singleton
-    FullscreenViewPresenter providePresenter() {
-        return new FullscreenViewPresenter();
+    FullscreenViewModel provideModel() {
+        return new FullscreenViewModel();
     }
+
 }

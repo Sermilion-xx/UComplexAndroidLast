@@ -1,13 +1,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="start"
+    android:layout_gravity="end"
     android:orientation="horizontal"
-    android:paddingTop="5dp">
+    android:padding="5dp">
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center" />
 
     <ImageView
         android:id="@+id/attachment"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="2dp"
@@ -15,12 +21,6 @@
         android:contentDescription="@string/attachment"
         android:scaleType="fitStart" />
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_gravity="center"
-        android:indeterminate="true"
-        android:visibility="gone" />
+
 
 </LinearLayout>

@@ -1,4 +1,4 @@
-package org.ucomplex.ucomplex.Modules.Messenger.FullscreenView;
+package org.ucomplex.ucomplex.Modules.FullscreenImageView;
 
 import android.graphics.Bitmap;
 import android.net.Uri;

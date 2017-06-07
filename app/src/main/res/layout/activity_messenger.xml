@@ -45,10 +45,11 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_gravity="center"
-                android:indeterminate="true" />
+                android:indeterminate="true"
+                android:visibility="gone"/>
 
             <ImageView
-                android:id="@+id/message_file_cancel"
+                android:id="@+id/cancelSending"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_gravity="center"
@@ -84,14 +85,14 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_toEndOf="@+id/messages_file_button"
-                android:layout_toStartOf="@+id/messages_send_button"
+                android:layout_toStartOf="@+id/send_button"
                 android:background="@null"
                 android:ellipsize="end"
                 android:hint="@string/message"
                 android:maxLines="2" />
 
             <Button
-                android:id="@+id/messages_send_button"
+                android:id="@+id/send_button"
                 android:layout_width="30dp"
                 android:layout_height="25dp"
                 android:layout_alignParentEnd="true"

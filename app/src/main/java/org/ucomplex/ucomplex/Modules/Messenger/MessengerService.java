@@ -32,6 +32,7 @@ public interface MessengerService {
     Observable<MessengerRaw> sendMessages(@Field("msg") String message,
                                           @Field("companion") Integer companion);
 
-
-
+    @GET("/files/messages/{id}/{name}?mobile=1") @Streaming
+    Observable<ResponseBody> downloadFile(@Path("id") Integer id,
+                                         @Path("name") String name);
 }

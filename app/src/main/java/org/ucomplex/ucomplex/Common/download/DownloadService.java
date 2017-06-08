@@ -32,6 +32,7 @@ import java.io.OutputStream;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.Response;
 
 public class DownloadService extends IntentService {
 
@@ -72,8 +73,13 @@ public class DownloadService extends IntentService {
         retrofitInterface = ServiceGenerator.createService(DownloadRetrofitService.class, UCApplication.getInstance().getAuthString());
         Call<ResponseBody> request = retrofitInterface.downloadFile(url);
         try {
-            downloadFile(request.execute().body(), name);
-        } catch (IOException e) {
+            Response<ResponseBody> response = request.execute();
+            if (response.isSuccessful()) {
+                downloadFile(response.body(), name);
+            } else {
+                onDownloadFailed();
+            }
+        } catch (Exception e) {
             onDownloadFailed();
             e.printStackTrace();
         }

@@ -59,9 +59,12 @@ public class MessengerPresenter extends AbstractPresenter<
         });
     }
 
-    void downloadFile(String name, String address) {
+    void downloadFile(String name, int id, String address) {
         checkStoragePermissions();
-        String url = MESSAGE_FILES_URL + address;
+        String url = MESSAGE_FILES_URL + id + "/"  + address;
+        if (getView() != null) {
+            getView().showToast(R.string.download_started);
+        }
         getActivityContext().startService(DownloadService.createIntent(getAppContext(), url, name));
     }
 

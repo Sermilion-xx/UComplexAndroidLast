@@ -68,7 +68,9 @@ public class MessengerActivity extends BaseMVPActivity<MVPView, MessengerPresent
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new MessengerAdapter(myId, companionName, (params, name) -> presenter.downloadFile(name, params));
+        mAdapter = new MessengerAdapter(myId,
+                companionName,
+                (address, name) -> presenter.downloadFile(name, myId, address));
         mRecyclerView.setAdapter(mAdapter);
         presenter.loadData(intent.getIntExtra(EXTRA_COMPANION, -1));
         sendButton.setEnabled(false);
@@ -86,6 +88,7 @@ public class MessengerActivity extends BaseMVPActivity<MVPView, MessengerPresent
     }
 
     TextWatcher buttonStateChanger = new TextWatcher() {
+
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 

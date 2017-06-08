@@ -35,6 +35,7 @@ import io.reactivex.disposables.Disposable;
 
 import static org.ucomplex.ucomplex.Common.Constants.TYPE_FOLDER;
 import static org.ucomplex.ucomplex.Common.Constants.UC_ACTION_DOWNLOAD_COMPLETE;
+import static org.ucomplex.ucomplex.Common.base.UCApplication.FILES_PATH;
 
 /**
  * ---------------------------------------------------
@@ -49,7 +50,7 @@ import static org.ucomplex.ucomplex.Common.Constants.UC_ACTION_DOWNLOAD_COMPLETE
 public class SubjectMaterialsPresenter extends AbstractPresenter<
         MaterialsRaw, List<Pair<List<SubjectItemFile>, String>>, SubjectMaterialsParams, SubjectMaterialsModel> {
 
-    private static final String FILES_PATH = "/files/users/";
+
     private String[] folderMenuActions;
     private String[] fileMenuActions;
 

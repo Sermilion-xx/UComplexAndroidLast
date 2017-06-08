@@ -83,7 +83,7 @@ class MessengerAdapter extends BaseAdapter<MessengerAdapter.MessengerViewHolder,
             Context context = holder.time.getContext();
             holder.time.setText(FacadeCommon.makeHumanReadableDate(item.getTime(), true));
             MessengerFilesAdapter messageFilesAdapter = new MessengerFilesAdapter(
-                    (params, name) -> onListItemClicked.onClick(params, name),
+                    (address, name) -> onListItemClicked.onClick(address, name),
                     uri -> context.startActivity(FullscreenViewActivity.creteIntent(context, this.companionName, item.getTime(), uri)),
                     UCApplication.getInstance().getLoggedUser().getId()
             );

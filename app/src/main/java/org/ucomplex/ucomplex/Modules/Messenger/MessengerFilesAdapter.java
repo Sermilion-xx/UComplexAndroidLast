@@ -84,11 +84,10 @@ public class MessengerFilesAdapter extends BaseAdapter<MessengerFilesAdapter.Mes
     @Override
     public void onBindViewHolder(MessengerMessageFilesViewHolder holder, int position) {
         MessageFile item = mItems.get(position);
-        String address = item.getFrom() + "/" + item.getAddress();
         if (getItemViewType(position) == TYPE_FILE) {
             holder.fileName.setText(item.getName());
             holder.attachment.setImageResource(R.drawable.ic_file);
-            holder.fileName.setOnClickListener(v -> onListItemClicked.onClick(address, item.getName()));
+            holder.fileName.setOnClickListener(v -> onListItemClicked.onClick(item.getAddress(), item.getName()));
         } else if (getItemViewType(position) == TYPE_IMAGE) {
             Context context = holder.attachment.getContext();
             downloadImage(holder.attachment, holder.progressBar, item, holder.attachment.getContext());

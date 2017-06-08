@@ -51,6 +51,11 @@ public class MessengerModel implements MVPModel<MessengerRaw, List<MessengerItem
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    public Observable<ResponseBody> downloadFile(int id, String name) {
+        return mService.downloadFile(id, name).subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
     @Override
     public void setData(List<MessengerItem> data) {
         this.mData = data;

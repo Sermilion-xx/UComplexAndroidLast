@@ -19,6 +19,7 @@ import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
+import static org.ucomplex.ucomplex.Common.base.UCApplication.BASE_FILES_URL;
 import static org.ucomplex.ucomplex.Common.base.UCApplication.MESSAGE_FILES_URL;
 
 public class MessengerPresenter extends AbstractPresenter<
@@ -61,7 +62,7 @@ public class MessengerPresenter extends AbstractPresenter<
 
     void downloadFile(String name, int id, String address) {
         checkStoragePermissions();
-        String url = MESSAGE_FILES_URL + id + "/"  + address;
+        String url = BASE_FILES_URL + MESSAGE_FILES_URL + id + "/"  + address;
         if (getView() != null) {
             getView().showToast(R.string.download_started);
         }

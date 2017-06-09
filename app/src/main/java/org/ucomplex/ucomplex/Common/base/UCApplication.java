@@ -28,10 +28,11 @@ import javax.net.ssl.X509TrustManager;
 
 public class UCApplication extends Application {
 
-    public static final String BASE_URL = "https://ucomplex.org/";
-    public static final String BASE_FILES_URL = "https://storage.ucomplex.org/";
-    public static final String MESSAGE_FILES_URL = "/files/messages/";
-    public static final String FILES_PATH = "/files/users/";
+    public static final String SCHEMA = "https://";
+    public static final String BASE_URL = SCHEMA + "ucomplex.org/";
+    public static final String BASE_FILES_URL = "storage.ucomplex.org/";
+    public static final String MESSAGE_FILES_URL = "files/messages/";
+    public static final String FILES_PATH = "files/users/";
     public static final String PHOTOS_URL = BASE_URL + "files/photos/";
     public static final String PHOTOS_ORIGINAL_URL = BASE_URL + "files/original/";
     public static final String FORMAT_JPG = ".jpg";

@@ -77,6 +77,9 @@ public class MessengerActivity extends BaseMVPActivity<MVPView, MessengerPresent
         messageText.addTextChangedListener(buttonStateChanger);
         sendButton.setOnClickListener(v -> {
             String message = messageText.getText().toString();
+            if (message.length() == 0 && filesToSend.size() > 0) {
+                message = getString(R.string.file) + ":" + filesToSend.get(filesToSend.size() - 1).getLastPathSegment();
+            }
             presenter.sendMessage(message, filesToSend);
         });
     }

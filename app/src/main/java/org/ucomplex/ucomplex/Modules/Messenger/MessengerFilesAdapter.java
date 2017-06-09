@@ -25,7 +25,9 @@ import org.ucomplex.ucomplex.R;
 import java.util.List;
 
 import static org.ucomplex.ucomplex.Common.Constants.imageFormats;
+import static org.ucomplex.ucomplex.Common.base.UCApplication.BASE_FILES_URL;
 import static org.ucomplex.ucomplex.Common.base.UCApplication.MESSAGE_FILES_URL;
+import static org.ucomplex.ucomplex.Common.base.UCApplication.SCHEMA;
 
 /**
  * ---------------------------------------------------
@@ -113,7 +115,7 @@ public class MessengerFilesAdapter extends BaseAdapter<MessengerFilesAdapter.Mes
 
     private void downloadImage(ImageView attachment, ProgressBar progressBar, MessageFile item, Context context) {
         progressBar.setVisibility(View.VISIBLE);
-        String url = MESSAGE_FILES_URL + item.getFrom() + "/" + item.getAddress();
+        String url = SCHEMA + BASE_FILES_URL + MESSAGE_FILES_URL + item.getFrom() + "/" + item.getAddress();
         Glide.with(context)
                 .load(url)
                 .asBitmap()

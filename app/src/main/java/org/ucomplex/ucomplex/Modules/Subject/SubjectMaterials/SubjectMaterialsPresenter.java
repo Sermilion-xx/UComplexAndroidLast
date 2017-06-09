@@ -35,6 +35,7 @@ import io.reactivex.disposables.Disposable;
 
 import static org.ucomplex.ucomplex.Common.Constants.TYPE_FOLDER;
 import static org.ucomplex.ucomplex.Common.Constants.UC_ACTION_DOWNLOAD_COMPLETE;
+import static org.ucomplex.ucomplex.Common.base.UCApplication.BASE_FILES_URL;
 import static org.ucomplex.ucomplex.Common.base.UCApplication.FILES_PATH;
 
 /**
@@ -138,7 +139,7 @@ public class SubjectMaterialsPresenter extends AbstractPresenter<
     }
 
     public void downloadFile(int ownerId, String fileName) {
-        String url = FILES_PATH + ownerId + "/" + fileName;
+        String url = BASE_FILES_URL + FILES_PATH + ownerId + "/" + fileName;
         if (ContextCompat.checkSelfPermission(getActivityContext(),
                 Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {

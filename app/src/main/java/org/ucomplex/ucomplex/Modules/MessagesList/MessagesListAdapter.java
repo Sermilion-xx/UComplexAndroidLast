@@ -90,9 +90,9 @@ class MessagesListAdapter extends BaseAdapter<MessagesListAdapter.MessagesListVi
             setImage(holder, context, item, me);
             holder.name.setText(item.getName());
             if (item.getMessage().length() == 0) {
-                holder.lastMessage.setText(context.getString(R.string.three_dots));
+                holder.lastMessage.setText(context.getString(R.string.file));
             } else {
-                holder.lastMessage.setText(item.getMessage());holder.lastMessage.setText(item.getMessage());
+                holder.lastMessage.setText(item.getMessage());
             }
             holder.time.setText(FacadeCommon.makeHumanReadableDate(item.getTime(), true));
             if (item.getStatus() == 0 && item.getFrom() != me.getId()) {

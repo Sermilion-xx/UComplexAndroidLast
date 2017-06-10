@@ -2,6 +2,7 @@ package org.ucomplex.ucomplex.Common.base;
 
 import android.support.v7.widget.RecyclerView;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -14,7 +15,7 @@ import java.util.List;
  * ---------------------------------------------------
  */
 
-public abstract class BaseAdapter<T extends RecyclerView.ViewHolder, D extends List> extends RecyclerView.Adapter<T>{
+public abstract class BaseAdapter<T extends RecyclerView.ViewHolder, D extends Collection> extends RecyclerView.Adapter<T>{
 
     protected final int TYPE_EMPTY = -1;
 

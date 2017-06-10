@@ -4,17 +4,18 @@
     android:layout_height="match_parent"
     android:background="@color/color_uc_activity_background">
 
-    <include layout="@layout/toolbar"
-        android:id="@+id/toolbar"/>
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
 
     <android.support.v7.widget.RecyclerView
-        android:layout_below="@+id/toolbar"
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginBottom="45dp"
         android:divider="@null"
-        android:dividerHeight="0dp"
-        android:layout_marginBottom="45dp"/>
+        android:dividerHeight="0dp" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -46,7 +47,7 @@
                 android:layout_height="30dp"
                 android:layout_gravity="center"
                 android:indeterminate="true"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
             <ImageView
                 android:id="@+id/cancelSending"
@@ -60,6 +61,23 @@
 
         </FrameLayout>
 
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            >
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/filesRecyclerView"
+                android:layout_width="wrap_content"
+                android:layout_height="70dp"
+                android:layout_gravity="start"
+                android:overScrollMode="never"/>
+
+        </FrameLayout>
+
+
+
         <RelativeLayout
             android:id="@+id/input_layout"
             android:layout_width="match_parent"
@@ -71,7 +89,7 @@
             android:paddingTop="7dp">
 
             <Button
-                android:id="@+id/messages_file_button"
+                android:id="@+id/buttonAddFile"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_alignParentStart="true"
@@ -84,7 +102,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_toEndOf="@+id/messages_file_button"
+                android:layout_toEndOf="@+id/buttonAddFile"
                 android:layout_toStartOf="@+id/send_button"
                 android:background="@null"
                 android:ellipsize="end"

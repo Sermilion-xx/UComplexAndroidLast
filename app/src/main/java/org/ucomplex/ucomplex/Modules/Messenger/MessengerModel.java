@@ -10,12 +10,14 @@ import org.ucomplex.ucomplex.Modules.Portfolio.retrofit.DownloadFileService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -51,8 +53,8 @@ public class MessengerModel implements MVPModel<MessengerRaw, List<MessengerItem
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Observable<ResponseBody> downloadFile(int id, String name) {
-        return mService.downloadFile(id, name).subscribeOn(Schedulers.newThread())
+    public Observable<ResponseBody> sendMessage(String message, int companion, List<MultipartBody.Part> multiParts) {
+        return mService.sendMessages(message, companion, multiParts).subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
@@ -90,4 +92,5 @@ public class MessengerModel implements MVPModel<MessengerRaw, List<MessengerItem
     public CompanionInfo getCompanion() {
         return companion;
     }
+
 }

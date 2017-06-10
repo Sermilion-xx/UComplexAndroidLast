@@ -43,6 +43,9 @@
   <color name="rating8">#E6E773</color>
   <color name="rating9">#c3e874</color>
   <color name="rating10">#89e874</color>
+    <color name="colorBlack30">#30000000</color>
+  <color name="colorWhite50">#50ffffff</color>
+  <color name="colorBlack70">#70ffffff</color>
 
 </resources>
 

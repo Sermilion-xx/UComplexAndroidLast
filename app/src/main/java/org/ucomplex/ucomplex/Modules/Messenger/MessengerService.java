@@ -6,6 +6,7 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -34,8 +35,9 @@ public interface MessengerService {
 
     @POST("/user/messages/add?mobile=1")
     @Multipart
-    Observable<ResponseBody> sendMessages(@Part("msg") String message,
+    Observable<MessengerRaw> sendMessages(@Part("msg") String message,
                                           @Part("companion") Integer companion,
+                                          @Part("description") RequestBody description,
                                           @Part List<MultipartBody.Part> files);
 
 }

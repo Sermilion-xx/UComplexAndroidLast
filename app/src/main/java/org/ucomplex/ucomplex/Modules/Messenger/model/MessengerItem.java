@@ -32,6 +32,19 @@ public final class MessengerItem {
         this.files = new ArrayList<>();
     }
 
+    private MessengerItem(int id, int from, String message, String time, int status) {
+        this.id = id;
+        this.from = from;
+        this.message = message;
+        this.time = time;
+        this.status = status;
+        this.files = new ArrayList<>();
+    }
+
+    public static MessengerItem createTempMessage(int from, String message, String time) {
+        return new MessengerItem(-1, from, message, time, -1);
+    }
+
     public int getId() {
         return id;
     }

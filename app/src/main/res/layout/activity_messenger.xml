@@ -106,6 +106,7 @@
                 android:layout_toStartOf="@+id/send_button"
                 android:background="@null"
                 android:ellipsize="end"
+                android:textColor="@color/colorBlack"
                 android:hint="@string/message"
                 android:maxLines="2" />
 

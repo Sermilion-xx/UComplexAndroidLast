@@ -58,11 +58,7 @@ class MessengerAddFileAdapterAdapter extends BaseAdapter<MessengerAddFileAdapter
                 bitmap = FacadeMedia.getBitmapFromStorage(mItems.get(position), UCApplication.getInstance(), 150);
                 holder.mImage.setImageBitmap(bitmap);
                 int pos = holder.getAdapterPosition();
-                holder.mRemove.setOnClickListener(v -> {
-                    onListItemClicked.onClick(pos, null);
-                    mItems.remove(pos);
-                    notifyItemRemoved(pos);
-                });
+                holder.mRemove.setOnClickListener(v -> onListItemClicked.onClick(pos, null));
             } catch (IOException e) {
                 e.printStackTrace();
             }

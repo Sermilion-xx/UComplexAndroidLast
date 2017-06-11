@@ -9,6 +9,7 @@ import org.ucomplex.ucomplex.Modules.Messenger.model.MessengerRaw;
 import org.ucomplex.ucomplex.Modules.Portfolio.retrofit.DownloadFileService;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +19,7 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -53,8 +55,8 @@ public class MessengerModel implements MVPModel<MessengerRaw, List<MessengerItem
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Observable<ResponseBody> sendMessage(String message, int companion, List<MultipartBody.Part> multiParts) {
-        return mService.sendMessages(message, companion, multiParts).subscribeOn(Schedulers.newThread())
+    public Observable<MessengerRaw> sendMessage(String message, int companion, RequestBody description, List<MultipartBody.Part> multiParts) {
+        return mService.sendMessages(message, companion, description, multiParts).subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
@@ -65,7 +67,7 @@ public class MessengerModel implements MVPModel<MessengerRaw, List<MessengerItem
 
     @Override
     public void addData(List<MessengerItem> data) {
-        mData.addAll(data);
+        mData.add(0, data.get(0));
     }
 
     @Override

@@ -22,6 +22,7 @@ import org.ucomplex.ucomplex.Common.interfaces.OnListItemClicked;
 import org.ucomplex.ucomplex.Modules.Messenger.model.MessageFile;
 import org.ucomplex.ucomplex.R;
 
+import java.io.IOException;
 import java.util.List;
 
 import static org.ucomplex.ucomplex.Common.Constants.imageFormats;
@@ -92,7 +93,15 @@ public class MessengerFilesAdapter extends BaseAdapter<MessengerFilesAdapter.Mes
             holder.fileName.setOnClickListener(v -> onListItemClicked.onClick(item.getAddress(), item.getName()));
         } else if (getItemViewType(position) == TYPE_IMAGE) {
             Context context = holder.attachment.getContext();
-            downloadImage(holder.attachment, holder.progressBar, item, holder.attachment.getContext());
+            if (item.getFileUri() != null) {
+                try {
+                    holder.attachment.setImageBitmap(FacadeMedia.getBitmapFromStorage(item.getFileUri(), context));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                downloadImage(holder.attachment, holder.progressBar, item, holder.attachment.getContext());
+            }
             holder.attachment.setOnClickListener(v -> {
                 Bitmap bitmap = FacadeMedia.drawableToBitmap(holder.attachment.getDrawable());
                 String bitmapUri = FacadeMedia.saveBitmapToStorage(
@@ -119,6 +128,7 @@ public class MessengerFilesAdapter extends BaseAdapter<MessengerFilesAdapter.Mes
         Glide.with(context)
                 .load(url)
                 .asBitmap()
+                .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
                 .priority(Priority.HIGH)
                 .listener(new RequestListener<String, Bitmap>() {
             @Override

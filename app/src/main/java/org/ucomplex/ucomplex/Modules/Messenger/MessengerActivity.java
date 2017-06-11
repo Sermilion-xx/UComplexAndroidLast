@@ -16,10 +16,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import org.ucomplex.ucomplex.Common.FacadeCommon;
+import org.ucomplex.ucomplex.Common.FacadeMedia;
 import org.ucomplex.ucomplex.Common.base.BaseMVPActivity;
 import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.OnListItemClicked;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
+import org.ucomplex.ucomplex.Modules.Messenger.model.MessengerItem;
 import org.ucomplex.ucomplex.R;
 
 import java.util.ArrayList;
@@ -61,6 +64,7 @@ public class MessengerActivity extends BaseMVPActivity<MVPView, MessengerPresent
     private List<Uri> mFilesToSend;
     private int mCompanion;
     private MessengerAddFileAdapterAdapter mFileAdapterAdapter;
+    private LinearLayoutManager mLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,11 +81,29 @@ public class MessengerActivity extends BaseMVPActivity<MVPView, MessengerPresent
         mProgress = (ProgressBar) findViewById(R.id.progressBar);
 
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
+        mLayoutManager = new LinearLayoutManager(this);
+        mLayoutManager.setReverseLayout(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new MessengerAdapter(myId,
                 companionName,
                 (address, name) -> presenter.downloadFile(name, myId, address));
+//        mAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+//            @Override
+//            public void onItemRangeInserted(int positionStart, int itemCount) {
+//                super.onItemRangeInserted(positionStart, itemCount);
+//                int friendlyMessageCount = mAdapter.getItemCount();
+//                int lastVisiblePosition =
+//                        mLayoutManager.findLastCompletelyVisibleItemPosition();
+//                // If the recycler view is initially being loaded or the
+//                // user is at the bottom of the list, scroll to the bottom
+//                // of the list to show the newly added message.
+//                if (lastVisiblePosition == -1 ||
+//                        (positionStart >= (friendlyMessageCount - 1) &&
+//                                lastVisiblePosition == (positionStart - 1))) {
+//                    mRecyclerView.scrollToPosition(positionStart);
+//                }
+//            }
+//        });
         mRecyclerView.setAdapter(mAdapter);
 
         presenter.loadData(mCompanion);
@@ -91,10 +113,9 @@ public class MessengerActivity extends BaseMVPActivity<MVPView, MessengerPresent
 
         mSendButton.setOnClickListener(v -> {
             String message = mMessageText.getText().toString();
-            if (message.length() == 0 && mFilesToSend.size() > 0) {
-                message = getString(R.string.file) + ":" + mFilesToSend.get(mFilesToSend.size() - 1).getLastPathSegment();
-            }
             presenter.sendMessage(message, mCompanion, mFilesToSend, this);
+            mAdapter.setItems(presenter.getData());
+            mAdapter.notifyItemInserted(0);
         });
 
         mButtonAddFile.setOnClickListener(v -> {
@@ -116,6 +137,13 @@ public class MessengerActivity extends BaseMVPActivity<MVPView, MessengerPresent
         });
         mFileAdapterAdapter.setItems(mFilesToSend);
         mFileRecyclerView.setAdapter(mFileAdapterAdapter);
+    }
+
+    public void resetMessegeView() {
+        mMessageText.setText("");
+        mFilesToSend.clear();
+        mFileAdapterAdapter.setItems(mFilesToSend);
+        mFileAdapterAdapter.notifyDataSetChanged();
     }
 
     private void openFilePicker() {
@@ -154,6 +182,12 @@ public class MessengerActivity extends BaseMVPActivity<MVPView, MessengerPresent
     public void dataLoaded() {
         mAdapter.setItems(presenter.getData());
         mAdapter.notifyDataSetChanged();
+    }
+
+    public void updateMessageList() {
+        mAdapter.setItems(presenter.getData());
+        mAdapter.notifyItemChanged(0);
+        mLayoutManager.scrollToPosition(0);
     }
 
     TextWatcher buttonStateChanger = new TextWatcher() {

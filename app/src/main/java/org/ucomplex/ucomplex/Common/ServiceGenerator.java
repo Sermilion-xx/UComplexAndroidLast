@@ -28,9 +28,9 @@ public class ServiceGenerator {
     private static void buildRetrofitBuilder(String baseUrl) {
         builder = new Retrofit.Builder()
                 .baseUrl(baseUrl)
+                .addConverterFactory(ScalarsConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .addConverterFactory(ScalarsConverterFactory.create());
+                .addConverterFactory(GsonConverterFactory.create());
     }
 
     public static <S> S createService(Class<S> serviceClass, String authString, String ... baseUrl) {

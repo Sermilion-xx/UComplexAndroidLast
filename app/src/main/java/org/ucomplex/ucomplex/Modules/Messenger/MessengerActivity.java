@@ -116,6 +116,7 @@ public class MessengerActivity extends BaseMVPActivity<MVPView, MessengerPresent
             presenter.sendMessage(message, mCompanion, mFilesToSend, this);
             mAdapter.setItems(presenter.getData());
             mAdapter.notifyItemInserted(0);
+            mLayoutManager.scrollToPosition(0);
         });
 
         mButtonAddFile.setOnClickListener(v -> {

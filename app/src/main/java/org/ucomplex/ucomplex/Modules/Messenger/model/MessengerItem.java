@@ -19,15 +19,15 @@ public final class MessengerItem {
     private final int id;
     private final int from;
     private final String message;
-    private final String time;
+    private String time;
     private final int status;
     private List<MessageFile> files;
 
     public MessengerItem() {
         this.id = 0;
         this.from = 0;
-        this.message = "";
-        this.time = "";
+        this.message = null;
+        this.time = null;
         this.status = 0;
         this.files = new ArrayList<>();
     }
@@ -59,6 +59,10 @@ public final class MessengerItem {
 
     public String getTime() {
         return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public int getStatus() {

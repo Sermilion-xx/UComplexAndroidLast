@@ -55,6 +55,10 @@ class MessengerAdapter extends BaseAdapter<MessengerAdapter.MessengerViewHolder,
         this.companionName = companionName;
     }
 
+    public MessengerItem getLastItem() {
+        return mItems.get(0);
+    }
+
     @Override
     public MessengerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());

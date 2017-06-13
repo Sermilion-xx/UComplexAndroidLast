@@ -13,6 +13,7 @@ import org.ucomplex.ucomplex.Common.FacadeMedia;
 import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
 import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.download.DownloadService;
+import org.ucomplex.ucomplex.Common.utility.FileUtils;
 import org.ucomplex.ucomplex.Modules.Messenger.model.MessageFile;
 import org.ucomplex.ucomplex.Modules.Messenger.model.MessengerItem;
 import org.ucomplex.ucomplex.Modules.Messenger.model.MessengerRaw;
@@ -91,27 +92,16 @@ public class MessengerPresenter extends AbstractPresenter<
     }
 
     void sendMessage(String message, int companion, List<Uri> fileUris, Context context) {
-        int myId = UCApplication.getInstance().getLoggedUser().getId();
-        MessengerItem item = MessengerItem.createTempMessage(
-                myId,
-                message,
-                context.getString(R.string.sending));
+        createTempMessage(message, fileUris, context);
 
-        for (int i = 0; i < fileUris.size(); i++) {
-            MessageFile file = new MessageFile(
-                    FacadeMedia.getFileNameFromUri(fileUris.get(i), getActivityContext()),
-                    fileUris.get(i),
-                    myId);
-            item.getFiles().add(file);
-        }
-        getData().add(0, item);
         List<MultipartBody.Part> multiParts = new ArrayList<>();
         ContentResolver contentResolver = context.getContentResolver();
         for (int i = 0; i < fileUris.size(); i++) {
             Uri uri = fileUris.get(i);
-            multiParts.add(createMultipart(uri, contentResolver));
+            multiParts.add(createMultipart(uri, "files" + (i == 0 ? "" : i) , contentResolver));
         }
-        RequestBody description = createPartFromString("hello, this is description speaking");
+        RequestBody description = createPartFromString("description");
+        mModel.sendMessage(message, companion, description, multiParts);
         Observable<MessengerRaw> observable = mModel.sendMessage(message, companion, description, multiParts);
         observable.subscribe(new Observer<MessengerRaw>() {
             @Override
@@ -121,8 +111,7 @@ public class MessengerPresenter extends AbstractPresenter<
 
             @Override
             public void onNext(MessengerRaw value) {
-                getData().remove(0);
-                mModel.addData(value.getMessages());
+                getData().get(0).setTime(value.getMessages().get(0).getTime());
                 if (getView() != null) {
                     ((MessengerActivity) getView()).resetMessegeView();
                     ((MessengerActivity) getView()).updateMessageList();
@@ -145,11 +134,34 @@ public class MessengerPresenter extends AbstractPresenter<
         });
     }
 
+
+
+    private void createTempMessage(String message, List<Uri> fileUris, Context context) {
+        int myId = UCApplication.getInstance().getLoggedUser().getId();
+        MessengerItem item = MessengerItem.createTempMessage(
+                myId,
+                message,
+                context.getString(R.string.sending));
+
+        for (int i = 0; i < fileUris.size(); i++) {
+            MessageFile file = new MessageFile(
+                    FacadeMedia.getFileNameFromUri(fileUris.get(i), getActivityContext()),
+                    fileUris.get(i),
+                    myId);
+            item.getFiles().add(file);
+        }
+        getData().add(0, item);
+    }
+
     @NonNull
-    private MultipartBody.Part createMultipart(Uri fileUri, ContentResolver contentResolver) {
-        File file = new File(fileUri.toString());
-        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-        return MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+    private MultipartBody.Part createMultipart(Uri fileUri, String partName, ContentResolver contentResolver) {
+        File file = FileUtils.getFile(getActivityContext(), fileUri);
+        RequestBody requestFile =
+                RequestBody.create(
+                        MediaType.parse(contentResolver.getType(fileUri)),
+                        file
+                );
+        return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
     }
 
     @NonNull

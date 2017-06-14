@@ -49,13 +49,19 @@ public class MessengerFilesAdapter extends BaseAdapter<MessengerFilesAdapter.Mes
 
         TextView fileName;
         ImageView attachment;
+        View darkLayer;
+        ImageView download;
         ProgressBar progressBar;
 
-        public MessengerMessageFilesViewHolder(View itemView) {
+        public MessengerMessageFilesViewHolder(View itemView, int viewType) {
             super(itemView);
             fileName = (TextView) itemView.findViewById(R.id.file_name);
             attachment = (ImageView) itemView.findViewById(R.id.attachment);
             progressBar = (ProgressBar) itemView.findViewById(R.id.progressBar);
+            if (viewType == TYPE_IMAGE) {
+                darkLayer = itemView.findViewById(R.id.dark_image_layer);
+                download = (ImageView) itemView.findViewById(R.id.download);
+            }
         }
     }
 
@@ -81,7 +87,7 @@ public class MessengerFilesAdapter extends BaseAdapter<MessengerFilesAdapter.Mes
             layout = R.layout.item_message_image;
         }
         View view = inflater.inflate(layout, parent, false);
-        return new MessengerMessageFilesViewHolder(view);
+        return new MessengerMessageFilesViewHolder(view, viewType);
     }
 
     @Override
@@ -100,8 +106,14 @@ public class MessengerFilesAdapter extends BaseAdapter<MessengerFilesAdapter.Mes
                     e.printStackTrace();
                 }
             } else {
-                downloadImage(holder.attachment, holder.progressBar, item, holder.attachment.getContext());
+                if (holder.attachment.getDrawable() == null) {
+                    holder.attachment.setImageResource(R.drawable.ic_image);
+                }
             }
+            if (item.isDownloaded()) {
+                holder.download.setVisibility(View.GONE);
+            }
+            holder.attachment.setEnabled(false);
             holder.attachment.setOnClickListener(v -> {
                 Bitmap bitmap = FacadeMedia.drawableToBitmap(holder.attachment.getDrawable());
                 String bitmapUri = FacadeMedia.saveBitmapToStorage(
@@ -111,6 +123,7 @@ public class MessengerFilesAdapter extends BaseAdapter<MessengerFilesAdapter.Mes
                         "");
                 intentCallback.startIntent(bitmapUri);
             });
+            holder.download.setOnClickListener(v -> downloadImage(holder, holder.progressBar, item, holder.attachment.getContext()));
         }
     }
 
@@ -122,27 +135,33 @@ public class MessengerFilesAdapter extends BaseAdapter<MessengerFilesAdapter.Mes
         return "";
     }
 
-    private void downloadImage(ImageView attachment, ProgressBar progressBar, MessageFile item, Context context) {
+    private void downloadImage(MessengerMessageFilesViewHolder holder, ProgressBar progressBar, MessageFile item, Context context) {
         progressBar.setVisibility(View.VISIBLE);
         String url = SCHEMA + BASE_FILES_URL + MESSAGE_FILES_URL + item.getFrom() + "/" + item.getAddress();
         Glide.with(context)
                 .load(url)
                 .asBitmap()
+                .placeholder(R.drawable.ic_image)
                 .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
                 .priority(Priority.HIGH)
                 .listener(new RequestListener<String, Bitmap>() {
             @Override
             public boolean onException(Exception e, String model, Target<Bitmap> target, boolean isFirstResource) {
                 progressBar.setVisibility(View.GONE);
+                holder.darkLayer.setVisibility(View.GONE);
+                holder.download.setVisibility(View.GONE);
                 return false;
             }
 
             @Override
             public boolean onResourceReady(Bitmap resource, String model, Target<Bitmap> target, boolean isFromMemoryCache, boolean isFirstResource) {
                 progressBar.setVisibility(View.GONE);
+                holder.darkLayer.setVisibility(View.GONE);
+                holder.download.setVisibility(View.GONE);
+                holder.attachment.setEnabled(true);
                 return false;
             }
-        }).into(attachment);
+        }).into(holder.attachment);
     }
 
     @Override

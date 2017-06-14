@@ -19,6 +19,7 @@ public final class MessageFile {
     private final String name;
     private final String address;
     private final Uri fileUri;
+    private boolean downloaded;
     private final int message;
     private final int from;
 
@@ -26,15 +27,17 @@ public final class MessageFile {
         this.name = "";
         this.address = "";
         this.fileUri = null;
+        this.downloaded = false;
         this.message = -1;
         this.from = -1;
     }
 
-    public MessageFile(String name, Uri fileUri, int from) {
+    public MessageFile(String name, Uri fileUri, int from, boolean downloaded) {
         this.name = name;
         this.address = name;
         this.fileUri = fileUri;
         this.message = -1;
+        this.downloaded = downloaded;
         this.from = from;
     }
 
@@ -56,5 +59,13 @@ public final class MessageFile {
 
     public Uri getFileUri() {
         return fileUri;
+    }
+
+    public boolean isDownloaded() {
+        return downloaded;
+    }
+
+    public void setDownloaded(boolean downloaded) {
+        this.downloaded = downloaded;
     }
 }

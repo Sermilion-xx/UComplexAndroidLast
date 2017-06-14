@@ -87,23 +87,6 @@ public class MessengerActivity extends BaseMVPActivity<MVPView, MessengerPresent
         mAdapter = new MessengerAdapter(myId,
                 companionName,
                 (address, name) -> presenter.downloadFile(name, myId, address));
-//        mAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-//            @Override
-//            public void onItemRangeInserted(int positionStart, int itemCount) {
-//                super.onItemRangeInserted(positionStart, itemCount);
-//                int friendlyMessageCount = mAdapter.getItemCount();
-//                int lastVisiblePosition =
-//                        mLayoutManager.findLastCompletelyVisibleItemPosition();
-//                // If the recycler view is initially being loaded or the
-//                // user is at the bottom of the list, scroll to the bottom
-//                // of the list to show the newly added message.
-//                if (lastVisiblePosition == -1 ||
-//                        (positionStart >= (friendlyMessageCount - 1) &&
-//                                lastVisiblePosition == (positionStart - 1))) {
-//                    mRecyclerView.scrollToPosition(positionStart);
-//                }
-//            }
-//        });
         mRecyclerView.setAdapter(mAdapter);
 
         presenter.loadData(mCompanion);

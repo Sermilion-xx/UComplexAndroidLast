@@ -106,7 +106,7 @@ public class MessengerPresenter extends AbstractPresenter<
         observable.subscribe(new Observer<MessengerRaw>() {
             @Override
             public void onSubscribe(Disposable d) {
-                showProgress();
+
             }
 
             @Override
@@ -124,7 +124,6 @@ public class MessengerPresenter extends AbstractPresenter<
                 if (getView() != null) {
                     ((MessengerActivity) getView()).updateMessageList();
                 }
-                hideProgress();
             }
 
             @Override
@@ -147,7 +146,7 @@ public class MessengerPresenter extends AbstractPresenter<
             MessageFile file = new MessageFile(
                     FacadeMedia.getFileNameFromUri(fileUris.get(i), getActivityContext()),
                     fileUris.get(i),
-                    myId);
+                    myId, true);
             item.getFiles().add(file);
         }
         getData().add(0, item);

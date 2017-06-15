@@ -86,7 +86,13 @@ public class MessengerActivity extends BaseMVPActivity<MVPView, MessengerPresent
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new MessengerAdapter(myId,
                 companionName,
-                (address, name) -> presenter.downloadFile(name, myId, address));
+                (address, name) -> {
+                    if (address == null) {
+                        presenter.cancelMessage();
+                    } else {
+                        presenter.downloadFile(name, myId, address);
+                    }
+                } );
         mRecyclerView.setAdapter(mAdapter);
 
         presenter.loadData(mCompanion);

@@ -26,13 +26,13 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_gravity="center"
-        android:background="@drawable/ic_file_download" />
+        android:src="@drawable/ic_file_download" />
 
     <ProgressBar
         android:id="@+id/progressBar"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_gravity="center"
-        android:visibility="gone" />
+         android:visibility="gone"/>
 
 </FrameLayout>

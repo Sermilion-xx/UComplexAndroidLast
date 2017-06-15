@@ -21,7 +21,6 @@ import org.ucomplex.ucomplex.R;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -37,6 +36,8 @@ import static org.ucomplex.ucomplex.Common.base.UCApplication.MESSAGE_FILES_URL;
 public class MessengerPresenter extends AbstractPresenter<
         MessengerRaw, List<MessengerItem>,
         Integer, MessengerModel> {
+
+    private Disposable messageDisposable = null;
 
     public MessengerPresenter() {
         UCApplication.getInstance().getAppDiComponent().inject(this);
@@ -63,6 +64,9 @@ public class MessengerPresenter extends AbstractPresenter<
             @Override
             public void onError(Throwable e) {
                 hideProgress();
+                if (getView() != null) {
+                    getView().showToast(R.string.error);
+                }
             }
 
             @Override
@@ -98,15 +102,16 @@ public class MessengerPresenter extends AbstractPresenter<
         ContentResolver contentResolver = context.getContentResolver();
         for (int i = 0; i < fileUris.size(); i++) {
             Uri uri = fileUris.get(i);
-            multiParts.add(createMultipart(uri, "files" + (i == 0 ? "" : i) , contentResolver));
+            multiParts.add(createMultipart(uri, "files" + (i == 0 ? "" : i), contentResolver));
         }
         RequestBody description = createPartFromString("description");
         mModel.sendMessage(message, companion, description, multiParts);
         Observable<MessengerRaw> observable = mModel.sendMessage(message, companion, description, multiParts);
+
         observable.subscribe(new Observer<MessengerRaw>() {
             @Override
             public void onSubscribe(Disposable d) {
-
+                messageDisposable = d;
             }
 
             @Override
@@ -131,8 +136,12 @@ public class MessengerPresenter extends AbstractPresenter<
                 hideProgress();
             }
         });
+
     }
 
+    public void cancelMessage() {
+        this.messageDisposable.dispose();
+    }
 
 
     private void createTempMessage(String message, List<Uri> fileUris, Context context) {

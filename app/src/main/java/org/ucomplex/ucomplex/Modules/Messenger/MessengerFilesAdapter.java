@@ -112,16 +112,33 @@ public class MessengerFilesAdapter extends BaseAdapter<MessengerFilesAdapter.Mes
                 downloadImage(holder, holder.progressBar, item, holder.attachment.getContext());
             }
             holder.attachment.setEnabled(false);
-            holder.attachment.setOnClickListener(v -> {
-                Bitmap bitmap = FacadeMedia.drawableToBitmap(holder.attachment.getDrawable());
-                String bitmapUri = FacadeMedia.saveBitmapToStorage(
-                        context.getContentResolver(),
-                        bitmap,
-                        item.getAddress(),
-                        "");
-                intentCallback.startIntent(bitmapUri);
-            });
-            holder.download.setOnClickListener(v -> downloadImage(holder, holder.progressBar, item, holder.attachment.getContext()));
+            holder.attachment.setOnClickListener(v ->
+                    openImageInNewActivity(holder, item, context)
+            );
+            holder.download.setOnClickListener(v ->
+                    downloadOrCancel(holder, item)
+            );
+        }
+    }
+
+    private void openImageInNewActivity(MessengerMessageFilesViewHolder holder, MessageFile item, Context context) {
+        Bitmap bitmap = FacadeMedia.drawableToBitmap(holder.attachment.getDrawable());
+        String bitmapUri = FacadeMedia.saveBitmapToStorage(
+                context.getContentResolver(),
+                bitmap,
+                item.getAddress(),
+                "");
+        intentCallback.startIntent(bitmapUri);
+    }
+
+    private void downloadOrCancel(MessengerMessageFilesViewHolder holder, MessageFile item) {
+        int drawable = (int) holder.download.getTag();
+        if (drawable  == R.drawable.ic_file_download) {
+            holder.download.setImageResource(R.drawable.ic_remove);
+            downloadImage(holder, holder.progressBar, item, holder.attachment.getContext());
+        } else if (drawable == R.drawable.ic_remove) {
+            holder.download.setImageResource(R.drawable.ic_file_download);
+            onListItemClicked.onClick(null, null);
         }
     }
 
@@ -143,24 +160,24 @@ public class MessengerFilesAdapter extends BaseAdapter<MessengerFilesAdapter.Mes
                 .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
                 .priority(Priority.HIGH)
                 .listener(new RequestListener<String, Bitmap>() {
-            @Override
-            public boolean onException(Exception e, String model, Target<Bitmap> target, boolean isFirstResource) {
-                progressBar.setVisibility(View.GONE);
-                holder.darkLayer.setVisibility(View.GONE);
-                holder.download.setVisibility(View.GONE);
-                return false;
-            }
+                    @Override
+                    public boolean onException(Exception e, String model, Target<Bitmap> target, boolean isFirstResource) {
+                        progressBar.setVisibility(View.GONE);
+                        holder.darkLayer.setVisibility(View.GONE);
+                        holder.download.setVisibility(View.GONE);
+                        return false;
+                    }
 
-            @Override
-            public boolean onResourceReady(Bitmap resource, String model, Target<Bitmap> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                progressBar.setVisibility(View.GONE);
-                holder.darkLayer.setVisibility(View.GONE);
-                holder.download.setVisibility(View.GONE);
-                holder.attachment.setEnabled(true);
-                item.setDownloaded(true);
-                return false;
-            }
-        }).into(holder.attachment);
+                    @Override
+                    public boolean onResourceReady(Bitmap resource, String model, Target<Bitmap> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                        progressBar.setVisibility(View.GONE);
+                        holder.darkLayer.setVisibility(View.GONE);
+                        holder.download.setVisibility(View.GONE);
+                        holder.attachment.setEnabled(true);
+                        item.setDownloaded(true);
+                        return false;
+                    }
+                }).into(holder.attachment);
     }
 
     @Override

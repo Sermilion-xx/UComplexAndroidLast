@@ -106,12 +106,10 @@ public class MessengerFilesAdapter extends BaseAdapter<MessengerFilesAdapter.Mes
                     e.printStackTrace();
                 }
             } else {
-                if (holder.attachment.getDrawable() == null) {
-                    holder.attachment.setImageResource(R.drawable.ic_image);
-                }
+                holder.attachment.setImageResource(R.drawable.ic_image);
             }
             if (item.isDownloaded()) {
-                holder.download.setVisibility(View.GONE);
+                downloadImage(holder, holder.progressBar, item, holder.attachment.getContext());
             }
             holder.attachment.setEnabled(false);
             holder.attachment.setOnClickListener(v -> {
@@ -159,6 +157,7 @@ public class MessengerFilesAdapter extends BaseAdapter<MessengerFilesAdapter.Mes
                 holder.darkLayer.setVisibility(View.GONE);
                 holder.download.setVisibility(View.GONE);
                 holder.attachment.setEnabled(true);
+                item.setDownloaded(true);
                 return false;
             }
         }).into(holder.attachment);

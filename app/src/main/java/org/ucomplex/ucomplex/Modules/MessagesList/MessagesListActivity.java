@@ -7,9 +7,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ProgressBar;
 
+import org.ucomplex.ucomplex.Common.NewMessageBroadcastReceiver;
 import org.ucomplex.ucomplex.Common.base.BaseMVPActivity;
 import org.ucomplex.ucomplex.Common.base.UCApplication;
-import org.ucomplex.ucomplex.Common.interfaces.IntentCallback;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
 import org.ucomplex.ucomplex.Modules.Messenger.MessengerActivity;
 import org.ucomplex.ucomplex.R;
@@ -33,7 +33,11 @@ public class MessagesListActivity extends BaseMVPActivity<MVPView, MessagesListP
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new MessagesListAdapter(object -> startActivity(MessengerActivity.creteIntent(this, object.first, object.second)));
+        mAdapter = new MessagesListAdapter(object -> {
+            startActivity(MessengerActivity.creteIntent(this, object.first, object.second));
+            NewMessageBroadcastReceiver.subtractMessageCount();
+            mDrawerAdapter.resetNotification();
+        });
         mRecyclerView.setAdapter(mAdapter);
         if (presenter.getData() == null) {
             presenter.loadData(null);
@@ -46,5 +50,21 @@ public class MessagesListActivity extends BaseMVPActivity<MVPView, MessagesListP
     public void dataLoaded() {
         mAdapter.setItems(presenter.getData());
         mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mAdapter != null) {
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (isFinishing()) {
+            presenter.clear();
+        }
     }
 }

@@ -1,12 +1,19 @@
 package org.ucomplex.ucomplex.Common.base;
 
 import android.app.Application;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.media.MediaPlayer;
 
 import org.ucomplex.ucomplex.Common.AppDiComponent;
 import org.ucomplex.ucomplex.Common.DaggerAppDiComponent;
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.FacadePreferences;
 import org.ucomplex.ucomplex.Domain.users.UserInterface;
+import org.ucomplex.ucomplex.Modules.Updates.UpdatesService;
+import org.ucomplex.ucomplex.R;
 
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -15,6 +22,8 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
+
+import static org.ucomplex.ucomplex.Common.Constants.UC_ACTION_NEW_MESSAGE;
 
 /**
  * ---------------------------------------------------
@@ -50,6 +59,7 @@ public class UCApplication extends Application {
     @Override 
     public void onCreate() {
         super.onCreate();
+        startService(new Intent(this, UpdatesService.class));
         INSTANCE = this;
         authString = FacadePreferences.getTokenFromPref(this);
         loggedUser = FacadePreferences.getUserDataFromPref(this);

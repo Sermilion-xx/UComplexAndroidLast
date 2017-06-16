@@ -1,9 +1,13 @@
 package org.ucomplex.ucomplex.Modules.Messenger;
 
 import android.Manifest;
+import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -30,6 +34,7 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
+import static org.ucomplex.ucomplex.Common.Constants.UC_ACTION_NEW_MESSAGE;
 import static org.ucomplex.ucomplex.Common.base.UCApplication.BASE_FILES_URL;
 import static org.ucomplex.ucomplex.Common.base.UCApplication.MESSAGE_FILES_URL;
 
@@ -38,26 +43,35 @@ public class MessengerPresenter extends AbstractPresenter<
         Integer, MessengerModel> {
 
     private Disposable messageDisposable = null;
+    private int companion = -1;
 
     public MessengerPresenter() {
         UCApplication.getInstance().getAppDiComponent().inject(this);
+
     }
 
     @Override
     public void loadData(Integer params) {
+        if (companion == -1) {
+            companion = params;
+        }
         Observable<MessengerRaw> dataObservable = mModel.loadData(params);
         dataObservable.subscribe(new Observer<MessengerRaw>() {
 
             @Override
             public void onSubscribe(Disposable d) {
-                showProgress();
+
             }
 
             @Override
             public void onNext(MessengerRaw value) {
-                mModel.processData(value);
-                if (getView() != null) {
-                    getView().dataLoaded();
+                List<MessengerItem> messageFiles = mModel.processData(value);
+                if (messageFiles.size() > 0) {
+
+                    mModel.setData(messageFiles);
+                    if (getView() != null) {
+                        getView().dataLoaded();
+                    }
                 }
             }
 
@@ -176,6 +190,29 @@ public class MessengerPresenter extends AbstractPresenter<
     private RequestBody createPartFromString(String descriptionString) {
         return RequestBody.create(
                 okhttp3.MultipartBody.FORM, descriptionString);
+    }
+
+    private final BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals(UC_ACTION_NEW_MESSAGE)) {
+                loadData(companion);
+            }
+        }
+    };
+
+    void onStart() {
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(UC_ACTION_NEW_MESSAGE);
+        getActivityContext().registerReceiver(receiver, filter);
+    }
+
+    void onStop() {
+        getActivityContext().unregisterReceiver(receiver);
+        if (((MessengerActivity)getActivityContext()).isFinishing()) {
+            clear();
+        }
     }
 
 }

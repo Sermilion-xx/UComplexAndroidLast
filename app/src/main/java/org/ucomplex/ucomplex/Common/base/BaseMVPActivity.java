@@ -21,6 +21,7 @@ import com.hannesdorfmann.mosby.mvp.MvpActivity;
 import com.hannesdorfmann.mosby.mvp.MvpPresenter;
 
 import org.ucomplex.ucomplex.Common.FacadeCommon;
+import org.ucomplex.ucomplex.Common.NewMessageBroadcastReceiver;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
 import org.ucomplex.ucomplex.Domain.users.UserInterface;
 import org.ucomplex.ucomplex.Common.Navdrawer.DrawerAdapter;
@@ -134,7 +135,11 @@ public abstract class BaseMVPActivity<V extends MVPView, Presenter extends MvpPr
         ArrayList<DrawerListItem> drawerListItems = new ArrayList<>();
         drawerListItems.add(header);
         for (int i = 0; i < icons.length; i++) {
-            drawerListItems.add(new DrawerListItem(icons[i], titles[i]));
+            DrawerListItem item =  new DrawerListItem(icons[i], titles[i]);
+            if (i == 4) {
+                item.setNotificationCount(NewMessageBroadcastReceiver.getMessageCount());
+            }
+            drawerListItems.add(item);
         }
         return drawerListItems;
     }
@@ -226,5 +231,23 @@ public abstract class BaseMVPActivity<V extends MVPView, Presenter extends MvpPr
     @Override
     public Context getActivityContext() {
         return this;
+    }
+
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (mDrawerAdapter != null) {
+            mDrawerAdapter.onStart();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mDrawerAdapter != null) {
+            mDrawerAdapter.onStop();
+        }
     }
 }

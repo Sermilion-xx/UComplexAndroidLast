@@ -1,17 +1,13 @@
 package org.ucomplex.ucomplex.Modules.Messenger;
 
 import org.ucomplex.ucomplex.Common.base.UCApplication;
-import org.ucomplex.ucomplex.Common.interfaces.DownloadCallback;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
 import org.ucomplex.ucomplex.Modules.Messenger.model.CompanionInfo;
 import org.ucomplex.ucomplex.Modules.Messenger.model.MessengerItem;
 import org.ucomplex.ucomplex.Modules.Messenger.model.MessengerRaw;
-import org.ucomplex.ucomplex.Modules.Portfolio.retrofit.DownloadFileService;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -20,10 +16,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * ---------------------------------------------------
@@ -62,17 +54,23 @@ public class MessengerModel implements MVPModel<MessengerRaw, List<MessengerItem
 
     @Override
     public void setData(List<MessengerItem> data) {
+        if (mData == null) {
+            mData = new ArrayList<>();
+        }
         this.mData = data;
     }
 
     @Override
     public void addData(List<MessengerItem> data) {
+        if (mData == null) {
+            mData = new ArrayList<>();
+        }
         mData.add(0, data.get(0));
     }
 
     @Override
     public void clear() {
-        mData.clear();
+        mData = null;
     }
 
     @Override
@@ -82,13 +80,13 @@ public class MessengerModel implements MVPModel<MessengerRaw, List<MessengerItem
 
     @Override
     public List<MessengerItem> processData(MessengerRaw data) {
-        mData = new ArrayList<>();
-        for (MessengerItem item: data.getMessages()) {
+        List<MessengerItem> messages = new ArrayList<>();
+        for (MessengerItem item : data.getMessages()) {
             item.setFiles(data.getFiles().get(item.getId()));
-            mData.add(item);
+            messages.add(item);
         }
         this.companion = data.getCompanion_info();
-        return mData;
+        return messages;
     }
 
     public CompanionInfo getCompanion() {

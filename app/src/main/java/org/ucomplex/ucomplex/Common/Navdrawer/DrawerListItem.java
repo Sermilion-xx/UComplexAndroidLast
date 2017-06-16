@@ -11,6 +11,7 @@ public class DrawerListItem {
     private String title1;
     private String title2;
     private int icon;
+    private int notificationCount;
 
     public DrawerListItem(int icon, String title){
         this.icon = icon;
@@ -62,5 +63,13 @@ public class DrawerListItem {
 
     public void setIcon(int icon) {
         this.icon = icon;
+    }
+
+    public int getNotificationCount() {
+        return notificationCount;
+    }
+
+    public void setNotificationCount(int notificationCount) {
+        this.notificationCount = notificationCount;
     }
 }

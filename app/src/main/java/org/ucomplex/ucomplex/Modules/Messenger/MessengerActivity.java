@@ -79,7 +79,6 @@ public class MessengerActivity extends BaseMVPActivity<MVPView, MessengerPresent
         mCompanion = intent.getIntExtra(EXTRA_COMPANION, -1);
         setupToolbar(companionName, R.drawable.ic_arrow_back_white);
         mProgress = (ProgressBar) findViewById(R.id.progressBar);
-
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mLayoutManager = new LinearLayoutManager(this);
         mLayoutManager.setReverseLayout(true);
@@ -95,7 +94,12 @@ public class MessengerActivity extends BaseMVPActivity<MVPView, MessengerPresent
                 } );
         mRecyclerView.setAdapter(mAdapter);
 
-        presenter.loadData(mCompanion);
+        if (presenter.getData() == null) {
+            showProgress();
+            presenter.loadData(mCompanion);
+        } else {
+            dataLoaded();
+        }
 
         mSendButton.setEnabled(false);
         mMessageText.addTextChangedListener(buttonStateChanger);
@@ -172,6 +176,7 @@ public class MessengerActivity extends BaseMVPActivity<MVPView, MessengerPresent
     public void dataLoaded() {
         mAdapter.setItems(presenter.getData());
         mAdapter.notifyDataSetChanged();
+        mLayoutManager.scrollToPosition(0);
     }
 
     public void updateMessageList() {
@@ -183,9 +188,7 @@ public class MessengerActivity extends BaseMVPActivity<MVPView, MessengerPresent
     TextWatcher buttonStateChanger = new TextWatcher() {
 
         @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -206,4 +209,21 @@ public class MessengerActivity extends BaseMVPActivity<MVPView, MessengerPresent
             setButtonState();
         }
     };
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        presenter.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        presenter.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }

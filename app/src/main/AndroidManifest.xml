@@ -80,6 +80,14 @@
             android:authorities="org.ucomplex.ucomplex.Common.UCContentProvider" />
 
         <service android:name=".Common.download.DownloadService"/>
+
+        <service android:name=".Modules.Updates.UpdatesService"/>
+
+        <receiver android:name=".Common.NewMessageBroadcastReceiver" >
+            <intent-filter>
+                <action android:name="org.ucomplex.ucomplex.NEW_MESSAGE" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

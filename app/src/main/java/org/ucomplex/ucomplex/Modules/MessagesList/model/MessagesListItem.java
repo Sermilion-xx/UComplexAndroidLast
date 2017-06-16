@@ -16,7 +16,7 @@ public final class MessagesListItem {
     private final int from;
     private final String message;
     private final String time;
-    private final int status;
+    private int status;
     private final String name;
     private final String code;
     private final int photo;
@@ -50,6 +50,10 @@ public final class MessagesListItem {
 
     public int getStatus() {
         return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public String getName() {

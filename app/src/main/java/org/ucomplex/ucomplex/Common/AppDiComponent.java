@@ -77,6 +77,8 @@ import org.ucomplex.ucomplex.Modules.SubjectsList.SubjectsListPresenter;
 import org.ucomplex.ucomplex.Modules.SubjectsList.dagger.SubjectsListModelModule;
 import org.ucomplex.ucomplex.Modules.SubjectsList.dagger.SubjectsListModule;
 import org.ucomplex.ucomplex.Modules.SubjectsList.dagger.SubjectsListPresenterModule;
+import org.ucomplex.ucomplex.Modules.Updates.UpdatesModule;
+import org.ucomplex.ucomplex.Modules.Updates.UpdatesService;
 import org.ucomplex.ucomplex.Modules.UserProfile.UserProfileActivity;
 import org.ucomplex.ucomplex.Modules.UserProfile.UserProfileModel;
 import org.ucomplex.ucomplex.Modules.UserProfile.UserProfilePresenter;
@@ -149,6 +151,7 @@ import dagger.Component;
                 MessengerModelModule.class,
                 FullscreenViewActivityModule.class,
                 FullscreenViewPresenterModule.class,
+                UpdatesModule.class
         })
 
 public interface AppDiComponent {
@@ -242,6 +245,8 @@ public interface AppDiComponent {
     void inject(FullscreenViewActivity activity);
 
     void inject(FullscreenViewPresenter presenter);
+
+    void inject(UpdatesService service);
 
 }
 

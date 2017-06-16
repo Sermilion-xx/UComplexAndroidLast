@@ -16,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import org.ucomplex.ucomplex.Common.FacadeCommon;
+import org.ucomplex.ucomplex.Common.NewMessageBroadcastReceiver;
 import org.ucomplex.ucomplex.Domain.users.UserInterface;
 import org.ucomplex.ucomplex.Common.Navdrawer.DrawerAdapter;
 import org.ucomplex.ucomplex.Common.Navdrawer.DrawerListItem;
@@ -100,7 +101,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         ArrayList<DrawerListItem> drawerListItems = new ArrayList<>();
         drawerListItems.add(header);
         for (int i = 0; i < icons.length; i++) {
-            drawerListItems.add(new DrawerListItem(icons[i], titles[i]));
+            DrawerListItem item =  new DrawerListItem(icons[i], titles[i]);
+            if (i == 4) {
+                item.setNotificationCount(NewMessageBroadcastReceiver.getMessageCount());
+            }
+            drawerListItems.add(item);
         }
         return drawerListItems;
     }

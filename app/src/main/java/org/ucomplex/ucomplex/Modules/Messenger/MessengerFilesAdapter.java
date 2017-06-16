@@ -2,6 +2,7 @@ package org.ucomplex.ucomplex.Modules.Messenger;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,6 +59,7 @@ public class MessengerFilesAdapter extends BaseAdapter<MessengerFilesAdapter.Mes
             fileName = (TextView) itemView.findViewById(R.id.file_name);
             attachment = (ImageView) itemView.findViewById(R.id.attachment);
             progressBar = (ProgressBar) itemView.findViewById(R.id.progressBar);
+            progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(progressBar.getContext(), R.color.colorWhite), android.graphics.PorterDuff.Mode.MULTIPLY);
             if (viewType == TYPE_IMAGE) {
                 darkLayer = itemView.findViewById(R.id.dark_image_layer);
                 download = (ImageView) itemView.findViewById(R.id.download);
@@ -103,7 +105,7 @@ public class MessengerFilesAdapter extends BaseAdapter<MessengerFilesAdapter.Mes
                 try {
                     holder.attachment.setImageBitmap(FacadeMedia.getBitmapFromStorage(item.getFileUri(), context));
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    holder.attachment.setImageResource(R.drawable.ic_image);
                 }
             } else {
                 holder.attachment.setImageResource(R.drawable.ic_image);

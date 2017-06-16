@@ -19,6 +19,8 @@ public class Constants {
     public static final String PREFIX = "org.ucomplex.ucomplex.";
     public static final String UC_ACTION_DOWNLOAD_COMPLETE = PREFIX+"download_complete";
     public static final String UC_ACTION_DOWNLOAD_CLICKED = PREFIX+"download_clicked";
+    public static final String UC_ACTION_NEW_MESSAGE = PREFIX + "NEW_MESSAGE";
+    public static final String UC_ACTION_FRIEND_REQUEST = PREFIX+"friend_req";
     public static final String TYPE_FOLDER = "f";
     public static final int CUSTOM_ADAPTER_ITEM_LAYOUT_AVAILABLE = 0;
     public static final List<String> imageFormats = Arrays.asList("jpg", "jpeg", "png", "gif");

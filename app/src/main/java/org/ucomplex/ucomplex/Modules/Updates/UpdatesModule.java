@@ -1,8 +1,8 @@
-package org.ucomplex.ucomplex.Modules.Messenger.dagger;
+package org.ucomplex.ucomplex.Modules.Updates;
 
-import org.ucomplex.ucomplex.Modules.Messenger.MessengerModel;
-
-import javax.inject.Singleton;
+import org.ucomplex.ucomplex.Common.ServiceGenerator;
+import org.ucomplex.ucomplex.Common.base.UCApplication;
+import org.ucomplex.ucomplex.Modules.Messenger.MessengerService;
 
 import dagger.Module;
 import dagger.Provides;
@@ -17,11 +17,11 @@ import dagger.Provides;
  * ---------------------------------------------------
  */
 @Module
-public class MessengerPresenterModule {
+public class UpdatesModule {
 
     @Provides
-    MessengerModel provideModel() {
-        return new MessengerModel();
+    UpdatesRetrofitService getService() {
+        return ServiceGenerator.createService(UpdatesRetrofitService.class, UCApplication.getInstance().getAuthString());
     }
 
 }

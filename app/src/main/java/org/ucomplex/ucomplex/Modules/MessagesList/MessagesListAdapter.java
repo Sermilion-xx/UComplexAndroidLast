@@ -2,13 +2,11 @@ package org.ucomplex.ucomplex.Modules.MessagesList;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -59,7 +57,7 @@ class MessagesListAdapter extends BaseAdapter<MessagesListAdapter.MessagesListVi
             time = (TextView) itemView.findViewById(R.id.time);
             lastProfile = (CircleImageView) itemView.findViewById(R.id.list_profile);
             lastMessage = (TextView) itemView.findViewById(R.id.last_message);
-            clickArea =   (ViewGroup) itemView.findViewById(R.id.clickArea);
+            clickArea = (ViewGroup) itemView.findViewById(R.id.clickArea);
         }
     }
 
@@ -97,9 +95,15 @@ class MessagesListAdapter extends BaseAdapter<MessagesListAdapter.MessagesListVi
             holder.time.setText(FacadeCommon.makeHumanReadableDate(item.getTime(), true));
             if (item.getStatus() == 0 && item.getFrom() != me.getId()) {
                 holder.clickArea.setBackgroundResource(R.color.colorNotSeen);
+            } else {
+                holder.clickArea.setBackgroundResource(R.color.colorWhite);
             }
-            holder.clickArea.setOnClickListener(v -> intentCallback.startIntent(new Pair<>(item.getName(), item.getCompanion())));
+            holder.clickArea.setOnClickListener(v -> {
+                item.setStatus(1);
+                intentCallback.startIntent(new Pair<>(item.getName(), item.getCompanion()));
+            });
         }
+
     }
 
     private void setImage(MessagesListViewHolder holder,

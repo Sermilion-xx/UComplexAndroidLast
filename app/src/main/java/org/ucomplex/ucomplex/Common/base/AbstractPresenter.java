@@ -50,7 +50,7 @@ public abstract class AbstractPresenter<
 
     @Override
     public void clear() {
-        mModel.clear();
+        mModel = null;
     }
 
     @Override
@@ -60,11 +60,7 @@ public abstract class AbstractPresenter<
 
     @Override
     public T getData() {
-        if (mModel == null) {
-            return null;
-        }else {
-            return mModel.getData();
-        }
+        return mModel.getData();
     }
 
     public void showProgress() {

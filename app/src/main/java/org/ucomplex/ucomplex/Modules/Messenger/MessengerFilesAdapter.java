@@ -132,11 +132,11 @@ public class MessengerFilesAdapter extends BaseAdapter<MessengerFilesAdapter.Mes
     }
 
     private void downloadOrCancel(MessengerMessageFilesViewHolder holder, MessageFile item) {
-        int drawable = (int) holder.download.getTag();
-        if (drawable  == R.drawable.ic_file_download) {
+        String tag = (String) holder.download.getTag();
+        if (tag.equals("download")) {
             holder.download.setImageResource(R.drawable.ic_remove);
             downloadImage(holder, holder.progressBar, item, holder.attachment.getContext());
-        } else if (drawable == R.drawable.ic_remove) {
+        } else if (tag.equals("downloaded")) {
             holder.download.setImageResource(R.drawable.ic_file_download);
             onListItemClicked.onClick(null, null);
         }
@@ -175,6 +175,7 @@ public class MessengerFilesAdapter extends BaseAdapter<MessengerFilesAdapter.Mes
                         holder.download.setVisibility(View.GONE);
                         holder.attachment.setEnabled(true);
                         item.setDownloaded(true);
+                        holder.download.setTag("downloaded");
                         return false;
                     }
                 }).into(holder.attachment);

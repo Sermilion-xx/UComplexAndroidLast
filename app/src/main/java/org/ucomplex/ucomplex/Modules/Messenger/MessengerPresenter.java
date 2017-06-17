@@ -37,6 +37,7 @@ import okhttp3.RequestBody;
 import static org.ucomplex.ucomplex.Common.Constants.UC_ACTION_NEW_MESSAGE;
 import static org.ucomplex.ucomplex.Common.base.UCApplication.BASE_FILES_URL;
 import static org.ucomplex.ucomplex.Common.base.UCApplication.MESSAGE_FILES_URL;
+import static org.ucomplex.ucomplex.Modules.Updates.UpdatesService.MESSAGE_COUNT;
 
 public class MessengerPresenter extends AbstractPresenter<
         MessengerRaw, List<MessengerItem>,
@@ -67,7 +68,6 @@ public class MessengerPresenter extends AbstractPresenter<
             public void onNext(MessengerRaw value) {
                 List<MessengerItem> messageFiles = mModel.processData(value);
                 if (messageFiles.size() > 0) {
-
                     mModel.setData(messageFiles);
                     if (getView() != null) {
                         getView().dataLoaded();
@@ -131,6 +131,12 @@ public class MessengerPresenter extends AbstractPresenter<
             @Override
             public void onNext(MessengerRaw value) {
                 getData().get(0).setTime(value.getMessages().get(0).getTime());
+                List<MessengerItem> messages = mModel.processData(value);
+                for (int i = 0; i < getData().get(0).getFiles().size(); i++) {
+                    messages.get(0).getFiles().get(i).setFileUri(getData().get(0).getFiles().get(i).getFileUri());
+                }
+                getData().remove(0);
+                getData().add(0, messages.get(0));
                 if (getView() != null) {
                     ((MessengerActivity) getView()).resetMessegeView();
                     ((MessengerActivity) getView()).updateMessageList();
@@ -197,7 +203,10 @@ public class MessengerPresenter extends AbstractPresenter<
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if (action.equals(UC_ACTION_NEW_MESSAGE)) {
-                loadData(companion);
+                int count = intent.getIntExtra(MESSAGE_COUNT, -1);
+                if (getData()!= null && getData().size() < count) {
+                    loadData(companion);
+                }
             }
         }
     };

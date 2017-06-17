@@ -2,8 +2,6 @@ package org.ucomplex.ucomplex.Modules.Messenger.model;
 
 import android.net.Uri;
 
-import java.util.List;
-
 /**
  * ---------------------------------------------------
  * Created by Sermilion on 05/06/2017.
@@ -17,9 +15,9 @@ import java.util.List;
 public final class MessageFile {
 
     private final String name;
-    private final String address;
-    private final Uri fileUri;
-    private boolean downloaded;
+    private String address;
+    private Uri fileUri;
+    private boolean downloadaded;
     private final int message;
     private final int from;
 
@@ -27,17 +25,17 @@ public final class MessageFile {
         this.name = "";
         this.address = "";
         this.fileUri = null;
-        this.downloaded = false;
+        this.downloadaded = false;
         this.message = -1;
         this.from = -1;
     }
 
-    public MessageFile(String name, Uri fileUri, int from, boolean downloaded) {
+    public MessageFile(String name, Uri fileUri, int from, boolean downloadaded) {
         this.name = name;
         this.address = name;
         this.fileUri = fileUri;
         this.message = -1;
-        this.downloaded = downloaded;
+        this.downloadaded = downloadaded;
         this.from = from;
     }
 
@@ -47,6 +45,10 @@ public final class MessageFile {
 
     public String getAddress() {
         return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public int getMessage() {
@@ -61,11 +63,15 @@ public final class MessageFile {
         return fileUri;
     }
 
-    public boolean isDownloaded() {
-        return downloaded;
+    public void setFileUri(Uri fileUri) {
+        this.fileUri = fileUri;
     }
 
-    public void setDownloaded(boolean downloaded) {
-        this.downloaded = downloaded;
+    public boolean isDownloadaded() {
+        return downloadaded;
+    }
+
+    public void setDownloadaded(boolean downloadaded) {
+        this.downloadaded = downloadaded;
     }
 }

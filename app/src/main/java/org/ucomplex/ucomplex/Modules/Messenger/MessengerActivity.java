@@ -138,6 +138,7 @@ public class MessengerActivity extends BaseMVPActivity<MVPView, MessengerPresent
         mFilesToSend.clear();
         mFileAdapterAdapter.setItems(mFilesToSend);
         mFileAdapterAdapter.notifyDataSetChanged();
+        mFileRecyclerView.setVisibility(View.GONE);
     }
 
     private void openFilePicker() {
@@ -174,6 +175,7 @@ public class MessengerActivity extends BaseMVPActivity<MVPView, MessengerPresent
 
     @Override
     public void dataLoaded() {
+        mButtonAddFile.setEnabled(true);
         mAdapter.setItems(presenter.getData());
         mAdapter.notifyDataSetChanged();
         mLayoutManager.scrollToPosition(0);

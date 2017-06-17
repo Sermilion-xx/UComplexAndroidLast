@@ -50,7 +50,7 @@ public abstract class AbstractPresenter<
 
     @Override
     public void clear() {
-        mModel = null;
+        mModel.setData(null);
     }
 
     @Override

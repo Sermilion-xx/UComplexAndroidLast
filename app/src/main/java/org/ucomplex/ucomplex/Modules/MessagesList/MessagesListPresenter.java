@@ -31,6 +31,7 @@ public class MessagesListPresenter extends AbstractPresenter<
             if (action.equals(UC_ACTION_NEW_MESSAGE)) {
                 int count = intent.getIntExtra(MESSAGE_COUNT, 0);
                 if (count > NewMessageBroadcastReceiver.getMessageCount()) {
+                    NewMessageBroadcastReceiver.setMessageCount(count);
                     loadData(null);
                 }
             }

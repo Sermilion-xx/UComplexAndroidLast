@@ -104,14 +104,12 @@ public class MessengerFilesAdapter extends BaseAdapter<MessengerFilesAdapter.Mes
             if (item.getFileUri() != null) {
                 try {
                     holder.attachment.setImageBitmap(FacadeMedia.getBitmapFromStorage(item.getFileUri(), context));
+                    holder.download.setVisibility(View.GONE);
                 } catch (IOException e) {
                     holder.attachment.setImageResource(R.drawable.ic_image);
                 }
             } else {
                 holder.attachment.setImageResource(R.drawable.ic_image);
-            }
-            if (item.isDownloaded()) {
-                downloadImage(holder, holder.progressBar, item, holder.attachment.getContext());
             }
             holder.attachment.setEnabled(false);
             holder.attachment.setOnClickListener(v ->
@@ -158,7 +156,6 @@ public class MessengerFilesAdapter extends BaseAdapter<MessengerFilesAdapter.Mes
         Glide.with(context)
                 .load(url)
                 .asBitmap()
-                .placeholder(R.drawable.ic_image)
                 .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
                 .priority(Priority.HIGH)
                 .listener(new RequestListener<String, Bitmap>() {
@@ -167,6 +164,7 @@ public class MessengerFilesAdapter extends BaseAdapter<MessengerFilesAdapter.Mes
                         progressBar.setVisibility(View.GONE);
                         holder.darkLayer.setVisibility(View.GONE);
                         holder.download.setVisibility(View.GONE);
+                        holder.attachment.setImageResource(R.drawable.ic_image);
                         return false;
                     }
 
@@ -176,7 +174,7 @@ public class MessengerFilesAdapter extends BaseAdapter<MessengerFilesAdapter.Mes
                         holder.darkLayer.setVisibility(View.GONE);
                         holder.download.setVisibility(View.GONE);
                         holder.attachment.setEnabled(true);
-                        item.setDownloaded(true);
+                        item.setDownloadaded(true);
                         holder.download.setTag("downloaded");
                         return false;
                     }

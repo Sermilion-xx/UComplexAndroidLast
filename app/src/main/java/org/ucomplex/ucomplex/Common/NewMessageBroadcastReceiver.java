@@ -38,6 +38,10 @@ public class NewMessageBroadcastReceiver extends BroadcastReceiver {
         return messageCount;
     }
 
+    public static void setMessageCount(int messageCount) {
+        NewMessageBroadcastReceiver.messageCount = messageCount;
+    }
+
     public static void subtractMessageCount() {
         messageCount--;
     }

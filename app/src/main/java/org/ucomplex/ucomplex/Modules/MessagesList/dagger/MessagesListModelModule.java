@@ -4,6 +4,8 @@ import org.ucomplex.ucomplex.Common.ServiceGenerator;
 import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Modules.MessagesList.MessagesListService;
 
+import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
 
@@ -20,6 +22,7 @@ import dagger.Provides;
 public class MessagesListModelModule {
 
     @Provides
+    @Singleton
     MessagesListService getService() {
         return ServiceGenerator.createService(MessagesListService.class, UCApplication.getInstance().getAuthString());
     }

@@ -67,4 +67,16 @@ public class MessagesListActivity extends BaseMVPActivity<MVPView, MessagesListP
             presenter.clear();
         }
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        presenter.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        presenter.onStop();
+    }
 }

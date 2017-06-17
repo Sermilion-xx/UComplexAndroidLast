@@ -29,6 +29,7 @@ public class NewMessageBroadcastReceiver extends BroadcastReceiver {
     private MediaPlayer mAlert;
     private static boolean seen = false;
     private static int messageCount = 0;
+
     public static void setMessageSeen(boolean isSeen) {
         seen = isSeen;
     }

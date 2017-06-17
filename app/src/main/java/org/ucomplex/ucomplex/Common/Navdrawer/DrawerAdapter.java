@@ -75,6 +75,19 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
 
     private List<DrawerListItem> mItems;
     private Activity mContext;
+    private NewMessageBroadcastReceiver receiver = new NewMessageBroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals(UC_ACTION_NEW_MESSAGE)) {
+                int count = intent.getIntExtra(MESSAGE_COUNT, 0);
+                if (count > 0 && mItems.get(MESSAGES_ADAPTER_POSITION).getNotificationCount() != count) {
+                    mItems.get(MESSAGES_ADAPTER_POSITION).setNotificationCount(count);
+                    notifyItemChanged(MESSAGES_ADAPTER_POSITION);
+                }
+            }
+        }
+    };
 
 
     public DrawerAdapter(List<DrawerListItem> items, Activity context) {
@@ -191,19 +204,6 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
         mContext.finish();
     }
 
-    private final BroadcastReceiver receiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if (action.equals(UC_ACTION_NEW_MESSAGE)) {
-                int count = intent.getIntExtra(MESSAGE_COUNT, 0);
-                if (count > 0 && mItems.get(MESSAGES_ADAPTER_POSITION).getNotificationCount() != count) {
-                    mItems.get(MESSAGES_ADAPTER_POSITION).setNotificationCount(count);
-                    notifyItemChanged(MESSAGES_ADAPTER_POSITION);
-                }
-            }
-        }
-    };
 
     public void onStart() {
         IntentFilter filter = new IntentFilter();

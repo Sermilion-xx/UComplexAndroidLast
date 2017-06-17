@@ -1,7 +1,7 @@
 package org.ucomplex.ucomplex.Modules.SubjectsList;
 
-import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
+import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Modules.SubjectsList.model.SubjectsListItem;
 import org.ucomplex.ucomplex.Modules.SubjectsList.model.SubjectsListRaw;
 
@@ -48,7 +48,7 @@ public class SubjectsListPresenter extends AbstractPresenter<
             public void onNext(SubjectsListRaw value) {
                 mModel.processData(value);
                 if (getView() != null) {
-                    ((SubjectsListActivity) getView()).dataLoaded();
+                    getView().dataLoaded();
                 }
             }
 

@@ -1,6 +1,7 @@
 package org.ucomplex.ucomplex.Modules.MessagesList;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +18,7 @@ import com.bumptech.glide.request.target.Target;
 import org.ucomplex.ucomplex.Common.Constants;
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.FacadeMedia;
+import org.ucomplex.ucomplex.Common.NewMessageBroadcastReceiver;
 import org.ucomplex.ucomplex.Common.base.BaseAdapter;
 import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.IntentCallback;
@@ -28,6 +30,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static org.ucomplex.ucomplex.Common.Constants.UC_ACTION_NEW_MESSAGE;
+import static org.ucomplex.ucomplex.Modules.Updates.UpdatesService.MESSAGE_COUNT;
 
 /**
  * ---------------------------------------------------

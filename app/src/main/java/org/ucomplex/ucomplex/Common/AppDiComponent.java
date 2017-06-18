@@ -1,5 +1,12 @@
 package org.ucomplex.ucomplex.Common;
 
+import org.ucomplex.ucomplex.Modules.Calendar.CalendarActivity;
+import org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.CalendarPageFragment;
+import org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.CalendarPageModel;
+import org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.CalendarPagePresenter;
+import org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.dagger.CalendarPageFragmentModule;
+import org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.dagger.CalendarPageModelModule;
+import org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.dagger.CalendarPagePresenterModule;
 import org.ucomplex.ucomplex.Modules.Events.EventsActivity;
 import org.ucomplex.ucomplex.Modules.Events.EventsModel;
 import org.ucomplex.ucomplex.Modules.Events.EventsPresenter;
@@ -151,7 +158,10 @@ import dagger.Component;
                 MessengerModelModule.class,
                 FullscreenViewActivityModule.class,
                 FullscreenViewPresenterModule.class,
-                UpdatesModule.class
+                UpdatesModule.class,
+                CalendarPageFragmentModule.class,
+                CalendarPagePresenterModule.class,
+                CalendarPageModelModule.class,
         })
 
 public interface AppDiComponent {
@@ -247,6 +257,12 @@ public interface AppDiComponent {
     void inject(FullscreenViewPresenter presenter);
 
     void inject(UpdatesService service);
+
+    void inject(CalendarPageFragment fragment);
+
+    void inject(CalendarPagePresenter presenter);
+
+    void inject(CalendarPageModel fragment);
 
 }
 

@@ -69,6 +69,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/FullscreenVieTheme"/>
 
+        <activity
+            android:name=".Modules.Calendar.CalendarActivity"
+            android:screenOrientation="portrait" />
+
         <receiver android:name=".Common.utility.NetworkStateReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />

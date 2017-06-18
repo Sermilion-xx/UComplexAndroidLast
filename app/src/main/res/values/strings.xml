@@ -210,4 +210,5 @@
     <string name="image_saved">Картинка сохранена</string>
     <string name="file">Файл</string>
     <string name="sending">Отправка</string>
+    <string name="show_all">Показать все</string>
 </resources>

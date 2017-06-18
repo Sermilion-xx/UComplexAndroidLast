@@ -23,6 +23,7 @@ import org.ucomplex.ucomplex.Common.FacadeMedia;
 import org.ucomplex.ucomplex.Common.FacadePreferences;
 import org.ucomplex.ucomplex.Common.NewMessageBroadcastReceiver;
 import org.ucomplex.ucomplex.Common.base.UCApplication;
+import org.ucomplex.ucomplex.Modules.Calendar.CalendarActivity;
 import org.ucomplex.ucomplex.Modules.Events.EventsActivity;
 import org.ucomplex.ucomplex.Modules.Login.LoginActivity;
 import org.ucomplex.ucomplex.Modules.MessagesList.MessagesListActivity;
@@ -166,6 +167,8 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
             mContext.startActivity(UsersActivity.creteIntent(mContext));
         } else if (position == 5) {
             mContext.startActivity(MessagesListActivity.creteIntent(mContext));
+        } else if (position == 6) {
+            mContext.startActivity(CalendarActivity.creteIntent(mContext));
         }
     }
 

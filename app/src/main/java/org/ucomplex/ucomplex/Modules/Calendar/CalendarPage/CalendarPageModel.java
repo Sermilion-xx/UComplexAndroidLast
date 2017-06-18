@@ -1,0 +1,70 @@
+package org.ucomplex.ucomplex.Modules.Calendar.CalendarPage;
+
+
+import org.ucomplex.ucomplex.Common.base.UCApplication;
+import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
+import org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.model.CalendarPageItem;
+import org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.model.CalendarPageRaw;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+
+/**
+ * ---------------------------------------------------
+ * Created by Sermilion on 18/06/2017.
+ * Project: UComplex
+ * ---------------------------------------------------
+ * <a href="http://www.ucomplex.org">www.ucomplex.org</a>
+ * <a href="http://www.github.com/sermilion>github</a>
+ * ---------------------------------------------------
+ */
+public class CalendarPageModel implements MVPModel<CalendarPageRaw, List<CalendarPageItem>, Void> {
+
+    private List<CalendarPageItem> mData;
+    private CalendarPageService mService;
+
+    public CalendarPageModel() {
+        UCApplication.getInstance().getAppDiComponent().inject(this);
+    }
+
+    @Inject
+    public void setService(CalendarPageService service) {
+        this.mService = service;
+    }
+
+    @Override
+    public Observable<CalendarPageRaw> loadData(Void params) {
+        return mService.getCalendar().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public void setData(List<CalendarPageItem> data) {
+        this.mData = data;
+    }
+
+    @Override
+    public void addData(List<CalendarPageItem> data) {
+        mData.addAll(data);
+    }
+
+    @Override
+    public void clear() {
+        mData.clear();
+    }
+
+    @Override
+    public List<CalendarPageItem> getData() {
+        return mData;
+    }
+
+    @Override
+    public List<CalendarPageItem> processData(CalendarPageRaw data) {
+        return mData;
+    }
+}

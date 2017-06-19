@@ -23,9 +23,9 @@ import io.reactivex.schedulers.Schedulers;
  * <a href="http://www.github.com/sermilion>github</a>
  * ---------------------------------------------------
  */
-public class CalendarPageModel implements MVPModel<CalendarPageRaw, List<CalendarPageItem>, Void> {
+public class CalendarPageModel implements MVPModel<CalendarPageRaw, CalendarPageRaw, Void> {
 
-    private List<CalendarPageItem> mData;
+    private CalendarPageRaw mData;
     private CalendarPageService mService;
 
     public CalendarPageModel() {
@@ -44,27 +44,27 @@ public class CalendarPageModel implements MVPModel<CalendarPageRaw, List<Calenda
     }
 
     @Override
-    public void setData(List<CalendarPageItem> data) {
+    public void setData(CalendarPageRaw data) {
         this.mData = data;
     }
 
     @Override
-    public void addData(List<CalendarPageItem> data) {
-        mData.addAll(data);
+    public void addData(CalendarPageRaw data) {
+        throw new UnsupportedOperationException("Operation not suported");
     }
 
     @Override
     public void clear() {
-        mData.clear();
+        mData = null;
     }
 
     @Override
-    public List<CalendarPageItem> getData() {
+    public CalendarPageRaw getData() {
         return mData;
     }
 
     @Override
-    public List<CalendarPageItem> processData(CalendarPageRaw data) {
+    public CalendarPageRaw processData(CalendarPageRaw data) {
         return mData;
     }
 }

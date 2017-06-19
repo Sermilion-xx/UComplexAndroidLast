@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.NotificationService;
 import org.ucomplex.ucomplex.R;
@@ -32,8 +34,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import static org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.NotificationService.EXTRA_BODY;
 import static org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.NotificationService.EXTRA_LARGE_ICON;
@@ -319,6 +323,21 @@ public class FacadeCommon {
     public static  <T> T jsonStringToObject(String jsonString, Class<T> aClass) {
         Gson gson = new Gson();
         return gson.fromJson(jsonString, aClass);
+    }
+
+    public static <T, E> List<T> getKeys(Map<T, E> object) {
+        List<T> keys = new ArrayList<>();
+        keys.addAll(object.keySet());
+        return keys;
+    }
+
+    public static <T, E> T getKeyFromValue(Map<T, E> hm, E value) {
+        for (T o : hm.keySet()) {
+            if (hm.get(o).equals(value)) {
+                return o;
+            }
+        }
+        return null;
     }
 
 }

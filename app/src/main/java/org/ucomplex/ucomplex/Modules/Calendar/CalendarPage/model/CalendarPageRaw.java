@@ -32,8 +32,7 @@ public final class CalendarPageRaw {
     private final Map<String, Map<Integer, ChangedDay>> changedDays;
     private final Map<Integer, Map<Integer, String>> days;
     private final String calendar;
-    private final Map<String, Map<Integer, String>> timetable;
-//    private final Timetable timetable;
+    private final Timetable  timetable;
 
     public CalendarPageRaw() {
         this.method = null;
@@ -114,7 +113,7 @@ public final class CalendarPageRaw {
         return calendar;
     }
 
-    public Map<String, Map<Integer, String>> getTimetable() {
+    public Timetable getTimetable() {
         return timetable;
     }
 

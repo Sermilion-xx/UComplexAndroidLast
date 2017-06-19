@@ -12,7 +12,7 @@ import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
 public class CalendarPagePresenter extends AbstractPresenter<
-        CalendarPageRaw, List<CalendarPageItem>,
+        CalendarPageRaw, CalendarPageRaw,
         Void, CalendarPageModel> {
 
     public CalendarPagePresenter() {

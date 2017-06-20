@@ -1,6 +1,12 @@
 package org.ucomplex.ucomplex.Common;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+
+import org.ucomplex.ucomplex.Common.utility.GsonObjectDeserializerArrayOrObject;
+import org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.model.CalendarPageRaw;
+import org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.model.Timetable;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -26,11 +32,14 @@ public class ServiceGenerator {
     private static Retrofit.Builder builder;
 
     private static void buildRetrofitBuilder(String baseUrl) {
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Timetable.class , new GsonObjectDeserializerArrayOrObject<Timetable>())
+                .create();
         builder = new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create());
+                .addConverterFactory(GsonConverterFactory.create(gson));
     }
 
     public static <S> S createService(Class<S> serviceClass, String authString, String ... baseUrl) {

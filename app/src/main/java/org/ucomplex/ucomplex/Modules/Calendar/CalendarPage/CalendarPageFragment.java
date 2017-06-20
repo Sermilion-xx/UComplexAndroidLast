@@ -1,30 +1,47 @@
 package org.ucomplex.ucomplex.Modules.Calendar.CalendarPage;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringDef;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
+import com.prolificinteractive.materialcalendarview.format.MonthArrayTitleFormatter;
 
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.base.BaseMvpFragment;
 import org.ucomplex.ucomplex.Common.base.UCApplication;
+import org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.model.CalendarPageParams;
 import org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.model.CalendarPageRaw;
 import org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.utility.CalendarDayDecorator;
 import org.ucomplex.ucomplex.R;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.utility.CalendarDayDecorator.TYPE_ATTESTATION;
+import static org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.utility.CalendarDayDecorator.TYPE_EVENTS;
+import static org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.utility.CalendarDayDecorator.TYPE_EXAM;
+import static org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.utility.CalendarDayDecorator.TYPE_INDIVID_LESSON;
+import static org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.utility.CalendarDayDecorator.TYPE_LESSON;
+import static org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.utility.CalendarDayDecorator.TYPE_TIMETABLE;
+import static org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.utility.CalendarDayDecorator.TYPE_TODAY;
 
 /**
  * ---------------------------------------------------
@@ -44,9 +61,7 @@ public class CalendarPageFragment extends BaseMvpFragment<CalendarPagePresenter>
 
     public CalendarPageFragment() {
         spinnerOptions = new ArrayList<>();
-        spinnerOptions.add("Показать все");
-        spinnerOptions.add("Все дисциплины");
-        spinnerOptions.add("События");
+        initializeSpinnerOptions();
     }
 
     @BindView(R.id.calendar)
@@ -67,6 +82,31 @@ public class CalendarPageFragment extends BaseMvpFragment<CalendarPagePresenter>
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
         ButterKnife.bind(this, view);
+        spinner.setOnItemSelectedListener(subjectSelectedListener);
+        MonthArrayTitleFormatter monthArrayTitleFormatter = new MonthArrayTitleFormatter(monthsTitles);
+        materialCalendarView.setTitleFormatter(monthArrayTitleFormatter);
+        materialCalendarView.setOnMonthChangedListener(new OnMonthChangedListener() {
+            @Override
+            public void onMonthChanged(MaterialCalendarView widget, final CalendarDay date) {
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        spinner.setSelection(0);
+                        int month = date.getMonth() + 1;
+                        int year = date.getYear();
+                        String monthStr = String.valueOf(month > 9 ? month : "0" + month);
+                        String dateStr = 1 + "." + monthStr + "." + year;
+                        int Year = Calendar.getInstance().get(Calendar.YEAR);
+                        if (year <= Year) {
+                            presenter.loadData(new CalendarPageParams(monthStr, dateStr));
+                        } else {
+                            Toast.makeText(getContext(), "Нету данных для следующего года!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }, 1000);
+            }
+        });
         return view;
     }
 
@@ -74,7 +114,7 @@ public class CalendarPageFragment extends BaseMvpFragment<CalendarPagePresenter>
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (presenter.getData() == null) {
-            presenter.loadData(null);
+            presenter.loadData(new CalendarPageParams());
         } else {
             dataLoaded();
         }
@@ -82,76 +122,15 @@ public class CalendarPageFragment extends BaseMvpFragment<CalendarPagePresenter>
 
     @Override
     public void dataLoaded() {
-
+        setupCalendar(0);
     }
-
 
     AdapterView.OnItemSelectedListener subjectSelectedListener = new AdapterView.OnItemSelectedListener() {
 
         @Override
         public void onItemSelected(AdapterView<?> spinner, View container,
                                    int position, long id) {
-            CalendarPageRaw calendar = presenter.getData();
-            Map<Integer, String> courses = calendar.getCourses();
-            String courseValue;
-            int courseKey;
-            if (position == 0) {
-                refreshMonth(calendar);
-            } else if (position == 1) {
-                materialCalendarView.removeDecorators();
-                //Расписание
-                materialCalendarView.addDecorator(new CalendarDayDecorator(calendar, 5, getActivityContext()));
-                //занятие
-                materialCalendarView.addDecorator(new CalendarDayDecorator(calendar, 0, getActivityContext()));
-                //индивидуадбное занятие
-                materialCalendarView.addDecorator(new CalendarDayDecorator(calendar, 3, getActivityContext()));
-                //аттестация
-                materialCalendarView.addDecorator(new CalendarDayDecorator(calendar, 1, getActivityContext()));
-                //экзамен
-                materialCalendarView.addDecorator(new CalendarDayDecorator(calendar, 2, getActivityContext()));
-
-            } else if (position == 2) {
-                //событие
-                materialCalendarView.removeDecorators();
-                materialCalendarView.addDecorator(new CalendarDayDecorator(calendar, 4, getActivityContext()));
-            } else {
-                materialCalendarView.removeDecorators();
-                courseValue = spinnerOptions.get(position);
-                courseKey = FacadeCommon.getKeyFromValue(courses, courseValue);
-
-                List<CalendarPageRaw.ChangedDay> filteredDays = new ArrayList<>();
-                for (CalendarPageRaw.ChangedDay day : calendar.getChangedDays()) {
-                    for (Lesson lesson : day.getLessons()) {
-                        if (lesson.getCourse() == Integer.parseInt(courseKey)) {
-                            filteredDays.add(day);
-                        }
-                    }
-                }
-                materialCalendarView.addDecorator(new CalendarDayDecorator(filteredDays, calendar.getYear(), calendar.getMonth(), 5, getActivityContext()));
-                materialCalendarView.addDecorator(new CalendarDayDecorator(filteredDays, calendar.getYear(), calendar.getMonth(), 0, getActivityContext()));
-                materialCalendarView.addDecorator(new CalendarDayDecorator(filteredDays, calendar.getYear(), calendar.getMonth(), 3, getActivityContext()));
-                materialCalendarView.addDecorator(new CalendarDayDecorator(filteredDays, calendar.getYear(), calendar.getMonth(), 1, getActivityContext()));
-                materialCalendarView.addDecorator(new CalendarDayDecorator(filteredDays, calendar.getYear(), calendar.getMonth(), 2, getActivityContext()));
-            }
-
-        }
-
-        private void refreshMonth(CalendarPageRaw calendar) {
-            //выставленны по приоритету, так как каджый декоратор накладываеться на предыдущий
-            //сегодня
-            materialCalendarView.addDecorator(new CalendarDayDecorator(calendar, 6, getActivityContext()));
-            //Расписание
-            materialCalendarView.addDecorator(new CalendarDayDecorator(calendar, 5, getActivityContext()));
-            //индивидуадбное занятие
-            materialCalendarView.addDecorator(new CalendarDayDecorator(calendar, 3, getActivityContext()));
-            //занятие
-            materialCalendarView.addDecorator(new CalendarDayDecorator(calendar, 0, getActivityContext()));
-            //аттестация
-            materialCalendarView.addDecorator(new CalendarDayDecorator(calendar, 1, getActivityContext()));
-            //экзамен
-            materialCalendarView.addDecorator(new CalendarDayDecorator(calendar, 2, getActivityContext()));
-            //события
-            materialCalendarView.addDecorator(new CalendarDayDecorator(calendar, 4, getActivityContext()));
+            setupCalendar(position);
         }
 
         @Override
@@ -159,4 +138,66 @@ public class CalendarPageFragment extends BaseMvpFragment<CalendarPagePresenter>
 
         }
     };
+
+    private void setupCalendar(int position) {
+        CalendarPageRaw calendar = presenter.getData();
+        Map<Integer, String> courses = calendar.getCourses();
+        List<Integer> keys = new ArrayList<>();
+        for (Integer key : calendar.getCourses().keySet()) {
+            keys.add(key);
+        }
+        spinnerOptions.clear();
+        initializeSpinnerOptions();
+        for (int i = 0; i < calendar.getCourses().size(); i++) {
+            spinnerOptions.add(calendar.getCourses().get(keys.get(i)));
+        }
+        if (position == 0) {
+            refreshMonth(calendar);
+        } else if (position == 1) {
+            materialCalendarView.removeDecorators();
+            materialCalendarView.addDecorator(new CalendarDayDecorator(calendar, TYPE_TIMETABLE, getActivityContext()));
+            materialCalendarView.addDecorator(new CalendarDayDecorator(calendar, TYPE_LESSON, getActivityContext()));
+            materialCalendarView.addDecorator(new CalendarDayDecorator(calendar, TYPE_INDIVID_LESSON, getActivityContext()));
+            materialCalendarView.addDecorator(new CalendarDayDecorator(calendar, TYPE_ATTESTATION, getActivityContext()));
+            materialCalendarView.addDecorator(new CalendarDayDecorator(calendar, TYPE_EXAM, getActivityContext()));
+        } else if (position == 2) {
+            //событие
+            materialCalendarView.removeDecorators();
+            materialCalendarView.addDecorator(new CalendarDayDecorator(calendar, TYPE_EVENTS, getActivityContext()));
+        } else {
+            materialCalendarView.removeDecorators();
+            String courseValue = spinnerOptions.get(position);
+            Map<Integer, CalendarPageRaw.ChangedDay> filteredDays = presenter.filtedChangedDays(courseValue, calendar, courses);
+            materialCalendarView.addDecorator(new CalendarDayDecorator(filteredDays, calendar.getYear(), calendar.getMonth(), TYPE_TIMETABLE, getActivityContext()));
+            materialCalendarView.addDecorator(new CalendarDayDecorator(filteredDays, calendar.getYear(), calendar.getMonth(), TYPE_LESSON, getActivityContext()));
+            materialCalendarView.addDecorator(new CalendarDayDecorator(filteredDays, calendar.getYear(), calendar.getMonth(), TYPE_INDIVID_LESSON, getActivityContext()));
+            materialCalendarView.addDecorator(new CalendarDayDecorator(filteredDays, calendar.getYear(), calendar.getMonth(), TYPE_ATTESTATION, getActivityContext()));
+            materialCalendarView.addDecorator(new CalendarDayDecorator(filteredDays, calendar.getYear(), calendar.getMonth(), TYPE_EXAM, getActivityContext()));
+        }
+    }
+
+    private void initializeSpinnerOptions() {
+        spinnerOptions.add("Показать все");
+        spinnerOptions.add("Все дисциплины");
+        spinnerOptions.add("События");
+    }
+
+
+    private void refreshMonth(CalendarPageRaw calendar) {
+        //выставленны по приоритету, так как каджый декоратор накладываеться на предыдущий
+        //сегодня
+        materialCalendarView.addDecorator(new CalendarDayDecorator(calendar, TYPE_TODAY, getActivityContext()));
+        //Расписание
+        materialCalendarView.addDecorator(new CalendarDayDecorator(calendar, TYPE_TIMETABLE, getActivityContext()));
+        //индивидуадбное занятие
+        materialCalendarView.addDecorator(new CalendarDayDecorator(calendar, TYPE_INDIVID_LESSON, getActivityContext()));
+        //занятие
+        materialCalendarView.addDecorator(new CalendarDayDecorator(calendar, TYPE_LESSON, getActivityContext()));
+        //аттестация
+        materialCalendarView.addDecorator(new CalendarDayDecorator(calendar, TYPE_ATTESTATION, getActivityContext()));
+        //экзамен
+        materialCalendarView.addDecorator(new CalendarDayDecorator(calendar, TYPE_EXAM, getActivityContext()));
+        //события
+        materialCalendarView.addDecorator(new CalendarDayDecorator(calendar, TYPE_EVENTS, getActivityContext()));
+    }
 }

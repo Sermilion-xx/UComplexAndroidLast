@@ -4,6 +4,7 @@ package org.ucomplex.ucomplex.Modules.Calendar.CalendarPage;
 import org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.model.CalendarPageRaw;
 
 import io.reactivex.Observable;
+import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 
@@ -18,6 +19,7 @@ import retrofit2.http.POST;
  */
 
 public interface CalendarPageService {
-    @POST("/student/ajax/calendar?mobile=1")
-    Observable<CalendarPageRaw> getCalendar();
+    @POST("/student/ajax/calendar?mobile=1") @FormUrlEncoded
+    Observable<CalendarPageRaw> getCalendar(@Field("month") String month,
+                                            @Field("time")  String time);
 }

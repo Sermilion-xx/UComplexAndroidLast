@@ -1,6 +1,7 @@
 package org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.model;
 
-import android.support.v4.util.Pair;
+import com.google.gson.JsonElement;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 import java.util.Map;
@@ -32,7 +33,8 @@ public final class CalendarPageRaw {
     private final Map<String, Map<Integer, ChangedDay>> changedDays;
     private final Map<Integer, Map<Integer, String>> days;
     private final String calendar;
-    private final Timetable  timetable;
+    @SerializedName("timetable")
+    private final Timetable timetable;
 
     public CalendarPageRaw() {
         this.method = null;

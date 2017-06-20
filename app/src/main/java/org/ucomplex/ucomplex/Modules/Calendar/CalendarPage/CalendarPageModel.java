@@ -4,6 +4,7 @@ package org.ucomplex.ucomplex.Modules.Calendar.CalendarPage;
 import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
 import org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.model.CalendarPageItem;
+import org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.model.CalendarPageParams;
 import org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.model.CalendarPageRaw;
 
 import java.util.List;
@@ -23,7 +24,7 @@ import io.reactivex.schedulers.Schedulers;
  * <a href="http://www.github.com/sermilion>github</a>
  * ---------------------------------------------------
  */
-public class CalendarPageModel implements MVPModel<CalendarPageRaw, CalendarPageRaw, Void> {
+public class CalendarPageModel implements MVPModel<CalendarPageRaw, CalendarPageRaw, CalendarPageParams> {
 
     private CalendarPageRaw mData;
     private CalendarPageService mService;
@@ -38,8 +39,8 @@ public class CalendarPageModel implements MVPModel<CalendarPageRaw, CalendarPage
     }
 
     @Override
-    public Observable<CalendarPageRaw> loadData(Void params) {
-        return mService.getCalendar().subscribeOn(Schedulers.io())
+    public Observable<CalendarPageRaw> loadData(CalendarPageParams params) {
+        return mService.getCalendar(params.getMonth(), params.getTime()).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
@@ -65,6 +66,7 @@ public class CalendarPageModel implements MVPModel<CalendarPageRaw, CalendarPage
 
     @Override
     public CalendarPageRaw processData(CalendarPageRaw data) {
+        mData = data;
         return mData;
     }
 }

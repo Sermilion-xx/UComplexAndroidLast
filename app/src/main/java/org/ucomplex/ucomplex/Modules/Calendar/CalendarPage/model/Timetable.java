@@ -12,11 +12,11 @@ import java.util.Map;
 public final class Timetable implements Serializable{
 
     private final Map<Integer, String> teachers;
-    private final Map<Integer, String> groups;
     private final Map<Integer, String> hours;
     private final Map<Integer, String> rooms;
+    private final Map<Integer, String> groups;
     private final Map<Integer, String> subjects;
-    private final Map<Integer, Map<String, String>> entries;
+    private final Map<Integer, List<Map<String, String>>> entries;
 
     public Timetable() {
         this.teachers = null;
@@ -47,7 +47,7 @@ public final class Timetable implements Serializable{
         return subjects;
     }
 
-    public Map<Integer, Map<String, String>> getEntries() {
+    public Map<Integer, List<Map<String, String>>> getEntries() {
         return entries;
     }
 }

@@ -2,6 +2,7 @@ package org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.utility;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.util.Pair;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
@@ -11,7 +12,6 @@ import com.prolificinteractive.materialcalendarview.DayViewFacade;
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.model.CalendarPageRaw;
 
-import java.security.PublicKey;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
@@ -64,7 +64,7 @@ public class CalendarDayDecorator implements DayViewDecorator {
         this.context = context;
     }
 
-    public CalendarDayDecorator(Map<Integer, CalendarPageRaw.ChangedDay> days, int year, int month, int type, Context context ) {
+    public CalendarDayDecorator(List<Pair<String, CalendarPageRaw.ChangedDayLesson>> days, int year, int month, int type, Context context ) {
         this.year = year;
         this.month = month;
         this.color = colors[type];
@@ -103,17 +103,17 @@ public class CalendarDayDecorator implements DayViewDecorator {
         }
     }
 
-    private Set<CalendarDay> changedDaysToCalendarDays(Map<String, Map<Integer, CalendarPageRaw.ChangedDay>> changedDays, int type){
+    private Set<CalendarDay> changedDaysToCalendarDays(Map<String, Map<Integer, CalendarPageRaw.ChangedDayLesson>> changedDays, int type){
         List<String> changeDaysKeys = FacadeCommon.getKeys(changedDays);
 
         for (int i = 0; i < changeDaysKeys.size(); i++) {
             int dayInt = Integer.parseInt(changeDaysKeys.get(i));
             CalendarDay calendarDay = CalendarDay.from(year, month - 1, dayInt);
 
-            Map<Integer, CalendarPageRaw.ChangedDay> changedDayLessons = changedDays.get(changeDaysKeys.get(i));
+            Map<Integer, CalendarPageRaw.ChangedDayLesson> changedDayLessons = changedDays.get(changeDaysKeys.get(i));
             List<Integer> changeDayKeys = FacadeCommon.getKeys(changedDayLessons);
             for (int j = 0; j < changedDayLessons.size(); j++) {
-                CalendarPageRaw.ChangedDay day = changedDayLessons.get(changeDayKeys.get(j));
+                CalendarPageRaw.ChangedDayLesson day = changedDayLessons.get(changeDayKeys.get(j));
                 if (day.getType() == type) {
                     dates.add(calendarDay);
                 }
@@ -122,12 +122,11 @@ public class CalendarDayDecorator implements DayViewDecorator {
         return dates;
     }
 
-    private Set<CalendarDay> changedDaysToCalendarDays1(Map<Integer, CalendarPageRaw.ChangedDay> changedDays, int type) {
-        List<Integer> changeDaysKeys = FacadeCommon.getKeys(changedDays);
-        for (int i = 0; i < changeDaysKeys.size(); i++) {
-            int dayInt = changeDaysKeys.get(i);
+    private Set<CalendarDay> changedDaysToCalendarDays1(List<Pair<String, CalendarPageRaw.ChangedDayLesson>> changedDays, int type) {
+        for (int i = 0; i < changedDays.size(); i++) {
+            int dayInt = Integer.parseInt(changedDays.get(i).first);
             CalendarDay calendarDay = CalendarDay.from(year, month - 1, dayInt);
-            CalendarPageRaw.ChangedDay day = changedDays.get(i);
+            CalendarPageRaw.ChangedDayLesson day = changedDays.get(i).second;
             if (day.getType() == type) {
                 dates.add(calendarDay);
             }

@@ -1,6 +1,7 @@
 package org.ucomplex.ucomplex.Modules.Calendar.CalendarPage;
 
 import android.support.annotation.NonNull;
+import android.support.v4.util.Pair;
 
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
@@ -8,7 +9,7 @@ import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.model.CalendarPageParams;
 import org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.model.CalendarPageRaw;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -37,7 +38,7 @@ public class CalendarPagePresenter extends AbstractPresenter<
             @Override
             public void onNext(CalendarPageRaw value) {
                 mModel.processData(value);
-                if (getView() != null) {
+                if (getView() != null && getData() != null) {
                     getView().dataLoaded();
                 }
             }
@@ -55,22 +56,22 @@ public class CalendarPagePresenter extends AbstractPresenter<
     }
 
     @NonNull
-    Map<Integer, CalendarPageRaw.ChangedDay> filtedChangedDays(String courseValue, CalendarPageRaw calendar, Map<Integer, String> courses) {
+    List<Pair<String, CalendarPageRaw.ChangedDayLesson>> filteredChangedDays(String courseValue, CalendarPageRaw calendar, Map<Integer, String> courses) {
         Object courseKeyObj = FacadeCommon.getKeyFromValue(courses, courseValue);
         int courseKey = -1;
         if (courseKeyObj != null) {
             courseKey = (int) courseKeyObj;
         }
-
-        Map<Integer, CalendarPageRaw.ChangedDay> filteredDays = new HashMap<>();
+        List<Pair<String, CalendarPageRaw.ChangedDayLesson>> filteredDays = new ArrayList<>();
         List<String> changeDaysKeys = FacadeCommon.getKeys(calendar.getChangedDays());
         for (int i = 0; i < calendar.getChangedDays().size(); i++) {
-            Map<Integer, CalendarPageRaw.ChangedDay> dayMap = calendar.getChangedDays().get(changeDaysKeys.get(i));
-            List<Integer> lessonsKeys = FacadeCommon.getKeys(dayMap);
+            String changedDayKey = changeDaysKeys.get(i);
+            Map<Integer, CalendarPageRaw.ChangedDayLesson> lessonsForDayMap = calendar.getChangedDays().get(changedDayKey);
+            List<Integer> lessonsKeys = FacadeCommon.getKeys(lessonsForDayMap);
             for (int j = 0; j < lessonsKeys.size(); j++) {
-                CalendarPageRaw.ChangedDay day = dayMap.get(lessonsKeys.get(i));
-                if (day.getCourse() == courseKey) {
-                    filteredDays.put(lessonsKeys.get(i), day);
+                CalendarPageRaw.ChangedDayLesson lesson = lessonsForDayMap.get(lessonsKeys.get(j));
+                if (lesson.getCourse() == courseKey) {
+                    filteredDays.add(new Pair<>(changedDayKey, lesson));
                 }
             }
         }

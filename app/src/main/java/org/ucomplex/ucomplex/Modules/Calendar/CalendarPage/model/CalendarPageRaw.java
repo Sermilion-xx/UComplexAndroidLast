@@ -1,6 +1,5 @@
 package org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.model;
 
-import com.google.gson.JsonElement;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -30,7 +29,7 @@ public final class CalendarPageRaw {
     private final String subgroup;
     private final String course;
     private final Map<Integer, String> courses;
-    private final Map<String, Map<Integer, ChangedDay>> changedDays;
+    private final Map<String, Map<Integer, ChangedDayLesson>> changedDays;
     private final Map<Integer, Map<Integer, String>> days;
     private final String calendar;
     @SerializedName("timetable")
@@ -103,7 +102,7 @@ public final class CalendarPageRaw {
         return courses;
     }
 
-    public Map<String, Map<Integer, ChangedDay>> getChangedDays() {
+    public Map<String, Map<Integer, ChangedDayLesson>> getChangedDays() {
         return changedDays;
     }
 
@@ -156,13 +155,13 @@ public final class CalendarPageRaw {
         }
     }
 
-    public class ChangedDay {
+    public class ChangedDayLesson {
 
         private final int type;
         private final int mark;
         private final int course;
 
-        public ChangedDay() {
+        public ChangedDayLesson() {
             this.type = -1;
             this.mark = -1;
             this.course = -1;

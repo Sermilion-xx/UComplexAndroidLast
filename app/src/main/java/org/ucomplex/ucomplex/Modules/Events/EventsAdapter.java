@@ -53,7 +53,7 @@ public class EventsAdapter extends BaseAdapter<EventsAdapter.EventViewHolder, Li
         TextView eventTime;
         TextView eventPersonName;
         LinearLayout eventDetailsLayout;
-        Button loadMoreEventsButton;
+        Button loadMoreButton;
 
         EventViewHolder(View view, int viewType) {
             super(view);
@@ -64,12 +64,12 @@ public class EventsAdapter extends BaseAdapter<EventsAdapter.EventViewHolder, Li
                 eventPersonName = (TextView) view.findViewById(R.id.list_events_item_name);
                 eventDetailsLayout = (LinearLayout) view.findViewById(R.id.event_details_layout);
             } else {
-                loadMoreEventsButton = (Button) view.findViewById(R.id.loadMoreButton);
+                loadMoreButton = (Button) view.findViewById(R.id.loadMoreButton);
             }
         }
     }
 
-    private boolean hasMoreEvents = false;
+    private boolean hasMoreItems = false;
     private LoadMoreCallback<Integer> mMoreCallback;
 
     EventsAdapter(LoadMoreCallback<Integer> callback) {
@@ -77,8 +77,8 @@ public class EventsAdapter extends BaseAdapter<EventsAdapter.EventViewHolder, Li
         mItems = new ArrayList<>();
     }
 
-    private void setHasMoreEvents(boolean hasMoreEvents) {
-        this.hasMoreEvents = hasMoreEvents;
+    private void setHasMoreItems(boolean hasMoreItems) {
+        this.hasMoreItems = hasMoreItems;
     }
 
     @Override
@@ -122,12 +122,12 @@ public class EventsAdapter extends BaseAdapter<EventsAdapter.EventViewHolder, Li
                         context.startActivity(intent);
                     }
                 });
-            } else if (getItemViewType(position) == TYPE_FOOTER && holder.loadMoreEventsButton != null) {
-                if (hasMoreEvents) {
-                    holder.loadMoreEventsButton.setVisibility(View.VISIBLE);
-                    holder.loadMoreEventsButton.setOnClickListener(v -> mMoreCallback.loadMoreData(getItemCount() + 1));
+            } else if (getItemViewType(position) == TYPE_FOOTER && holder.loadMoreButton != null) {
+                if (hasMoreItems) {
+                    holder.loadMoreButton.setVisibility(View.VISIBLE);
+                    holder.loadMoreButton.setOnClickListener(v -> mMoreCallback.loadMoreData(getItemCount() + 1));
                 } else {
-                    holder.loadMoreEventsButton.setVisibility(View.GONE);
+                    holder.loadMoreButton.setVisibility(View.GONE);
                 }
             }
         }
@@ -150,25 +150,11 @@ public class EventsAdapter extends BaseAdapter<EventsAdapter.EventViewHolder, Li
     }
 
     void updateAdapterItems(List<EventItem> items, boolean internetConnected) {
-        setHasMoreEvents(items.size() > 9 && internetConnected);
+        setHasMoreItems(items.size() > 9 && internetConnected);
        if (mItems.size() == 0) {
            populateRecyclerView(items);
        } else {
            addMoreToRecyclerView(items);
        }
-    }
-
-    private void addMoreToRecyclerView(List<EventItem> newItems) {
-        int end = mItems.size();
-        mItems.addAll(end, newItems);
-        notifyItemRangeInserted(end, getItemCount() - 1);
-    }
-
-    private void populateRecyclerView(List<EventItem> newItems) {
-        int end = getItemCount();
-        mItems.clear();
-        notifyItemRangeRemoved(0, end);
-        mItems.addAll(newItems);
-        notifyItemRangeChanged(0, newItems.size() - 1);
     }
 }

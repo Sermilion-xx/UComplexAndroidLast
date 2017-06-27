@@ -213,4 +213,5 @@
     <string name="show_all">Показать все</string>
     <string name="no_data_for_next_year">Нету данных для следующего года!</string>
     <string name="all_disciplines">Все дисциплины</string>
+    <string name="belt">Лента</string>
 </resources>

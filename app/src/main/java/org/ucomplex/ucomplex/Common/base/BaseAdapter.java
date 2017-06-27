@@ -2,6 +2,8 @@ package org.ucomplex.ucomplex.Common.base;
 
 import android.support.v7.widget.RecyclerView;
 
+import org.ucomplex.ucomplex.Modules.Events.model.EventItem;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -37,5 +39,20 @@ public abstract class BaseAdapter<T extends RecyclerView.ViewHolder, D extends C
     @Override
     public int getItemViewType(int position) {
         return mItems.size() == 0 ? TYPE_EMPTY : 0;
+    }
+
+
+    protected void populateRecyclerView(D newItems) {
+        int end = getItemCount();
+        mItems.clear();
+        notifyItemRangeRemoved(0, end);
+        mItems.addAll(newItems);
+        notifyItemRangeChanged(0, newItems.size() - 1);
+    }
+
+    protected void addMoreToRecyclerView(D newItems) {
+        int end = mItems.size();
+        mItems.addAll(newItems);
+        notifyItemRangeInserted(end, getItemCount() - 1);
     }
 }

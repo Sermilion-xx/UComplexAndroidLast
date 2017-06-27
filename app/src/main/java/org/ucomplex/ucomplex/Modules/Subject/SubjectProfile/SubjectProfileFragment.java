@@ -10,11 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
-import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.base.BaseMvpFragment;
+import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.OnPresenterInjectedListener;
 import org.ucomplex.ucomplex.Domain.role.Role;
-import org.ucomplex.ucomplex.Domain.role.RoleTeacher;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.SubjectItemFile;
 import org.ucomplex.ucomplex.R;
 
@@ -93,5 +92,12 @@ public class SubjectProfileFragment extends BaseMvpFragment<SubjectPresenter> {
         mAdapter.setItems(presenter.getData().getProfileItems());
         mAdapter.notifyDataSetChanged();
         onPresenterInjectedListener.presenterInjected(presenter.getModel().getFilesAndTeachers());
+    }
+
+    public Pair<List<SubjectItemFile>, Map<Integer, Role>> getFilesAndTeachers() {
+        if (presenter.getModel() != null) {
+            return presenter.getModel().getFilesAndTeachers();
+        }
+        return null;
     }
 }

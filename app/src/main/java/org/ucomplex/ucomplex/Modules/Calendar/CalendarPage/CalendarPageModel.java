@@ -3,11 +3,8 @@ package org.ucomplex.ucomplex.Modules.Calendar.CalendarPage;
 
 import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
-import org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.model.CalendarPageItem;
 import org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.model.CalendarPageParams;
 import org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.model.CalendarPageRaw;
-
-import java.util.List;
 
 import javax.inject.Inject;
 

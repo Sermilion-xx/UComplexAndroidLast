@@ -53,7 +53,7 @@ public class SubjectActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         if (subjectProfileFragment != null) {
-            subjectMaterialsFragment.setMaterialsItems(subjectProfileFragment.getPresenter().getModel().getFilesAndTeachers());
+            subjectMaterialsFragment.setMaterialsItems(subjectProfileFragment.getFilesAndTeachers());
         }
     }
 

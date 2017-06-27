@@ -193,8 +193,8 @@ public class FacadeCommon {
                 r += tempYyMMdd[2] + " " + month + " " + tempYyMMdd[0] + " г.";
             }
             if (justDate != null) {
-                if (hhMMss != null) {
-                    r += " в " + hhMMss.substring(0, 5);
+                if (justDate[0] == false) {
+                    r += " в " + hhMMss;
                 }
             }
 
@@ -326,6 +326,9 @@ public class FacadeCommon {
     }
 
     public static <T, E> List<T> getKeys(Map<T, E> object) {
+        if (object == null) {
+            return new ArrayList<T>();
+        }
         List<T> keys = new ArrayList<>();
         keys.addAll(object.keySet());
         return keys;
@@ -339,5 +342,4 @@ public class FacadeCommon {
         }
         return null;
     }
-
 }

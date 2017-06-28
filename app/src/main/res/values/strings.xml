@@ -82,7 +82,7 @@
     <string name="subject">Дисциплина</string>
     <string name="lecturers">Преподаватели</string>
 
-    <string name="absence" formatted="false">Посещаемость: %1$s</string>
+    <string name="attendanceWithFormat" formatted="false">Посещаемость: %1$s</string>
     <string name="average_mark_formatter">Средняя успеваемость: %1$s</string>
     <string name="average_mark">Средняя успеваемость</string>
     <string name="subject_attendance">Посещаемость по предмету:</string>
@@ -214,4 +214,10 @@
     <string name="no_data_for_next_year">Нету данных для следующего года!</string>
     <string name="all_disciplines">Все дисциплины</string>
     <string name="belt">Лента</string>
+    <string name="statistics">Статистика</string>
+    <string name="discipline_name">Название предмета</string>
+    <string name="performance">Успеваемость:</string>
+    <string name="current_semester">Teкущий семестр</string>
+    <string name="previous_semesters">Предыдущие семестры</string>
+    <string name="attendance">Посещаемость:</string>
 </resources>

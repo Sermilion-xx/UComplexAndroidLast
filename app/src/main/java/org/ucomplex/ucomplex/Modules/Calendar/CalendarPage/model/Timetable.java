@@ -48,6 +48,9 @@ public final class Timetable implements Serializable{
     }
 
     public Map<Integer, List<Map<String, String>>> getEntries() {
+        if (entries == null) {
+            return new HashMap<>();
+        }
         return entries;
     }
 }

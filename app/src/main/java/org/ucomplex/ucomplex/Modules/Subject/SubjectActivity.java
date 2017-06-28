@@ -52,7 +52,7 @@ public class SubjectActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (subjectProfileFragment != null) {
+        if (subjectProfileFragment != null && subjectProfileFragment.getFilesAndTeachers() != null) {
             subjectMaterialsFragment.setMaterialsItems(subjectProfileFragment.getFilesAndTeachers());
         }
     }

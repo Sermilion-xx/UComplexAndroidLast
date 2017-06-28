@@ -13,6 +13,12 @@ import org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.CalendarPagePresenter
 import org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.dagger.CalendarPageFragmentModule;
 import org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.dagger.CalendarPageModelModule;
 import org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.dagger.CalendarPagePresenterModule;
+import org.ucomplex.ucomplex.Modules.Calendar.CalendarStatistics.CalendarStatisticsFragment;
+import org.ucomplex.ucomplex.Modules.Calendar.CalendarStatistics.CalendarStatisticsModel;
+import org.ucomplex.ucomplex.Modules.Calendar.CalendarStatistics.CalendarStatisticsPresenter;
+import org.ucomplex.ucomplex.Modules.Calendar.CalendarStatistics.dagger.CalendarStatisticsFragmentModule;
+import org.ucomplex.ucomplex.Modules.Calendar.CalendarStatistics.dagger.CalendarStatisticsModelModule;
+import org.ucomplex.ucomplex.Modules.Calendar.CalendarStatistics.dagger.CalendarStatisticsPresenterModule;
 import org.ucomplex.ucomplex.Modules.Events.EventsActivity;
 import org.ucomplex.ucomplex.Modules.Events.EventsModel;
 import org.ucomplex.ucomplex.Modules.Events.EventsPresenter;
@@ -170,7 +176,10 @@ import dagger.Component;
                 CalendarPageModelModule.class,
                 CalendarBeltFragmentModule.class,
                 CalendarBeltPresenterModule.class,
-                CalendarBeltModelModule.class
+                CalendarBeltModelModule.class,
+                CalendarStatisticsFragmentModule.class,
+                CalendarStatisticsPresenterModule.class,
+                CalendarStatisticsModelModule.class
         })
 
 public interface AppDiComponent {
@@ -279,6 +288,11 @@ public interface AppDiComponent {
 
     void inject(CalendarBeltModel fragment);
 
+    void inject(CalendarStatisticsFragment fragment);
+
+    void inject(CalendarStatisticsPresenter presenter);
+
+    void inject(CalendarStatisticsModel fragment);
 
 }
 

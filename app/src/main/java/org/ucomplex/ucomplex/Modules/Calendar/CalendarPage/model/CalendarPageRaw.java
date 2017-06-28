@@ -2,6 +2,7 @@ package org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -59,6 +60,9 @@ public final class CalendarPageRaw {
     }
 
     public Map<Integer, List<Event>> getEvents() {
+        if (events == null) {
+            return new HashMap<>();
+        }
         return events;
     }
 
@@ -115,6 +119,9 @@ public final class CalendarPageRaw {
     }
 
     public Timetable getTimetable() {
+        if (timetable == null) {
+            return new Timetable();
+        }
         return timetable;
     }
 

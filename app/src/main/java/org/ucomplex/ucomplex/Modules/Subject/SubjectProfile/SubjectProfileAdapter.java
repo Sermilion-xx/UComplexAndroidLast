@@ -99,7 +99,7 @@ public class SubjectProfileAdapter extends BaseAdapter<SubjectProfileAdapter.Sub
                     .into(holder.mIcon);
         } else if (getItemViewType(position) == TYPE_INFO) {
             Context context = holder.mAttendance.getContext();
-            String text = context.getString(R.string.absence, item.getAttendance());
+            String text = context.getString(R.string.attendanceWithFormat, item.getAttendance());
             holder.mAttendance.setText(FacadeCommon.fromHtml(text));
             String average = context.getString(R.string.average_mark_formatter, item.getMark());
             holder.mAverageGrade.setText(average);

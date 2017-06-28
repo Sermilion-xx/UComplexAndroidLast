@@ -13,13 +13,14 @@ import org.ucomplex.ucomplex.Common.base.UCApplication;
 
 import org.ucomplex.ucomplex.Modules.Calendar.CalendarBelt.CalendarBeltFragment;
 import org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.CalendarPageFragment;
+import org.ucomplex.ucomplex.Modules.Calendar.CalendarStatistics.CalendarStatisticsFragment;
 import org.ucomplex.ucomplex.R;
 
 public class CalendarActivity extends BaseActivity {
 
     private static final String TAG_CALENDAR_FRAGMENT = "calendarFragment";
     private static final String TAG_BELT_FRAGMENT = "beltFragment";
-//    private static final String TAG_TIMELINE_FRAGMENT = "subjectTimelineFragment";
+    private static final String TAG_STATISTICS_FRAGMENT = "statisticsFragment";
 
     public static Intent creteIntent(Context context) {
         return new Intent(context, CalendarActivity.class);
@@ -27,13 +28,13 @@ public class CalendarActivity extends BaseActivity {
 
     private CalendarPageFragment calendarFragment;
     private CalendarBeltFragment beltFragment;
-//    private SubjectTimelineFragment subjectTimelineFragment;
+    private CalendarStatisticsFragment statisticsFragment;
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         getSupportFragmentManager().putFragment(outState, TAG_CALENDAR_FRAGMENT, calendarFragment);
         getSupportFragmentManager().putFragment(outState, TAG_BELT_FRAGMENT, beltFragment);
-//        getSupportFragmentManager().putFragment(outState, TAG_TIMELINE_FRAGMENT, subjectTimelineFragment);
+        getSupportFragmentManager().putFragment(outState, TAG_STATISTICS_FRAGMENT, statisticsFragment);
         super.onSaveInstanceState(outState);
     }
 
@@ -55,16 +56,16 @@ public class CalendarActivity extends BaseActivity {
         if (savedInstanceState != null) {
             calendarFragment = (CalendarPageFragment) getSupportFragmentManager().getFragment(savedInstanceState, TAG_CALENDAR_FRAGMENT);
             beltFragment = (CalendarBeltFragment) getSupportFragmentManager().getFragment(savedInstanceState, TAG_BELT_FRAGMENT);
-//            subjectTimelineFragment = (SubjectTimelineFragment) getSupportFragmentManager().getFragment(savedInstanceState, TAG_TIMELINE_FRAGMENT);
+            statisticsFragment = (CalendarStatisticsFragment) getSupportFragmentManager().getFragment(savedInstanceState, TAG_STATISTICS_FRAGMENT);
         } else {
             calendarFragment = CalendarPageFragment.getInstance();
             beltFragment = CalendarBeltFragment.getInstance();
-//            subjectTimelineFragment = SubjectTimelineFragment.getInstance(gcourse);
+            statisticsFragment = CalendarStatisticsFragment.getInstance();
         }
 
         viewPagerAdapter.addFragment(calendarFragment, getString(R.string.calendar));
         viewPagerAdapter.addFragment(beltFragment, getString(R.string.belt));
-//        viewPagerAdapter.addFragment(subjectTimelineFragment, getString(R.string.timeline));
+        viewPagerAdapter.addFragment(statisticsFragment, getString(R.string.statistics));
         viewPager.setAdapter(viewPagerAdapter);
     }
 

@@ -1,12 +1,15 @@
 package org.ucomplex.ucomplex.Common;
 
-import org.ucomplex.ucomplex.Modules.Calendar.CalendarActivity;
 import org.ucomplex.ucomplex.Modules.Calendar.CalendarBelt.CalendarBeltFragment;
 import org.ucomplex.ucomplex.Modules.Calendar.CalendarBelt.CalendarBeltModel;
 import org.ucomplex.ucomplex.Modules.Calendar.CalendarBelt.CalendarBeltPresenter;
 import org.ucomplex.ucomplex.Modules.Calendar.CalendarBelt.dagger.CalendarBeltFragmentModule;
 import org.ucomplex.ucomplex.Modules.Calendar.CalendarBelt.dagger.CalendarBeltModelModule;
 import org.ucomplex.ucomplex.Modules.Calendar.CalendarBelt.dagger.CalendarBeltPresenterModule;
+import org.ucomplex.ucomplex.Modules.CalendarDay.CalendarDayPerformance.CalendarDayPerformanceActivity;
+import org.ucomplex.ucomplex.Modules.CalendarDay.CalendarDayPerformance.CalendarDayPerformancePresenter;
+import org.ucomplex.ucomplex.Modules.CalendarDay.CalendarDayPerformance.dagger.CalendarDayPerformanceFragmentModule;
+import org.ucomplex.ucomplex.Modules.CalendarDay.CalendarDayPerformance.dagger.CalendarDayPerformancePresenterModule;
 import org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.CalendarPageFragment;
 import org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.CalendarPageModel;
 import org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.CalendarPagePresenter;
@@ -179,7 +182,9 @@ import dagger.Component;
                 CalendarBeltModelModule.class,
                 CalendarStatisticsFragmentModule.class,
                 CalendarStatisticsPresenterModule.class,
-                CalendarStatisticsModelModule.class
+                CalendarStatisticsModelModule.class,
+                CalendarDayPerformanceFragmentModule.class,
+                CalendarDayPerformancePresenterModule.class
         })
 
 public interface AppDiComponent {
@@ -293,6 +298,10 @@ public interface AppDiComponent {
     void inject(CalendarStatisticsPresenter presenter);
 
     void inject(CalendarStatisticsModel fragment);
+
+    void inject(CalendarDayPerformancePresenter presenter);
+
+    void inject(CalendarDayPerformanceActivity activity);
 
 }
 

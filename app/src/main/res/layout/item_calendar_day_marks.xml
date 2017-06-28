@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:paddingTop="8dp"
+>
+
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        card_view:cardCornerRadius="0dp">
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/list_item_border_with_shadow">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/subject"
+                android:text="Исследование социально-экономических "
+                android:textSize="18sp"
+                android:textColor="@color/color_uc_ListTextColorPrimary"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="16dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/teacher"
+                android:text="Ялмаев Рустам Алиевич"
+                android:layout_below="@+id/subject"
+                android:textSize="16sp"
+                android:textColor="@color/color_uc_ListText"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="7dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/room"
+                android:text="Аудитория 9-09"
+                android:layout_below="@+id/teacher"
+                android:textSize="16sp"
+                android:textColor="@color/color_uc_ListText"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="10dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:id="@+id/separator"
+                android:layout_height="1dp"
+                android:layout_below="@+id/room"
+                android:background="@color/color_uc_activity_background" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/time"
+                android:layout_below="@+id/separator"
+                android:textSize="14sp"
+                android:textColor="@color/color_uc_ListText"
+                android:text="time"
+                android:paddingTop="10dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/type"
+                android:text="Тип занятия"
+                android:textSize="14sp"
+                android:textColor="@color/color_uc_ListText"
+                android:layout_alignBottom="@+id/time"
+                android:layout_alignParentEnd="true"
+                android:gravity="end"
+                android:paddingEnd="20dp"
+                android:paddingStart="20dp"
+                android:paddingBottom="15dp"
+                android:layout_alignTop="@+id/time"
+                android:paddingTop="10dp" />
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+    </LinearLayout>

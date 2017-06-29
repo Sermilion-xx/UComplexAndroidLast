@@ -17,8 +17,6 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.NotificationService;
 import org.ucomplex.ucomplex.R;
@@ -34,7 +32,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -54,6 +52,24 @@ import static org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.Notificatio
  */
 
 public class FacadeCommon {
+
+    public static final Map<String, String> months = new HashMap<>();
+
+    static {
+        months.put("1", "январь");
+        months.put("2", "февраль");
+        months.put("3", "март");
+        months.put("4", "апрель");
+        months.put("5", "май");
+        months.put("6", "июнь");
+        months.put("7", "июль");
+        months.put("8", "август");
+        months.put("9", "сентябрь");
+        months.put("10", "октябрь");
+        months.put("11", "ноябрь");
+        months.put("12", "декабрь");
+    }
+
 
     public static String encodeLoginData(String loginData) {
         byte[] authBytes;
@@ -212,14 +228,14 @@ public class FacadeCommon {
         if (bytes < unit) return bytes + " б";
         int exp = (int) (Math.log(bytes) / Math.log(unit));
         String pre = (si ? "кмгтпе" : "кмгтпе").charAt(exp - 1) + (si ? "" : "");
-        return String.format(new Locale("Ru"),"%.1f %sб", bytes / Math.pow(unit, exp), pre);
+        return String.format(new Locale("Ru"), "%.1f %sб", bytes / Math.pow(unit, exp), pre);
     }
 
     public enum NoContentLayoutType {
         DEFAULT, MESSAGES
     }
 
-    public static int getAvailableListLayout(int itemCount, NoContentLayoutType...type) {
+    public static int getAvailableListLayout(int itemCount, NoContentLayoutType... type) {
         if (!UCApplication.getInstance().isConnectedToInternet() && itemCount == 0) {
             return R.layout.item_no_internet;
         } else if (itemCount == 0) {
@@ -238,7 +254,7 @@ public class FacadeCommon {
     }
 
     public static String getLastOnline(long lastOnlineMilliseconds) {
-        Date date = new Date(lastOnlineMilliseconds*1000);
+        Date date = new Date(lastOnlineMilliseconds * 1000);
         Locale locale = new Locale("ru", "RU");
         SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", locale);
         return FacadeCommon.makeHumanReadableDate(sdfDate.format(date));
@@ -247,9 +263,9 @@ public class FacadeCommon {
     public static double round(double value, int places) {
         if (places < 0) throw new IllegalArgumentException();
         BigDecimal bd;
-        try{
+        try {
             bd = new BigDecimal(value);
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             return 0.0;
         }
         bd = bd.setScale(places, RoundingMode.HALF_UP);
@@ -320,7 +336,7 @@ public class FacadeCommon {
         return true;
     }
 
-    public static  <T> T jsonStringToObject(String jsonString, Class<T> aClass) {
+    public static <T> T jsonStringToObject(String jsonString, Class<T> aClass) {
         Gson gson = new Gson();
         return gson.fromJson(jsonString, aClass);
     }

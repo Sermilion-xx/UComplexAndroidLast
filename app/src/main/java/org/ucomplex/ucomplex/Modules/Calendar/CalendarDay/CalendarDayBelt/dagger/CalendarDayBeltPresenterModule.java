@@ -1,6 +1,6 @@
-package org.ucomplex.ucomplex.Modules.CalendarDay.CalendarDayPerformance.dagger;
+package org.ucomplex.ucomplex.Modules.Calendar.CalendarDay.CalendarDayBelt.dagger;
 
-import org.ucomplex.ucomplex.Modules.CalendarDay.CalendarDayPerformance.CalendarDayPerformanceModel;
+import org.ucomplex.ucomplex.Modules.Calendar.CalendarDay.CalendarDayBelt.CalendarDayBeltModel;
 
 import javax.inject.Singleton;
 
@@ -17,12 +17,12 @@ import dagger.Provides;
  * ---------------------------------------------------
  */
 @Module
-public class CalendarDayPerformancePresenterModule {
+public class CalendarDayBeltPresenterModule {
 
     @Provides
     @Singleton
-    CalendarDayPerformanceModel provideModel() {
-        return new CalendarDayPerformanceModel();
+    CalendarDayBeltModel provideModel() {
+        return new CalendarDayBeltModel();
     }
 
 }

@@ -26,6 +26,14 @@ public  final class CalendarBeltItem {
         this.type = type;
     }
 
+    public CalendarBeltItem(String disciplineName, int mark, int type) {
+        this.disciplineName = disciplineName;
+        this.teacherName = null;
+        this.time = null;
+        this.mark = mark;
+        this.type = type;
+    }
+
     public CalendarBeltItem() {
         this.disciplineName = null;
         this.teacherName = null;

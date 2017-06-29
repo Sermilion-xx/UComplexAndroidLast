@@ -1,13 +1,10 @@
 package org.ucomplex.ucomplex.Modules.Calendar.CalendarBelt;
 
-import android.content.Context;
-
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
 import org.ucomplex.ucomplex.Modules.Calendar.CalendarBelt.model.CalendarBeltItem;
 import org.ucomplex.ucomplex.Modules.Calendar.CalendarBelt.model.CalendarBeltRaw;
-import org.ucomplex.ucomplex.Modules.Subject.SubjectTimeline.model.Marks;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

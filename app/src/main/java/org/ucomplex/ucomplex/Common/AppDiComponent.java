@@ -6,10 +6,6 @@ import org.ucomplex.ucomplex.Modules.Calendar.CalendarBelt.CalendarBeltPresenter
 import org.ucomplex.ucomplex.Modules.Calendar.CalendarBelt.dagger.CalendarBeltFragmentModule;
 import org.ucomplex.ucomplex.Modules.Calendar.CalendarBelt.dagger.CalendarBeltModelModule;
 import org.ucomplex.ucomplex.Modules.Calendar.CalendarBelt.dagger.CalendarBeltPresenterModule;
-import org.ucomplex.ucomplex.Modules.CalendarDay.CalendarDayPerformance.CalendarDayPerformanceActivity;
-import org.ucomplex.ucomplex.Modules.CalendarDay.CalendarDayPerformance.CalendarDayPerformancePresenter;
-import org.ucomplex.ucomplex.Modules.CalendarDay.CalendarDayPerformance.dagger.CalendarDayPerformanceFragmentModule;
-import org.ucomplex.ucomplex.Modules.CalendarDay.CalendarDayPerformance.dagger.CalendarDayPerformancePresenterModule;
 import org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.CalendarPageFragment;
 import org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.CalendarPageModel;
 import org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.CalendarPagePresenter;
@@ -22,12 +18,20 @@ import org.ucomplex.ucomplex.Modules.Calendar.CalendarStatistics.CalendarStatist
 import org.ucomplex.ucomplex.Modules.Calendar.CalendarStatistics.dagger.CalendarStatisticsFragmentModule;
 import org.ucomplex.ucomplex.Modules.Calendar.CalendarStatistics.dagger.CalendarStatisticsModelModule;
 import org.ucomplex.ucomplex.Modules.Calendar.CalendarStatistics.dagger.CalendarStatisticsPresenterModule;
+import org.ucomplex.ucomplex.Modules.Calendar.CalendarDay.CalendarDayBelt.CalendarDayBeltFragment;
+import org.ucomplex.ucomplex.Modules.Calendar.CalendarDay.CalendarDayBelt.CalendarDayBeltPresenter;
+import org.ucomplex.ucomplex.Modules.Calendar.CalendarDay.CalendarDayBelt.dagger.CalendarDayBeltFragmentModule;
+import org.ucomplex.ucomplex.Modules.Calendar.CalendarDay.CalendarDayBelt.dagger.CalendarDayBeltPresenterModule;
 import org.ucomplex.ucomplex.Modules.Events.EventsActivity;
 import org.ucomplex.ucomplex.Modules.Events.EventsModel;
 import org.ucomplex.ucomplex.Modules.Events.EventsPresenter;
 import org.ucomplex.ucomplex.Modules.Events.dagger.EventsActivityModule;
 import org.ucomplex.ucomplex.Modules.Events.dagger.EventsModelModule;
 import org.ucomplex.ucomplex.Modules.Events.dagger.EventsPresenterModule;
+import org.ucomplex.ucomplex.Modules.FullscreenImageView.FullscreenViewActivity;
+import org.ucomplex.ucomplex.Modules.FullscreenImageView.FullscreenViewPresenter;
+import org.ucomplex.ucomplex.Modules.FullscreenImageView.dagger.FullscreenViewActivityModule;
+import org.ucomplex.ucomplex.Modules.FullscreenImageView.dagger.FullscreenViewPresenterModule;
 import org.ucomplex.ucomplex.Modules.Login.LoginActivity;
 import org.ucomplex.ucomplex.Modules.Login.LoginPresenter;
 import org.ucomplex.ucomplex.Modules.Login.dagger.LoginActivityModule;
@@ -38,10 +42,6 @@ import org.ucomplex.ucomplex.Modules.MessagesList.MessagesListPresenter;
 import org.ucomplex.ucomplex.Modules.MessagesList.dagger.MessagesListActivityModule;
 import org.ucomplex.ucomplex.Modules.MessagesList.dagger.MessagesListModelModule;
 import org.ucomplex.ucomplex.Modules.MessagesList.dagger.MessagesListPresenterModule;
-import org.ucomplex.ucomplex.Modules.FullscreenImageView.FullscreenViewActivity;
-import org.ucomplex.ucomplex.Modules.FullscreenImageView.FullscreenViewPresenter;
-import org.ucomplex.ucomplex.Modules.FullscreenImageView.dagger.FullscreenViewActivityModule;
-import org.ucomplex.ucomplex.Modules.FullscreenImageView.dagger.FullscreenViewPresenterModule;
 import org.ucomplex.ucomplex.Modules.Messenger.MessengerActivity;
 import org.ucomplex.ucomplex.Modules.Messenger.MessengerModel;
 import org.ucomplex.ucomplex.Modules.Messenger.MessengerPresenter;
@@ -183,8 +183,8 @@ import dagger.Component;
                 CalendarStatisticsFragmentModule.class,
                 CalendarStatisticsPresenterModule.class,
                 CalendarStatisticsModelModule.class,
-                CalendarDayPerformanceFragmentModule.class,
-                CalendarDayPerformancePresenterModule.class
+                CalendarDayBeltFragmentModule.class,
+                CalendarDayBeltPresenterModule.class
         })
 
 public interface AppDiComponent {
@@ -299,9 +299,9 @@ public interface AppDiComponent {
 
     void inject(CalendarStatisticsModel fragment);
 
-    void inject(CalendarDayPerformancePresenter presenter);
+    void inject(CalendarDayBeltPresenter presenter);
 
-    void inject(CalendarDayPerformanceActivity activity);
+    void inject(CalendarDayBeltFragment fragment);
 
 }
 

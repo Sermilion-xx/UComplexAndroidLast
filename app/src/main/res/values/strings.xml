@@ -216,7 +216,7 @@
     <string name="belt">Лента</string>
     <string name="statistics">Статистика</string>
     <string name="discipline_name">Название предмета</string>
-    <string name="performance">Успеваемость:</string>
+    <string name="performance">Успеваемость</string>
     <string name="current_semester">Teкущий семестр</string>
     <string name="previous_semesters">Предыдущие семестры</string>
     <string name="attendance">Посещаемость:</string>

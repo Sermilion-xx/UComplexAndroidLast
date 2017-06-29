@@ -63,12 +63,10 @@
         <activity
             android:name=".Modules.Messenger.MessengerActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".Modules.FullscreenImageView.FullscreenViewActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/FullscreenVieTheme"/>
-
+            android:theme="@style/FullscreenVieTheme" />
         <activity
             android:name=".Modules.Calendar.CalendarActivity"
             android:screenOrientation="portrait" />
@@ -83,15 +81,16 @@
             android:name=".Common.UCContentProvider"
             android:authorities="org.ucomplex.ucomplex.Common.UCContentProvider" />
 
-        <service android:name=".Common.download.DownloadService"/>
+        <service android:name=".Common.download.DownloadService" />
+        <service android:name=".Modules.Updates.UpdatesService" />
 
-        <service android:name=".Modules.Updates.UpdatesService"/>
-
-        <receiver android:name=".Common.NewMessageBroadcastReceiver" >
+        <receiver android:name=".Common.NewMessageBroadcastReceiver">
             <intent-filter>
                 <action android:name="org.ucomplex.ucomplex.NEW_MESSAGE" />
             </intent-filter>
         </receiver>
+
+        <activity android:name=".Modules.Calendar.CalendarDay.CalendarDayActivity"></activity>
     </application>
 
 </manifest>

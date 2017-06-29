@@ -3,6 +3,7 @@ package org.ucomplex.ucomplex.Modules.Calendar.CalendarPage;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.util.Pair;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
 import com.prolificinteractive.materialcalendarview.format.MonthArrayTitleFormatter;
 
@@ -23,6 +25,7 @@ import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.model.CalendarPageParams;
 import org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.model.CalendarPageRaw;
 import org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.utility.CalendarDayDecorator;
+import org.ucomplex.ucomplex.Modules.Calendar.CalendarDay.CalendarDayActivity;
 import org.ucomplex.ucomplex.R;
 
 import java.util.ArrayList;
@@ -114,6 +117,15 @@ public class CalendarPageFragment extends BaseMvpFragment<CalendarPagePresenter>
                 }, 1000);
             }
         });
+        materialCalendarView.setOnDateChangedListener(new OnDateSelectedListener() {
+            @Override
+            public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
+                String day = date.getDay() < 10 ? "0" + String.valueOf(date.getDay()) : String.valueOf(date.getDay());
+                String month = String.valueOf(date.getMonth());
+                String year = String.valueOf(date.getYear());
+                startActivity(CalendarDayActivity.creteIntent(getActivityContext(), day, month, year));
+            }
+        });
         return view;
     }
 
@@ -155,7 +167,6 @@ public class CalendarPageFragment extends BaseMvpFragment<CalendarPagePresenter>
             keys.add(key);
         }
         initializeSpinnerOptions(calendar.getCourses());
-
 
         if (position == 0) {
             refreshMonth(calendar);

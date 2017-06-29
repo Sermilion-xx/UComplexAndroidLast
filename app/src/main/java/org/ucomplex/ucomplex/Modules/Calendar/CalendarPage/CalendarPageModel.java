@@ -6,6 +6,8 @@ import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
 import org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.model.CalendarPageParams;
 import org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.model.CalendarPageRaw;
 
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
@@ -26,8 +28,16 @@ public class CalendarPageModel implements MVPModel<CalendarPageRaw, CalendarPage
     private CalendarPageRaw mData;
     private CalendarPageService mService;
 
-    public CalendarPageModel() {
+    public static  CalendarPageModel getInstance() {
+        return SingletonHelper.INSTANCE;
+    }
+
+    private CalendarPageModel() {
         UCApplication.getInstance().getAppDiComponent().inject(this);
+    }
+
+    private static class SingletonHelper {
+        private static final CalendarPageModel INSTANCE = new CalendarPageModel();
     }
 
     @Inject

@@ -22,7 +22,7 @@ public class CalendarPagePresenterModule {
     @Provides
     @Singleton
     CalendarPageModel provideModel() {
-        return new CalendarPageModel();
+        return CalendarPageModel.getInstance();
     }
 
 }

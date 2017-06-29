@@ -1,4 +1,4 @@
-package org.ucomplex.ucomplex.Modules.CalendarDay.CalendarDayPerformance;
+package org.ucomplex.ucomplex.Modules.Calendar.CalendarDay.CalendarDayBelt;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,11 +8,12 @@ import android.view.ViewGroup;
 import org.ucomplex.ucomplex.Common.Constants;
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.base.BaseAdapter;
-import org.ucomplex.ucomplex.Modules.CalendarDay.CalendarDayPerformance.model.CalendarDayPerformanceItem;
+import org.ucomplex.ucomplex.Modules.Calendar.CalendarDay.CalendarDayBelt.model.CalendarDayBeltItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
-class CalendarDayPerformanceAdapter extends BaseAdapter<CalendarDayPerformanceAdapter.CalendarDayViewHolder, List<CalendarDayPerformanceItem>> {
+public class CalendarDayBeltAdapter extends BaseAdapter<CalendarDayBeltAdapter.CalendarDayViewHolder, List<CalendarDayBeltItem>> {
 
     static class CalendarDayViewHolder extends RecyclerView.ViewHolder {
 
@@ -20,6 +21,10 @@ class CalendarDayPerformanceAdapter extends BaseAdapter<CalendarDayPerformanceAd
             super(itemView);
 
         }
+    }
+
+    public CalendarDayBeltAdapter() {
+        mItems = new ArrayList<>();
     }
 
 
@@ -37,7 +42,7 @@ class CalendarDayPerformanceAdapter extends BaseAdapter<CalendarDayPerformanceAd
     @Override
     public void onBindViewHolder(CalendarDayViewHolder holder, int position) {
         if (mItems.size() > 0) {
-            CalendarDayPerformanceItem item = mItems.get(position);
+            CalendarDayBeltItem item = mItems.get(position);
         }
     }
 

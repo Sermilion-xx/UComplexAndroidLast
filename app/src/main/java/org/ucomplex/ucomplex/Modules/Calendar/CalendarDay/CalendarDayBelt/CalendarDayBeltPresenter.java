@@ -1,9 +1,9 @@
-package org.ucomplex.ucomplex.Modules.CalendarDay.CalendarDayPerformance;
+package org.ucomplex.ucomplex.Modules.Calendar.CalendarDay.CalendarDayBelt;
 
 import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
-import org.ucomplex.ucomplex.Modules.CalendarDay.CalendarDayPerformance.model.CalendarDayPerformanceItem;
-
 import org.ucomplex.ucomplex.Common.base.UCApplication;
+import org.ucomplex.ucomplex.Modules.Calendar.CalendarBelt.model.CalendarBeltItem;
+import org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.model.CalendarPageRaw;
 
 import java.util.List;
 
@@ -11,18 +11,18 @@ import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
-public class CalendarDayPerformancePresenter extends AbstractPresenter<
-        List<CalendarDayPerformanceItem>, List<CalendarDayPerformanceItem>,
-        Void, CalendarDayPerformanceModel> {
+public class CalendarDayBeltPresenter extends AbstractPresenter<
+        CalendarPageRaw, List<CalendarBeltItem>,
+        String, CalendarDayBeltModel> {
 
-    public CalendarDayPerformancePresenter() {
+    public CalendarDayBeltPresenter() {
         UCApplication.getInstance().getAppDiComponent().inject(this);
     }
 
     @Override
-    public void loadData(Void params) {
-        Observable<List<CalendarDayPerformanceItem>> dataObservable = mModel.loadData(params);
-        dataObservable.subscribe(new Observer<List<CalendarDayPerformanceItem>>() {
+    public void loadData(String params) {
+        Observable<CalendarPageRaw> dataObservable = mModel.loadData(params);
+        dataObservable.subscribe(new Observer<CalendarPageRaw>() {
 
             @Override
             public void onSubscribe(Disposable d) {
@@ -30,7 +30,7 @@ public class CalendarDayPerformancePresenter extends AbstractPresenter<
             }
 
             @Override
-            public void onNext(List<CalendarDayPerformanceItem> value) {
+            public void onNext(CalendarPageRaw value) {
                 mModel.processData(value);
                 if (getView() != null) {
                     getView().dataLoaded();

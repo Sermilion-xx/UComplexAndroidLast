@@ -21,7 +21,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-class CalendarBeltAdapter extends BaseAdapter<CalendarBeltAdapter.CalendarBeltViewHolder, List<CalendarBeltItem>> {
+public class CalendarBeltAdapter extends BaseAdapter<CalendarBeltAdapter.CalendarBeltViewHolder, List<CalendarBeltItem>> {
 
     public static final String MARK_ABCENT = "н";
     public static final String MARK_SICK = "б";
@@ -59,7 +59,7 @@ class CalendarBeltAdapter extends BaseAdapter<CalendarBeltAdapter.CalendarBeltVi
     }
 
     @Inject
-    CalendarBeltAdapter() {
+    public CalendarBeltAdapter() {
         mItems = new ArrayList<>();
     }
 

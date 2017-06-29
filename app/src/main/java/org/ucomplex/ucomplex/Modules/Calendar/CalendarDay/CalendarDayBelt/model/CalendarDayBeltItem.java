@@ -1,4 +1,4 @@
-package org.ucomplex.ucomplex.Modules.CalendarDay.CalendarDayPerformance.model;
+package org.ucomplex.ucomplex.Modules.Calendar.CalendarDay.CalendarDayBelt.model;
 
 /**
  * ---------------------------------------------------
@@ -10,20 +10,22 @@ package org.ucomplex.ucomplex.Modules.CalendarDay.CalendarDayPerformance.model;
  * ---------------------------------------------------
  */
 
-public final class CalendarDayPerformanceItem {
+public final class CalendarDayBeltItem {
 
     private final String disciplineName;
     private final int mark;
-    private final String teacherNme;
-    private final String room;
-    private final String time;
+    private final int type;
 
-    public CalendarDayPerformanceItem() {
+    public CalendarDayBeltItem() {
         this.disciplineName = null;
         this.mark = -1;
-        this.teacherNme = null;
-        this.room = null;
-        this.time = null;
+        this.type = -1;
+    }
+
+    public CalendarDayBeltItem(String disciplineName, int mark, int type) {
+        this.disciplineName = disciplineName;
+        this.mark = mark;
+        this.type = type;
     }
 
     public String getDisciplineName() {
@@ -34,15 +36,8 @@ public final class CalendarDayPerformanceItem {
         return mark;
     }
 
-    public String getTeacherNme() {
-        return teacherNme;
+    public int getTeacherNme() {
+        return type;
     }
 
-    public String getRoom() {
-        return room;
-    }
-
-    public String getTime() {
-        return time;
-    }
 }

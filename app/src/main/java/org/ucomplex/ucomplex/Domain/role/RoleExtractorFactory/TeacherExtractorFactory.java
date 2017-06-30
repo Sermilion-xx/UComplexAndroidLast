@@ -33,6 +33,7 @@ public class TeacherExtractorFactory implements AbstractRoleExtractorFactory {
         roleBaseBuilder.role(teacherRaw.getRole());
         roleBaseBuilder.position_name(teacherRaw.getPosition_name());
         roleBaseBuilder.position(teacherRaw.getPosition());
+        roleBaseBuilder.code(teacherRaw.getCode());
 
         RoleTeacher.RoleTeacherBuilder builder = new RoleTeacher.RoleTeacherBuilder(roleBaseBuilder);
         builder.rate(teacherRaw.getRate());

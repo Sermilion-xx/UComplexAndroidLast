@@ -121,9 +121,11 @@ public class CalendarPageFragment extends BaseMvpFragment<CalendarPagePresenter>
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
                 String day = date.getDay() < 10 ? "0" + String.valueOf(date.getDay()) : String.valueOf(date.getDay());
-                String month = String.valueOf(date.getMonth());
+                String month = String.valueOf(date.getMonth() + 1);
                 String year = String.valueOf(date.getYear());
-                startActivity(CalendarDayActivity.creteIntent(getActivityContext(), day, month, year));
+                if (presenter.getData() != null) {
+                    startActivity(CalendarDayActivity.creteIntent(getActivityContext(), day, month, year));
+                }
             }
         });
         return view;

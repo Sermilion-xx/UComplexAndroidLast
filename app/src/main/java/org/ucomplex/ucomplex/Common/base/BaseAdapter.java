@@ -38,6 +38,9 @@ public abstract class BaseAdapter<T extends RecyclerView.ViewHolder, D extends C
 
     @Override
     public int getItemViewType(int position) {
+        if (mItems == null) {
+            return 0;
+        }
         return mItems.size() == 0 ? TYPE_EMPTY : 0;
     }
 

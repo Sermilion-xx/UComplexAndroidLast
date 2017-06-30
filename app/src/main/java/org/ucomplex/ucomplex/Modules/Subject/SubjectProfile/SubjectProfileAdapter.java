@@ -23,6 +23,8 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static org.ucomplex.ucomplex.Common.base.UCApplication.PHOTOS_URL;
+
 /**
  * ---------------------------------------------------
  * Created by Sermilion on 30/03/2017.
@@ -88,7 +90,7 @@ public class SubjectProfileAdapter extends BaseAdapter<SubjectProfileAdapter.Sub
             holder.mTitle.setText(item.getName());
         } else if (getItemViewType(position) == TYPE_TEACHERS) {
             holder.mTeachersName.setText(item.getName());
-            String url = UCApplication.PHOTOS_URL + item.getCode() + IMAGE_FORMAT;
+            String url = PHOTOS_URL + item.getCode() + IMAGE_FORMAT;
             Drawable textDrawable = FacadeMedia.getTextDrawable(item.getId(),
                     item.getName(), holder.mTeachersName.getContext());
             Glide.with(holder.mTeachersName.getContext())

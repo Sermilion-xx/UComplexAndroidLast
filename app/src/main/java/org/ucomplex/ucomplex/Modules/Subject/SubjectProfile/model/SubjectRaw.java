@@ -24,6 +24,7 @@ import java.util.List;
 public final class SubjectRaw {
 
     private final Course course;
+    @SerializedName("teacher")
     private TeacherRaw teacher;
     private Role roleTeacher;
     private final Depart depart;

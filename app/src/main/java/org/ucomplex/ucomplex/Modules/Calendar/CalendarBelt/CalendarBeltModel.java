@@ -88,6 +88,10 @@ public class CalendarBeltModel implements MVPModel<CalendarBeltRaw, List<Calenda
             CalendarBeltItem item = new CalendarBeltItem(disciplineName, teacherName, time, markValue, type);
             items.add(item);
         }
+        if (data.getMarks().size() == 20) {
+            CalendarBeltItem item = new CalendarBeltItem();
+            items.add(item);
+        }
         mData.addAll(items);
         return items;
     }

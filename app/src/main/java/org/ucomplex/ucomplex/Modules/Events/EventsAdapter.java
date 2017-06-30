@@ -109,7 +109,7 @@ public class EventsAdapter extends BaseAdapter<EventsAdapter.EventViewHolder, Li
                         item.getParamId(),
                         item.getName(),
                         context);
-                String url = BASE_URL + PHOTOS_URL + item.getCode() + FORMAT_JPG;
+                String url = PHOTOS_URL + item.getCode() + FORMAT_JPG;
                 Glide.with(context)
                         .load(url)
                         .asBitmap()

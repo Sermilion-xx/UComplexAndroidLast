@@ -131,7 +131,6 @@ public class CalendarBeltAdapter extends BaseAdapter<CalendarBeltAdapter.Calenda
         }
     }
 
-
     @Override
     public int getItemCount() {
         return mItems == null || mItems.size() == 0 ? 1 : mItems.size();
@@ -139,7 +138,7 @@ public class CalendarBeltAdapter extends BaseAdapter<CalendarBeltAdapter.Calenda
 
     @Override
     public int getItemViewType(int position) {
-        if (mItems.size() > 0 && position == getItemCount() - 1) {
+        if (mItems.size() > 0 && position == getItemCount() - 1 && mItems.size() == 20) {
             return TYPE_FOOTER;
         } else if(mItems.size() == 0){
             return TYPE_NO_CONTENT;

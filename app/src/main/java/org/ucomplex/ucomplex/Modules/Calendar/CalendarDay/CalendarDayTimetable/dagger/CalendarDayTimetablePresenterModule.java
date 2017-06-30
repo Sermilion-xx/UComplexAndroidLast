@@ -1,7 +1,6 @@
-package org.ucomplex.ucomplex.Modules.Calendar.CalendarBelt.dagger;
+package org.ucomplex.ucomplex.Modules.Calendar.CalendarDay.CalendarDayTimetable.dagger;
 
-import org.ucomplex.ucomplex.Modules.Calendar.CalendarBelt.CalendarBeltModel;
-import org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.CalendarPageModel;
+import org.ucomplex.ucomplex.Modules.Calendar.CalendarDay.CalendarDayTimetable.CalendarDayTimetableModel;
 
 import javax.inject.Singleton;
 
@@ -18,11 +17,12 @@ import dagger.Provides;
  * ---------------------------------------------------
  */
 @Module
-public class CalendarBeltPresenterModule {
+public class CalendarDayTimetablePresenterModule {
 
     @Provides
-    CalendarBeltModel provideModel() {
-        return new CalendarBeltModel();
+    @Singleton
+    CalendarDayTimetableModel provideModel() {
+        return new CalendarDayTimetableModel();
     }
 
 }

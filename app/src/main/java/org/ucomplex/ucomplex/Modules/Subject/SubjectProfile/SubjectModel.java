@@ -103,7 +103,7 @@ public class SubjectModel implements MVPModel<SubjectRaw, SubjectObject, Integer
 
         RoleTeacher mainTeacher = (RoleTeacher) data.getTeacher();
         mTeachers.put(mainTeacher.getId(), mainTeacher);
-        profileItemsSet.add(extractProfileItem(mainTeacher));
+        profileItemsSet.add(extractProfileItem(mainTeacher.getRolePrimary()));
 
         for (int i = 0; i < data.getFiles().size(); i++) {
             FilesRaw filesRaw = data.getFiles().get(i);

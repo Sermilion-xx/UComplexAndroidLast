@@ -63,7 +63,7 @@ public class CalendarDayActivity extends BaseActivity {
             timetableFragment = (CalendarDayTimetableFragment) getSupportFragmentManager().getFragment(savedInstanceState, TAG_TIMETABLE_FRAGMENT);
         } else {
             beltFragment = CalendarDayBeltFragment.getInstance(day);
-            timetableFragment = CalendarDayTimetableFragment.getInstance();
+            timetableFragment = CalendarDayTimetableFragment.getInstance(day);
         }
         viewPagerAdapter.addFragment(beltFragment, getString(R.string.performance));
         viewPagerAdapter.addFragment(timetableFragment, getString(R.string.timeline));

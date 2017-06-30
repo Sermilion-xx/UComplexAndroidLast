@@ -94,7 +94,7 @@ public final class RoleBase implements Role, Parcelable {
 
     @Override
     public String getCode() {
-        return null;
+        return code;
     }
 
     public String getPosition_name() {

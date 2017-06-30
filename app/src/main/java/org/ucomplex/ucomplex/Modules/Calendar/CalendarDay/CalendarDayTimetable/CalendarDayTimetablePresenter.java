@@ -1,8 +1,8 @@
-package org.ucomplex.ucomplex.Modules.Calendar.CalendarDay.CalendarDayBelt;
+package org.ucomplex.ucomplex.Modules.Calendar.CalendarDay.CalendarDayTimetable;
 
 import org.ucomplex.ucomplex.Common.base.AbstractPresenter;
 import org.ucomplex.ucomplex.Common.base.UCApplication;
-import org.ucomplex.ucomplex.Modules.Calendar.CalendarBelt.model.CalendarBeltItem;
+import org.ucomplex.ucomplex.Modules.Calendar.CalendarDay.CalendarDayTimetable.model.CalendarDayTimetableItem;
 import org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.model.CalendarPageRaw;
 
 import java.util.List;
@@ -11,17 +11,16 @@ import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
-public class CalendarDayBeltPresenter extends AbstractPresenter<
-        CalendarPageRaw, List<CalendarBeltItem>,
-        String, CalendarDayBeltModel> {
+public class CalendarDayTimetablePresenter extends AbstractPresenter<
+        CalendarPageRaw, List<CalendarDayTimetableItem>,
+        String, CalendarDayTimetableModel> {
 
-    public CalendarDayBeltPresenter() {
+    public CalendarDayTimetablePresenter() {
         UCApplication.getInstance().getAppDiComponent().inject(this);
     }
 
     @Override
     public void loadData(String params) {
-        clear();
         Observable<CalendarPageRaw> dataObservable = mModel.loadData(params);
         dataObservable.subscribe(new Observer<CalendarPageRaw>() {
 

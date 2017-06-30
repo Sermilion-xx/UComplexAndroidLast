@@ -208,7 +208,7 @@ public class FacadeCommon {
                 }
                 r += tempYyMMdd[2] + " " + month + " " + tempYyMMdd[0] + " г.";
             }
-            if (justDate != null) {
+            if (justDate != null && justDate.length > 0) {
                 if (justDate[0] == false) {
                     r += " в " + hhMMss;
                 }

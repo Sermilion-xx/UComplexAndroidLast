@@ -28,7 +28,6 @@ public class CalendarDayBeltFragmentModule {
     }
 
     @Provides
-    @Singleton
     CalendarBeltAdapter provideAdapter() {
         return new CalendarBeltAdapter();
     }

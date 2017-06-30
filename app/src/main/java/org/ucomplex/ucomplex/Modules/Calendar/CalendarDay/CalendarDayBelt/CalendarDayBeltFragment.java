@@ -70,11 +70,7 @@ public class CalendarDayBeltFragment extends BaseMvpFragment<CalendarDayBeltPres
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (presenter.getData() == null) {
-            presenter.loadData(getArguments().getString(EXTRA_DAY));
-        } else {
-            dataLoaded();
-        }
+        presenter.loadData(getArguments().getString(EXTRA_DAY));
     }
 
     @Override

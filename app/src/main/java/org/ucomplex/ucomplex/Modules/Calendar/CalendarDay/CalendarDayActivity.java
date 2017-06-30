@@ -44,14 +44,13 @@ public class CalendarDayActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentViewWithNavDrawer(R.layout.activity_calendar_day);
+        setContentView(R.layout.activity_calendar_day);
         mProgress = (ProgressBar) findViewById(R.id.progressBar);
         Intent intent = getIntent();
         String day = intent.getStringExtra(EXTRA_DAY);
         String month = intent.getStringExtra(EXTRA_MONTH);
         String year = intent.getStringExtra(EXTRA_YEAR);
-        setupToolbar(day + " " + FacadeCommon.months.get(month) + " " + year, R.drawable.ic_menu);
-        setupDrawer();
+        setupToolbar(day + " " + FacadeCommon.months.get(month) + " " + year, R.drawable.ic_arrow_back_white);
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());

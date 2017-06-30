@@ -36,6 +36,7 @@ public class CalendarDayBeltModel implements MVPModel<CalendarPageRaw, List<Cale
             @Override
             protected void subscribeActual(Observer<? super CalendarPageRaw> observer) {
                 observer.onNext(CalendarPageModel.getInstance().getData());
+                observer.onComplete();
             }
         }.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
@@ -68,14 +69,16 @@ public class CalendarDayBeltModel implements MVPModel<CalendarPageRaw, List<Cale
         }
         Map<Integer, CalendarPageRaw.ChangedDayLesson> changedDays = data.getChangedDays().get(dayInt);
         List<Integer> changeDaysKeys = FacadeCommon.getKeys(changedDays);
-        for (int i = 0; i < changedDays.size(); i++) {
-            CalendarPageRaw.ChangedDayLesson lesson = changedDays.get(changeDaysKeys.get(i));
-            int mark = lesson.getMark();
-            int type = lesson.getType();
-            int course = lesson.getCourse();
-            String subjectName = data.getCourses().get(course);
-            CalendarBeltItem item = new CalendarBeltItem(subjectName, mark, type);
-            mData.add(item);
+        if (changedDays != null) {
+            for (int i = 0; i < changedDays.size(); i++) {
+                CalendarPageRaw.ChangedDayLesson lesson = changedDays.get(changeDaysKeys.get(i));
+                int mark = lesson.getMark();
+                int type = lesson.getType();
+                int course = lesson.getCourse();
+                String subjectName = data.getCourses().get(course);
+                CalendarBeltItem item = new CalendarBeltItem(subjectName, mark, type);
+                mData.add(item);
+            }
         }
         return mData;
     }

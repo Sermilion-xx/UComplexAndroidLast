@@ -63,6 +63,9 @@ public class CalendarBeltAdapter extends BaseAdapter<CalendarBeltAdapter.Calenda
         mItems = new ArrayList<>();
     }
 
+
+
+
     public void setmMoreCallback(LoadMoreCallback<Integer> mMoreCallback) {
         this.mMoreCallback = mMoreCallback;
     }
@@ -84,8 +87,12 @@ public class CalendarBeltAdapter extends BaseAdapter<CalendarBeltAdapter.Calenda
             if (getItemViewType(position) == TYPE_COMMON) {
                 CalendarBeltItem item = mItems.get(position);
                 holder.discilineName.setText(item.getDisciplineName());
-                holder.time.setText(item.getTime());
-                holder.teacherName.setText(item.getTeacherName());
+                if (item.getTime() != null) {
+                    holder.time.setVisibility(View.VISIBLE);
+                    holder.teacherName.setVisibility(View.VISIBLE);
+                    holder.time.setText(item.getTime());
+                    holder.teacherName.setText(item.getTeacherName());
+                }
                 Context context = holder.discilineName.getContext();
                 int type = item.getType();
                 if (type == 0) {
@@ -103,7 +110,11 @@ public class CalendarBeltAdapter extends BaseAdapter<CalendarBeltAdapter.Calenda
                 }
                 holder.markImage.setText(getLetter(item.getMark()));
             } else {
-                holder.loadMoreButton.setOnClickListener(v -> mMoreCallback.loadMoreData(getItemCount() + 1));
+                if (mItems.size() < 20) {
+                    holder.loadMoreButton.setVisibility(View.GONE);
+                } else {
+                    holder.loadMoreButton.setOnClickListener(v -> mMoreCallback.loadMoreData(getItemCount() + 1));
+                }
             }
         }
     }

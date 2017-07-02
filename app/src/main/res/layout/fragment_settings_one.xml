@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="55dp">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:mContext="org.ucomplex.ucomplex.Activities.SettingsActivity"
+        tools:showIn="@layout/activity_settings">
+
+        <ImageView
+            android:id="@+id/settings_photo"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_no_image"
+            android:contentDescription="@string/profile_image" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/setting_button_changeImage"
+            android:layout_width="57dp"
+            android:layout_height="57dp"
+            android:layout_alignParentEnd="true"
+            app:fabSize="normal"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="170dp"
+            android:background="@drawable/circle"
+            android:clickable="true"
+            android:padding="13dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_camera" />
+
+        <TextView
+            android:id="@+id/settings_password_change_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/setting_button_changeImage"
+            android:layout_marginLeft="17dp"
+            android:layout_marginRight="17dp"
+            android:gravity="center_vertical"
+            android:text="@string/password_change"
+            android:textColor="@color/colorPrimary"
+            android:textSize="19sp" />
+
+        <EditText
+            android:id="@+id/settings_password_current"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/settings_password_change_title"
+            android:layout_marginLeft="17dp"
+            android:layout_marginRight="17dp"
+            android:layout_marginTop="24dp"
+            android:background="@null"
+            android:hint="@string/current_password"
+            android:inputType="textPassword"
+            android:textColor="@color/color_uc_ListText"
+            android:textColorHint="@color/color_uc_ListText"
+            android:textCursorDrawable="@drawable/cursor_black"
+            android:textSize="13sp" />
+
+        <EditText
+            android:id="@+id/settings_password_new"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/settings_password_current"
+            android:layout_marginLeft="17dp"
+            android:layout_marginRight="17dp"
+            android:layout_marginTop="61dp"
+            android:background="@null"
+            android:hint="@string/new_password"
+            android:inputType="textPassword"
+            android:textColor="@color/color_uc_ListText"
+            android:textColorHint="@color/color_uc_ListText"
+            android:textCursorDrawable="@drawable/cursor_black"
+            android:textSize="13sp" />
+
+        <EditText
+            android:id="@+id/settings_password_again"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/settings_password_new"
+            android:layout_marginLeft="17dp"
+            android:layout_marginRight="17dp"
+            android:layout_marginTop="61dp"
+            android:background="@null"
+            android:hint="@string/enter_password_again"
+            android:inputType="textPassword"
+            android:textColor="@color/color_uc_ListText"
+            android:textColorHint="@color/color_uc_ListText"
+            android:textCursorDrawable="@drawable/cursor_black"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/settings_number_change_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/settings_password_again"
+            android:layout_marginLeft="17dp"
+            android:layout_marginRight="17dp"
+            android:layout_marginTop="63dp"
+            android:gravity="center_vertical"
+            android:text="@string/phone_number"
+            android:textColor="@color/colorPrimary"
+            android:textSize="19sp" />
+
+        <TextView
+            android:id="@+id/settings_phone_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/settings_number_change_title"
+            android:layout_marginLeft="17dp"
+            android:layout_marginRight="17dp"
+            android:layout_marginTop="7dp"
+            android:text="+7 000 *** ** 00"
+            android:textColor="@color/colorPrimary"
+            android:textSize="13sp" />
+
+        <EditText
+            android:id="@+id/settings_phone_new"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/settings_phone_number"
+            android:layout_marginLeft="17dp"
+            android:layout_marginRight="17dp"
+            android:layout_marginTop="61dp"
+            android:background="@null"
+            android:hint="@string/new_number"
+            android:inputType="phone"
+            android:textColor="@color/color_uc_ListText"
+            android:textColorHint="@color/color_uc_ListText"
+            android:textCursorDrawable="@drawable/cursor_black"
+            android:textSize="13sp" />
+
+        <EditText
+            android:id="@+id/settings_phone_password_current_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/settings_phone_new"
+            android:layout_marginLeft="17dp"
+            android:layout_marginRight="17dp"
+            android:layout_marginTop="61dp"
+            android:background="@null"
+            android:hint="@string/current_password"
+            android:inputType="phone"
+            android:textColor="@color/color_uc_ListText"
+            android:textColorHint="@color/color_uc_ListText"
+            android:textCursorDrawable="@drawable/cursor_black"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/settings_email_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/settings_phone_password_current_phone"
+            android:layout_marginLeft="17dp"
+            android:layout_marginRight="17dp"
+            android:layout_marginTop="63dp"
+            android:gravity="center_vertical"
+            android:text="@string/email_address"
+            android:textColor="@color/colorPrimary"
+            android:textSize="19sp" />
+
+        <TextView
+            android:id="@+id/settings_email_current"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/settings_email_title"
+            android:layout_marginLeft="17dp"
+            android:layout_marginRight="17dp"
+            android:layout_marginTop="7dp"
+            android:text="ucomplex@ucomplex.org"
+            android:textColor="@color/colorPrimary"
+            android:textSize="13sp" />
+
+        <EditText
+            android:id="@+id/settings_email_new"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/settings_phone_new"
+            android:layout_below="@+id/settings_email_current"
+            android:layout_marginEnd="17dp"
+            android:layout_marginTop="61dp"
+            android:background="@null"
+            android:hint="@string/new_email_address"
+            android:inputType="textEmailAddress"
+            android:textColor="@color/color_uc_ListText"
+            android:textColorHint="@color/color_uc_ListText"
+            android:textCursorDrawable="@drawable/cursor_black"
+            android:textSize="13sp" />
+
+        <EditText
+            android:id="@+id/settings_email_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/settings_phone_new"
+            android:layout_below="@+id/settings_email_new"
+            android:layout_marginEnd="17dp"
+            android:layout_marginTop="61dp"
+            android:background="@null"
+            android:hint="@string/current_password"
+            android:inputType="textPassword"
+            android:textColor="@color/color_uc_ListText"
+            android:textColorHint="@color/color_uc_ListText"
+            android:textCursorDrawable="@drawable/cursor_black"
+            android:textSize="13sp" />
+
+
+        <TextView
+            android:id="@+id/settings_privacy_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/settings_email_password"
+            android:layout_marginLeft="17dp"
+            android:layout_marginRight="17dp"
+            android:layout_marginTop="30dp"
+            android:gravity="center_vertical"
+            android:text="@string/confidentiality"
+            android:textColor="@color/colorPrimary"
+            android:textSize="19sp" />
+
+        <TextView
+            android:id="@+id/settings_privacy_closed_profile_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/settings_privacy_title"
+            android:layout_marginLeft="17dp"
+            android:layout_marginRight="17dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/closed_profile"
+            android:textSize="13sp" />
+
+        <Switch
+            android:id="@+id/settings_privacy_closed_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/settings_privacy_title"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="7dp"
+            android:layout_toEndOf="@+id/settings_privacy_closed_profile_title"
+            android:textColor="@color/colorWhite" />
+
+        <TextView
+            android:id="@+id/settings_privacy_hide_profile_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/settings_privacy_closed_profile_title"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="17dp"
+            android:layout_marginRight="17dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/do_not_show_in_search"
+            android:textSize="13sp" />
+
+        <Switch
+            android:id="@+id/settings_privacy_hide_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/settings_privacy_closed_profile_title"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="7dp"
+            android:layout_toEndOf="@+id/settings_privacy_hide_profile_title"
+            android:textColor="@color/colorWhite" />
+    </RelativeLayout>
+
+</ScrollView>

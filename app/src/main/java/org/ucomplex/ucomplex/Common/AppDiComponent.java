@@ -83,6 +83,12 @@ import org.ucomplex.ucomplex.Modules.RoleSelect.RoleSelectActivity;
 import org.ucomplex.ucomplex.Modules.RoleSelect.RoleSelectPresenter;
 import org.ucomplex.ucomplex.Modules.RoleSelect.dagger.RoleSelectActivityModule;
 import org.ucomplex.ucomplex.Modules.RoleSelect.dagger.RoleSelectPresenterModule;
+import org.ucomplex.ucomplex.Modules.Settings.SettingsActivity;
+import org.ucomplex.ucomplex.Modules.Settings.SettingsModel;
+import org.ucomplex.ucomplex.Modules.Settings.SettingsPresenter;
+import org.ucomplex.ucomplex.Modules.Settings.dagger.SettingsActivityModule;
+import org.ucomplex.ucomplex.Modules.Settings.dagger.SettingsModelModule;
+import org.ucomplex.ucomplex.Modules.Settings.dagger.SettingsPresenterModule;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.SubjectMaterialsFragment;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.SubjectMaterialsModel;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.SubjectMaterialsPresenter;
@@ -196,7 +202,10 @@ import dagger.Component;
                 CalendarDayTimetableFragmentModule.class,
                 CalendarDayTimetablePresenterModule.class,
                 CalendarDayEventsFragmentModule.class,
-                CalendarDayEventsPresenterModule.class
+                CalendarDayEventsPresenterModule.class,
+                SettingsActivityModule.class,
+                SettingsPresenterModule.class,
+                SettingsModelModule.class,
         })
 
 public interface AppDiComponent {
@@ -322,6 +331,12 @@ public interface AppDiComponent {
     void inject(CalendarDayEventsPresenter presenter);
 
     void inject(CalendarDayEventsFragment fragment);
+
+    void inject(SettingsActivity activity);
+
+    void inject(SettingsPresenter presenter);
+
+    void inject(SettingsModel fragment);
 
 }
 

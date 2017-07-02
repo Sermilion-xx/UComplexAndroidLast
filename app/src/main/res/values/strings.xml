@@ -222,4 +222,15 @@
     <string name="attendance">Посещаемость:</string>
     <string name="lekcionnye">лекционные</string>
     <string name="practical">практические</string>
+    <string name="new_number">Новый номер</string>
+    <string name="do_not_show_in_search">Не показывать в поиске</string>
+    <string name="profile_image">profile_image</string>
+    <string name="password_change">Смена пароля</string>
+    <string name="current_password">Текущий пароль</string>
+    <string name="new_password">Новый пароль</string>
+    <string name="enter_password_again">Введите пароль еще раз</string>
+    <string name="phone_number">Номер телефона</string>
+    <string name="new_email_address">Новый адрес электонной почты</string>
+    <string name="confidentiality">Конфиденциальность</string>
+    <string name="closed_profile">Закрытый профиль:</string>
 </resources>

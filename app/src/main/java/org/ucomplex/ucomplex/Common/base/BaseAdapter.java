@@ -24,7 +24,9 @@ public abstract class BaseAdapter<T extends RecyclerView.ViewHolder, D extends C
     protected D mItems;
 
     public void setItems(D data) {
-        mItems = data;
+        if (data != null) {
+            mItems = data;
+        }
     }
 
     public D getItems() {

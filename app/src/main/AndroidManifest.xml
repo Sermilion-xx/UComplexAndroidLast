@@ -71,6 +71,10 @@
             android:name=".Modules.Calendar.CalendarActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".Modules.Settings.SettingsActivity"
+            android:screenOrientation="portrait" />
+
         <receiver android:name=".Common.utility.NetworkStateReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />

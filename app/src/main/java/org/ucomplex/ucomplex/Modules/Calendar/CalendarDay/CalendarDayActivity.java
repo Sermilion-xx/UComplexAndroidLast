@@ -11,6 +11,7 @@ import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.ViewPagerAdapter;
 import org.ucomplex.ucomplex.Common.base.BaseActivity;
 import org.ucomplex.ucomplex.Modules.Calendar.CalendarDay.CalendarDayBelt.CalendarDayBeltFragment;
+import org.ucomplex.ucomplex.Modules.Calendar.CalendarDay.CalendarDayEvents.CalendarDayEventsFragment;
 import org.ucomplex.ucomplex.Modules.Calendar.CalendarDay.CalendarDayTimetable.CalendarDayTimetableFragment;
 import org.ucomplex.ucomplex.R;
 
@@ -18,6 +19,7 @@ public class CalendarDayActivity extends BaseActivity {
 
     private static final String TAG_BELT_FRAGMENT = "beltFragment";
     private static final String TAG_TIMETABLE_FRAGMENT = "timetableFragment";
+    private static final String TAG_EVENTS_FRAGMENT = "eventsFragment";
 
     public static final String EXTRA_DAY = "day";
     public static final String EXTRA_MONTH = "month";
@@ -33,11 +35,13 @@ public class CalendarDayActivity extends BaseActivity {
 
     private CalendarDayBeltFragment beltFragment;
     private CalendarDayTimetableFragment timetableFragment;
+    private CalendarDayEventsFragment eventsFragment;
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         getSupportFragmentManager().putFragment(outState, TAG_BELT_FRAGMENT, beltFragment);
         getSupportFragmentManager().putFragment(outState, TAG_TIMETABLE_FRAGMENT, timetableFragment);
+        getSupportFragmentManager().putFragment(outState, TAG_EVENTS_FRAGMENT, eventsFragment);
         super.onSaveInstanceState(outState);
     }
 
@@ -61,12 +65,15 @@ public class CalendarDayActivity extends BaseActivity {
         if (savedInstanceState != null) {
             beltFragment = (CalendarDayBeltFragment) getSupportFragmentManager().getFragment(savedInstanceState, TAG_BELT_FRAGMENT);
             timetableFragment = (CalendarDayTimetableFragment) getSupportFragmentManager().getFragment(savedInstanceState, TAG_TIMETABLE_FRAGMENT);
+            eventsFragment = (CalendarDayEventsFragment) getSupportFragmentManager().getFragment(savedInstanceState, TAG_EVENTS_FRAGMENT);
         } else {
             beltFragment = CalendarDayBeltFragment.getInstance(day);
             timetableFragment = CalendarDayTimetableFragment.getInstance(day);
+            eventsFragment = CalendarDayEventsFragment.getInstance(day);
         }
         viewPagerAdapter.addFragment(beltFragment, getString(R.string.performance));
         viewPagerAdapter.addFragment(timetableFragment, getString(R.string.timeline));
+        viewPagerAdapter.addFragment(eventsFragment, getString(R.string.events));
         viewPager.setAdapter(viewPagerAdapter);
     }
 }

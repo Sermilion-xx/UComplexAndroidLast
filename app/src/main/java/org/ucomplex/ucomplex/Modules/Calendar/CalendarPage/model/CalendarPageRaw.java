@@ -19,7 +19,7 @@ import java.util.Map;
 public final class CalendarPageRaw {
 
     private final String method;
-    private final Map<Integer, List<Event>> events;
+    private final Map<String, List<Event>> events;
     private final int day;
     private final String pre_month;
     private final String next_months;
@@ -59,7 +59,7 @@ public final class CalendarPageRaw {
         return method;
     }
 
-    public Map<Integer, List<Event>> getEvents() {
+    public Map<String, List<Event>> getEvents() {
         if (events == null) {
             return new HashMap<>();
         }
@@ -107,6 +107,9 @@ public final class CalendarPageRaw {
     }
 
     public Map<String, Map<Integer, ChangedDayLesson>> getChangedDays() {
+        if (changedDays == null) {
+            return new HashMap<>();
+        }
         return changedDays;
     }
 
@@ -116,6 +119,10 @@ public final class CalendarPageRaw {
 
     public String getCalendar() {
         return calendar;
+    }
+
+    public Map<String, List<Timetable.Lesson>> getEntries() {
+        return  timetable.getEntries();
     }
 
     public Timetable getTimetable() {

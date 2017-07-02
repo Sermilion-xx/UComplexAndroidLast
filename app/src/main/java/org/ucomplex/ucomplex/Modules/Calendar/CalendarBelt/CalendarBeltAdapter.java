@@ -84,7 +84,7 @@ public class CalendarBeltAdapter extends BaseAdapter<CalendarBeltAdapter.Calenda
     @Override
     public void onBindViewHolder(CalendarBeltViewHolder holder, int position) {
         if (mItems.size() > 0) {
-            if (getItemViewType(position) == TYPE_COMMON) {
+             if (getItemViewType(position) == TYPE_COMMON) {
                 CalendarBeltItem item = mItems.get(position);
                 holder.discilineName.setText(item.getDisciplineName());
                 if (item.getTime() != null) {

@@ -4,7 +4,10 @@ import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
 import org.ucomplex.ucomplex.Modules.Calendar.CalendarDay.CalendarDayTimetable.model.CalendarDayTimetableItem;
 import org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.CalendarPageModel;
 import org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.model.CalendarPageRaw;
+import org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.model.Timetable;
+import org.ucomplex.ucomplex.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -60,6 +63,24 @@ public class CalendarDayTimetableModel implements MVPModel<CalendarPageRaw, List
 
     @Override
     public List<CalendarDayTimetableItem> processData(CalendarPageRaw data) {
+        mData = new ArrayList<>();
+        List<Timetable.Lesson> dayEntries = data.getEntries().get(dayInt);
+        if (dayEntries != null) {
+            for (Timetable.Lesson entry : dayEntries) {
+                String disciplineName = data.getTimetable().getSubjects().get(entry.getCourse());
+                String teacherName = data.getTimetable().getTeachers().get(entry.getTeacher());
+                String room = data.getTimetable().getRooms().get(entry.getRoom());
+                String time = entry.getDate();
+                int type = 0;
+                if (entry.getType() == 0) {
+                    type = R.string.lekcionnye;
+                } else if (entry.getType() == 1) {
+                    type = R.string.practical;
+                }
+                CalendarDayTimetableItem item = new CalendarDayTimetableItem(disciplineName, teacherName, room, time, type);
+                mData.add(item);
+            }
+        }
         return mData;
     }
 }

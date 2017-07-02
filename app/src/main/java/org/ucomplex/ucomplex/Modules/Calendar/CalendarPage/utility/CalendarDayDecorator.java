@@ -11,6 +11,7 @@ import com.prolificinteractive.materialcalendarview.DayViewFacade;
 
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.model.CalendarPageRaw;
+import org.ucomplex.ucomplex.Modules.Calendar.CalendarPage.model.Timetable;
 
 import java.util.Calendar;
 import java.util.HashSet;
@@ -135,8 +136,8 @@ public class CalendarDayDecorator implements DayViewDecorator {
     }
 
 
-    private Set<CalendarDay> eventsToCalendarDays(Map<Integer, List<CalendarPageRaw.Event>> eventsMap){
-        List<Integer> changeDaysKeys = FacadeCommon.getKeys(eventsMap);
+    private Set<CalendarDay> eventsToCalendarDays(Map<String, List<CalendarPageRaw.Event>> eventsMap){
+        List<String> changeDaysKeys = FacadeCommon.getKeys(eventsMap);
         Set<CalendarDay> dates = new HashSet<>();
 
         for (int i = 0; i < changeDaysKeys.size(); i++) {
@@ -155,11 +156,11 @@ public class CalendarDayDecorator implements DayViewDecorator {
         return dates;
     }
 
-    private Set<CalendarDay> timetableDaysToCalendarDays(Map<Integer, List<Map<String, String>>> entries){
+    private Set<CalendarDay> timetableDaysToCalendarDays(Map<String, List<Timetable.Lesson>> entries){
         Set<CalendarDay> dates = new HashSet<>();
-        List<Integer> changeDaysKeys = FacadeCommon.getKeys(entries);
-        for(Integer lessonDay : changeDaysKeys){
-            CalendarDay calendarDay = CalendarDay.from(year, month-1, lessonDay);
+        List<String> changeDaysKeys = FacadeCommon.getKeys(entries);
+        for(String lessonDay : changeDaysKeys){
+            CalendarDay calendarDay = CalendarDay.from(year, month-1, Integer.valueOf(lessonDay));
             dates.add(calendarDay);
         }
         return dates;

@@ -47,9 +47,10 @@
   <color name="colorWhite50">#50ffffff</color>
   <color name="colorBlack70">#70ffffff</color>
 
-  <color name="colorBlue1">#51cde7</color>
-  <color name="colorOrange1">#fecd71</color>
-  <color name="colorGreen1">#9ece2b</color>
-  <color name="colorPurple1">#d18ec0</color>
+  <color name="colorBlueCalendar">#51cde7</color>
+  <color name="colorOrangeCalendar">#fecd71</color>
+  <color name="colorGreenCalendar">#9ece2b</color>
+  <color name="colorPurpleCalendar">#d18ec0</color>
+  <color name="colorRedCalendar">#fb736d</color>
 </resources>
 

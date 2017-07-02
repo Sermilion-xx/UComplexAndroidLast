@@ -32,9 +32,11 @@ public class CalendarDayBeltPresenter extends AbstractPresenter<
 
             @Override
             public void onNext(CalendarPageRaw value) {
-                mModel.processData(value);
-                if (getView() != null) {
-                    getView().dataLoaded();
+                if (value !=null) {
+                    mModel.processData(value);
+                    if (getView() != null) {
+                        getView().dataLoaded();
+                    }
                 }
             }
 

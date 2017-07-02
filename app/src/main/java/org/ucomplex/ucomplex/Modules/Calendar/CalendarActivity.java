@@ -69,6 +69,4 @@ public class CalendarActivity extends BaseActivity {
         viewPager.setAdapter(viewPagerAdapter);
     }
 
-
-
 }

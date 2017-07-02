@@ -220,4 +220,6 @@
     <string name="current_semester">Teкущий семестр</string>
     <string name="previous_semesters">Предыдущие семестры</string>
     <string name="attendance">Посещаемость:</string>
+    <string name="lekcionnye">лекционные</string>
+    <string name="practical">практические</string>
 </resources>

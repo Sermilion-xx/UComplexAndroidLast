@@ -3,6 +3,9 @@ package org.ucomplex.ucomplex.Common.base;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.util.Pair;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -21,6 +24,7 @@ import org.ucomplex.ucomplex.Domain.users.UserInterface;
 import org.ucomplex.ucomplex.Common.Navdrawer.DrawerAdapter;
 import org.ucomplex.ucomplex.Common.Navdrawer.DrawerListItem;
 import org.ucomplex.ucomplex.Common.Navdrawer.FacadeDrawer;
+import org.ucomplex.ucomplex.Modules.Settings.SettingsProfileFragment;
 import org.ucomplex.ucomplex.R;
 
 import java.util.ArrayList;
@@ -172,5 +176,21 @@ public abstract class BaseActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    protected Fragment addFragment(Class<?> fragmentClass, Bundle inState,
+                                   String name,
+                                   int containerId) {
+        Fragment fragment;
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        if (inState != null) {
+            fragment = manager.getFragment(inState, name);
+        } else {
+            fragment = FragmentFactory.getFragment(fragmentClass);
+            transaction.add(containerId, fragment , name);
+            transaction.commit();
+        }
+        return fragment;
     }
 }

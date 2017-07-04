@@ -14,7 +14,7 @@ public final class Info {
 
     private int person;
     private int id;
-    private int login;
+    private String login;
     private String pass;
     private String name;
     private int academic_degree;
@@ -42,7 +42,7 @@ public final class Info {
     public Info() {
         this.person = -1;
         this.id = -1;
-        this.login = -1;
+        this.login = null;
         this.pass = null;
         this.name = null;
         this.academic_degree = -1;
@@ -76,7 +76,7 @@ public final class Info {
         return id;
     }
 
-    public int getLogin() {
+    public String getLogin() {
         return login;
     }
 

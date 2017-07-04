@@ -2,7 +2,7 @@ package org.ucomplex.ucomplex.Modules.Settings.dagger;
 
 import org.ucomplex.ucomplex.Common.ServiceGenerator;
 import org.ucomplex.ucomplex.Common.base.UCApplication;
-import org.ucomplex.ucomplex.Modules.Settings.SettingsService;
+import org.ucomplex.ucomplex.Modules.Settings.SettingsProfileService;
 
 import dagger.Module;
 import dagger.Provides;
@@ -20,8 +20,8 @@ import dagger.Provides;
 public class SettingsModelModule {
 
     @Provides
-    SettingsService getService() {
-        return ServiceGenerator.createService(SettingsService.class, UCApplication.getInstance().getAuthString());
+    SettingsProfileService getService() {
+        return ServiceGenerator.createService(SettingsProfileService.class, UCApplication.getInstance().getAuthString());
     }
 
 }

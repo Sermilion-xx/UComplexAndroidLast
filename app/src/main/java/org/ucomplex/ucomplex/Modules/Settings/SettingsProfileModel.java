@@ -1,11 +1,10 @@
 package org.ucomplex.ucomplex.Modules.Settings;
 
-import android.app.Application;
-
 import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
 import org.ucomplex.ucomplex.Modules.Settings.model.SettingsItem;
 import org.ucomplex.ucomplex.Modules.Settings.model.SettingsRaw;
+import org.ucomplex.ucomplex.Modules.Settings.model.Status;
 
 import java.util.List;
 
@@ -24,17 +23,17 @@ import io.reactivex.schedulers.Schedulers;
  * <a href="http://www.github.com/sermilion>github</a>
  * ---------------------------------------------------
  */
-public class SettingsModel implements MVPModel<SettingsRaw, List<SettingsItem>, Void> {
+public class SettingsProfileModel implements MVPModel<SettingsRaw, SettingsRaw, Void> {
 
-    private List<SettingsItem> mData;
-    private SettingsService mService;
+    private SettingsRaw mData;
+    private SettingsProfileService mService;
 
-    public SettingsModel() {
+    public SettingsProfileModel() {
         UCApplication.getInstance().getAppDiComponent().inject(this);
     }
 
     @Inject
-    public void setService(SettingsService service) {
+    public void setService(SettingsProfileService service) {
         this.mService = service;
     }
 
@@ -44,28 +43,46 @@ public class SettingsModel implements MVPModel<SettingsRaw, List<SettingsItem>, 
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    public Observable<Status> saveSettings(String currpass,
+                                           String oldpass,
+                                           String pass,
+                                           String email,
+                                           String phone,
+                                           Integer closed,
+                                           Integer searchable) {
+        return mService.saveProfile(currpass,
+                oldpass,
+                pass,
+                email,
+                phone,
+                closed,
+                searchable).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
     @Override
-    public void setData(List<SettingsItem> data) {
+    public void setData(SettingsRaw data) {
         this.mData = data;
     }
 
     @Override
-    public void addData(List<SettingsItem> data) {
-        mData.addAll(data);
+    public void addData(SettingsRaw data) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void clear() {
-        mData.clear();
+        mData = null;
     }
 
     @Override
-    public List<SettingsItem> getData() {
+    public SettingsRaw getData() {
         return mData;
     }
 
     @Override
-    public List<SettingsItem> processData(SettingsRaw data) {
+    public SettingsRaw processData(SettingsRaw data) {
+        mData = data;
         return mData;
     }
 }

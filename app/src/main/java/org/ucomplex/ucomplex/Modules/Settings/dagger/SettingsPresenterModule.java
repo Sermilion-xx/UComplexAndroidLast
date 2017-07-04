@@ -1,6 +1,6 @@
 package org.ucomplex.ucomplex.Modules.Settings.dagger;
 
-import org.ucomplex.ucomplex.Modules.Settings.SettingsModel;
+import org.ucomplex.ucomplex.Modules.Settings.SettingsProfileModel;
 
 import javax.inject.Singleton;
 
@@ -20,9 +20,8 @@ import dagger.Provides;
 public class SettingsPresenterModule {
 
     @Provides
-    @Singleton
-    SettingsModel provideModel() {
-        return new SettingsModel();
+    SettingsProfileModel provideModel() {
+        return new SettingsProfileModel();
     }
 
 }

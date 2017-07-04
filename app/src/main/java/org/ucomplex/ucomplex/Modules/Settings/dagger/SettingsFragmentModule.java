@@ -1,6 +1,6 @@
 package org.ucomplex.ucomplex.Modules.Settings.dagger;
 
-import org.ucomplex.ucomplex.Modules.Settings.SettingsPresenter;
+import org.ucomplex.ucomplex.Modules.Settings.SettingsProfilePresenter;
 
 import javax.inject.Singleton;
 
@@ -17,11 +17,10 @@ import dagger.Provides;
  * ---------------------------------------------------
  */
 @Module
-public class SettingsActivityModule {
+public class SettingsFragmentModule {
 
     @Provides
-    @Singleton
-    SettingsPresenter providePresenter() {
-        return new SettingsPresenter();
+    SettingsProfilePresenter providePresenter() {
+        return new SettingsProfilePresenter();
     }
 }

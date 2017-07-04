@@ -233,4 +233,6 @@
     <string name="new_email_address">Новый адрес электонной почты</string>
     <string name="confidentiality">Конфиденциальность</string>
     <string name="closed_profile">Закрытый профиль:</string>
+    <string name="settings_saved">Настройки сохранены</string>
+    <string name="save">Сохранить</string>
 </resources>

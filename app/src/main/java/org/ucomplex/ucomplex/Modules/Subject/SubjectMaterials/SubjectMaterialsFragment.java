@@ -105,7 +105,13 @@ public class SubjectMaterialsFragment extends BaseMvpFragment<SubjectMaterialsPr
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivityContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter.setMyFiles(getArguments().getBoolean(MY_FILES));
-        mAdapter.setOnListItemClicked((params, type) -> presenter.loadData(params));
+        mAdapter.setOnListItemClicked((params, type) -> {
+            if (type == 1) {
+                presenter.downloadFile(params.getOwnersId(), params.getFileName());
+            } else {
+                presenter.loadData(params);
+            }
+        });
         mRecyclerView.setAdapter(mAdapter);
         return view;
     }

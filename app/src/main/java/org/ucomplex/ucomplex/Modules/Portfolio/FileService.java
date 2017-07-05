@@ -1,4 +1,4 @@
-package org.ucomplex.ucomplex.Modules.Portfolio.retrofit;
+package org.ucomplex.ucomplex.Modules.Portfolio;
 
 import org.ucomplex.ucomplex.Modules.Portfolio.model.RequestResult;
 import org.ucomplex.ucomplex.Modules.Portfolio.model.ShareFileList;
@@ -13,6 +13,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -46,4 +47,10 @@ public interface FileService {
             @Part MultipartBody.Part file,
             @PartMap() HashMap<String, RequestBody> folder
     );
+
+    @GET("/student/my_files?mobile=1")
+    Observable<MaterialsRaw> getPortfolio();
+
+    @POST("/student/my_files/create_folder?mobile=1")  @FormUrlEncoded
+    Observable<MaterialsRaw> createFolder(@Field("name") String name);
 }

@@ -5,16 +5,12 @@ import android.net.Uri;
 import android.support.v4.util.Pair;
 
 import org.ucomplex.ucomplex.Common.base.UCApplication;
-import org.ucomplex.ucomplex.Common.interfaces.DownloadCallback;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
 import org.ucomplex.ucomplex.Domain.MaterialsFile;
 import org.ucomplex.ucomplex.Domain.role.Role;
-import org.ucomplex.ucomplex.Domain.role.RoleTeacher;
 import org.ucomplex.ucomplex.Modules.Portfolio.model.RequestResult;
 import org.ucomplex.ucomplex.Modules.Portfolio.model.ShareFileList;
-import org.ucomplex.ucomplex.Modules.Portfolio.retrofit.DownloadFileService;
-import org.ucomplex.ucomplex.Modules.Portfolio.retrofit.FileService;
-import org.ucomplex.ucomplex.Modules.Portfolio.retrofit.PortfolioService;
+import org.ucomplex.ucomplex.Modules.Portfolio.FileService;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.MaterialsRaw;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.SubjectItemFile;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.SubjectMaterialsParams;
@@ -33,10 +29,6 @@ import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * ---------------------------------------------------
@@ -55,7 +47,6 @@ public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<L
     private static final String PARAM_KEY = "file";
 
     private SubjectTeachersMaterialsService subjectTeachersMaterialsService;
-    private PortfolioService portfolioService;
     private FileService fileService;
 
     private List<Pair<List<SubjectItemFile>, String>> mPageHistory;
@@ -81,11 +72,6 @@ public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<L
     }
 
     @Inject
-    void setPortfolioService(PortfolioService service) {
-        this.portfolioService = service;
-    }
-
-    @Inject
     void setFileService(FileService service) {
         this.fileService = service;
     }
@@ -98,7 +84,7 @@ public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<L
         } else {
             myFiles = true;
             myName = UCApplication.getInstance().getLoggedUser().getName();
-            return portfolioService.getPortfolio().subscribeOn(Schedulers.io())
+            return fileService.getPortfolio().subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread());
         }
     }
@@ -135,7 +121,7 @@ public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<L
 
     public void processDataToCurrentHistory(MaterialsRaw data) {
         for (MaterialsFile materialsFile : data.getFiles()) {
-            mPageHistory.get(getHistoryCount()-1).first.add(extractFileItem(materialsFile));
+            mPageHistory.get(getHistoryCount() - 1).first.add(extractFileItem(materialsFile));
         }
     }
 
@@ -208,12 +194,12 @@ public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<L
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    void createFolder(String folderName) {
-
-
+    Observable<MaterialsRaw> createFolder(String folderName) {
+        return fileService.createFolder(folderName).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
-    Observable<MaterialsRaw> uploadFile(Uri uri, Context context) {
+    Observable<MaterialsRaw> uploadFile(Uri uri) {
         HashMap<String, RequestBody> params = new HashMap<>();
         File myFile = new File(uri.getPath());
         String filePath = myFile.getAbsolutePath();

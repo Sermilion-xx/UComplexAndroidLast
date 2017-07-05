@@ -220,7 +220,7 @@ public class SubjectMaterialsPresenter extends AbstractPresenter<
         intent.setAction(UC_ACTION_DOWNLOAD_COMPLETE);
         File file = new File(uri.getPath());
         FacadeCommon.startNotificationService(file.getName(), R.string.upload_started, uri, getActivityContext());
-        Observable<MaterialsRaw> observable = mModel.uploadFile(uri, getActivityContext());
+        Observable<MaterialsRaw> observable = mModel.uploadFile(uri);
         observable.subscribe(new Observer<MaterialsRaw>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -249,7 +249,31 @@ public class SubjectMaterialsPresenter extends AbstractPresenter<
     }
 
     public void createFolder(String folderName) {
-        mModel.createFolder(folderName);
+        Observable<MaterialsRaw> deleteObservable = mModel.createFolder(folderName);
+        deleteObservable.subscribe(new Observer<MaterialsRaw>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                showProgress();
+            }
+
+            @Override
+            public void onNext(MaterialsRaw value) {
+                mModel.processDataToCurrentHistory(value);
+                if (getView() != null) {
+                    ((PortfolioActivity) getView()).notifyItemInserted(getCurrentHistory().size());
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                hideProgress();
+            }
+
+            @Override
+            public void onComplete() {
+                hideProgress();
+            }
+        });
     }
 
 

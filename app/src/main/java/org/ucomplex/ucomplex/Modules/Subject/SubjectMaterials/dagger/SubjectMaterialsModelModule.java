@@ -2,16 +2,11 @@ package org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.dagger;
 
 import org.ucomplex.ucomplex.Common.ServiceGenerator;
 import org.ucomplex.ucomplex.Common.base.UCApplication;
-
-import org.ucomplex.ucomplex.Modules.Portfolio.retrofit.DownloadFileService;
-import org.ucomplex.ucomplex.Modules.Portfolio.retrofit.FileService;
-import org.ucomplex.ucomplex.Modules.Portfolio.retrofit.PortfolioService;
+import org.ucomplex.ucomplex.Modules.Portfolio.FileService;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.SubjectTeachersMaterialsService;
 
 import dagger.Module;
 import dagger.Provides;
-
-import static org.ucomplex.ucomplex.Common.base.UCApplication.BASE_FILES_URL;
 
 /**
  * ---------------------------------------------------
@@ -28,11 +23,6 @@ public class SubjectMaterialsModelModule {
     @Provides
     SubjectTeachersMaterialsService provideTeachersFilesService(){
         return ServiceGenerator.createService(SubjectTeachersMaterialsService.class, UCApplication.getInstance().getAuthString());
-    }
-
-    @Provides
-    PortfolioService providePortfolioService(){
-        return ServiceGenerator.createService(PortfolioService.class, UCApplication.getInstance().getAuthString());
     }
 
     @Provides

@@ -138,8 +138,7 @@ public class PortfolioActivity extends BaseMVPActivity<MVPView, SubjectMaterials
                     } else {
                         showToast(R.string.error_check_internet, Toast.LENGTH_LONG);
                     }
-                })
-                .setNegativeButton(PortfolioActivity.this.getString(R.string.cancel),
+                }).setNegativeButton(PortfolioActivity.this.getString(R.string.cancel),
                         (dialog, id) -> dialog.cancel());
         AlertDialog alert = alertDialogBuilder.create();
         alert.show();

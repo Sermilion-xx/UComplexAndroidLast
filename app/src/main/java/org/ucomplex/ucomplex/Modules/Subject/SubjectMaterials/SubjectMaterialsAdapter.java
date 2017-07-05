@@ -69,13 +69,13 @@ public class SubjectMaterialsAdapter extends BaseAdapter<SubjectMaterialsAdapter
     private boolean[] mItemTypes;
     private String filename;
     private boolean mMyFiles;
-    private OnListItemClicked<SubjectMaterialsParams, Void> onListItemClicked;
+    private OnListItemClicked<SubjectMaterialsParams, Integer> onListItemClicked;
 
     public SubjectMaterialsAdapter() {
         mItems = new ArrayList<>();
     }
 
-    public void setOnListItemClicked(OnListItemClicked<SubjectMaterialsParams, Void> onListItemClicked) {
+    public void setOnListItemClicked(OnListItemClicked<SubjectMaterialsParams, Integer> onListItemClicked) {
         this.onListItemClicked = onListItemClicked;
     }
 
@@ -152,7 +152,7 @@ public class SubjectMaterialsAdapter extends BaseAdapter<SubjectMaterialsAdapter
                             params.setFileName(filename);
                             params.setOwnersId(item.getOwnersId());
 
-                            onListItemClicked.onClick(params, null);
+                            onListItemClicked.onClick(params, 1);
                         }
                     });
                 } else if (getItemViewType(position) == TYPE_FOLDER) {
@@ -164,7 +164,7 @@ public class SubjectMaterialsAdapter extends BaseAdapter<SubjectMaterialsAdapter
                             params.setFileAddress(item.getAddress());
                             params.setFileName(item.getName());
                             params.setMyFolder(mMyFiles);
-                            onListItemClicked.onClick(params, null);
+                            onListItemClicked.onClick(params, 0);
                         }
                     });
                 }
@@ -174,7 +174,7 @@ public class SubjectMaterialsAdapter extends BaseAdapter<SubjectMaterialsAdapter
                         SubjectMaterialsParams params = new SubjectMaterialsParams(FileOperationType.MENU);
                         params.setPosition(position);
                         params.setFile(item);
-                        onListItemClicked.onClick(params, null);
+                        onListItemClicked.onClick(params, 1);
                     });
                 } else {
                     holder.mMenuButton.setVisibility(View.GONE);

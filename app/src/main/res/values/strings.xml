@@ -235,4 +235,6 @@
     <string name="closed_profile">Закрытый профиль:</string>
     <string name="settings_saved">Настройки сохранены</string>
     <string name="save">Сохранить</string>
+    <string name="error_password_mismatch">Не верный пароль</string>
+    <string name="error_password_empty">Введите пароль</string>
 </resources>

@@ -43,14 +43,13 @@ public class SettingsProfileModel implements MVPModel<SettingsRaw, SettingsRaw, 
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Observable<Status> saveSettings(String currpass,
-                                           String oldpass,
+    public Observable<Status> saveSettings(String oldpass,
                                            String pass,
                                            String email,
                                            String phone,
                                            Integer closed,
                                            Integer searchable) {
-        return mService.saveProfile(currpass,
+        return mService.saveProfile(
                 oldpass,
                 pass,
                 email,

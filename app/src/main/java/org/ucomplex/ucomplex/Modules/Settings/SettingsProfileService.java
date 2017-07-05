@@ -23,8 +23,7 @@ public interface SettingsProfileService {
     Observable<SettingsRaw> getProfile();
 
     @POST("/student/profile/save?mobile=1") @FormUrlEncoded
-    Observable<Status> saveProfile(@Field("currpass") String currpass,
-                                   @Field("oldpass") String oldpass,
+    Observable<Status> saveProfile(@Field("oldpass") String oldpass,
                                    @Field("pass") String pass,
                                    @Field("email") String email,
                                    @Field("phone") String phone,

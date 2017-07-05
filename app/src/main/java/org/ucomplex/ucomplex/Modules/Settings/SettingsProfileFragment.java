@@ -57,15 +57,11 @@ public class SettingsProfileFragment extends BaseMvpFragment<SettingsProfilePres
     TextView phoneCurrent;
     @BindView(R.id.phone_new)
     TextView phoneNew;
-    @BindView(R.id.phone_password)
-    TextView phonePassword;
 
     @BindView(R.id.email_current)
     TextView emailCurrent;
     @BindView(R.id.email_new)
     TextView emailNew;
-    @BindView(R.id.email_password)
-    TextView emailPassword;
 
     @BindView(R.id.privacy_closed_profile)
     Switch closedProfile;
@@ -88,7 +84,6 @@ public class SettingsProfileFragment extends BaseMvpFragment<SettingsProfilePres
     }
 
 
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -108,28 +103,43 @@ public class SettingsProfileFragment extends BaseMvpFragment<SettingsProfilePres
         phoneCurrent.setText(info.getPhone());
         emailCurrent.setText(info.getEmail());
         closedProfile.setChecked(info.getClosed() == 1);
-        hiddenProfile.setChecked(info.getSearchable() == 0);
+        hiddenProfile.setChecked(info.getSearchable() == 1);
+    }
+
+    private boolean checkPassword(String oldpass, String pass, String passAgain) {
+        boolean oldpassBool = oldpass.length() > 0;
+        boolean passBool = pass.length() > 0;
+        boolean passAgainBool = passAgain.length() > 0;
+        return oldpassBool && passBool && passAgainBool;
+    }
+
+    private boolean settingsChanged(String email, String phone, Integer closed, Integer searchable) {
+        return email.length() > 0
+                || phone.length() > 0
+                || presenter.getData().getInfo().getClosed() != closed
+                || presenter.getData().getInfo().getSearchable() != searchable;
     }
 
     public void saveSettings() {
-        String currpass;
-        if (phonePassword.getText().length() == 0) {
-            currpass = emailPassword.getText().toString();
-        } else {
-            currpass = phonePassword.getText().toString();
-        }
         String oldpass = passwordCurrent.getText().toString();
         String pass = passwordNew.getText().toString();
+        String passAgain = passwordNewAgain.getText().toString();
+
         String email = emailNew.getText().toString();
         String phone = phoneNew.getText().toString();
         Integer closed = closedProfile.isChecked() ? 1 : 0;
         Integer searchable = hiddenProfile.isChecked() ? 1 : 0;
-        String currentPassword = UCApplication.getInstance().getLoggedUser().getPassword();
 
-        if (currpass.length() > 0 && currpass.equals(currentPassword) || pass.length() > 0) {
-            presenter.saveSettings(currpass, oldpass, pass, email, phone, closed, searchable);
-        } else {
-            showToast(R.string.error_incorrect_password);
+        boolean passwordCorrect = checkPassword(oldpass, pass, passAgain);
+        boolean settingsChanged = settingsChanged(email, phone, closed, searchable);
+
+        if (passwordCorrect || settingsChanged) {
+            presenter.saveSettings(oldpass, pass, email, phone, closed, searchable);
+            passwordCurrent.setText("");
+            passwordNew.setText("");
+            passwordNewAgain.setText("");
+            emailNew.setText("");
+            phoneNew.setText("");
         }
     }
 }

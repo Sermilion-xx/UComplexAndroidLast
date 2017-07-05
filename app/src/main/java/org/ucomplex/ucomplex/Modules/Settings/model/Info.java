@@ -171,4 +171,108 @@ public final class Info {
     public int getClient() {
         return client;
     }
+
+    public void setPerson(int person) {
+        this.person = person;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAcademic_degree(int academic_degree) {
+        this.academic_degree = academic_degree;
+    }
+
+    public void setAcademic_rank(int academic_rank) {
+        this.academic_rank = academic_rank;
+    }
+
+    public void setAcademic_awards(String academic_awards) {
+        this.academic_awards = academic_awards;
+    }
+
+    public void setUpqualification(String upqualification) {
+        this.upqualification = upqualification;
+    }
+
+    public void setSex(int sex) {
+        this.sex = sex;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public void setAgent(int agent) {
+        this.agent = agent;
+    }
+
+    public void setClosed(int closed) {
+        this.closed = closed;
+    }
+
+    public void setSearchable(int searchable) {
+        this.searchable = searchable;
+    }
+
+    public void setOnline(long online) {
+        this.online = online;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
+    public void setClient(int client) {
+        this.client = client;
+    }
 }

@@ -48,15 +48,13 @@ public class SettingsProfilePresenter extends AbstractPresenter<
         });
     }
 
-    public void saveSettings(String currpass,
-                             String oldpass,
+    public void saveSettings(String oldpass,
                              String pass,
                              String email,
                              String phone,
                              Integer closed,
                              Integer searchable) {
         Observable<Status> dataObservable = mModel.saveSettings(
-                currpass,
                 oldpass,
                 pass,
                 email,
@@ -77,6 +75,8 @@ public class SettingsProfilePresenter extends AbstractPresenter<
                         getView().showToast(R.string.error);
                     } else {
                         getView().showToast(R.string.settings_saved);
+                        updateModel(pass, email, phone, closed, searchable);
+                        getView().dataLoaded();
                     }
                 }
             }
@@ -94,5 +94,23 @@ public class SettingsProfilePresenter extends AbstractPresenter<
                 hideProgress();
             }
         });
+    }
+
+    private void updateModel(String pass,
+                             String email,
+                             String phone,
+                             Integer closed,
+                             Integer searchable) {
+        if (pass.length() > 0) {
+            getData().getInfo().setPass(pass);
+        }
+        if (email.length() > 0) {
+            getData().getInfo().setEmail(email);
+        }
+        if (phone.length() > 0) {
+            getData().getInfo().setPhone(phone);
+        }
+        getData().getInfo().setClosed(closed);
+        getData().getInfo().setSearchable(searchable);
     }
 }

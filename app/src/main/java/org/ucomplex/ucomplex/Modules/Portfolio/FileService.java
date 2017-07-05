@@ -48,9 +48,10 @@ public interface FileService {
             @PartMap() HashMap<String, RequestBody> folder
     );
 
-    @GET("/student/my_files?mobile=1")
-    Observable<MaterialsRaw> getPortfolio();
+    @POST("/student/my_files?mobile=1") @FormUrlEncoded
+    Observable<MaterialsRaw> getPortfolio(@Field("folder") String folder);
 
     @POST("/student/my_files/create_folder?mobile=1")  @FormUrlEncoded
-    Observable<MaterialsRaw> createFolder(@Field("name") String name);
+    Observable<MaterialsRaw> createFolder(@Field("name") String name,
+                                          @Field("folder") String folder);
 }

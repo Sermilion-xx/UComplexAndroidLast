@@ -49,13 +49,13 @@ import static org.ucomplex.ucomplex.Common.base.UCApplication.FILES_PATH;
  */
 
 public class SubjectMaterialsPresenter extends AbstractPresenter<
-        MaterialsRaw, List<Pair<List<SubjectItemFile>, String>>, SubjectMaterialsParams, SubjectMaterialsModel> {
+        MaterialsRaw, List<Pair<List<SubjectItemFile>, SubjectMaterialsModel.CurrentFolderNameAndCode>>, SubjectMaterialsParams, SubjectMaterialsModel> {
 
 
     private String[] folderMenuActions;
     private String[] fileMenuActions;
-
     public SubjectMaterialsPresenter() {
+
         UCApplication application = UCApplication.getInstance();
         application.getAppDiComponent().inject(this);
         folderMenuActions = new String[]{application.getString(R.string.rename), application.getString(R.string.delete)};
@@ -68,7 +68,7 @@ public class SubjectMaterialsPresenter extends AbstractPresenter<
     }
 
     void setMaterialsItems(List<SubjectItemFile> items) {
-        mModel.addHistory(new Pair<>(items, ""));
+        mModel.addHistory(new Pair<>(items, new SubjectMaterialsModel.CurrentFolderNameAndCode()));
         pageUp();
     }
 
@@ -76,11 +76,15 @@ public class SubjectMaterialsPresenter extends AbstractPresenter<
         mModel.pageUp();
     }
 
-    void pageDown() {
+    public void pageDown() {
         mModel.pageDown();
-        Pair<List<SubjectItemFile>, String> history = getHistory(mModel.getCurrentPage());
+        Pair<List<SubjectItemFile>, SubjectMaterialsModel.CurrentFolderNameAndCode> history = getHistory(mModel.getCurrentPage());
         if (getView() != null) {
-            ((SubjectMaterialsFragment) getView()).getAdapter().setItems(history.first);
+            if (getView() instanceof PortfolioActivity) {
+                ((PortfolioActivity) getView()).getAdapter().setItems(history.first);
+            } else {
+                ((SubjectMaterialsFragment) getView()).getAdapter().setItems(history.first);
+            }
         }
     }
 
@@ -88,12 +92,16 @@ public class SubjectMaterialsPresenter extends AbstractPresenter<
         return mModel.getCurrentPage();
     }
 
-    private Pair<List<SubjectItemFile>, String> getHistory(int index) {
+    private Pair<List<SubjectItemFile>, SubjectMaterialsModel.CurrentFolderNameAndCode> getHistory(int index) {
         return mModel.getHistory(index);
     }
 
+    public String getCurrentFolderCode() {
+        return mModel.getCurrentFolderCode();
+    }
+
     public List<SubjectItemFile> getCurrentHistory() {
-        Pair<List<SubjectItemFile>, String> pair = mModel.getHistory(mModel.getCurrentPage());
+        Pair<List<SubjectItemFile>, SubjectMaterialsModel.CurrentFolderNameAndCode> pair = mModel.getHistory(mModel.getCurrentPage());
         if (pair != null) {
             return pair.first;
         }
@@ -120,6 +128,7 @@ public class SubjectMaterialsPresenter extends AbstractPresenter<
                     mModel.processData(value);
                     if (getView() != null) {
                         mModel.setCurrentFolder(params.getFileName());
+                        mModel.setCurrentFolderCode(params.getFileAddress());
                         pageUp();
                         getView().dataLoaded();
                     }
@@ -221,35 +230,42 @@ public class SubjectMaterialsPresenter extends AbstractPresenter<
         File file = new File(uri.getPath());
         FacadeCommon.startNotificationService(file.getName(), R.string.upload_started, uri, getActivityContext());
         Observable<MaterialsRaw> observable = mModel.uploadFile(uri);
-        observable.subscribe(new Observer<MaterialsRaw>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-                showProgress();
-            }
-
-            @Override
-            public void onNext(MaterialsRaw value) {
-                mModel.processDataToCurrentHistory(value);
-                if (getView() != null) {
-                    ((PortfolioActivity) getView()).notifyItemInserted(getCurrentHistory().size());
+        if (observable != null) {
+            observable.subscribe(new Observer<MaterialsRaw>() {
+                @Override
+                public void onSubscribe(Disposable d) {
+//                showProgress();
                 }
-            }
 
-            @Override
-            public void onError(Throwable e) {
-                e.printStackTrace();
-                hideProgress();
-            }
+                @Override
+                public void onNext(MaterialsRaw value) {
+                    mModel.processDataToCurrentHistory(value);
+                    if (getView() != null) {
+                        ((PortfolioActivity) getView()).notifyItemInserted(getCurrentHistory().size());
+                    }
+                }
 
-            @Override
-            public void onComplete() {
-                hideProgress();
+                @Override
+                public void onError(Throwable e) {
+                    e.printStackTrace();
+//                hideProgress();
+                }
+
+                @Override
+                public void onComplete() {
+//                hideProgress();
+                }
+            });
+        } else {
+            if (getView() != null) {
+                getView().showToast(R.string.error_file_not_found);
             }
-        });
+        }
+
     }
 
-    public void createFolder(String folderName) {
-        Observable<MaterialsRaw> deleteObservable = mModel.createFolder(folderName);
+    public void createFolder(String folderName, String folder) {
+        Observable<MaterialsRaw> deleteObservable = mModel.createFolder(folderName, folder);
         deleteObservable.subscribe(new Observer<MaterialsRaw>() {
             @Override
             public void onSubscribe(Disposable d) {

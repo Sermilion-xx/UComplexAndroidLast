@@ -1,16 +1,17 @@
 package org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials;
 
-import android.content.Context;
 import android.net.Uri;
 import android.support.v4.util.Pair;
 
+import org.ucomplex.ucomplex.Common.FacadeMedia;
 import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPModel;
+import org.ucomplex.ucomplex.Common.utility.FileUtils;
 import org.ucomplex.ucomplex.Domain.MaterialsFile;
 import org.ucomplex.ucomplex.Domain.role.Role;
+import org.ucomplex.ucomplex.Modules.Portfolio.FileService;
 import org.ucomplex.ucomplex.Modules.Portfolio.model.RequestResult;
 import org.ucomplex.ucomplex.Modules.Portfolio.model.ShareFileList;
-import org.ucomplex.ucomplex.Modules.Portfolio.FileService;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.MaterialsRaw;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.SubjectItemFile;
 import org.ucomplex.ucomplex.Modules.Subject.SubjectMaterials.model.SubjectMaterialsParams;
@@ -40,22 +41,56 @@ import okhttp3.RequestBody;
  * ---------------------------------------------------
  */
 
-public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<List<SubjectItemFile>, String>>, SubjectMaterialsParams> {
+public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<List<SubjectItemFile>, SubjectMaterialsModel.CurrentFolderNameAndCode>>, SubjectMaterialsParams> {
+
+    public static class CurrentFolderNameAndCode {
+        private String name;
+        private String code;
+
+        public CurrentFolderNameAndCode(String name, String code) {
+            this.name = name;
+            this.code = code;
+        }
+
+        public CurrentFolderNameAndCode() {
+
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getCode() {
+            return code;
+        }
+
+        public void setCode(String code) {
+            this.code = code;
+        }
+    }
 
     private static final String DEFAULT_FOLDER_NAME = "null";
-    private static final String FILES_PATH = "/files/users/";
     private static final String PARAM_KEY = "file";
 
     private SubjectTeachersMaterialsService subjectTeachersMaterialsService;
     private FileService fileService;
 
-    private List<Pair<List<SubjectItemFile>, String>> mPageHistory;
+    private List<Pair<List<SubjectItemFile>, CurrentFolderNameAndCode>> mPageHistory;
     private Map<Integer, Role> mTeachers;
 
     private int currentPage = -1;
-    private String currentFolder = "null";
+    private String currentFolder;
+    private String currentFolderCode;
     private boolean myFiles;
     private String myName;
+
+    public String getCurrentFolder() {
+        return currentFolder;
+    }
 
     void setTeachers(Map<Integer, Role> mTeachers) {
         this.mTeachers = mTeachers;
@@ -84,18 +119,18 @@ public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<L
         } else {
             myFiles = true;
             myName = UCApplication.getInstance().getLoggedUser().getName();
-            return fileService.getPortfolio().subscribeOn(Schedulers.io())
+            return fileService.getPortfolio(folder.getFileAddress()).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread());
         }
     }
 
     @Override
-    public void setData(List<Pair<List<SubjectItemFile>, String>> data) {
+    public void setData(List<Pair<List<SubjectItemFile>, CurrentFolderNameAndCode>> data) {
         mPageHistory = data;
     }
 
     @Override
-    public void addData(List<Pair<List<SubjectItemFile>, String>> data) {
+    public void addData(List<Pair<List<SubjectItemFile>, CurrentFolderNameAndCode>> data) {
         mPageHistory.addAll(data);
     }
 
@@ -105,17 +140,17 @@ public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<L
     }
 
     @Override
-    public List<Pair<List<SubjectItemFile>, String>> getData() {
+    public List<Pair<List<SubjectItemFile>, CurrentFolderNameAndCode>> getData() {
         return mPageHistory;
     }
 
     @Override
-    public List<Pair<List<SubjectItemFile>, String>> processData(MaterialsRaw data) {
+    public List<Pair<List<SubjectItemFile>, CurrentFolderNameAndCode>> processData(MaterialsRaw data) {
         List<SubjectItemFile> list = new ArrayList<>();
         for (MaterialsFile materialsFile : data.getFiles()) {
             list.add(extractFileItem(materialsFile));
         }
-        mPageHistory.add(new Pair<>(list, ""));
+        mPageHistory.add(new Pair<>(list, new CurrentFolderNameAndCode()));
         return mPageHistory;
     }
 
@@ -142,6 +177,13 @@ public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<L
         return item;
     }
 
+    public void setCurrentFolderCode(String currentFolderCode) {
+        this.currentFolderCode = currentFolderCode;
+    }
+
+    public String getCurrentFolderCode() {
+        return currentFolderCode;
+    }
 
     void setCurrentFolder(String currentFolder) {
         this.currentFolder = currentFolder;
@@ -157,14 +199,17 @@ public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<L
 
     void pageDown() {
         currentPage--;
+        mPageHistory.remove(mPageHistory.size() - 1);
         if (currentPage < 1) {
             currentFolder = DEFAULT_FOLDER_NAME;
+            currentFolderCode = null;
         } else {
-            currentFolder = getHistory(currentPage).second;
+            currentFolder = getHistory(currentPage).second.getName();
+            currentFolderCode = getHistory(currentPage).second.getCode();
         }
     }
 
-    void addHistory(Pair<List<SubjectItemFile>, String> list) {
+    void addHistory(Pair<List<SubjectItemFile>, CurrentFolderNameAndCode> list) {
         this.mPageHistory.add(list);
     }
 
@@ -172,7 +217,7 @@ public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<L
         return this.mPageHistory.size();
     }
 
-    Pair<List<SubjectItemFile>, String> getHistory(int index) {
+    Pair<List<SubjectItemFile>, CurrentFolderNameAndCode> getHistory(int index) {
         if (index > -1 && index < this.mPageHistory.size()) {
             return this.mPageHistory.get(index);
         }
@@ -194,21 +239,22 @@ public class SubjectMaterialsModel implements MVPModel<MaterialsRaw, List<Pair<L
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    Observable<MaterialsRaw> createFolder(String folderName) {
-        return fileService.createFolder(folderName).subscribeOn(Schedulers.io())
+    Observable<MaterialsRaw> createFolder(String folderName, String folder) {
+        return fileService.createFolder(folderName, folder).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
     Observable<MaterialsRaw> uploadFile(Uri uri) {
         HashMap<String, RequestBody> params = new HashMap<>();
-        File myFile = new File(uri.getPath());
-        String filePath = myFile.getAbsolutePath();
-        File uploadFile = new File(filePath);
-        RequestBody requestFile = RequestBody.create(MediaType.parse(filePath), uploadFile);
-        MultipartBody.Part body =
-                MultipartBody.Part.createFormData(PARAM_KEY, uploadFile.getName(), requestFile);
-        return fileService.upload(body, params).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-
+        String filePath = FileUtils.getPath(UCApplication.getInstance(), uri);
+        if (filePath != null) {
+            File uploadFile = new File(filePath);
+            RequestBody requestFile = RequestBody.create(MediaType.parse(filePath), uploadFile);
+            MultipartBody.Part body =
+                    MultipartBody.Part.createFormData(PARAM_KEY, uploadFile.getName(), requestFile);
+            return fileService.upload(body, params).subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread());
+        }
+        return null;
     }
 }

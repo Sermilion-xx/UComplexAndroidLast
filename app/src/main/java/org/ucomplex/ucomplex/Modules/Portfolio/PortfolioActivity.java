@@ -2,6 +2,7 @@ package org.ucomplex.ucomplex.Modules.Portfolio;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -15,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -101,6 +103,10 @@ public class PortfolioActivity extends BaseMVPActivity<MVPView, SubjectMaterials
         }
     }
 
+    public SubjectMaterialsAdapter getAdapter() {
+        return mAdapter;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -134,7 +140,7 @@ public class PortfolioActivity extends BaseMVPActivity<MVPView, SubjectMaterials
                 .setPositiveButton(PortfolioActivity.this.getString(R.string.ok), (dialog, id) -> {
                     if (UCApplication.getInstance().isConnectedToInternet()) {
                         String folderName = editText.getText().toString();
-                        presenter.createFolder(folderName);
+                        presenter.createFolder(folderName, presenter.getCurrentFolderCode());
                     } else {
                         showToast(R.string.error_check_internet, Toast.LENGTH_LONG);
                     }
@@ -142,6 +148,15 @@ public class PortfolioActivity extends BaseMVPActivity<MVPView, SubjectMaterials
                         (dialog, id) -> dialog.cancel());
         AlertDialog alert = alertDialogBuilder.create();
         alert.show();
+        Button positive = alert.getButton(DialogInterface.BUTTON_POSITIVE);
+        Button negative = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
+
+        if(positive != null) {
+            positive.setTextColor(getResources().getColor(R.color.colorPrimary));
+        }
+        if(negative != null) {
+            negative.setTextColor(getResources().getColor(R.color.colorPrimary));
+        }
     }
 
     private void pickImage() {
@@ -206,6 +221,16 @@ public class PortfolioActivity extends BaseMVPActivity<MVPView, SubjectMaterials
     }
 
     @Override
+    public void onBackPressed() {
+        if(presenter.getCurrentPage() > 0){
+            presenter.pageDown();
+            mAdapter.notifyDataSetChanged();
+        }else{
+            super.onBackPressed();
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         presenter = null;
@@ -215,12 +240,12 @@ public class PortfolioActivity extends BaseMVPActivity<MVPView, SubjectMaterials
     }
 
     public void performFileOperation(SubjectMaterialsParams params) {
-        if (params.getOperationType() == FileOperationType.CREATE_FOLDER) {
-
-        } else if (params.getOperationType() == FileOperationType.MENU) {
+       if (params.getOperationType() == FileOperationType.MENU) {
             presenter.createItemMenu(params).show();
         }  else if (params.getOperationType() == FileOperationType.DOWNLOAD) {
             presenter.downloadFile(params.getOwnersId(), params.getFileName());
-        }
+        } else if (params.getOperationType() == FileOperationType.GO_TO_FOLDER) {
+           presenter.loadData(params);
+       }
     }
 }

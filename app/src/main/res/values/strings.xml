@@ -237,4 +237,6 @@
     <string name="save">Сохранить</string>
     <string name="error_password_mismatch">Не верный пароль</string>
     <string name="error_password_empty">Введите пароль</string>
+    <string name="enter_name">Введите название</string>
+    <string name="error_file_not_found">Файл не найден</string>
 </resources>

@@ -133,7 +133,7 @@ public class SubjectMaterialsAdapter extends BaseAdapter<SubjectMaterialsAdapter
             if (getItemViewType(position) != TYPE_EMPTY) {
                 SubjectItemFile item = mItems.get(position);
                 holder.mFileName.setText(item.getName());
-                if (item.getTime() != null) {
+                if (item.getTime().length() > 0) {
                     holder.mFileTime.setText(FacadeCommon.makeHumanReadableDate(item.getTime()));
                 } else {
                     holder.mFileTime.setText(holder.mFileTime.getContext().getString(R.string.just_now));

@@ -53,7 +53,7 @@ public class UserProfileAdapterTest {
         context = RuntimeEnvironment.application.getApplicationContext();
         recyclerView = new RecyclerView(context);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        adapter = new UserProfileAdapter(onListItemClicked);
+        adapter = new UserProfileAdapter(-1, onListItemClicked);
         list = new ArrayList<>();
         list.add(new UserProfileItem("Student", "Role", 1951, 4));
         list.add(new UserProfileItem("Student", "Role", 1951, 4));

@@ -37,6 +37,7 @@ import org.ucomplex.ucomplex.R;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.http.HEAD;
 
 import static org.ucomplex.ucomplex.Common.Constants.UC_ACTION_NEW_MESSAGE;
 import static org.ucomplex.ucomplex.Modules.Updates.UpdatesService.MESSAGE_COUNT;
@@ -125,7 +126,9 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
 
     private void bindListRow(DrawerListItem item, ViewHolder holder, int position) {
         int viewType = getItemViewType(position);
-        if (viewType == TYPE_ITEM) {
+        if (viewType == TYPE_HEADER) {
+            holder.mTextView1.setOnClickListener(v -> setupOnClick(position));
+        } if (viewType == TYPE_ITEM) {
             setupMenuItem(item, holder, position);
         } else if (viewType == TYPE_MESSAGE) {
             setupMenuItem(item, holder, position);

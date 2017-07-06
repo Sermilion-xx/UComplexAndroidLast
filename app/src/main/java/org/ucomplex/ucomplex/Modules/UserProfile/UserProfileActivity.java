@@ -50,9 +50,10 @@ public class UserProfileActivity extends BaseMVPActivity<MVPView, UserProfilePre
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new UserProfileAdapter(onListItemClicked);
+        int userId = getIntent().getIntExtra(USER_ID, -1);
+        mAdapter = new UserProfileAdapter(userId, onListItemClicked);
         mRecyclerView.setAdapter(mAdapter);
-        presenter.loadData(getIntent().getIntExtra(USER_ID, -1));
+        presenter.loadData(userId);
     }
 
     private OnListItemClicked<Object, ProfileRequestType> onListItemClicked = (params, type) -> {

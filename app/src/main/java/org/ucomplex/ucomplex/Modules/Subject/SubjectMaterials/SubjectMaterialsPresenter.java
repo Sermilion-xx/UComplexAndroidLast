@@ -234,7 +234,9 @@ public class SubjectMaterialsPresenter extends AbstractPresenter<
             observable.subscribe(new Observer<MaterialsRaw>() {
                 @Override
                 public void onSubscribe(Disposable d) {
-//                showProgress();
+                    if (getView() != null) {
+                        getView().showToast(R.string.upload_started);
+                    }
                 }
 
                 @Override
@@ -248,12 +250,18 @@ public class SubjectMaterialsPresenter extends AbstractPresenter<
                 @Override
                 public void onError(Throwable e) {
                     e.printStackTrace();
-//                hideProgress();
+                    NotificationService.sendDownloadCompleteBroadcast(getActivityContext());
+                    if (getView() != null) {
+                        getView().showToast(R.string.error_file_upload);
+                    }
                 }
 
                 @Override
                 public void onComplete() {
-//                hideProgress();
+                    NotificationService.sendDownloadCompleteBroadcast(getActivityContext());
+                    if (getView() != null) {
+                        getView().showToast(R.string.upload_finished);
+                    }
                 }
             });
         } else {

@@ -85,7 +85,11 @@ class MessengerAdapter extends BaseAdapter<MessengerAdapter.MessengerViewHolder,
                 holder.message.setText(item.getMessage());
             }
             Context context = holder.time.getContext();
-            holder.time.setText(FacadeCommon.makeHumanReadableDate(item.getTime(), true));
+            if (item.getTime().equals(context.getString(R.string.sending))) {
+                holder.time.setText(item.getTime());
+            } else {
+                holder.time.setText(FacadeCommon.makeHumanReadableDate(item.getTime(), true));
+            }
             MessengerFilesAdapter messageFilesAdapter = new MessengerFilesAdapter(
                     (address, name) -> onListItemClicked.onClick(address, name),
                     uri -> context.startActivity(FullscreenViewActivity.creteIntent(context, this.companionName, item.getTime(), uri)),

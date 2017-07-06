@@ -136,7 +136,9 @@ public class MessengerPresenter extends AbstractPresenter<
                     messages.get(0).getFiles().get(i).setFileUri(getData().get(0).getFiles().get(i).getFileUri());
                 }
                 getData().remove(0);
-                getData().add(0, messages.get(0));
+                if (messages.size() > 0) {
+                    getData().add(0, messages.get(0));
+                }
                 if (getView() != null) {
                     ((MessengerActivity) getView()).resetMessegeView();
                     ((MessengerActivity) getView()).updateMessageList();

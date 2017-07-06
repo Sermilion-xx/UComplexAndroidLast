@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ProgressBar;
 
 import org.ucomplex.ucomplex.Common.NewMessageBroadcastReceiver;
@@ -12,6 +14,7 @@ import org.ucomplex.ucomplex.Common.base.BaseMVPActivity;
 import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.mvp.MVPView;
 import org.ucomplex.ucomplex.Modules.Messenger.MessengerActivity;
+import org.ucomplex.ucomplex.Modules.Users.UsersActivity;
 import org.ucomplex.ucomplex.R;
 
 public class MessagesListActivity extends BaseMVPActivity<MVPView, MessagesListPresenter> {
@@ -50,6 +53,25 @@ public class MessagesListActivity extends BaseMVPActivity<MVPView, MessagesListP
     public void dataLoaded() {
         mAdapter.setItems(presenter.getData());
         mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_add, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                return true;
+            case R.id.menu_add:
+                startActivity(UsersActivity.creteIntent(this));
+                return true;
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

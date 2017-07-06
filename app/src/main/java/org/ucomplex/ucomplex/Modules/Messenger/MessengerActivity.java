@@ -123,6 +123,7 @@ public class MessengerActivity extends BaseMVPActivity<MVPView, MessengerPresent
             @Override
             public void onClick(Integer params, Void type) {
                 mFilesToSend.remove((int)params);
+                mFileAdapterAdapter.notifyItemRemoved(params);
                 if (mFilesToSend.size() == 0) {
                     mFileRecyclerView.setVisibility(View.GONE);
                     mSendButton.setEnabled(false);

@@ -18,10 +18,11 @@ import org.ucomplex.ucomplex.Common.Constants;
 import org.ucomplex.ucomplex.Common.FacadeCommon;
 import org.ucomplex.ucomplex.Common.FacadeMedia;
 import org.ucomplex.ucomplex.Common.base.BaseAdapter;
+import org.ucomplex.ucomplex.Common.base.UCApplication;
 import org.ucomplex.ucomplex.Common.interfaces.OnListItemClicked;
 import org.ucomplex.ucomplex.Domain.BlackList;
 import org.ucomplex.ucomplex.Domain.users.User;
-import org.ucomplex.ucomplex.Domain.role.Role;
+import org.ucomplex.ucomplex.Modules.Messenger.MessengerActivity;
 import org.ucomplex.ucomplex.Modules.UserProfile.model.ProfileRequestType;
 import org.ucomplex.ucomplex.Modules.UserProfile.model.UserProfileItem;
 import org.ucomplex.ucomplex.R;
@@ -65,23 +66,27 @@ public class UserProfileAdapter extends BaseAdapter<UserProfileAdapter.UserProfi
         public UserProfileViewHolder(View itemView, int viewType) {
             super(itemView);
             if (viewType == TYPE_HEADER) {
-                mFriendButton =  (Button) itemView.findViewById(R.id.add_friend_button);
+                mFriendButton = (Button) itemView.findViewById(R.id.add_friend_button);
                 mMessageButton = (Button) itemView.findViewById(R.id.message_button);
-                mProfileImage =  (CircleImageView) itemView.findViewById(R.id.profile_picture);
-                mName =          (TextView) itemView.findViewById(R.id.name);
-                mBlockButton =   (ImageView) itemView.findViewById(R.id.block);
+                mProfileImage = (CircleImageView) itemView.findViewById(R.id.profile_picture);
+                mName = (TextView) itemView.findViewById(R.id.name);
+                mBlockButton = (ImageView) itemView.findViewById(R.id.block);
             } else if (viewType == TYPE_INFO) {
-                mInfoKey =       (TextView) itemView.findViewById(R.id.profile_role_key);
-                mInfoValue =     (TextView) itemView.findViewById(R.id.profile_role_value);
-                mRole =          (CircleImageView) itemView.findViewById(R.id.profile_role_icon);
-                mClickArea =     (RelativeLayout) itemView.findViewById(R.id.clickArea);
+                mInfoKey = (TextView) itemView.findViewById(R.id.profile_role_key);
+                mInfoValue = (TextView) itemView.findViewById(R.id.profile_role_value);
+                mRole = (CircleImageView) itemView.findViewById(R.id.profile_role_icon);
+                mClickArea = (RelativeLayout) itemView.findViewById(R.id.clickArea);
             }
         }
     }
 
     private OnListItemClicked<Object, ProfileRequestType> onListItemClicked;
+    private int userId;
+    private int myId;
 
-    public UserProfileAdapter(OnListItemClicked<Object, ProfileRequestType> onListItemClicked) {
+    public UserProfileAdapter(int userId, OnListItemClicked<Object, ProfileRequestType> onListItemClicked) {
+        this.myId = UCApplication.getInstance().getLoggedUser().getId();
+        this.userId = userId;
         this.onListItemClicked = onListItemClicked;
     }
 
@@ -129,32 +134,36 @@ public class UserProfileAdapter extends BaseAdapter<UserProfileAdapter.UserProfi
     }
 
     private void setupButtonListeners(UserProfileViewHolder holder, UserProfileItem item, Context context, BlackList blackList) {
-        holder.mBlockButton.setOnClickListener(v -> {
-            item.setBlocked(!item.getBlocked().is_black());
-            boolean blocked = item.getBlocked().is_black();
-            if (blocked) {
-                onListItemClicked.onClick(item.getId(), ProfileRequestType.BLOCK);
-            } else {
-                onListItemClicked.onClick(item.getId(), ProfileRequestType.UNBLOCK);
-            }
-            updateBlackListButton(holder.mBlockButton, blackList.is_black());
-        });
+        if (userId != myId) {
+            holder.mBlockButton.setOnClickListener(v -> {
+                item.setBlocked(!item.getBlocked().is_black());
+                boolean blocked = item.getBlocked().is_black();
+                if (blocked) {
+                    onListItemClicked.onClick(item.getId(), ProfileRequestType.BLOCK);
+                } else {
+                    onListItemClicked.onClick(item.getId(), ProfileRequestType.UNBLOCK);
+                }
+                updateBlackListButton(holder.mBlockButton, blackList.is_black());
+            });
 
-        holder.mMessageButton.setOnClickListener(v -> {
+            holder.mMessageButton.setOnClickListener(v -> context.startActivity(MessengerActivity.creteIntent(context, item.getPersonName(), item.getId())));
 
-        });
-
-        holder.mFriendButton.setOnClickListener(v -> {
-            item.setFriend(!item.getFriend().is_friend());
-            boolean friend = item.getFriend().is_friend();
-            if (friend) {
+            holder.mFriendButton.setOnClickListener(v -> {
+                item.setFriend(!item.getFriend().is_friend());
+                boolean friend = item.getFriend().is_friend();
+                if (friend) {
+                    onListItemClicked.onClick(item.getId(), ProfileRequestType.FRIEND);
+                } else {
+                    onListItemClicked.onClick(item.getId(), ProfileRequestType.UNFRIEND);
+                }
+                updateFriendButton(holder.mFriendButton, item.getFriend().is_friend(), context);
                 onListItemClicked.onClick(item.getId(), ProfileRequestType.FRIEND);
-            } else {
-                onListItemClicked.onClick(item.getId(), ProfileRequestType.UNFRIEND);
-            }
-            updateFriendButton(holder.mFriendButton, item.getFriend().is_friend(), context);
-            onListItemClicked.onClick(item.getId(), ProfileRequestType.FRIEND);
-        });
+            });
+        } else {
+            holder.mFriendButton.setEnabled(false);
+            holder.mMessageButton.setEnabled(false);
+            holder.mBlockButton.setEnabled(false);
+        }
 
         holder.mProfileImage.setOnClickListener(v -> {
             String originalUrl = PHOTOS_ORIGINAL_URL + item.getCode() + FORMAT_JPG;

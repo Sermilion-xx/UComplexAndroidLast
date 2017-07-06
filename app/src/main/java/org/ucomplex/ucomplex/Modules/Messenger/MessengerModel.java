@@ -30,7 +30,6 @@ public class MessengerModel implements MVPModel<MessengerRaw, List<MessengerItem
 
     private List<MessengerItem> mData;
     private MessengerService mService;
-    private CompanionInfo companion;
 
     public MessengerModel() {
         UCApplication.getInstance().getAppDiComponent().inject(this);
@@ -54,9 +53,6 @@ public class MessengerModel implements MVPModel<MessengerRaw, List<MessengerItem
 
     @Override
     public void setData(List<MessengerItem> data) {
-        if (mData == null) {
-            mData = new ArrayList<>();
-        }
         this.mData = data;
     }
 
@@ -80,17 +76,14 @@ public class MessengerModel implements MVPModel<MessengerRaw, List<MessengerItem
 
     @Override
     public List<MessengerItem> processData(MessengerRaw data) {
+        if (mData == null) {
+            mData = new ArrayList<>();
+        }
         List<MessengerItem> messages = new ArrayList<>();
         for (MessengerItem item : data.getMessages()) {
             item.setFiles(data.getFiles().get(item.getId()));
             messages.add(item);
         }
-        this.companion = data.getCompanion_info();
         return messages;
     }
-
-    public CompanionInfo getCompanion() {
-        return companion;
-    }
-
 }

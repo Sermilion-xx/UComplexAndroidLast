@@ -26,7 +26,7 @@ public final class MessengerItem {
     public MessengerItem() {
         this.id = 0;
         this.from = 0;
-        this.message = null;
+        this.message = "";
         this.time = null;
         this.status = 0;
         this.files = new ArrayList<>();
@@ -70,6 +70,9 @@ public final class MessengerItem {
     }
 
     public List<MessageFile> getFiles() {
+        if (files == null) {
+            return new ArrayList<>();
+        }
         return files;
     }
 

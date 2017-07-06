@@ -239,4 +239,5 @@
     <string name="error_password_empty">Введите пароль</string>
     <string name="enter_name">Введите название</string>
     <string name="error_file_not_found">Файл не найден</string>
+    <string name="upload_finished">Отправка файла завершена</string>
 </resources>
